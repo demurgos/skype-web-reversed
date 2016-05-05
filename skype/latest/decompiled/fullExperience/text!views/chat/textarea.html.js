@@ -1,0 +1,3 @@
+define("text!views/chat/textarea.html", [], function () {
+  return "<swx-suggestion-list></swx-suggestion-list>\r\n\r\n<textarea data-bind=\"value: messageBody, enable: isEnabled, css: {hide: !isServiceEnabled()},\r\n    valueUpdate: ['afterkeydown','propertychange','input'],\r\n    event: {\r\n        keypress: handleKeyPress,\r\n        keydown: handleKeyDown,\r\n        input: handleInput,\r\n        focus: onFocus,\r\n        blur: onBlur,\r\n        paste: onPaste,\r\n        beforepaste: onBeforePaste },\r\n    hasFocus: chatInputFocus,\r\n    l10n_attr: {'placeholder': placeholder},\r\n    attr: { 'aria-label': label, 'maxlength': messageMaxLength}\" name=\"messageInput\" class=\"inputField fontSize-p\"></textarea>\r\n";
+})

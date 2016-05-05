@@ -1,0 +1,3 @@
+define("text!views/common/buttons/radioButton.html", [], function () {
+  return "<label class=\"RadioButton\" data-bind=\"attr: {for: id}\">\r\n    <div class=\"RadioButton-element\">\r\n        <input class=\"RadioButton-input\" type=\"radio\" data-bind=\"checked: checked, attr: { id: id, name: name, value: value, 'aria-label': ariaLabel}\" />\r\n        <div class=\"RadioButton-outerCircle\" data-bind=\"css: {RadioButton-outerCircle--checked : isInputChecked}\">\r\n            <div class=\"RadioButton-innerCircle\"></div>\r\n        </div>\r\n    </div>\r\n    <span class=\"text RadioButton-label\" data-bind=\"l10n: {key: labelKey}\"></span>\r\n</label>\r\n";
+})
