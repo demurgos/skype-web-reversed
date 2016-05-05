@@ -1,33 +1,9 @@
 var path = require("path");
-var fs = require("fs-extra");
-var Bluebird = require("bluebird");
-var esprima = require("esprima");
-var escodegen = require("escodegen");
 var esquery = require("esquery");
 var estraverse = require("estraverse");
 var _ = require("lodash");
 
 var ast = require("./ast");
-
-var defaultOptions = {
-  filePath: null,
-  outputDir: null,
-  fileExtension: "js",
-  unresolvedDir: "__unresolved"
-};
-
-var escodegenOptions = {
-  format: {
-    indent: {
-      style: '  '
-    },
-    newline: '\n',
-    space: ' ',
-    quotes: "double",
-    parentheses: true,
-    semicolons: true
-  }
-};
 
 var decompilerPrefix = "~";
 
@@ -190,91 +166,18 @@ function patchProgram (programNode) {
   return programNode;
 }
 
-/**
- * Read the file at the path `path` and returns its content as an utf8 string.
- * @param path
- * @return {Bluebird<string>}
- */
-function readFile (path) {
-  return Bluebird.fromCallback(function (cb) {
-    return fs.readFile(path, "utf8", cb);
+function decompile (programNode, options) {
+  programNode = initTree(programNode);
+  var defineCalls = markDefineCalls(programNode);
+  programNode = markDefineCallsDescendants(programNode);
+  _.forEach(defineCalls, function(dc) {
+    augmentRootNoConflict(dc);
   });
-}
+  var moduleDescriptors = getModuleDescriptors(defineCalls, options);
 
-/**
- * Writes `str` to file at `path`. (Overrides any previous content)
- * @param filePath
- * @param str An utf8 string
- * @returns {Bluebird<void>}
- */
-function writeFile (filePath, str) {
-  return Bluebird.fromCallback(function (cb) {
-    return fs.outputFile(filePath, str, cb);
-  });
-}
+  programNode = patchProgram(programNode);
 
-function writeAstNode(filePath, astNode) {
-  return Bluebird.try(function() {
-    var code = escodegen.generate(astNode, escodegenOptions);
-    if (code.length > 1 && code[code.length - 1] !== "\n") {
-      code = code + "\n";
-    }
-    return writeFile(filePath, code);
-  });
-}
-
-/**
- *
- * @param moduleDescriptors {{id: string, ast: Node}}
- */
-function writeModules(moduleDescriptors, options) {
-  return Bluebird
-    .fromCallback(function (cb) {
-      return fs.emptyDir(options.outputDir, cb);
-    })
-    .then(function () {
-      return Bluebird.map(moduleDescriptors, function(md) {
-        return writeAstNode(md.filePath, md.ast);
-      });
-    });
-}
-
-function decompile(options) {
-  options = _.defaults({}, options, defaultOptions);
-  var filePath = options.filePath;
-  var outputDir = options.outputDir;
-  if (!filePath) {
-    throw new Error("Missing filePath");
-  }
-  if (!outputDir) {
-    throw new Error("Missing outputDir");
-  }
-
-  return readFile(filePath)
-    .then(function (contentStr) {
-      var program = esprima.parse(contentStr);
-      program = initTree(program);
-      var defineCalls = markDefineCalls(program);
-      program = markDefineCallsDescendants(program);
-      _.forEach(defineCalls, function(dc) {
-        augmentRootNoConflict(dc);
-      });
-      var moduleDescriptors = getModuleDescriptors(defineCalls, options);
-
-      program = patchProgram(program);
-
-      return writeModules(moduleDescriptors, options)
-        .then(function(){
-          var programPath = path.resolve(outputDir, options.unresolvedDir, path.basename(filePath));
-          return writeAstNode(programPath, program);
-        });
-
-      // console.log("marked");
-      // var moduleDescriptors = getModuleNodes(program);
-      // console.log("Require modules: " + moduleDescriptors.length);
-      // return writeModules(moduleDescriptors, options);
-    });
+  return {program: programNode, moduleDescriptors: moduleDescriptors};
 }
 
 exports.decompile = decompile;
-exports.default = decompile;
