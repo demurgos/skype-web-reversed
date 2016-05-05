@@ -1,0 +1,33 @@
+### Dependencies ###
+# Node dependencies directory
+node_modules
+
+# Typings definitions
+typings
+
+### Build directory ###
+build
+
+### Temporary files ###
+# Temporary directory
+tmp
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Users Environment Variables
+
+
+### Editors ###
+# Komodo Tools
+*.komodoproject
+.komodotools
+
+# WebStorm
+.idea
