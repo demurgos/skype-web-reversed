@@ -6,7 +6,7 @@ var escodegen = require("escodegen");
 var _ = require("lodash");
 
 var requirejs = require("./requirejs");
-
+var namespaceLink = require("./namespace-link");
 
 var defaultOptions = {
   filePath: null,
@@ -96,6 +96,8 @@ function decompile(options) {
 
       var program = requirejsResult.program;
       var moduleDescriptors = requirejsResult.moduleDescriptors;
+
+      namespaceLink.decompile(program);
 
       return writeModules(moduleDescriptors, options)
         .then(function(){
