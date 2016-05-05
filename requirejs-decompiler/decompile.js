@@ -7,6 +7,8 @@ var esquery = require("esquery");
 var estraverse = require("estraverse");
 var _ = require("lodash");
 
+var ast = require("./ast");
+
 var defaultOptions = {
   filePath: null,
   outputDir: null,
@@ -27,12 +29,7 @@ var escodegenOptions = {
   }
 };
 
-var decompilerPrefix = "__";
-var uid = 0;
-
-function getUid () {
-  return decompilerPrefix + uid++;
-}
+var decompilerPrefix = "~";
 
 function isDefineZoneRoot(astNode) {
   return astNode._ownerDefine && astNode._ownerDefine._defineRoot === astNode;
@@ -69,6 +66,7 @@ function markDefineCalls (programNode) {
   _.forEach(defineCalls, function(dc) {
     dc._ownerDefine = dc;
     dc._defineRoot = dc;
+    dc._id = dc.arguments[0].value;
 
     dc._isDefine = true;
     dc._isNestedDefine = false;
@@ -132,7 +130,7 @@ function augmentRootNoConflict(defineCall) {
  */
 function getModuleDescriptors (defineCalls, options) {
   return _.map(defineCalls, function(dc, idx) {
-    var id = dc.arguments[0].value;
+    var id = dc._id;
     var filePath = path.resolve(options.outputDir, id);
 
     if (true) { // TODO: check if there is a need to add the extension ?
@@ -144,6 +142,52 @@ function getModuleDescriptors (defineCalls, options) {
 
     return {id: id, filePath: filePath, ast: dc._defineRoot};
   });
+}
+
+/**
+ * Return a call to require("~moduleId") compatible with the type of the supplied node.
+ * @param node
+ * @param moduleId
+ */
+function getCompatibleModuleRequire (node, moduleId) {
+  var callExpression = {
+    type: "CallExpression",
+    callee: {
+      type: "Identifier",
+      name: "require"
+    },
+    arguments: [{
+      type: "Literal",
+      value: decompilerPrefix + moduleId
+    }]
+  };
+
+  if(ast.isExpression(node)) {
+    return callExpression;
+  } else if (ast.isStatement(node)) {
+    return {
+      type: "ExpressionStatement",
+      expression: callExpression
+    }
+  }
+  throw new Error("Cannot patch node");
+}
+
+/**
+ * Replaces defineRoots by calls to require.
+ * @param programNode
+ */
+function patchProgram (programNode) {
+  estraverse.replace(programNode, {
+    enter: function(node, parent) {
+      if (node && node._parent && isDefineZoneRoot(node)) {
+        return getCompatibleModuleRequire(node, node._ownerDefine._id);
+      } else {
+        return undefined;
+      }
+    }
+  });
+  return programNode;
 }
 
 /**
@@ -217,7 +261,13 @@ function decompile(options) {
       });
       var moduleDescriptors = getModuleDescriptors(defineCalls, options);
 
-      return writeModules(moduleDescriptors, options);
+      program = patchProgram(program);
+
+      return writeModules(moduleDescriptors, options)
+        .then(function(){
+          var programPath = path.resolve(outputDir, options.unresolvedDir, path.basename(filePath));
+          return writeAstNode(programPath, program);
+        });
 
       // console.log("marked");
       // var moduleDescriptors = getModuleNodes(program);
