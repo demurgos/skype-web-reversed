@@ -8,15 +8,16 @@ This just searches for `define` calls with their first argument being an id stri
 
 The problem with this algorithm is that it does not take care of the scope.
 
-### Territory flags
+### Root augmentation
 
-We first discover every `define` call and assign an id to each of them.
-We then proceed to explore
+This algorithm discovers every `define` call and mark it as the root of its own `defineZone` (ie. the area "owned" by this `define`).
 
-Then, we mark each sub-node (and the call himself) by an id pointing to the nearest ancestor `define` (called the `owner`).
-At this point, some nodes don't have any owner (their `owner` attribute is `null`) and some owned nodes might referer to external nodes.
-
-Once every node is marked we traverse the tree to the root and note how many
+The next step is to grow the zone to the leafs: every sub-node gets the `ownerDefine` of its parent. During this traversal, we check
+the presence of nested `define` (a `define` call in an other `define` call) and count the number `define` calls in the subtree of
+each node.
+Each define call is still the root of its own subtree so if we splitted the modules right now, we would get the same result as with the naive algorithm.
+The improvement of this algorithm, is that we now extend the root of `defineZone` to the top (in the direction of the program root)
+while there are no conflicts: the parent of the current root has only one `subDefine` (the one we are currently extending).
 
 ## API
 
