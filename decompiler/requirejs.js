@@ -5,7 +5,7 @@ var _ = require("lodash");
 
 var ast = require("./ast");
 
-var decompilerPrefix = "~";
+var decompilerPrefix = "rjs$$";
 
 function isDefineZoneRoot(astNode) {
   return astNode._ownerDefine && astNode._ownerDefine._defineRoot === astNode;
@@ -42,7 +42,7 @@ function markDefineCalls (programNode) {
   _.forEach(defineCalls, function(dc) {
     dc._ownerDefine = dc;
     dc._defineRoot = dc;
-    dc._id = dc.arguments[0].value;
+    dc._id = decompilerPrefix + dc.arguments[0].value;
 
     dc._isDefine = true;
     dc._isNestedDefine = false;
@@ -134,7 +134,7 @@ function getCompatibleModuleRequire (node, moduleId) {
     },
     arguments: [{
       type: "Literal",
-      value: decompilerPrefix + moduleId
+      value: moduleId
     }]
   };
 
