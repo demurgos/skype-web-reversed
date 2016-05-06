@@ -6,7 +6,7 @@ var escodegen = require("escodegen");
 var _ = require("lodash");
 
 var requirejs = require("./requirejs");
-var namespaceLink = require("./namespace-link");
+var msBond = require("./ms-bond");
 
 var defaultOptions = {
   filePath: null,
@@ -92,15 +92,17 @@ function decompile(options) {
   return readFile(filePath)
     .then(function (contentStr) {
       var program = esprima.parse(contentStr);
+
       var requirejsResult = requirejs.decompile(program, options);
+      program = requirejsResult.program;
 
-      var program = requirejsResult.program;
-      var moduleDescriptors = requirejsResult.moduleDescriptors;
+      var msBondResult = msBond.decompile(program, options);
+      program = msBondResult.program;
 
-      namespaceLink.decompile(program);
-
-      return writeModules(moduleDescriptors, options)
-        .then(function(){
+      return Bluebird.join(
+        writeModules(requirejsResult.moduleDescriptors, options),
+        writeModules(msBondResult.moduleDescriptors, options),
+        function(){
           var programPath = path.resolve(outputDir, options.unresolvedDir, path.basename(filePath));
           return writeAstNode(programPath, program);
         });
