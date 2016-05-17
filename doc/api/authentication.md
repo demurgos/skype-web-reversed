@@ -1,58 +1,58 @@
 # Authentication
 
-## Skype Token
+## Login Keys
 
-### Obtaining the login keys
-
-#### Request
+### Request
 
 ````txt
 GET https://login.skype.com/login?method=skype&client_id=578134&redirect_uri=https%3A%2F%2Fweb.skype.com
 ````
 
-#### Response
+### Response
 
 The response is an HTML page with the following keys:
 
-##### pie
+#### pie
 
 Attribute `value` of `input[name="pie"]`.
 
-##### etm
+#### etm
 
 Attribute `value` of `input[name="etm"]`.
 
-### Login
+## SkypeToken
 
-#### Request
+### Request
 
 ````txt
 POST https://login.skype.com/login?method=skype&client_id=578134&redirect_uri=https%3A%2F%2Fweb.skype.com
 ````
 
-##### Parameters
+#### Body
 
-###### username
+You should send a JSON document with the following parameters:
 
-- Type: {`string`}
-
-###### password
+##### username
 
 - Type: {`string`}
 
-###### pie
+##### password
+
+- Type: {`string`}
+
+##### pie
 
 - Type: {`string`}
 
 The login key `pie`.
 
-###### etm
+##### etm
 
 - Type: {`string`}
 
 The login key `etm`.
 
-###### timezone_field
+##### timezone_field
 
 - Type: {`string`}
 - Pattern: `/^[+-](?:0\d|1[0-2])\|[0-5]\d$/`
@@ -67,13 +67,13 @@ This is the timezone offset. It is contructed as the concatenation of `sign`, `h
 
 If there is no offset, `timezone` is `"+00|00"`.
 
-###### js_time
+##### js_time
 
 - Type: {`integer`}
 
 An epoch timestamp in **seconds**.
 
-##### Example
+#### Example
 
 ````json
 {
@@ -86,19 +86,71 @@ An epoch timestamp in **seconds**.
 }
 ````
 
-#### Response
+### Response
 
 The response is an HTML page with the following keys:
 
-##### skypetoken
+#### skypetoken
 
 Attribute `value` of `input[name="skypetoken"]`.
 
-##### expires_in
+#### expires_in
 
 Attribute `value` of `input[name="expires_in"]`.
 This is a base-10 integer indicating the number of **seconds** until the expiration of the `skypetoken`.
 
 ## RegistrationToken
 
-**TODO**
+### Request
+
+````text
+POST https://{host}/v1/users/{user}/endpoints
+````
+
+#### Parameters
+
+- Default `host` is `client-s.gateway.messenger.live.com` but you should follow redirections trough the `Location` header.
+- `user` should be `ME`
+
+#### Headers
+
+##### LockAndKey
+
+- `appId`, should be `msmsgs@msnmsgr.com`
+- `time`, an epoch timestamp in seconds
+- `lockAndKeyResponse`, the result of `hmacSha256(time, appId, "Q1P7W2E4J9R8U3S5")`
+
+##### ClientInfo
+
+- `os`, should be `Windows`
+- `osVer`, should be `10`
+- `proc`, should be `Win64`
+- `lcid`, should be `en-us`
+- `deviceType`, should be `1`
+- `country`, should be `n/a`
+- `clientName`, should be `skype.com`
+- `clientVer`, should be `908/1.30.0.128`
+
+##### Authentication
+
+- `skypetoken`, the SkypeToken
+
+#### Body
+
+You must set the body to the string `{}`.
+
+### Response
+
+#### Headers
+
+##### Location
+
+Parse the URI to get the new host. Perform the request again using this new host.
+
+##### set-registrationtoken
+
+A parametrized header:
+
+- `registrationToken`, a base64 string
+- `expires`, an epoch timestamp in seconds indicating the expiration date.
+- `endpointId`, the id of your endpoint
