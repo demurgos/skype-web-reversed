@@ -1,0 +1,64 @@
+{
+  "date": "2016-05-29T20:02:58.157Z",
+  "request": {
+    "method": "GET",
+    "uri": "https://contacts.skype.com/contacts/v1/users/reverse.bob/contacts",
+    "headers": {
+      "X-Skypetoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjIifQ.eyJpYXQiOjE0NjQ1NTE4MzQsImV4cCI6MTQ2NDYzODIzNCwic2t5cGVpZCI6ImZhY2Vib3QuYm9iIiwic2NwIjo5NTgsImNzaSI6IjAiLCJjaWQiOiI5MTk3ZDY4MWFjZTk0ODBhIiwiYWF0IjoxNDY0NTUxODMzfQ.QUr75Ya4csN4ZRxSDYGpDN7cI6AP5ltfBmz2OA9DU0TlnMewk_r-yZPFF1OJlvfjMX_MwRSbdP7koWIjvlJYakzs2y6fCxhgEoJH-BtRX-IuqrPEiZwEhWsILPR3vpPbq0hy5JgZNMTJouaJrmTMbmydCyt4MlyNxNQQqfiLY1H-lUdwl3BPd6Kes0lhBj_f2sC1YqJRxcKkq4oc"
+    },
+    "cookieJar": null,
+    "form": null,
+    "body": null,
+    "_jsonBody": null
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "content-length": "656",
+      "content-type": "application/json; charset=utf-8",
+      "etag": "\"A#RmT4_XnReh5FVd8dG0yErh62YZxyylNWJ5vBM1G4ImpQ_2LlBV2hXeW0ECOSabh6BCKfe1NRqHR7U8ZPAlnTVw==\"",
+      "server": "Microsoft-HTTPAPI/2.0",
+      "date": "Sun, 29 May 2016 19:57:15 GMT",
+      "connection": "close"
+    },
+    "body": "{\"contacts\":[{\"id\":\"echo123\",\"person_id\":\"2b58f78a-0000-0000-0000-000000000000\",\"type\":\"skype\",\"display_name\":\"Echo / Sound Test Service\",\"authorized\":true,\"blocked\":false,\"avatar_url\":\"https://api.skype.com/users/echo123/profile/avatar\",\"name\":{\"first\":\"Echo / Sound Test Service\",\"nickname\":\"echo123\"}},{\"id\":\"reverse.alice\",\"person_id\":\"86ed304e-0000-0000-0000-000000000000\",\"type\":\"skype\",\"display_name\":\"Alice Early\",\"authorized\":true,\"blocked\":false,\"avatar_url\":\"https://api.skype.com/users/reverse.alice/profile/avatar\",\"locations\":[{\"country\":\"fr\"}],\"name\":{\"first\":\"Alice\",\"surname\":\"Early\",\"nickname\":\"reverse.alice\"}}],\"count\":2,\"scope\":\"full\"}",
+    "_jsonBody": {
+      "contacts": [
+        {
+          "id": "echo123",
+          "person_id": "2b58f78a-0000-0000-0000-000000000000",
+          "type": "skype",
+          "display_name": "Echo / Sound Test Service",
+          "authorized": true,
+          "blocked": false,
+          "avatar_url": "https://api.skype.com/users/echo123/profile/avatar",
+          "name": {
+            "first": "Echo / Sound Test Service",
+            "nickname": "echo123"
+          }
+        },
+        {
+          "id": "reverse.alice",
+          "person_id": "86ed304e-0000-0000-0000-000000000000",
+          "type": "skype",
+          "display_name": "Alice Reverse",
+          "authorized": true,
+          "blocked": false,
+          "avatar_url": "https://api.skype.com/users/reverse.alice/profile/avatar",
+          "locations": [
+            {
+              "country": "fr"
+            }
+          ],
+          "name": {
+            "first": "Alice",
+            "surname": "Reverse",
+            "nickname": "reverse.alice"
+          }
+        }
+      ],
+      "count": 2,
+      "scope": "full"
+    }
+  }
+}
