@@ -12,4 +12,4 @@ define("jSkype/services/stratus/actions", {
   DELETE_CONTACT: "deleteContact",
   SEARCH_DIRECTORY: "searchDirectory",
   SEARCH_DIRECTORY_BY_ID: "searchDirectoryById"
-})
+});

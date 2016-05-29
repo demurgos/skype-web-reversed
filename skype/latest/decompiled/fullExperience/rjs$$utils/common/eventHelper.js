@@ -44,6 +44,15 @@ define("utils/common/eventHelper", [
       105: "9"
     };
   i.prototype.emit = function () {
-  }, i.prototype.done = function () {
-  }, t.swallow = s, t.getKeyCode = o, t.getNumpadKey = u, t.isActivation = a, t.isAlphaNumericKey = f, t.isNumPadKey = l, t.emptyEmitter = new i(), t.isDeactivation = c;
-})
+  };
+  i.prototype.done = function () {
+  };
+  t.swallow = s;
+  t.getKeyCode = o;
+  t.getNumpadKey = u;
+  t.isActivation = a;
+  t.isAlphaNumericKey = f;
+  t.isNumPadKey = l;
+  t.emptyEmitter = new i();
+  t.isDeactivation = c;
+});

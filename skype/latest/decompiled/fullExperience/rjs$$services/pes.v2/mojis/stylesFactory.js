@@ -19,4 +19,4 @@ define("services/pes.v2/mojis/stylesFactory", [
   }
   var t = e("services/pes/constants");
   return new n();
-})
+});

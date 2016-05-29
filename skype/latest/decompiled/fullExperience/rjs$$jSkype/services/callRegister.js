@@ -15,20 +15,31 @@ define("jSkype/services/callRegister", [
     e.canPlaceCall = t.property({
       readOnly: !0,
       value: !0
-    }), e.canProcessIncomingCall = function (t) {
+    });
+    e.canProcessIncomingCall = function (t) {
       return e.activeCalls(t) ? !0 : e.activeCalls.size() === 0 ? !0 : !1;
-    }, e.wasCallEnded = function (e) {
+    };
+    e.wasCallEnded = function (e) {
       return Boolean(s[u(e)]);
-    }, e.registerCall = function (r) {
-      n.log("[CallRegister] Register call", r.conversationId), e.activeCalls._add(r, r.conversationId);
-    }, e.unregisterCall = function (r, i) {
-      s.hasOwnProperty(i) && (s[i] = !0), n.log("[CallRegister] Unregister call", r.conversationId), e.activeCalls._remove(r.conversationId);
-    }, e.activeCalls = r.exposeReadOnlyCollection(t.collection()), e.activeCalls.size.changed(function () {
+    };
+    e.registerCall = function (r) {
+      n.log("[CallRegister] Register call", r.conversationId);
+      e.activeCalls._add(r, r.conversationId);
+    };
+    e.unregisterCall = function (r, i) {
+      s.hasOwnProperty(i) && (s[i] = !0);
+      n.log("[CallRegister] Unregister call", r.conversationId);
+      e.activeCalls._remove(r.conversationId);
+    };
+    e.activeCalls = r.exposeReadOnlyCollection(t.collection());
+    e.activeCalls.size.changed(function () {
       e.canPlaceCall._set(e.activeCalls.size() < o);
-    }), e.getConversationByCallId = function (t) {
+    });
+    e.getConversationByCallId = function (t) {
       if (i.hasOwnProperty(t))
         return i[t];
-    }, e.registerCallIdMapping = function (e, t) {
+    };
+    e.registerCallIdMapping = function (e, t) {
       if (a(t)) {
         var r = u(t);
         return i[r] = e, s.hasOwnProperty(r) || (s[r] = !1), n.log("[CallRegister] New Call Id Registered:", r), !0;
@@ -42,4 +53,4 @@ define("jSkype/services/callRegister", [
       return i = i || new s(), i;
     }
   };
-})
+});

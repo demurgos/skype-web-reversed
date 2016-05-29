@@ -7,9 +7,12 @@ module.exports = function () {
   }, t.prototype.WriteBool = function (e) {
     this._stream.WriteByte(e ? 1 : 0);
   }, t.prototype.WriteContainerBegin = function (e, t) {
-    this.WriteUInt8(t), this.WriteUInt32(e);
+    this.WriteUInt8(t);
+    this.WriteUInt32(e);
   }, t.prototype.WriteMapContainerBegin = function (e, t, n) {
-    this.WriteUInt8(t), this.WriteUInt8(n), this.WriteUInt32(e);
+    this.WriteUInt8(t);
+    this.WriteUInt8(n);
+    this.WriteUInt32(e);
   }, t.prototype.WriteContainerEnd = function () {
   }, t.prototype.WriteDouble = function (t) {
     var n = e.Encoding.Double.GetBytes(t);
@@ -22,9 +25,11 @@ module.exports = function () {
   }, t.prototype.WriteFieldEnd = function () {
   }, t.prototype.WriteFieldOmitted = function (e, t, n) {
   }, t.prototype.WriteInt16 = function (t) {
-    t = e.Encoding.Zigzag.EncodeZigzag16(t), this.WriteUInt16(t);
+    t = e.Encoding.Zigzag.EncodeZigzag16(t);
+    this.WriteUInt16(t);
   }, t.prototype.WriteInt32 = function (t) {
-    t = e.Encoding.Zigzag.EncodeZigzag32(t), this.WriteUInt32(t);
+    t = e.Encoding.Zigzag.EncodeZigzag32(t);
+    this.WriteUInt32(t);
   }, t.prototype.WriteInt64 = function (t) {
     this.WriteUInt64(e.Encoding.Zigzag.EncodeZigzag64(t));
   }, t.prototype.WriteInt8 = function (t) {
@@ -34,7 +39,8 @@ module.exports = function () {
       this.WriteUInt32(0);
     else {
       var n = e.Encoding.Utf8.GetBytes(t);
-      this.WriteUInt32(n.length), this._stream.Write(n, 0, n.length);
+      this.WriteUInt32(n.length);
+      this._stream.Write(n, 0, n.length);
     }
   }, t.prototype.WriteStructBegin = function (e, t) {
   }, t.prototype.WriteStructEnd = function (e) {
@@ -54,7 +60,8 @@ module.exports = function () {
     this.WriteUInt32(e.length);
     for (var t = 0; t < e.length; ++t) {
       var n = e.charCodeAt(t);
-      this._stream.WriteByte(n), this._stream.WriteByte(n >>> 8);
+      this._stream.WriteByte(n);
+      this._stream.WriteByte(n >>> 8);
     }
   }, t;
 }()

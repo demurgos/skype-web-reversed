@@ -23,4 +23,4 @@ define("jSkype/models/mediaStream", [
   }
   var t = e("jcafe-property-model"), n = e("jSkype/models/mediaStreamSource"), r = e("swx-enums");
   return i;
-})
+});

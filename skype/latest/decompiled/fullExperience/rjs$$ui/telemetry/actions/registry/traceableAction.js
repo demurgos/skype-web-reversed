@@ -29,7 +29,8 @@ define("ui/telemetry/actions/registry/traceableAction", [
     function g() {
       n.forIn(c, function (e) {
         i.clearMarks(e);
-      }), n.forIn(h, function (e) {
+      });
+      n.forIn(h, function (e) {
         i.clearMeasures(e);
       });
     }
@@ -46,13 +47,17 @@ define("ui/telemetry/actions/registry/traceableAction", [
     var f = this, l = r.create(), c = v(l), h = m(l), p = !1, d = o.resolve(u.serviceLocator.FEATURE_FLAGS);
     f.startTrace = function () {
       i.mark(c.start);
-    }, f.markBeforeRender = function () {
+    };
+    f.markBeforeRender = function () {
       w() && (i.mark(c.beforeRender), i.measure(h.beforeRenderDuration, c.start, c.beforeRender), y(h.beforeRenderDuration), p = !0);
-    }, f.markAfterRender = function () {
+    };
+    f.markAfterRender = function () {
       w() && (i.mark(c.afterRender), i.measure(h.afterRenderDuration, c.start, c.afterRender), y(h.afterRenderDuration), p = !0);
-    }, f.addEventData = function (t) {
+    };
+    f.addEventData = function (t) {
       n.isPlainObject(t) && n.merge(e, t);
-    }, f.endTrace = function () {
+    };
+    f.endTrace = function () {
       p && (d.isFeatureOn(u.featureFlags.TELEMETRY_UIACTIONPERF_ENABLED) && a.get().sendEvent(s.telemetry.uiTenantToken, "ui_action_perf", e), g(), t());
     };
   }
@@ -60,4 +65,4 @@ define("ui/telemetry/actions/registry/traceableAction", [
   t.build = function (e, t) {
     return new f(e, t);
   };
-})
+});

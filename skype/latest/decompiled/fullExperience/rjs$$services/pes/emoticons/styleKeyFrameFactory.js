@@ -24,4 +24,4 @@ define("services/pes/emoticons/styleKeyFrameFactory", [], function () {
     var r = i(e.id, e.styleDef.smallHeight, n);
     return r += i(e.id + "_large", e.styleDef.largeHeight, n), r += i(e.id + "_extraLarge", e.styleDef.extraLargeHeight, t), r;
   }, new s();
-})
+});

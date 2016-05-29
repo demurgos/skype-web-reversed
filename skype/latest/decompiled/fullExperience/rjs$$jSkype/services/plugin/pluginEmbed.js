@@ -14,7 +14,9 @@ define("jSkype/services/plugin/pluginEmbed", [
     var n = t.createElement("object");
     return Object.keys(e).forEach(function (r) {
       var i = t.createElement("param");
-      i.setAttribute("name", r), i.setAttribute("value", e[r]), n.appendChild(i);
+      i.setAttribute("name", r);
+      i.setAttribute("value", e[r]);
+      n.appendChild(i);
     }), n.setAttribute("tabindex", "-1"), n.setAttribute("type", r.MIME_TYPE), n;
   }
   function o() {
@@ -48,4 +50,4 @@ define("jSkype/services/plugin/pluginEmbed", [
       r && r.parentNode && r.parentNode.removeChild(r);
     }
   };
-})
+});

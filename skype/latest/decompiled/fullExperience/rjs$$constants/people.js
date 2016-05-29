@@ -41,4 +41,4 @@ define("constants/people", [], function () {
     scopes: { FULL: "full" }
   };
   return e;
-})
+});

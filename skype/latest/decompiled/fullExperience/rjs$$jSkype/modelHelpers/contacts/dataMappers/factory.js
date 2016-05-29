@@ -11,13 +11,17 @@ define("jSkype/modelHelpers/contacts/dataMappers/factory", [
   var n = e("jSkype/modelHelpers/contacts/dataMappers/contactToPerson"), r = e("jSkype/modelHelpers/contacts/dataMappers/profileToPerson"), i = e("jSkype/modelHelpers/contacts/dataMappers/userInfo"), s = e("jSkype/modelHelpers/contacts/dataMappers/directoryResultToPerson"), o = e("jSkype/modelHelpers/contacts/dataMappers/directorySearchResultByIdToPerson");
   t.getContactMapper = function () {
     return n;
-  }, t.getProfileMapper = function () {
+  };
+  t.getProfileMapper = function () {
     return r;
-  }, t.getUserInfoMapper = function () {
+  };
+  t.getUserInfoMapper = function () {
     return i;
-  }, t.getDirectorySearchMapper = function () {
+  };
+  t.getDirectorySearchMapper = function () {
     return s;
-  }, t.getDirectorySearchByIdMapper = function () {
+  };
+  t.getDirectorySearchByIdMapper = function () {
     return o;
   };
-})
+});

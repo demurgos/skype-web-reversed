@@ -4,13 +4,20 @@ define("jSkype/models/group", [
   "swx-enums"
 ], function (e) {
   function r(e, r) {
-    e = e || n.groupType.Root, this.type = t.property({
+    e = e || n.groupType.Root;
+    this.type = t.property({
       readOnly: !0,
       value: e
-    }), this.name = t.property({ value: i(r, e) }), this.uri = t.property({ readOnly: !0 }), this.avatarUrl = t.property(), this.relationshipLevel = t.property({
+    });
+    this.name = t.property({ value: i(r, e) });
+    this.uri = t.property({ readOnly: !0 });
+    this.avatarUrl = t.property();
+    this.relationshipLevel = t.property({
       readOnly: !0,
       value: n.groupPrivacyRelationshipLevel.None
-    }), this.persons = t.collection(), this.groups = t.collection();
+    });
+    this.persons = t.collection();
+    this.groups = t.collection();
   }
   function i(e, t) {
     var r, i = Boolean(n.groupType[e]);
@@ -28,4 +35,4 @@ define("jSkype/models/group", [
   }
   var t = e("jcafe-property-model"), n = e("swx-enums");
   return r;
-})
+});

@@ -58,8 +58,11 @@ define("telemetry/chat/activityItemHelper", [
         if (!e(r, t.telemetry.messageTypes.FILES_MASK | t.telemetry.messageTypes.RICHTEXT_MASK | t.telemetry.messageTypes.TEXT_MASK))
           throw new Error("Not supported:" + r);
       }
-      e(r, t.telemetry.messageTypes.FILES_MASK) && n.files.total++, e(r, t.telemetry.messageTypes.RICHTEXT_MASK) && s(n, r), e(r, t.telemetry.messageTypes.TEXT_MASK) && n.text.total++;
-    }, this.getEmptyResult = function () {
+      e(r, t.telemetry.messageTypes.FILES_MASK) && n.files.total++;
+      e(r, t.telemetry.messageTypes.RICHTEXT_MASK) && s(n, r);
+      e(r, t.telemetry.messageTypes.TEXT_MASK) && n.text.total++;
+    };
+    this.getEmptyResult = function () {
       var e = {
         media: {
           picture: 0,
@@ -90,7 +93,8 @@ define("telemetry/chat/activityItemHelper", [
         other: 0
       };
       return e;
-    }, this.getTelemetryMessageType = function (e) {
+    };
+    this.getTelemetryMessageType = function (e) {
       switch (e.type()) {
       case n.activityType.VideoMessage:
         return t.telemetry.messageTypes.MEDIA_VIDEO;
@@ -110,7 +114,8 @@ define("telemetry/chat/activityItemHelper", [
       default:
         return t.telemetry.messageTypes.OTHER_TYPES;
       }
-    }, this.getTelemetryMessageTypeObsolete = function (e) {
+    };
+    this.getTelemetryMessageTypeObsolete = function (e) {
       switch (e.messagetype) {
       case r.VIDEO:
         return t.telemetry.messageTypes.MEDIA_VIDEO;
@@ -168,7 +173,8 @@ define("telemetry/chat/activityItemHelper", [
       default:
         return t.telemetry.messageTypes.OTHER_TYPES;
       }
-    }, this.processConversation = function (e) {
+    };
+    this.processConversation = function (e) {
       var t = this.getEmptyResult(), n, r = e.historyService.activityItems();
       for (n = 0; n < r.length; n++) {
         var i = r[n], s = this.getTelemetryMessageType(i);
@@ -188,4 +194,4 @@ define("telemetry/chat/activityItemHelper", [
       TEXT: "Text"
     };
   return new i();
-})
+});

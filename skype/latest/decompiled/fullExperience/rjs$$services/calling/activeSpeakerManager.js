@@ -9,7 +9,8 @@ define("services/calling/activeSpeakerManager", [
       h && (c = setInterval(m, i));
     }
     function d() {
-      c && (clearInterval(c), c = null), l = [];
+      c && (clearInterval(c), c = null);
+      l = [];
     }
     function v(e) {
       var t = e.speaking !== e.audio.isSpeaking(), n = e.speaking ? e.tick < o : e.tick < s;
@@ -19,7 +20,8 @@ define("services/calling/activeSpeakerManager", [
       var e = !1;
       f.forEach(function (t) {
         e = v(t) || e;
-      }), e && y();
+      });
+      e && y();
     }
     function g(e) {
       return e.rawParticipant;
@@ -28,7 +30,12 @@ define("services/calling/activeSpeakerManager", [
       var i = [], s = [], o, u, c = new Date();
       f.forEach(function (e) {
         e.speaking ? i.push(e) : c - e.timestamp < a && s.push(e);
-      }), i.sort(t.byTimestamp), s.sort(t.byTimestampDescending), u = Math.max(0, e - i.length), o = i.slice(0, e).map(g).concat(s.slice(0, u).map(g)), n.isEqual(l, o) || (l = o, r(o));
+      });
+      i.sort(t.byTimestamp);
+      s.sort(t.byTimestampDescending);
+      u = Math.max(0, e - i.length);
+      o = i.slice(0, e).map(g).concat(s.slice(0, u).map(g));
+      n.isEqual(l, o) || (l = o, r(o));
     }
     function b(e) {
       return f.filter(function (t) {
@@ -53,16 +60,24 @@ define("services/calling/activeSpeakerManager", [
     this.onParticipantAdded = function (e) {
       if (b(e))
         return;
-      E(e), !c && f.length > 1 && p();
-    }, this.onParticipantRemoved = function (e) {
+      E(e);
+      !c && f.length > 1 && p();
+    };
+    this.onParticipantRemoved = function (e) {
       if (!b(e))
         return;
-      w(e), f.length < 2 && d();
-    }, this.pause = function () {
-      h = !1, d();
-    }, this.unpause = function () {
-      h = !0, !c && f.length > 1 && p();
-    }, this.dispose = function () {
+      w(e);
+      f.length < 2 && d();
+    };
+    this.pause = function () {
+      h = !1;
+      d();
+    };
+    this.unpause = function () {
+      h = !0;
+      !c && f.length > 1 && p();
+    };
+    this.dispose = function () {
       d();
     };
   }
@@ -72,4 +87,4 @@ define("services/calling/activeSpeakerManager", [
       return new f(e, t);
     }
   };
-})
+});

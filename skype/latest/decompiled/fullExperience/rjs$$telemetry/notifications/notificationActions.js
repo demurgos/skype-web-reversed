@@ -9,7 +9,9 @@ define("telemetry/notifications/notificationActions", [
   function s() {
     function e(e) {
       var t = i.telemetry.notificationActionsEvent.TYPE, s = {};
-      s.type = e.type, s.action = e.action, n.get().sendEvent(r.telemetry.uiTenantToken, t, s);
+      s.type = e.type;
+      s.action = e.action;
+      n.get().sendEvent(r.telemetry.uiTenantToken, t, s);
     }
     return { send: e };
   }
@@ -17,4 +19,4 @@ define("telemetry/notifications/notificationActions", [
   t.build = function () {
     return new s();
   };
-})
+});

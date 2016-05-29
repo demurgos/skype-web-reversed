@@ -43,7 +43,8 @@ define("jSkype/services/trouter/handlers/incomingCallMessageHandler", [
     function g(e) {
       var t = {}, r, i;
       try {
-        r = atob(e.body.gp), i = JSON.parse(r);
+        r = atob(e.body.gp);
+        i = JSON.parse(r);
       } catch (s) {
         return o.error("Error when parsing gp payload", e.body.gp), !1;
       }
@@ -80,4 +81,4 @@ define("jSkype/services/trouter/handlers/incomingCallMessageHandler", [
   t.build = function () {
     return new c();
   };
-})
+});

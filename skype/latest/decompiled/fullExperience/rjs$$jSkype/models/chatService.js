@@ -19,10 +19,12 @@ define("jSkype/models/chatService", [
         e && e.timestamp() > p.timestamp() && (t = e.timestamp().getTime() + 100, p.timestamp._set(new Date(t)));
       }
       function w() {
-        p.status._set(n.activityStatus.Succeeded), u.resolve();
+        p.status._set(n.activityStatus.Succeeded);
+        u.resolve();
       }
       function S() {
-        p.status._set(n.activityStatus.Failed), u.reject();
+        p.status._set(n.activityStatus.Failed);
+        u.reject();
       }
       var u = r.task(), f = o && o.translation && o.translation.users && o.translation.users.length && o.translation.users[0].value, l = f ? t : a.processOutgoingTextMessage(t), c = i.processMentions(l), p = i.outgoingTextMessageActivityItem({
           content: c,
@@ -91,7 +93,8 @@ define("jSkype/models/chatService", [
     v([
       n.messageFormat.Text,
       n.messageFormat.Html
-    ]), this._editMessage = function (t, n) {
+    ]);
+    this._editMessage = function (t, n) {
       var s = r.task(), o = t === "", u = o ? null : T(n.translations), f = u ? t : a.processOutgoingTextMessage(t), l = {
           skypeeditedid: n.key(),
           key: n.key(),
@@ -99,23 +102,39 @@ define("jSkype/models/chatService", [
           messagetype: "RichText"
         };
       return u && (u.users[0].value = i.processMentions(u.users[0].value), n._translationsArray.add(u), l.properties = y(u)), e.sendMessage(h, l, n, s.resolve.bind(s), s.reject.bind(s)), s.promise;
-    }, this._notificationOn = !0, this._notificationKeywords = [], this._setNotificationSettings = function (e, t) {
-      p._notificationOn = !e || e.toLowerCase() !== "false", this._notificationKeywords = t ? t.split(" ").filter(function (e) {
+    };
+    this._notificationOn = !0;
+    this._notificationKeywords = [];
+    this._setNotificationSettings = function (e, t) {
+      p._notificationOn = !e || e.toLowerCase() !== "false";
+      this._notificationKeywords = t ? t.split(" ").filter(function (e) {
         return e === 0 || e;
-      }) : [], h._notificationsEnabled._set(p._notificationOn);
-    }, this._updateNotificationSettings = function (t, n) {
+      }) : [];
+      h._notificationsEnabled._set(p._notificationOn);
+    };
+    this._updateNotificationSettings = function (t, n) {
       function r(e, t) {
         p._setNotificationSettings(e.toString(), t);
       }
       e.setAlerts(h.conversationId, t, n, r);
-    }, this.shouldNotify = function (t) {
+    };
+    this.shouldNotify = function (t) {
       function n(e) {
         var n = new RegExp("(?:\\s+|^)" + c.escapeRegExp(e), "i");
         return n.test(t);
       }
       return p._notificationOn || p._notificationKeywords.some(n);
-    }, this.supportedMessageFormats = v.asReadOnly(), this.sendMessage = r.command(g, h.activeModalities.chat), this._sendMoji = r.command(b, h.activeModalities.chat), this._sendSwiftCard = r.command(w, h.activeModalities.chat), this.sendIsTyping = r.command(S, h.activeModalities.chat), this.start = r.enabledCommand(x), this.accept = r.disabledCommand(), this.reject = r.disabledCommand(), this.stop = r.disabledCommand();
+    };
+    this.supportedMessageFormats = v.asReadOnly();
+    this.sendMessage = r.command(g, h.activeModalities.chat);
+    this._sendMoji = r.command(b, h.activeModalities.chat);
+    this._sendSwiftCard = r.command(w, h.activeModalities.chat);
+    this.sendIsTyping = r.command(S, h.activeModalities.chat);
+    this.start = r.enabledCommand(x);
+    this.accept = r.disabledCommand();
+    this.reject = r.disabledCommand();
+    this.stop = r.disabledCommand();
   }
   var t = e("jSkype/client"), n = e("swx-enums"), r = e("jcafe-property-model"), i = e("jSkype/utils/chat/generator"), s = e("jSkype/settings"), o = e("constants/common"), u = e("jSkype/constants/people").authorizationStates, a = e("utils/chat/messageSanitizer"), f = e("jSkype/services/systemCommands/main"), l = e("jSkype/modelHelpers/personHelper"), c = e("lodash-compat");
   return h;
-})
+});

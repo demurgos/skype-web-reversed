@@ -8,4 +8,4 @@ define("jSkype/services/serviceAccessLayer/serviceQosReporterFacade", [
   t.getInstance = function () {
     return r || (r = n.build()), r;
   };
-})
+});

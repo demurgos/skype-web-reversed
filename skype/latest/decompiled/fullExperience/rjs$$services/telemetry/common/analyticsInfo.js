@@ -47,4 +47,4 @@ define("services/telemetry/common/analyticsInfo", [
   return u.get = function () {
     return i || (i = new u()), i;
   }, u;
-})
+});

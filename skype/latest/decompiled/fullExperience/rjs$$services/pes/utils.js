@@ -24,4 +24,4 @@ define("services/pes/utils", [], function () {
     };
   }
   return new e();
-})
+});

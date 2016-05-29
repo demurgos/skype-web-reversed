@@ -1,1 +1,1 @@
-define("jSkype/constants/calling", { eventProperties: { PluginVersion: "plugin_version" } })
+define("jSkype/constants/calling", { eventProperties: { PluginVersion: "plugin_version" } });

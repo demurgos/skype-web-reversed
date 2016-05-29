@@ -7,7 +7,8 @@ define("jSkype/services/electron", [
   var n = e("browser/window");
   t.getSkypeModule = function () {
     return n.Skype.getSkypeModule();
-  }, t.registerPresence = function (e, t) {
+  };
+  t.registerPresence = function (e, t) {
     return n.Skype.registerPresence(e, t);
   };
-})
+});

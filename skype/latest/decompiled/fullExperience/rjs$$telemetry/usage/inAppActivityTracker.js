@@ -19,7 +19,10 @@ define("telemetry/usage/inAppActivityTracker", [
   }
   function d() {
     var e = o.get(f.APP_FOCUSED_TIME_KEY), t = o.get(f.APP_CLOSED_TIME_KEY), n = o.get(f.SIGNED_IN_TIME_KEY);
-    n && t ? v(parseInt(n, 10), parseInt(t, 10), f.APP_EXIT_POINT_REASON.APP_CLOSED, f.APP_ENTRY_POINT_REASON.APP_OPENED) : e && t && v(parseInt(e, 10), parseInt(t, 10), f.APP_EXIT_POINT_REASON.APP_CLOSED, f.APP_ENTRY_POINT_REASON.APP_FOREGROUNDED), o.remove(f.APP_FOCUSED_TIME_KEY), o.remove(f.APP_CLOSED_TIME_KEY), o.remove(f.SIGNED_IN_TIME_KEY);
+    n && t ? v(parseInt(n, 10), parseInt(t, 10), f.APP_EXIT_POINT_REASON.APP_CLOSED, f.APP_ENTRY_POINT_REASON.APP_OPENED) : e && t && v(parseInt(e, 10), parseInt(t, 10), f.APP_EXIT_POINT_REASON.APP_CLOSED, f.APP_ENTRY_POINT_REASON.APP_FOREGROUNDED);
+    o.remove(f.APP_FOCUSED_TIME_KEY);
+    o.remove(f.APP_CLOSED_TIME_KEY);
+    o.remove(f.SIGNED_IN_TIME_KEY);
   }
   function v(e, t, n, i) {
     var o = (t - e) / 1000, a = r.telemetry.inappActivity.KPI_INAPP_ACTIVITY_END, f = {
@@ -55,13 +58,18 @@ define("telemetry/usage/inAppActivityTracker", [
     if (!h)
       return;
     var e = new Date().getTime();
-    o.set(f.APP_FOCUSED_TIME_KEY, e), m(e, f.APP_ENTRY_POINT_REASON.APP_FOREGROUNDED), y(), l = !0;
+    o.set(f.APP_FOCUSED_TIME_KEY, e);
+    m(e, f.APP_ENTRY_POINT_REASON.APP_FOREGROUNDED);
+    y();
+    l = !0;
   }
   function S() {
     if (!h)
       return;
     var e = o.get(f.APP_FOCUSED_TIME_KEY), t = o.get(f.SIGNED_IN_TIME_KEY), n = new Date().getTime();
-    t ? (v(parseInt(t, 10), n, f.APP_EXIT_POINT_REASON.APP_BACKGROUNDED, f.APP_ENTRY_POINT_REASON.APP_OPENED), o.remove(f.SIGNED_IN_TIME_KEY)) : e && (v(parseInt(e, 10), n, f.APP_EXIT_POINT_REASON.APP_BACKGROUNDED, f.APP_ENTRY_POINT_REASON.APP_FOREGROUNDED), o.remove(f.APP_FOCUSED_TIME_KEY)), b(), l = !1;
+    t ? (v(parseInt(t, 10), n, f.APP_EXIT_POINT_REASON.APP_BACKGROUNDED, f.APP_ENTRY_POINT_REASON.APP_OPENED), o.remove(f.SIGNED_IN_TIME_KEY)) : e && (v(parseInt(e, 10), n, f.APP_EXIT_POINT_REASON.APP_BACKGROUNDED, f.APP_ENTRY_POINT_REASON.APP_FOREGROUNDED), o.remove(f.APP_FOCUSED_TIME_KEY));
+    b();
+    l = !1;
   }
   function x() {
     setTimeout(function () {
@@ -74,7 +82,10 @@ define("telemetry/usage/inAppActivityTracker", [
       h = !0;
       if (p() && i.hasFocus()) {
         var t = new Date().getTime();
-        o.set(f.SIGNED_IN_TIME_KEY, t), m(t, f.APP_ENTRY_POINT_REASON.APP_OPENED), y(), l = !0;
+        o.set(f.SIGNED_IN_TIME_KEY, t);
+        m(t, f.APP_ENTRY_POINT_REASON.APP_OPENED);
+        y();
+        l = !0;
       }
     }
   }
@@ -94,9 +105,17 @@ define("telemetry/usage/inAppActivityTracker", [
       INTERVAL_30_SECONDS: 30000
     }, l, c, h;
   t.init = function (e) {
-    h = !1, l = !1, d(), e.state.changed(T), a.addEventListener(r.events.browser.FOCUS, w), a.addEventListener(r.events.browser.BLUR, S), a.addEventListener(r.events.browser.CLICK, x), a.addEventListener(r.events.browser.BEFOREUNLOAD, function () {
+    h = !1;
+    l = !1;
+    d();
+    e.state.changed(T);
+    a.addEventListener(r.events.browser.FOCUS, w);
+    a.addEventListener(r.events.browser.BLUR, S);
+    a.addEventListener(r.events.browser.CLICK, x);
+    a.addEventListener(r.events.browser.BEFOREUNLOAD, function () {
       o.set(f.APP_CLOSED_TIME_KEY, new Date().getTime());
       return;
     });
-  }, t.inappActivityConstants = f;
-})
+  };
+  t.inappActivityConstants = f;
+});

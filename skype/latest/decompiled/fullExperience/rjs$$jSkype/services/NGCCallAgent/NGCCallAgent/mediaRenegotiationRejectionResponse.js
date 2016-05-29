@@ -4,7 +4,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/mediaRenegotiationRejectionRes
 ], function (e) {
   var t = e("jSkype/services/NGCCallAgent/NGCCallAgent/utils"), n = {};
   return n.getPayload = function (e, n) {
-    t.assertNotNull(e, "signalingSession cannot be null"), t.assertCallEndReason(n);
+    t.assertNotNull(e, "signalingSession cannot be null");
+    t.assertCallEndReason(n);
     var r = {
       payload: {
         mediaNegotiationFailure: {
@@ -27,4 +28,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/mediaRenegotiationRejectionRes
     };
     return r;
   }, n;
-})
+});

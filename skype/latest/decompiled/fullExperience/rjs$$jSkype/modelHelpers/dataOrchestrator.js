@@ -46,4 +46,4 @@ define("jSkype/modelHelpers/dataOrchestrator", [
       }) : g().then(d, d);
     });
   };
-})
+});

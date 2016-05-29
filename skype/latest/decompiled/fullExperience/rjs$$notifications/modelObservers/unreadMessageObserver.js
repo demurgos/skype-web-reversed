@@ -40,7 +40,8 @@ define("notifications/modelObservers/unreadMessageObserver", [
     function h(e) {
       e.historyService.activityItems.added(function (t) {
         p(e, t);
-      }), l && e.historyService._messagesWithUnseenHearts.added(function (t) {
+      });
+      l && e.historyService._messagesWithUnseenHearts.added(function (t) {
         d(e, t);
       });
     }
@@ -57,19 +58,25 @@ define("notifications/modelObservers/unreadMessageObserver", [
         };
       if (!c(e, t, !0))
         return;
-      r = s.build(n.notifications.UNREAD_MESSAGE, i), m(r);
+      r = s.build(n.notifications.UNREAD_MESSAGE, i);
+      m(r);
     }
     function v(e, t) {
       function u() {
-        r.active(!1), o.dispose();
+        r.active(!1);
+        o.dispose();
       }
       var r, i = {
           conversation: e,
           message: t
         }, o;
-      r = s.build(n.notifications.UNREAD_MESSAGE, i), m(r), o = t.html.changed(function () {
+      r = s.build(n.notifications.UNREAD_MESSAGE, i);
+      m(r);
+      o = t.html.changed(function () {
         r.description(t.text());
-      }), t.isDeleted.once(!0, u), t.isRead.once(!0, u);
+      });
+      t.isDeleted.once(!0, u);
+      t.isRead.once(!0, u);
     }
     function m(e) {
       function n() {
@@ -91,4 +98,4 @@ define("notifications/modelObservers/unreadMessageObserver", [
       return new a();
     }
   };
-})
+});

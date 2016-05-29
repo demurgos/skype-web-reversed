@@ -81,29 +81,51 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
       });
     }
     function ot(e, t) {
-      U.remote = t, U.reasonCode = e.code, U.reasonSubCode = e.subCode, U.reasonPhrase = e.phrase, t && (A = e.code === p.CALL_END_CODE.NO_NGC_ENDPOINT, z = "remoteTerminated");
+      U.remote = t;
+      U.reasonCode = e.code;
+      U.reasonSubCode = e.subCode;
+      U.reasonPhrase = e.phrase;
+      t && (A = e.code === p.CALL_END_CODE.NO_NGC_ENDPOINT, z = "remoteTerminated");
       if (A)
         tt(new Error(n.ERRORS.P2P_FALLBACK)), Jt(w.selfParticipant, i.callConnectionState.Disconnected, i.callDisconnectionReason.OutOfBrowserCall);
       else {
-        e.code === p.CALL_END_CODE.P2P_FALLBACK_FOR_SCREENSHARING && d.sendScreenSharingFallbackMessage(w), tt(new Error("terminated"));
+        e.code === p.CALL_END_CODE.P2P_FALLBACK_FOR_SCREENSHARING && d.sendScreenSharingFallbackMessage(w);
+        tt(new Error("terminated"));
         var r = i.callDisconnectionReason.Terminated, s = i.callDisconnectionReason.Terminated;
         k ? !L && !t && z === "cancelCall" ? r = i.callDisconnectionReason.Canceled : !L && !t && z === "rejectCall" ? r = i.callDisconnectionReason.Busy : At(e) && (r = i.callDisconnectionReason.Missed) : !Tt() && w.participants(0) && (At(e) ? s = i.callDisconnectionReason.Missed : !L && t && (s = i.callDisconnectionReason.Busy));
       }
-      qt(s), Jt(w.selfParticipant, i.callConnectionState.Disconnected, r);
+      qt(s);
+      Jt(w.selfParticipant, i.callConnectionState.Disconnected, r);
     }
     function ut() {
       return tt(new Error("call ended by user")), rt();
     }
     function at() {
       var e = {}, t = new Date().getTime();
-      e[h.CONTEXT_ID.DATA_VERSION] = "3", e[h.CONTEXT_ID.CORRELATIONID] = String(C.correlationId), e.CallNumber = "0", e.NegotiationNumber = String(X), e.NegotiationRequiredTime = String(t), e.MediaLegId = String(W.mediaLegId), e.Status = String(W.status), e.Retarget = "false", e.ReInvite = W.isRenegotiation ? "true" : "false", e.CreationTime = String(W.timeStamps.created * c), e.StartTime = String(W.timeStamps.started * c), e.CompleteTime = String(t * c);
+      e[h.CONTEXT_ID.DATA_VERSION] = "3";
+      e[h.CONTEXT_ID.CORRELATIONID] = String(C.correlationId);
+      e.CallNumber = "0";
+      e.NegotiationNumber = String(X);
+      e.NegotiationRequiredTime = String(t);
+      e.MediaLegId = String(W.mediaLegId);
+      e.Status = String(W.status);
+      e.Retarget = "false";
+      e.ReInvite = W.isRenegotiation ? "true" : "false";
+      e.CreationTime = String(W.timeStamps.created * c);
+      e.StartTime = String(W.timeStamps.started * c);
+      e.CompleteTime = String(t * c);
       if (!W.isOfferer)
         e.Type = "answering", e.ProcessOfferTime = String(W.timeStamps.initialOfferArrived * c), e.CreateAnswerFinalTime = String(W.timeStamps.finalAnswerCreated * c), e.AnswerReadyProvisionalTime = String(W.timeStamps.offerProcessed * c), e.AnswerReadyFinalTime = String(W.timeStamps.modalitiesConfigured * c);
       else {
         var n = "0";
-        e.Type = "offering", e.OfferReadyTime = String(W.timeStamps.offerCreated * c), e["ProcessAnswer_" + n + "_Final_Time"] = String(W.timeStamps.finalAnswerProcessed * c), e["ProcessAnswer_" + n + "_Final_Accepted"] = "true";
+        e.Type = "offering";
+        e.OfferReadyTime = String(W.timeStamps.offerCreated * c);
+        e["ProcessAnswer_" + n + "_Final_Time"] = String(W.timeStamps.finalAnswerProcessed * c);
+        e["ProcessAnswer_" + n + "_Final_Accepted"] = "true";
       }
-      e.isGroupConversation = Tt() ? "1" : "0", W.result && (e.isComplete = W.result.isComplete ? "1" : "0", e.activeVideoModalities = String(W.result.activeModalities.video), e.activeAudioModalities = String(W.result.activeModalities.audio), e.configuredVideoModalities = String(W.result.configuredModalities.video), e.configuredAudioModalities = String(W.result.configuredModalities.audio)), e.timeCompleted = String((t - W.timeStamps.created) * c);
+      e.isGroupConversation = Tt() ? "1" : "0";
+      W.result && (e.isComplete = W.result.isComplete ? "1" : "0", e.activeVideoModalities = String(W.result.activeModalities.video), e.activeAudioModalities = String(W.result.activeModalities.audio), e.configuredVideoModalities = String(W.result.configuredModalities.video), e.configuredAudioModalities = String(W.result.configuredModalities.audio));
+      e.timeCompleted = String((t - W.timeStamps.created) * c);
       for (var i in W.timeStamps)
         W.timeStamps.hasOwnProperty(i) && (e["time_" + i] = String((W.timeStamps[i] - W.timeStamps.created) * c));
       try {
@@ -117,7 +139,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
         if (!Tt()) {
           var t = w.participants(0), n = a.hasReceiveDirectionality(e.activeModalities.video);
           g.checkVideoPolicySettings(t).then(function (e) {
-            n = e ? n : !1, Vt(t, et(n));
+            n = e ? n : !1;
+            Vt(t, et(n));
           });
         }
         var r = a.hasSendDirectionality(e.activeModalities.video);
@@ -146,7 +169,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
       return O.hasOwnProperty(e);
     }
     function dt(e) {
-      O[e].dispose(), delete O[e];
+      O[e].dispose();
+      delete O[e];
     }
     function vt() {
       try {
@@ -223,10 +247,13 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
           if (r || s)
             o.video._sourceId(void 0), o.audio._sourceId(void 0);
           if (s) {
-            Vt(o, i.mediaStreamState.Stopped), Jt(o, i.callConnectionState.Disconnected);
+            Vt(o, i.mediaStreamState.Stopped);
+            Jt(o, i.callConnectionState.Disconnected);
             return;
           }
-          r && Jt(o, i.callConnectionState.Connected), n && (o.audio._sourceId(n.sourceId), S.log("updated participant", Rt(o), "audio msi:", n.sourceId)), t && (o.video._sourceId(t.sourceId), S.log("updated participant", Rt(o), "video msi:", t.sourceId), Vt(o, t.streamState), Et(o));
+          r && Jt(o, i.callConnectionState.Connected);
+          n && (o.audio._sourceId(n.sourceId), S.log("updated participant", Rt(o), "audio msi:", n.sourceId));
+          t && (o.video._sourceId(t.sourceId), S.log("updated participant", Rt(o), "video msi:", t.sourceId), Vt(o, t.streamState), Et(o));
         }
       }
     }
@@ -238,10 +265,14 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
     }
     function Nt(e, t, n) {
       if (w.isGroupConversation() && w.activeModalities.audio()) {
-        S.log("_initiateSignalingSession : joining existing conversation"), C.joinGivenConversation(w._ngcJoinUrl, w._ngcCorrelationId, e, Ht(t), n);
+        S.log("_initiateSignalingSession : joining existing conversation");
+        C.joinGivenConversation(w._ngcJoinUrl, w._ngcCorrelationId, e, Ht(t), n);
         return;
       }
-      w.isGroupConversation() && C.setThreadId(w.conversationId), It(), S.log("_initiateSignalingSession : starting new call. suppressDialout = " + Ct()), C.startOutgoingCall(e, Ht(t), Ct(), n);
+      w.isGroupConversation() && C.setThreadId(w.conversationId);
+      It();
+      S.log("_initiateSignalingSession : starting new call. suppressDialout = " + Ct());
+      C.startOutgoingCall(e, Ht(t), Ct(), n);
     }
     function Ct() {
       return !!w._autoCall;
@@ -262,7 +293,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
         var n = w.selfParticipant.video.channels(0);
         n && n.isStarted.set._enabled(!0);
       }).catch(function (e) {
-        Vt(w.selfParticipant, et(!1)), S.error("startStopLocalVideoAsync failed", "error:", e);
+        Vt(w.selfParticipant, et(!1));
+        S.error("startStopLocalVideoAsync failed", "error:", e);
       });
     }
     function At(e) {
@@ -295,7 +327,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
       }).then(function () {
         return W.timeStamps.answerProcessed = new Date().getTime(), ct();
       }).then(function (e) {
-        W.status = "Succeeded", W.result = e;
+        W.status = "Succeeded";
+        W.result = e;
       }).catch(function (e) {
         if (G(e) && !e.value.callHandlerTerminationInProgress) {
           var r = s.RENEGOTIATION_ERROR.local;
@@ -308,18 +341,21 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
           phrase: p.CALL_END_PHRASE.MEDIA_RENEGOTIATION_ERROR
         }, e);
       }).finally(function () {
-        at(), S.log("end renegotiation offer");
+        at();
+        S.log("end renegotiation offer");
       });
     }
     function Pt(e) {
       var t = 0, n = 1;
       q = q.then(function () {
-        ++X, W = {
+        ++X;
+        W = {
           isOfferer: !1,
           isRenegotiation: !0,
           mediaLegId: "",
           timeStamps: { created: new Date().getTime() }
-        }, K = e.mediaTypes || [];
+        };
+        K = e.mediaTypes || [];
         var n = e.mediaContent;
         S.log("begin renegotiation answer");
         if (n.escalationOccurring)
@@ -334,7 +370,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
       }).then(function () {
         return W.timeStamps.mediaAcknowledged = new Date().getTime(), ct();
       }).then(function (e) {
-        W.status = "Succeeded", W.result = e;
+        W.status = "Succeeded";
+        W.result = e;
       }).catch(function (e) {
         if (G(e) && !e.value.callHandlerTerminationInProgress)
           return S.warn("handleMediaRenegotiationOffer", "error:", e), Z().then(function () {
@@ -351,7 +388,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
           phrase: p.CALL_END_PHRASE.MEDIA_RENEGOTIATION_ERROR
         }, e);
       }).finally(function () {
-        at(), S.log("end renegotiation answer");
+        at();
+        S.log("end renegotiation answer");
       });
     }
     function Ht(e) {
@@ -374,9 +412,12 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
       });
     }
     function Ft(e) {
-      S.log("_addParticipantToCall", e.person.id()), Jt(e, i.callConnectionState.Connecting), F.promise.then(function () {
+      S.log("_addParticipantToCall", e.person.id());
+      Jt(e, i.callConnectionState.Connecting);
+      F.promise.then(function () {
         Jt(e, i.callConnectionState.Ringing);
-      }), C.addParticipantAsync(jt(e.person)).then(function (e) {
+      });
+      C.addParticipantAsync(jt(e.person)).then(function (e) {
         wt(e, !0);
       }).catch(function () {
         Jt(e, i.callConnectionState.Disconnected, i.callDisconnectionReason.Refused);
@@ -384,13 +425,15 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
     }
     function It() {
       var e = w.participants, t = e.subscribe();
-      e().forEach(Ft), t.dispose();
+      e().forEach(Ft);
+      t.dispose();
     }
     function qt(e) {
       var t = w.participants, n = t.subscribe();
       t().forEach(function (t) {
         Jt(t, i.callConnectionState.Disconnected, e);
-      }), n.dispose();
+      });
+      n.dispose();
     }
     function Rt(e) {
       return (w.selfParticipant === e ? "* " : "") + e.person.id();
@@ -419,14 +462,18 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
         var r = n.stream.state(), s = r === i.mediaStreamState.Active || r === i.mediaStreamState.Inactive;
         if (r === t || s && t === i.mediaStreamState.Started)
           return;
-        S.log("updateVideoChannelStreamState", Rt(e), "state:", r, "->", t), n.stream.state._set(t);
+        S.log("updateVideoChannelStreamState", Rt(e), "state:", r, "->", t);
+        n.stream.state._set(t);
       }
     }
     function $t(e, t, n, r) {
       var i = e.video.channels(0);
       if (i) {
         var s = i.stream.state();
-        S.log("updateVideoChannelStreamStateAndSize", Rt(e), "state:", s, "->", t, "size:", n, r), i.stream.state._set(t), i.stream.width._set(n), i.stream.height._set(r);
+        S.log("updateVideoChannelStreamStateAndSize", Rt(e), "state:", s, "->", t, "size:", n, r);
+        i.stream.state._set(t);
+        i.stream.width._set(n);
+        i.stream.height._set(r);
       }
     }
     function Jt(e, t, n) {
@@ -441,7 +488,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
         e || (S.log("enableVideoWhenVideoChannelAdded", Rt(t), "state:", r.stream.state(), "isStarted:", r.isStarted()), e = r.isStarted(!0), t.video.channels.added.off(n));
       }
       var e, t = w.selfParticipant;
-      S.log("enableVideoWhenVideoChannelAdded", Rt(t)), t.video.channels.added(n);
+      S.log("enableVideoWhenVideoChannelAdded", Rt(t));
+      t.video.channels.added(n);
     }
     function Qt(e, t) {
       N && t === "UserSelection" && yt();
@@ -496,7 +544,9 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
       }).then(function () {
         return W.timeStamps.initialNegotiationRequested = new Date().getTime(), N.createOfferAsync();
       }).then(function (e) {
-        W.mediaLegId = e.mediaContent.mediaLegId, W.timeStamps.offerCreated = new Date().getTime(), Nt(e.mediaContent, e.modalities, W.timeStamps.offerCreated - W.timeStamps.created);
+        W.mediaLegId = e.mediaContent.mediaLegId;
+        W.timeStamps.offerCreated = new Date().getTime();
+        Nt(e.mediaContent, e.modalities, W.timeStamps.offerCreated - W.timeStamps.created);
       }).then(function () {
         return H.promise;
       }).then(function (e) {
@@ -506,27 +556,35 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
       }).then(function () {
         return M = null, ct();
       }).then(function (e) {
-        W.status = "Succeeded", W.result = e;
+        W.status = "Succeeded";
+        W.result = e;
       }).catch(function (e) {
         return W.status = "ErrorLocalInternal-fatal", S.error("placeCall failed", "error:", e), it({
           subCode: p.CALL_END_SUB_CODE.MEDIA_DROP_DURING_CONNECT,
           phrase: p.CALL_END_PHRASE.MEDIA_DROP_DURING_CONNECT
         }, e);
       }).finally(function () {
-        at(), S.log("end placeCall");
+        at();
+        S.log("end placeCall");
       }), q;
-    }, this.acknowledge = function () {
+    };
+    this.acknowledge = function () {
       if (w._callData.wasNGCPayloadProcessed())
         return S.log("acknowledge, NGC payload was processed"), Promise.resolve();
       S.log("acknowledge", w);
       var e = w._callData.getIncomingNGCPayload();
       return q = q.then(function () {
-        ++X, W = {
+        ++X;
+        W = {
           isOfferer: !1,
           isRenegotiation: !1,
           mediaLegId: "",
           timeStamps: { created: new Date().getTime() }
-        }, W.timeStamps.started = new Date().getTime(), k = !0, xt(), C.handleIncomingCall(e);
+        };
+        W.timeStamps.started = new Date().getTime();
+        k = !0;
+        xt();
+        C.handleIncomingCall(e);
       }).then(function () {
         return W.timeStamps.incomingCallHandled = new Date().getTime(), D.promise;
       }).then(function (e) {
@@ -534,14 +592,16 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
         var t = e.mediaContent;
         return W.timeStamps.initialOfferArrived = new Date().getTime(), bt(), N.processOfferAsync(t);
       }).then(function () {
-        W.timeStamps.offerProcessed = new Date().getTime(), E.onCallStatusChanged(p.CALL_STATUS.RINGING);
+        W.timeStamps.offerProcessed = new Date().getTime();
+        E.onCallStatusChanged(p.CALL_STATUS.RINGING);
       }).catch(function (e) {
         return S.error("acknowledge failed", "error:", e.toString()), it({
           subCode: p.CALL_END_SUB_CODE.MEDIA_DROP_DURING_CONNECT,
           phrase: p.CALL_END_PHRASE.MEDIA_DROP_DURING_CONNECT
         }, e);
       }), q;
-    }, this.acceptCall = function (e) {
+    };
+    this.acceptCall = function (e) {
       S.log("acceptCall");
       var t = Bt(!0, e);
       return q = q.then(function () {
@@ -555,59 +615,84 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
       }).then(function () {
         return W.timeStamps.callConnected = new Date().getTime(), ct();
       }).then(function (e) {
-        W.status = "Succeeded", W.result = e;
+        W.status = "Succeeded";
+        W.result = e;
       }).catch(function (e) {
         return W.status = "ErrorLocalInternal-fatal", S.error("acceptCall failed", "error:", e), it({
           subCode: p.CALL_END_SUB_CODE.MEDIA_DROP_DURING_CONNECT,
           phrase: p.CALL_END_PHRASE.MEDIA_DROP_DURING_CONNECT
         }, e);
       }).finally(function () {
-        at(), S.log("end acceptCall");
+        at();
+        S.log("end acceptCall");
       }), q;
-    }, this.rejectCall = function () {
+    };
+    this.rejectCall = function () {
       return S.log("rejectCall"), z = "rejectCall", ut().catch(function (e) {
-        Jt(w.selfParticipant, i.callConnectionState.Disconnected, i.callDisconnectionReason.Failed), S.error("rejectCall failed", "error:", e);
+        Jt(w.selfParticipant, i.callConnectionState.Disconnected, i.callDisconnectionReason.Failed);
+        S.error("rejectCall failed", "error:", e);
       });
-    }, this.cancelCall = function () {
+    };
+    this.cancelCall = function () {
       return S.log("cancelCall"), z = "cancelCall", ut().catch(function (e) {
-        Jt(w.selfParticipant, i.callConnectionState.Disconnected, i.callDisconnectionReason.Failed), S.error("cancelCall failed", "error:", e);
+        Jt(w.selfParticipant, i.callConnectionState.Disconnected, i.callDisconnectionReason.Failed);
+        S.error("cancelCall failed", "error:", e);
       });
-    }, this.endCall = function () {
+    };
+    this.endCall = function () {
       return S.log("endCall"), z = "endCall", ut().catch(function (e) {
-        Jt(w.selfParticipant, i.callConnectionState.Disconnected, i.callDisconnectionReason.Failed), S.error("endCall failed", "error:", e);
+        Jt(w.selfParticipant, i.callConnectionState.Disconnected, i.callDisconnectionReason.Failed);
+        S.error("endCall failed", "error:", e);
       });
-    }, this.dispose = function () {
-      S.log("dispose"), tt(new Error("terminated")), gt(), $.dispose(), J.dispose(), w.mediaConnectionType(i.mediaConnectionType.Unknown);
-    }, this.setSoundLevelEventMode = function (e) {
+    };
+    this.dispose = function () {
+      S.log("dispose");
+      tt(new Error("terminated"));
+      gt();
+      $.dispose();
+      J.dispose();
+      w.mediaConnectionType(i.mediaConnectionType.Unknown);
+    };
+    this.setSoundLevelEventMode = function (e) {
       return S.log("setSoundLevelEventMode", "options:", e), o.task().resolve(null).promise;
-    }, this.mute = function () {
+    };
+    this.mute = function () {
       return kt(!0);
-    }, this.unmute = function () {
+    };
+    this.unmute = function () {
       return kt(!1);
-    }, this.startParticipantVideo = function (e, t) {
+    };
+    this.startParticipantVideo = function (e, t) {
       S.log("startParticipantVideo", e, t);
       if (Ut(e) && t === n.PLUGIN_MEDIA_TYPES.VIDEO)
         return Lt(!0);
-    }, this.stopParticipantVideo = function (e, t) {
+    };
+    this.stopParticipantVideo = function (e, t) {
       S.log("stopParticipantVideo", e, t);
       if (Ut(e) && t === n.PLUGIN_MEDIA_TYPES.VIDEO)
         return Lt(!1);
-    }, this.attachParticipantVideo = function (e, t) {
+    };
+    this.attachParticipantVideo = function (e, t) {
       S.log("attachParticipantVideo", e, t);
       if (Yt() && !pt(e)) {
         var n = Wt(e), r = !1, s = {
             onVideoSizeChanged: function (e, t) {
               var s = e > 0 && t > 0;
-              s ? $t(n, i.mediaStreamState.Active, e, t) : r && !s && Vt(n, i.mediaStreamState.Inactive), r = s;
+              s ? $t(n, i.mediaStreamState.Active, e, t) : r && !s && Vt(n, i.mediaStreamState.Inactive);
+              r = s;
             }
           };
         n === w.selfParticipant ? (yt(), O[e] = y.getDeviceManager().createPreviewRenderer(t, s), O[e].startVideoAsync().catch(function (e) {
-          S.error("failed to start preview video renderer", e), Vt(w.selfParticipant, et(!1));
+          S.error("failed to start preview video renderer", e);
+          Vt(w.selfParticipant, et(!1));
         })) : (S.log("creating renderer for", e), O[e] = O[e] || N.createRemoteRenderer(t, s), Et(n));
       }
-    }, this.detachParticipantVideo = function (e, t) {
-      S.log("detachParticipantVideo", e, t), n.PLUGIN_MEDIA_TYPES.VIDEO === t && pt(e) && dt(e);
-    }, this.requestCallInfo = function () {
+    };
+    this.detachParticipantVideo = function (e, t) {
+      S.log("detachParticipantVideo", e, t);
+      n.PLUGIN_MEDIA_TYPES.VIDEO === t && pt(e) && dt(e);
+    };
+    this.requestCallInfo = function () {
       S.log("requestCallInfo");
       var e = o.task();
       if (C && C.correlationId) {
@@ -616,40 +701,69 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler", [
       } else
         e.reject("CallInformation not available");
       return e.promise;
-    }, this.getRemoteParticipantCollection = function () {
+    };
+    this.getRemoteParticipantCollection = function () {
       return w.participants();
-    }, this.onParticipantJoined = function (e) {
-      S.log("onParticipantJoined", e), wt(e, !0);
-    }, this.onParticipantUpdated = function (e) {
-      S.log("onParticipantUpdated", e), wt(e);
-    }, this.onParticipantRemoved = function (e) {
-      S.log("onParticipantRemoved", e), wt(e, !1, !0);
-    }, this.onConversationUpdated = function (e) {
+    };
+    this.onParticipantJoined = function (e) {
+      S.log("onParticipantJoined", e);
+      wt(e, !0);
+    };
+    this.onParticipantUpdated = function (e) {
+      S.log("onParticipantUpdated", e);
+      wt(e);
+    };
+    this.onParticipantRemoved = function (e) {
+      S.log("onParticipantRemoved", e);
+      wt(e, !1, !0);
+    };
+    this.onConversationUpdated = function (e) {
       S.log("onConversationUpdated", "threadId:", e.threadId);
-    }, this.onReTargetCompletedSuccess = function () {
+    };
+    this.onReTargetCompletedSuccess = function () {
       S.log("onReTargetCompletedSuccess");
-    }, this.onReTargetCompletedFailure = function (e) {
+    };
+    this.onReTargetCompletedFailure = function (e) {
       S.log("onReTargetCompletedFailure", "details:", e);
-    }, this.onOffer = function (e) {
+    };
+    this.onOffer = function (e) {
       e.renegotiation ? Pt(e) : _t(e);
-    }, this.onAnswer = function (e) {
-      S.log("onAnswer", "provisional:", e.provisional, "renegotiation:", e.renegotiation, "mediaTypes:", e.mediaTypes), e.renegotiation ? Mt(e) : e.provisional || Ot(e);
-    }, this.onMediaAcknowledgementSuccess = function (e) {
-      S.log("onMediaAcknowledgementSuccess", "isRenegotiation:", e), P.resolve();
-    }, this.onMediaAcknowledgementFailure = function (e, t) {
-      S.log("onMediaAcknowledgementFailure", "isRenegotiation:", e), P.reject(t);
-    }, this.onMediaRenegotiationRejection = function (e) {
-      S.log("onMediaRenegotiationRejection", "error:", e), B.reject(e);
-    }, this.onCallStatusChanged = function (e, t) {
-      S.log("onCallStatusChanged", e, t), C.correlationId && w.audioService.callId._set(C.correlationId), C.participantManager && (w._callData.ngcParticipantId(C.participantManager.localParticipant.participantId), w._callData.ngcEndpointId(C.participantManager.localParticipant.endpointId)), e === p.CALL_STATUS.RINGING ? (k && Jt(w.selfParticipant, i.callConnectionState.Notified), F.resolve()) : e === p.CALL_STATUS.CONNECTED ? (L = !0, j.resolve(), Jt(w.selfParticipant, i.callConnectionState.Connected)) : (e === p.CALL_STATUS.LOCAL_TERMINATED || e === p.CALL_STATUS.REMOTE_TERMINATED) && ot(t, p.CALL_STATUS.REMOTE_TERMINATED === e);
-    }, function () {
+    };
+    this.onAnswer = function (e) {
+      S.log("onAnswer", "provisional:", e.provisional, "renegotiation:", e.renegotiation, "mediaTypes:", e.mediaTypes);
+      e.renegotiation ? Mt(e) : e.provisional || Ot(e);
+    };
+    this.onMediaAcknowledgementSuccess = function (e) {
+      S.log("onMediaAcknowledgementSuccess", "isRenegotiation:", e);
+      P.resolve();
+    };
+    this.onMediaAcknowledgementFailure = function (e, t) {
+      S.log("onMediaAcknowledgementFailure", "isRenegotiation:", e);
+      P.reject(t);
+    };
+    this.onMediaRenegotiationRejection = function (e) {
+      S.log("onMediaRenegotiationRejection", "error:", e);
+      B.reject(e);
+    };
+    this.onCallStatusChanged = function (e, t) {
+      S.log("onCallStatusChanged", e, t);
+      C.correlationId && w.audioService.callId._set(C.correlationId);
+      C.participantManager && (w._callData.ngcParticipantId(C.participantManager.localParticipant.participantId), w._callData.ngcEndpointId(C.participantManager.localParticipant.endpointId));
+      e === p.CALL_STATUS.RINGING ? (k && Jt(w.selfParticipant, i.callConnectionState.Notified), F.resolve()) : e === p.CALL_STATUS.CONNECTED ? (L = !0, j.resolve(), Jt(w.selfParticipant, i.callConnectionState.Connected)) : (e === p.CALL_STATUS.LOCAL_TERMINATED || e === p.CALL_STATUS.REMOTE_TERMINATED) && ot(t, p.CALL_STATUS.REMOTE_TERMINATED === e);
+    };
+    (function () {
       S.log("construct");
       var e = jt(w.selfParticipant.person);
-      C = b.getNewSignalingSession(e, E), $ = t.get().devicesManager.selectedCamera.changed(Gt), J = t.get().devicesManager.selectedCamera.changed(Qt), S.log("unmuting microphone for a new call"), y.getDeviceManager().unmuteInputAsync().catch(function (e) {
+      C = b.getNewSignalingSession(e, E);
+      $ = t.get().devicesManager.selectedCamera.changed(Gt);
+      J = t.get().devicesManager.selectedCamera.changed(Qt);
+      S.log("unmuting microphone for a new call");
+      y.getDeviceManager().unmuteInputAsync().catch(function (e) {
         S.error("failed to unmute microphone during call setup:", e);
-      }), w.mediaConnectionType(i.mediaConnectionType.Pluginless);
-    }();
+      });
+      w.mediaConnectionType(i.mediaConnectionType.Pluginless);
+    }());
   }
   var t = e("jSkype/client"), n = e("constants/calling"), r = e("jSkype/settings"), i = e("swx-enums"), s = e("jSkype/services/mediaAgent/constants"), o = e("jcafe-property-model"), u = e("jSkype/services/NGCCallAgent/NGCCallAgent/participant"), a = e("jSkype/services/mediaAgent/helper"), f = e("jSkype/modelHelpers/personHelper"), l = e("jSkype/modelHelpers/contacts/dataMappers/dataMaps"), c = 10000, h = e("jSkype/services/NGCCallAgent/NGCCallAgent/telemetryConstants"), p = e("jSkype/services/NGCCallAgent/NGCCallAgent/constants"), d = e("jSkype/modelHelpers/calling/fallbackMessageHelper"), v = e("jSkype/services/pluginless/pluginlessTelemetry"), m = e("lodash-compat"), g = e("jSkype/services/preferences/settingsUtils/privacySettingsUtil");
   return y;
-})
+});

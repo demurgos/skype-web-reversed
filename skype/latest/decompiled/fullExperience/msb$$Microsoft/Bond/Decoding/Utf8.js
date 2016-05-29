@@ -15,7 +15,10 @@ module.exports = function () {
         t.push(String.fromCharCode((r & 15) << 12 | (i & 63) << 6 | s & 63));
       } else {
         var i = e[++n], s = e[++n], o = e[++n];
-        r = (r & 7) << 18 | (i & 63) << 12 | (s & 63) << 6 | o & 63, r -= 65536, t.push(String.fromCharCode(55296 | r >> 10 & 1023)), t.push(String.fromCharCode(56320 | r & 1023));
+        r = (r & 7) << 18 | (i & 63) << 12 | (s & 63) << 6 | o & 63;
+        r -= 65536;
+        t.push(String.fromCharCode(55296 | r >> 10 & 1023));
+        t.push(String.fromCharCode(56320 | r & 1023));
       }
     }
     return t.join("");

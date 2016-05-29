@@ -33,7 +33,8 @@ define("jSkype/models/historyService", [
       var e = v.activityItems();
       for (var t = 0; t < e.length - 1; t++)
         N(e[t].key());
-      y.reset(), v.getMoreActivityItems.enabled._set(!0);
+      y.reset();
+      v.getMoreActivityItems.enabled._set(!0);
     }
     function k(e) {
       function i() {
@@ -61,7 +62,9 @@ define("jSkype/models/historyService", [
     }
     function O() {
       function e() {
-        y.reset(), b.empty(), E.resolve();
+        y.reset();
+        b.empty();
+        E.resolve();
       }
       return E ? E.promise : (E = t.task(), E.promise.finally(function () {
         E = null;
@@ -69,7 +72,11 @@ define("jSkype/models/historyService", [
     }
     function M(e, t, n) {
       var r = v.activityItems.size(), i, s;
-      H(n), i = v.activityItems.size() - r, s = e - i, s > 0 && y.hasMoreItems() ? D(s, t) : t.resolve(), y.hasMoreItems() || v.getMoreActivityItems.enabled._set(!1);
+      H(n);
+      i = v.activityItems.size() - r;
+      s = e - i;
+      s > 0 && y.hasMoreItems() ? D(s, t) : t.resolve();
+      y.hasMoreItems() || v.getMoreActivityItems.enabled._set(!1);
     }
     function D(e, t) {
       y.get(e).then(M.bind(v, e, t)).catch(t.reject.bind(t));
@@ -97,7 +104,8 @@ define("jSkype/models/historyService", [
       e.timestamp && e.timestamp() > d.lastModificationTimestamp() && (d.lastModificationTimestamp._set(e.timestamp()), v._lastMessageFromServer = e);
     }
     function I(e, t) {
-      v._removeMessage(e), T(t);
+      v._removeMessage(e);
+      T(t);
     }
     function q(e, t) {
       var n = y.getMostRecentEditForMessage(e._id);
@@ -143,7 +151,10 @@ define("jSkype/models/historyService", [
           return;
         }
         if (a) {
-          i._id = r._id, i.timestamp._set(r.timestamp()), N(i.key()), T(i);
+          i._id = r._id;
+          i.timestamp._set(r.timestamp());
+          N(i.key());
+          T(i);
           return;
         }
         if (s && !t) {
@@ -168,13 +179,15 @@ define("jSkype/models/historyService", [
       if (i) {
         if (r.sender !== i.sender)
           return;
-        a(), z(i);
+        a();
+        z(i);
       } else if (!e.skypeeditedid) {
         if (n === !0 && !t) {
           z(r);
           return;
         }
-        T(r), R(r);
+        T(r);
+        R(r);
       }
       F(r);
     }
@@ -186,26 +199,47 @@ define("jSkype/models/historyService", [
     h || (a.isFeatureOn(r.featureFlags.UNREAD_MSG_LOGGING) ? h = f.getLogger("unread-msgs") : h = {
       log: function () {
       }
-    }), w.resolve(), this.activityItems = b.sort(B), this.unreadActivityItemsCount = y.unreadActivityItemsCount, this._unreadActivityItemsWithKeywordsCount = y._unreadActivityItemsWithKeywordsCount, this.getMoreActivityItems = t.command(P, t.boolProperty(!0)), this.markAllAsRead = t.command(A, m), this.historyDisclosedCommandEnabled = t.property({ value: !1 }), this.isHistoryDisclosed = t.property({
+    });
+    w.resolve();
+    this.activityItems = b.sort(B);
+    this.unreadActivityItemsCount = y.unreadActivityItemsCount;
+    this._unreadActivityItemsWithKeywordsCount = y._unreadActivityItemsWithKeywordsCount;
+    this.getMoreActivityItems = t.command(P, t.boolProperty(!0));
+    this.markAllAsRead = t.command(A, m);
+    this.historyDisclosedCommandEnabled = t.property({ value: !1 });
+    this.isHistoryDisclosed = t.property({
       value: !1,
       set: t.command(k, v.historyDisclosedCommandEnabled)
-    }), this.removeAll = t.command(O, S), this._messagesWithUnseenHearts = t.collection(), this._reset = function () {
-      b.empty(), y.reset(!0), v.getMoreActivityItems.enabled._set(!0);
-    }, this._removeMessage = function (e) {
+    });
+    this.removeAll = t.command(O, S);
+    this._messagesWithUnseenHearts = t.collection();
+    this._reset = function () {
+      b.empty();
+      y.reset(!0);
+      v.getMoreActivityItems.enabled._set(!0);
+    };
+    this._removeMessage = function (e) {
       var t = e.key() + "";
-      y.onItemRemoved(t), N(t);
-    }, this._addOutgoingMessage = function (e) {
+      y.onItemRemoved(t);
+      N(t);
+    };
+    this._addOutgoingMessage = function (e) {
       return T(e);
-    }, this._processRawMessage = function (e, t, n, r) {
+    };
+    this._processRawMessage = function (e, t, n, r) {
       if (!e.id)
         return;
-      y.getItem(e.id) ? y.onItemUpdated(e) : n || y.onItemAdded(e), X(e, t, n), !t && !n && !r && x(e);
-    }, this._updateReadStatusFromServer = function () {
-      y.onConsumptionHorizonChanged(), b().forEach(function (e) {
+      y.getItem(e.id) ? y.onItemUpdated(e) : n || y.onItemAdded(e);
+      X(e, t, n);
+      !t && !n && !r && x(e);
+    };
+    this._updateReadStatusFromServer = function () {
+      y.onConsumptionHorizonChanged();
+      b().forEach(function (e) {
         e.isRead._set(s.isMessageReadOnServer(d._consumptionHorizon, e.key(), e._id));
       });
     };
   }
   var t = e("jcafe-property-model"), n = e("lodash-compat"), r = e("constants/common"), i = e("jSkype/services/webapi/constants"), s = e("jSkype/utils/chat/message"), o = e("jSkype/utils/chat/generator"), u = e("jSkype/utils/chat/editMessageHandler"), a = e("jSkype/settings"), f = e("utils/common/logTracer/api"), l = e("swx-enums"), c = e("jSkype/services/annotations/main"), h;
   return p;
-})
+});

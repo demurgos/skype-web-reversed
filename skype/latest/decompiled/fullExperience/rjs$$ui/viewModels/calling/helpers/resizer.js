@@ -13,17 +13,24 @@ define("ui/viewModels/calling/helpers/resizer", [
     };
   return r = function (e, n, r) {
     function l() {
-      a = !0, document.addEventListener(o.MOUSE_MOVE, h), document.addEventListener(o.MOUSE_UP, c);
+      a = !0;
+      document.addEventListener(o.MOUSE_MOVE, h);
+      document.addEventListener(o.MOUSE_UP, c);
     }
     function c(e) {
       function f() {
         return t < u.top || t >= u.bottom;
       }
       var t = e.pageY, u = n.getBoundingClientRect();
-      a = !1, f() && v(s.ACTIVE, { remove: !0 }), document.removeEventListener(o.MOUSE_MOVE, h), document.removeEventListener(o.MOUSE_UP, c), v([
+      a = !1;
+      f() && v(s.ACTIVE, { remove: !0 });
+      document.removeEventListener(o.MOUSE_MOVE, h);
+      document.removeEventListener(o.MOUSE_UP, c);
+      v([
         s.MAX,
         s.MIN
-      ], { remove: !0 }), r.onResizeEnd(i);
+      ], { remove: !0 });
+      r.onResizeEnd(i);
     }
     function h(t) {
       function u() {
@@ -45,7 +52,9 @@ define("ui/viewModels/calling/helpers/resizer", [
       v([
         s.MAX,
         s.MIN
-      ], { remove: !0 }), i = n - o, r.onResize(o);
+      ], { remove: !0 });
+      i = n - o;
+      r.onResize(o);
     }
     function p() {
       Object.keys(f).forEach(function (e) {
@@ -61,8 +70,11 @@ define("ui/viewModels/calling/helpers/resizer", [
     }
     function v(e, r) {
       var i = "add";
-      t.isArray(e) || (e = [e]), r && r.remove && (i = "remove"), e.forEach(function (e) {
-        document.body.classList[i](e), e === s.ACTIVE && n.classList[i](e);
+      t.isArray(e) || (e = [e]);
+      r && r.remove && (i = "remove");
+      e.forEach(function (e) {
+        document.body.classList[i](e);
+        e === s.ACTIVE && n.classList[i](e);
       });
     }
     var a = !1, f = {
@@ -73,7 +85,8 @@ define("ui/viewModels/calling/helpers/resizer", [
           a || v(s.ACTIVE, { remove: !0 });
         },
         mousedown: function (e) {
-          e.preventDefault(), l();
+          e.preventDefault();
+          l();
         }
       };
     return t.merge({
@@ -90,4 +103,4 @@ define("ui/viewModels/calling/helpers/resizer", [
       return new r(e, t, n);
     }
   }, n;
-})
+});

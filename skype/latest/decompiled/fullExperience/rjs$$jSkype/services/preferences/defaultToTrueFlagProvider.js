@@ -15,4 +15,4 @@ define("jSkype/services/preferences/defaultToTrueFlagProvider", [
   }, i.prototype.update = function (e) {
     return n.prototype.update.call(this, !e);
   }, t.assign(i, r), i;
-})
+});

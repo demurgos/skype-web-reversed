@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   var t = typeof window == "undefined" ? null : window;
   typeof define == "function" && define.amd ? define("dompurify/src/purify", [], function () {
     return e(t);
@@ -535,7 +535,26 @@ function (e) {
       "svg",
       "video"
     ]), H = null, B = n.createElement("form"), j = function (e) {
-      typeof e != "object" && (e = {}), b = "ALLOWED_TAGS" in e ? g({}, e.ALLOWED_TAGS) : w, E = "ALLOWED_ATTR" in e ? g({}, e.ALLOWED_ATTR) : S, x = "FORBID_TAGS" in e ? g({}, e.FORBID_TAGS) : {}, T = "FORBID_ATTR" in e ? g({}, e.FORBID_ATTR) : {}, N = e.ALLOW_DATA_ATTR !== !1, C = e.SAFE_FOR_JQUERY || !1, k = e.SAFE_FOR_TEMPLATES || !1, L = e.WHOLE_DOCUMENT || !1, A = e.RETURN_DOM || !1, O = e.RETURN_DOM_FRAGMENT || !1, M = e.RETURN_DOM_IMPORT || !1, _ = e.SANITIZE_DOM !== !1, D = e.KEEP_CONTENT !== !1, O && (A = !0), e.ADD_TAGS && (b === w && (b = y(b)), g(b, e.ADD_TAGS)), e.ADD_ATTR && (E === S && (E = y(E)), g(E, e.ADD_ATTR)), D && (b["#text"] = !0), Object && "freeze" in Object && Object.freeze(e), H = e;
+      typeof e != "object" && (e = {});
+      b = "ALLOWED_TAGS" in e ? g({}, e.ALLOWED_TAGS) : w;
+      E = "ALLOWED_ATTR" in e ? g({}, e.ALLOWED_ATTR) : S;
+      x = "FORBID_TAGS" in e ? g({}, e.FORBID_TAGS) : {};
+      T = "FORBID_ATTR" in e ? g({}, e.FORBID_ATTR) : {};
+      N = e.ALLOW_DATA_ATTR !== !1;
+      C = e.SAFE_FOR_JQUERY || !1;
+      k = e.SAFE_FOR_TEMPLATES || !1;
+      L = e.WHOLE_DOCUMENT || !1;
+      A = e.RETURN_DOM || !1;
+      O = e.RETURN_DOM_FRAGMENT || !1;
+      M = e.RETURN_DOM_IMPORT || !1;
+      _ = e.SANITIZE_DOM !== !1;
+      D = e.KEEP_CONTENT !== !1;
+      O && (A = !0);
+      e.ADD_TAGS && (b === w && (b = y(b)), g(b, e.ADD_TAGS));
+      e.ADD_ATTR && (E === S && (E = y(E)), g(E, e.ADD_ATTR));
+      D && (b["#text"] = !0);
+      Object && "freeze" in Object && Object.freeze(e);
+      H = e;
     }, F = function (e) {
       try {
         e.parentNode.removeChild(e);
@@ -572,7 +591,9 @@ function (e) {
       C && !e.firstElementChild && (!e.content || !e.content.firstElementChild) && (e.innerHTML = e.textContent.replace(/</g, "&lt;"));
       if (k && e.nodeType === 3) {
         var r = e.textContent;
-        r = r.replace(U, " "), r = r.replace(z, " "), e.textContent = r;
+        r = r.replace(U, " ");
+        r = r.replace(z, " ");
+        e.textContent = r;
       }
       return Q("afterSanitizeElements", e, null), !1;
     }, X = /^data-[\w.\u00B7-\uFFFF-]/, V = /^(?:\w+script|data):/i, $ = /[\x00-\x20\xA0\u1680\u180E\u2000-\u2029\u205f\u3000]/g, J = function (t) {
@@ -586,14 +607,24 @@ function (e) {
           keepAttr: !0
         }, s = r.length, o, u, a, f, l;
       while (s--) {
-        o = r[s], u = o.name, a = o.value, f = u.toLowerCase(), i.attrName = f, i.attrValue = a, i.keepAttr = !0, Q("uponSanitizeAttribute", t, i), a = i.attrValue, f === "name" && t.nodeName === "IMG" && r.id ? (l = r.id, r = Array.prototype.slice.apply(r), t.removeAttribute("id"), t.removeAttribute(u), r.indexOf(l) > s && t.setAttribute("id", l.value)) : (u === "id" && t.setAttribute(u, ""), t.removeAttribute(u));
+        o = r[s];
+        u = o.name;
+        a = o.value;
+        f = u.toLowerCase();
+        i.attrName = f;
+        i.attrValue = a;
+        i.keepAttr = !0;
+        Q("uponSanitizeAttribute", t, i);
+        a = i.attrValue;
+        f === "name" && t.nodeName === "IMG" && r.id ? (l = r.id, r = Array.prototype.slice.apply(r), t.removeAttribute("id"), t.removeAttribute(u), r.indexOf(l) > s && t.setAttribute("id", l.value)) : (u === "id" && t.setAttribute(u, ""), t.removeAttribute(u));
         if (!i.keepAttr)
           continue;
         if (_ && (f === "id" || f === "name") && (a in e || a in n || a in B))
           continue;
         if ((E[f] && !T[f] || !k && N && X.test(f)) && (!V.test(a.replace($, "")) || f === "src" && a.indexOf("data:") === 0 && t.nodeName === "IMG"))
           try {
-            k && (a = a.replace(U, " "), a = a.replace(z, " ")), t.setAttribute(u, a);
+            k && (a = a.replace(U, " "), a = a.replace(z, " "));
+            t.setAttribute(u, a);
           } catch (c) {
           }
       }
@@ -605,7 +636,8 @@ function (e) {
         Q("uponSanitizeShadowNode", t, null);
         if (W(t))
           continue;
-        t.content instanceof i && K(t.content), J(t);
+        t.content instanceof i && K(t.content);
+        J(t);
       }
       Q("afterSanitizeShadowDOM", e, null);
     }, Q = function (e, n, r) {
@@ -616,7 +648,8 @@ function (e) {
       });
     };
   return t.sanitize = function (n, s) {
-    n || (n = ""), typeof n != "string" && (n = n.toString());
+    n || (n = "");
+    typeof n != "string" && (n = n.toString());
     if (!t.isSupported)
       return typeof e.toStaticHTML == "object" || typeof e.toStaticHTML == "function" ? e.toStaticHTML(n) : n;
     j(s);
@@ -631,7 +664,9 @@ function (e) {
         continue;
       if (W(u))
         continue;
-      u.content instanceof i && K(u.content), J(u), a = u;
+      u.content instanceof i && K(u.content);
+      J(u);
+      a = u;
     }
     var l;
     if (A) {
@@ -647,7 +682,8 @@ function (e) {
   }, t.addHook = function (e, t) {
     if (typeof t != "function")
       return;
-    m[e] = m[e] || [], m[e].push(t);
+    m[e] = m[e] || [];
+    m[e].push(t);
   }, t.removeHook = function (e) {
     m[e] && m[e].pop();
   }, t.removeHooks = function (e) {
@@ -655,4 +691,4 @@ function (e) {
   }, t.removeAllHooks = function () {
     m = [];
   }, t;
-})
+}));

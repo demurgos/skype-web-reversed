@@ -8,7 +8,8 @@ define("jSkype/utils/chat/editMessageHandler", [
     return !!e.html;
   }
   function i(e, t, n) {
-    n.timestamp._set(t.timestamp()), e.replaceMessage(t, n);
+    n.timestamp._set(t.timestamp());
+    e.replaceMessage(t, n);
   }
   function s(e, t) {
     r(e) && r(t) && (e._actualId = t._id, e.isDeleted._set(t.isDeleted()), e.isEdited._set(t.isEdited()), n.updateMessageProperties(e, t), e.html._set(t.html()));
@@ -17,4 +18,4 @@ define("jSkype/utils/chat/editMessageHandler", [
   t.handleMessageEdit = function (e, t, n) {
     n.type() !== t.type() ? i(e, t, n) : s(t, n);
   };
-})
+});

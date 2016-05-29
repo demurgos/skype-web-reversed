@@ -21,9 +21,10 @@ define("telemetry/chat/youtubeActionEvent", [
         videoLength: o.videoLength,
         playerActionDuration: o.duration
       };
-      o.startTime && (a.startTime = o.startTime), r.get().sendEvent(t.telemetry.uiTenantToken, e, a);
+      o.startTime && (a.startTime = o.startTime);
+      r.get().sendEvent(t.telemetry.uiTenantToken, e, a);
     };
   }
   var t = e("experience/settings"), n = e("services/telemetry/hashingService"), r = e("ui/telemetry/telemetryClient");
   return new i();
-})
+});

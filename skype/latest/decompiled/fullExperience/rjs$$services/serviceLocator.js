@@ -4,4 +4,4 @@ define("services/serviceLocator", [
 ], function (e) {
   var t = e("swx-service-locator").ServiceLocator, n = t.build();
   return n;
-})
+});

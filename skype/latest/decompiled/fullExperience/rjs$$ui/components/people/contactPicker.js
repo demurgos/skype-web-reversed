@@ -12,5 +12,7 @@ define("ui/components/people/contactPicker", [
     return e.isSelectable = !0, i.setContext(n.dataFor(t.element)), i.init(e, t.element), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/people/contactPicker");
-  t.name = e("constants/components").people.CONTACT_PICKER, t.template = e("text!views/people/picker.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").people.CONTACT_PICKER;
+  t.template = e("text!views/people/picker.html");
+  t.viewModel = { createViewModel: i };
+});

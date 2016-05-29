@@ -15,9 +15,15 @@ define("ui/viewModels/people/baseList", [
   "utils/common/statusMapper"
 ], function (e) {
   function v(e) {
-    this.listSource = t.observable(e), this.contacts = t.observableArray(), this.emptyListText = i.fetch({ key: "message_text_emptySearchResults" }), this.showEmptyListText = t.observable(!1), this.listHasContacts = t.computed(function () {
+    this.listSource = t.observable(e);
+    this.contacts = t.observableArray();
+    this.emptyListText = i.fetch({ key: "message_text_emptySearchResults" });
+    this.showEmptyListText = t.observable(!1);
+    this.listHasContacts = t.computed(function () {
       return this.contacts().length > 0;
-    }, this), this.isLocal = e === a.searchScope.AddressBook, this.isLocal ? (this.listClass = t.observable(u.contactList.className.LOCAL), this.listTitle = t.observable(i.fetch({ key: "message_text_contactTitleLocal" })), this.showListTitle = t.observable(!0), this.events = {
+    }, this);
+    this.isLocal = e === a.searchScope.AddressBook;
+    this.isLocal ? (this.listClass = t.observable(u.contactList.className.LOCAL), this.listTitle = t.observable(i.fetch({ key: "message_text_contactTitleLocal" })), this.showListTitle = t.observable(!0), this.events = {
       results: d.LOCAL_SEARCH_RESULTS,
       rendered: d.LOCAL_SEARCH_RESULTS_RENDERED
     }, this.historyLoadOrigin = o.telemetry.historyLoadOrigin.CONTACT_SEARCH, this.searchItemI18nKey = "accessibility_searchItem_oneToOne") : (this.listClass = t.observable(u.contactList.className.DIRECTORY), this.listTitle = t.observable(i.fetch({ key: "message_text_contactTitleDirectory" })), this.showListTitle = t.observable(!1), this.events = {
@@ -37,28 +43,38 @@ define("ui/viewModels/people/baseList", [
   }, v.prototype.dispose = function () {
     m().unsubscribe(d.QUERY_CHANGED, this.search);
   }, v.prototype.reset = function () {
-    this.showListTitle(!1), this.showEmptyListText(!1), this.contacts([]);
+    this.showListTitle(!1);
+    this.showEmptyListText(!1);
+    this.contacts([]);
   }, v.prototype.search = function (t) {
     function v() {
       if (l.activeSearchPromise !== a)
         return;
-      y(), l.contacts(i.results().map(function (e) {
+      y();
+      l.contacts(i.results().map(function (e) {
         return f.build(e.result, {
           keepPresenceSubscription: !1,
           keepLastSeenAtSubscription: !1,
           keepActivitySubscription: !1,
           keepEndpointTypeSubscription: !1
         });
-      })), m().publish(d.QUERY_EXECUTED, { moreResultsAvailable: i.moreResultsAvailable() });
+      }));
+      m().publish(d.QUERY_EXECUTED, { moreResultsAvailable: i.moreResultsAvailable() });
     }
     function y() {
       if (l.activeSearchPromise !== a)
         return;
       var e = s.getTraceableAction(c.search.started);
-      e.markBeforeRender(), e.addEventData({
+      e.markBeforeRender();
+      e.addEventData({
         source: l.listSource(),
         results: i.results().length
-      }), l.activeSearchPromise = null, l.totalSearchResults = i.results().length, m().publish(l.events.results, l.totalSearchResults), l.showListTitle(!0), l.showEmptyListText(!i.results().length);
+      });
+      l.activeSearchPromise = null;
+      l.totalSearchResults = i.results().length;
+      m().publish(l.events.results, l.totalSearchResults);
+      l.showListTitle(!0);
+      l.showEmptyListText(!i.results().length);
     }
     var i, s, a, l = this;
     if (!t)
@@ -94,7 +110,9 @@ define("ui/viewModels/people/baseList", [
     var t = this;
     return l(t.contacts().length, function () {
       var e = g().getTraceableAction(c.search.started);
-      e.markAfterRender(), e.endTrace(), m().publish(t.events.rendered, { resultCount: t.contacts().length });
+      e.markAfterRender();
+      e.endTrace();
+      m().publish(t.events.rendered, { resultCount: t.contacts().length });
     });
   }, v;
-})
+});

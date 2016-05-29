@@ -15,12 +15,14 @@ define("jSkype/modelHelpers/account/dataHandlers/account", [
     var e = n.get().personsAndGroupsManager.mePerson.account;
     this.onSuccess = function (e) {
       return e.response.forEach(t), Promise.resolve();
-    }, this.onError = function (e) {
+    };
+    this.onError = function (e) {
       return Promise.reject(e);
     };
   }
   var n = e("jSkype/client"), r = e("jSkype/services/entitlement/serviceSettings");
-  t.classFunction = i, t.build = function () {
+  t.classFunction = i;
+  t.build = function () {
     return new i();
   };
-})
+});

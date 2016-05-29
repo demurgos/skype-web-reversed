@@ -26,9 +26,16 @@ define("jSkype/utils/chat/messagesCache", [
       return typeof e.isOutgoing == "undefined" && (e.isOutgoing = o.isMessageOutgoing(e)), e.isOutgoing;
     }
     function E(e) {
-      v.log("cacheMessages", e), e.forEach(function (e) {
-        v.log("caching and sanitizing message", e), i.message(e), e.key = s.getMessageKey(e), e.timestamp = e.timestamp || +new Date(e.originalarrivaltime), S(e), v.getItem(e.id) ? (v.log("updating message", e), v.replaceItem(e, e.id)) : (v.log("adding message", e), v.cacheItem(e, e.id), v.size() === 1 && m && C());
-      }), x();
+      v.log("cacheMessages", e);
+      e.forEach(function (e) {
+        v.log("caching and sanitizing message", e);
+        i.message(e);
+        e.key = s.getMessageKey(e);
+        e.timestamp = e.timestamp || +new Date(e.originalarrivaltime);
+        S(e);
+        v.getItem(e.id) ? (v.log("updating message", e), v.replaceItem(e, e.id)) : (v.log("adding message", e), v.cacheItem(e, e.id), v.size() === 1 && m && C());
+      });
+      x();
     }
     function S(e) {
       if (e.contactRequestType || e.pstnEventType || e.pluginFreeMessageType)
@@ -37,9 +44,13 @@ define("jSkype/utils/chat/messagesCache", [
     }
     function x() {
       var e, t = [], n = d.chatService._notificationKeywords && d.chatService._notificationKeywords.length > 0;
-      e = T().filter(o.canMessageBeMarkedAsUnreadInUI), n && (t = f.filter(e, function (e) {
+      e = T().filter(o.canMessageBeMarkedAsUnreadInUI);
+      n && (t = f.filter(e, function (e) {
         return d.chatService.shouldNotify(e.content);
-      })), v.log("updateUnreadActivityItemsCount", e), v.unreadActivityItemsCount._set(e.length - t.length), v._unreadActivityItemsWithKeywordsCount._set(t.length);
+      }));
+      v.log("updateUnreadActivityItemsCount", e);
+      v.unreadActivityItemsCount._set(e.length - t.length);
+      v._unreadActivityItemsWithKeywordsCount._set(t.length);
     }
     function T() {
       return v.getItems(function (e) {
@@ -64,7 +75,9 @@ define("jSkype/utils/chat/messagesCache", [
             return !1;
         }), e.length > 0;
       }
-      v.log("getUnreadMessages"), x(), d._isAlive || T().length > 0 || n() ? t() : e();
+      v.log("getUnreadMessages");
+      x();
+      d._isAlive || T().length > 0 || n() ? t() : e();
     }
     function k(e) {
       return e.contactRequestType;
@@ -81,7 +94,8 @@ define("jSkype/utils/chat/messagesCache", [
       v._serverHasMoreItems = !0;
     }
     var v = this, m, g = a.events.system;
-    r.call(v, c, n.byTimestamp), this._updateConversationLastMessage = function (e) {
+    r.call(v, c, n.byTimestamp);
+    this._updateConversationLastMessage = function (e) {
       if (d._lastMessageRefreshed)
         return;
       var t = d.historyService.activityItems();
@@ -91,34 +105,53 @@ define("jSkype/utils/chat/messagesCache", [
         });
         if (!n)
           return;
-        d.historyService._processRawMessage(n, !1, !1, !0), d._lastMessageRefreshed = !0;
+        d.historyService._processRawMessage(n, !1, !1, !0);
+        d._lastMessageRefreshed = !0;
       }
-    }, this._getItemsFromService = function (n) {
+    };
+    this._getItemsFromService = function (n) {
       function s(e) {
-        v.log("received messages from server - error"), v.onNewItemsLoaded(), r.reject(e);
+        v.log("received messages from server - error");
+        v.onNewItemsLoaded();
+        r.reject(e);
       }
       function o(e, t) {
-        v._updateConversationLastMessage(e), v.log("received messages from server", e, t), v.onNewItemsLoaded(), v._serverHasMoreItems = t, E(e), i = v._getCachedItems(n), v.log("Returning messages from server", i), r.resolve(i);
+        v._updateConversationLastMessage(e);
+        v.log("received messages from server", e, t);
+        v.onNewItemsLoaded();
+        v._serverHasMoreItems = t;
+        E(e);
+        i = v._getCachedItems(n);
+        v.log("Returning messages from server", i);
+        r.resolve(i);
       }
       var r = t.task(), i;
       return N() ? o([], !0) : e.syncMessages(d, p, o, s), r.promise;
-    }, this._onItemAddedOrUpdated = function (e) {
-      v.log("_onItemAddedOrUpdated"), E([e]);
-    }, this._emptyCache = function () {
+    };
+    this._onItemAddedOrUpdated = function (e) {
+      v.log("_onItemAddedOrUpdated");
+      E([e]);
+    };
+    this._emptyCache = function () {
       v.log("_emptyCache");
       var e = v.getItems(function (e) {
         return !k(e);
       });
       v.clean(e);
-    }, this._serverHasMoreItems = !0, u.get().subscribe(g.FORCE_RESYNC, O), this.unreadActivityItemsCount = t.property({
+    };
+    this._serverHasMoreItems = !0;
+    u.get().subscribe(g.FORCE_RESYNC, O);
+    this.unreadActivityItemsCount = t.property({
       readOnly: !0,
       value: 0,
       get: L
-    }), this._unreadActivityItemsWithKeywordsCount = t.property({
+    });
+    this._unreadActivityItemsWithKeywordsCount = t.property({
       readOnly: !0,
       value: 0,
       get: A
-    }), this.getOldestServerMessage = function () {
+    });
+    this.getOldestServerMessage = function () {
       var e = null;
       return v.forAllItems(function (t) {
         if (k(t))
@@ -126,9 +159,12 @@ define("jSkype/utils/chat/messagesCache", [
         if (!e || e.timestamp > t.timestamp)
           e = t;
       }), e;
-    }, this.onConsumptionHorizonChanged = function () {
-      v.forAllItems(y), x();
-    }, this.getMostRecentEditForMessage = function (e) {
+    };
+    this.onConsumptionHorizonChanged = function () {
+      v.forAllItems(y);
+      x();
+    };
+    this.getMostRecentEditForMessage = function (e) {
       function r(e) {
         return t.clientmessageid && e.skypeeditedid === t.clientmessageid && e.author === t.author;
       }
@@ -138,4 +174,4 @@ define("jSkype/utils/chat/messagesCache", [
   }
   var t = e("jcafe-property-model"), n = e("utils/chat/sort"), r = e("jSkype/utils/chat/cacheBase"), i = e("jSkype/services/webapi/utils/sanitizer"), s = e("jSkype/utils/chat/conversation"), o = e("jSkype/utils/chat/message"), u = e("jSkype/services/internalPubSub"), a = e("constants/common"), f = e("lodash-compat"), l = e("jSkype/utils/chat/generator"), c = 10, h = 50, p = h + 1;
   return d.prototype = Object.create(r.prototype), d.prototype.constructor = d, d;
-})
+});

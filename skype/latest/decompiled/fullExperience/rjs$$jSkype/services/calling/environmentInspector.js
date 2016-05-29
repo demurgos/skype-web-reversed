@@ -14,7 +14,9 @@ define("jSkype/services/calling/environmentInspector", [
     }) : l(!1, t.reason);
   }
   function l(e, r) {
-    n.log("[EnvInspector] check for calling support", e, r), t.isCallingSupported.set(e, r), o.resolve(e);
+    n.log("[EnvInspector] check for calling support", e, r);
+    t.isCallingSupported.set(e, r);
+    o.resolve(e);
   }
   function c(e) {
     var t = i.buildSupportDetector();
@@ -26,16 +28,21 @@ define("jSkype/services/calling/environmentInspector", [
   }
   var n = e("jSkype/telemetry/logging/callingLogTracer").get(), r = e("jSkype/services/calling/platformValidator"), i = e("jSkype/services/calling/supportDetectorFactory"), s = e("jcafe-property-model"), o = null, u = !1, a = "";
   t.disableCalling = function (e) {
-    u = !0, a = e, t.isCallingSupported(!1, e);
-  }, t.isCallingSupported = s.property({
+    u = !0;
+    a = e;
+    t.isCallingSupported(!1, e);
+  };
+  t.isCallingSupported = s.property({
     get: function () {
       return u ? (t.isCallingSupported.reason = a, !1) : t.checkForCallingSupport();
     }
-  }), t.checkForCallingSupport = function (e) {
+  });
+  t.checkForCallingSupport = function (e) {
     if (!o || o.promise.state() === "resolved")
       o = s.task(), f(e);
     return o.promise;
-  }, t.checkForPluginBasedCallingSupport = function (e) {
+  };
+  t.checkForPluginBasedCallingSupport = function (e) {
     if (!o || o.promise.state() === "resolved") {
       o = s.task();
       var t = r.getPlatformSupport();
@@ -45,4 +52,4 @@ define("jSkype/services/calling/environmentInspector", [
     }
     return o.promise;
   };
-})
+});

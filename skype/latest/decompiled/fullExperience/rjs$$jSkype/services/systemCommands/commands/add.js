@@ -18,7 +18,10 @@ define("jSkype/services/systemCommands/commands/add", [
   function a() {
     this.isAvailableFor = function (e) {
       return n.availableForOneToOne(e) || n.availableForNonAnonymousGroupMembers(e);
-    }, this.help = "[skypename]", this.showInHelp = !0, this.action = function (e, t) {
+    };
+    this.help = "[skypename]";
+    this.showInHelp = !0;
+    this.action = function (e, t) {
       var n = r.getPersonById(t), i, s;
       if (!n)
         return;
@@ -33,4 +36,4 @@ define("jSkype/services/systemCommands/commands/add", [
   t.build = function () {
     return new a();
   };
-})
+});

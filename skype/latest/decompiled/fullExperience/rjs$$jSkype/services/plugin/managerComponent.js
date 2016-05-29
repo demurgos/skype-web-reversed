@@ -3,7 +3,8 @@ define("jSkype/services/plugin/managerComponent", [
   "jSkype/services/plugin/baseComponent"
 ], function (e) {
   function r() {
-    i(), this._init.call(this, "_", { cssClass: "pluginNoSize" });
+    i();
+    this._init.call(this, "_", { cssClass: "pluginNoSize" });
   }
   function i() {
     window.navigator.plugins && window.navigator.plugins.refresh && window.navigator.plugins.refresh(!1);
@@ -18,4 +19,4 @@ define("jSkype/services/plugin/managerComponent", [
     };
     this._invokeMethod("RunSoftwareUpdate", s);
   }, r;
-})
+});

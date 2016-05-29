@@ -41,4 +41,4 @@ define("notifications/factory", [
   }
   var t = e("constants/common"), n = e("swx-i18n").localization, r = e("notifications/types/incomingCall"), i = e("notifications/types/hardware"), s = e("notifications/types/avatar"), o = e("notifications/types/callingNotSupported"), u = e("notifications/types/unreadMessage"), a = e("notifications/types/contactRequest"), f = e("notifications/types/chatRequest");
   return { build: l };
-})
+});

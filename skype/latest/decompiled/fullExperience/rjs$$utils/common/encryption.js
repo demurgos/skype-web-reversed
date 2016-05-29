@@ -56,16 +56,20 @@ define("utils/common/encryption", [
     crypto: n,
     importedKeyProcessor: a,
     exportedKeyProcessor: f
-  }, t.generateEncryptionKey = function () {
+  };
+  t.generateEncryptionKey = function () {
     return o.crypto.subtle.generateKey({
       name: i,
       length: 256
     }, !0, s);
-  }, t.exportEncryptionKey = function (e) {
+  };
+  t.exportEncryptionKey = function (e) {
     return o.crypto.subtle.exportKey("jwk", e).then(o.exportedKeyProcessor);
-  }, t.importEncryptionKey = function (e) {
+  };
+  t.importEncryptionKey = function (e) {
     return o.crypto.subtle.importKey("jwk", o.importedKeyProcessor(e), { name: i }, !0, s);
-  }, t.encrypt = function (e, t) {
+  };
+  t.encrypt = function (e, t) {
     var n, r = { name: i };
     return new Promise(function (i, s) {
       function u(e) {
@@ -77,9 +81,11 @@ define("utils/common/encryption", [
         s(f);
         return;
       }
-      r.iv = o.crypto.getRandomValues(new Uint8Array(16)), o.crypto.subtle.encrypt(r, e, n).then(u, s);
+      r.iv = o.crypto.getRandomValues(new Uint8Array(16));
+      o.crypto.subtle.encrypt(r, e, n).then(u, s);
     });
-  }, t.decrypt = function (e, t) {
+  };
+  t.decrypt = function (e, t) {
     var n, r;
     return !t || !t.data ? Promise.reject("Invalid encrypted data") : (n = {
       name: i,
@@ -96,4 +102,4 @@ define("utils/common/encryption", [
       o.crypto.subtle.decrypt(n, e, r).then(s, i);
     }));
   };
-})
+});

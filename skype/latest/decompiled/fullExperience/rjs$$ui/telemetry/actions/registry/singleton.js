@@ -8,4 +8,4 @@ define("ui/telemetry/actions/registry/singleton", [
   t.getInstance = function () {
     return r || (r = new n()), r;
   };
-})
+});

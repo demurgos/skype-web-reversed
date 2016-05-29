@@ -6,7 +6,8 @@ define("utils/chat/unreadConversations", [
 ], function (e) {
   function s() {
     function u(n, r) {
-      t.utils.addOrRemoveItem(e(), n, !r), e.valueHasMutated();
+      t.utils.addOrRemoveItem(e(), n, !r);
+      e.valueHasMutated();
     }
     function a(e) {
       e.__subUnread && e.__subUnread.dispose();
@@ -39,4 +40,4 @@ define("utils/chat/unreadConversations", [
       i = null;
     }
   };
-})
+});

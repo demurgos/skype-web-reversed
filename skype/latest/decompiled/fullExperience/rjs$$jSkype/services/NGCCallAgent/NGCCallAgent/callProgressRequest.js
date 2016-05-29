@@ -26,4 +26,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callProgressRequest", [
     };
     return n;
   }, n;
-})
+});

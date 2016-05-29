@@ -11,8 +11,11 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactDeleted", [
 ], function (e, t) {
   function a() {
     this.onSuccess = function (e) {
-      u.getCache().remove(e.id()), n.setAuthorization(e, r.UNAUTHORIZED), f();
-    }, this.onError = function (e) {
+      u.getCache().remove(e.id());
+      n.setAuthorization(e, r.UNAUTHORIZED);
+      f();
+    };
+    this.onError = function (e) {
     };
   }
   function f() {
@@ -23,4 +26,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactDeleted", [
   t.build = function () {
     return new a();
   };
-})
+});

@@ -4,4 +4,4 @@ define("jSkype/services/plugin/participantVideoState", {
   rendering: "Rendering",
   stopping: "Stopping",
   notAvailable: "NotAvailable"
-})
+});

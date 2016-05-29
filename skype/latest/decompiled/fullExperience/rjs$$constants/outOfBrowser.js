@@ -46,4 +46,4 @@ define("constants/outOfBrowser", {
     WindowHidden: "windowHidden",
     WindowClosing: "windowClosing"
   }
-})
+});

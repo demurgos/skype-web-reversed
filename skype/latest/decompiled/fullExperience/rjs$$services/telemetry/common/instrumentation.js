@@ -46,4 +46,4 @@ define("services/telemetry/common/instrumentation", [
       return i(e);
     }
   };
-})
+});

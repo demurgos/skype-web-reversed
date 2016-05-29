@@ -18,4 +18,4 @@ define("jSkype/services/mediaAgent/adapter/webrtcAdapter", [
       return r() ? e.build() : i() ? new n() : new n();
     }
   };
-})
+});

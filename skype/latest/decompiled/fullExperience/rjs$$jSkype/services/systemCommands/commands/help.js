@@ -6,7 +6,9 @@ define("jSkype/services/systemCommands/commands/help", [
   "lodash-compat"
 ], function (e, t) {
   function i() {
-    this.isAvailableFor = n.availableAlways, this.showInHelp = !0, this.action = function (e, t) {
+    this.isAvailableFor = n.availableAlways;
+    this.showInHelp = !0;
+    this.action = function (e, t) {
       var i = "Available commands:\n";
       r.forIn(t, function (t, n) {
         if (t.isAvailableFor(e) && t.showInHelp)
@@ -17,11 +19,12 @@ define("jSkype/services/systemCommands/commands/help", [
             });
           } else
             i += "  /" + n, i += t.help ? " " + t.help : "", i += "\n";
-      }), n.sendSystemMessage(e, i);
+      });
+      n.sendSystemMessage(e, i);
     };
   }
   var n = e("jSkype/services/systemCommands/commandsHelper"), r = e("lodash-compat");
   t.build = function () {
     return new i();
   };
-})
+});

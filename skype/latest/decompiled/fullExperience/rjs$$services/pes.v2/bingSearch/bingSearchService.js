@@ -8,7 +8,9 @@ define("services/pes.v2/bingSearch/bingSearchService", [
   "experience/settings"
 ], function (e) {
   function u(e, t, n) {
-    this.apiKey = e, this.authMethod = t, this.serviceUrl = n;
+    this.apiKey = e;
+    this.authMethod = t;
+    this.serviceUrl = n;
   }
   var t = e("lodash-compat"), n = e("utils/common/builderMixin"), r = e("reqwest"), i = e("utils/common/cancelation"), s = e("utils/common/url"), o = e("experience/settings");
   return u.prototype.search = function (n, u) {
@@ -43,4 +45,4 @@ define("services/pes.v2/bingSearch/bingSearchService", [
       });
     })) : Promise.resolve();
   }, t.extend(u, n), u;
-})
+});

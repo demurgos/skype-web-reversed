@@ -18,4 +18,4 @@ define("jSkype/models/videoService", [
   t.build = function (e, t) {
     return new s(e, t);
   };
-})
+});

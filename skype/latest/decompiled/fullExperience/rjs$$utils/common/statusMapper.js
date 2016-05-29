@@ -35,7 +35,8 @@ define("utils/common/statusMapper", [
   t.getStatusIconClass = function (e, t, r) {
     var i;
     return e ? (a(r, t, e) ? i = n.endpointType.Mobile.toLowerCase() : p(e) ? o() ? i = n.onlineStatus.Online.toLowerCase() + "withtick" : i = n.onlineStatus.Online.toLowerCase() : l(e) ? i = n.onlineStatus.Offline.toLowerCase() : h(e) ? i = n.onlineStatus.Idle.toLowerCase() : c(e) ? o() && u(e, n.onlineStatus.Busy) ? i = n.onlineStatus.DoNotDisturb.toLowerCase() : i = n.onlineStatus.Busy.toLowerCase() : i = e.toLowerCase(), i) : "";
-  }, t.getAvailabilityText = function (e) {
+  };
+  t.getAvailabilityText = function (e) {
     switch (e) {
     case n.onlineStatus.Online:
       return r.fetch({ key: "message_text_presenceAvailable" });
@@ -60,4 +61,4 @@ define("utils/common/statusMapper", [
       return null;
     }
   };
-})
+});

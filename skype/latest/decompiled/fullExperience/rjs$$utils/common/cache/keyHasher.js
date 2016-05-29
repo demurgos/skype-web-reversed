@@ -16,7 +16,8 @@ define("utils/common/cache/keyHasher", [
     };
     this.fillMap = function (e) {
       e !== null && (i = e);
-    }, this.getHashByKey = function (o) {
+    };
+    this.getHashByKey = function (o) {
       if (o === n.INTERNAL_KEYS.KEYS_MAP)
         return o;
       var u = t.find(i.map, s.bind(null, o));
@@ -24,10 +25,12 @@ define("utils/common/cache/keyHasher", [
         key: o,
         hash: u
       }), e(n.INTERNAL_KEYS.KEYS_MAP, i), u);
-    }, this.getKeyByHash = function (e) {
+    };
+    this.getKeyByHash = function (e) {
       var n = t.find(i.map, o.bind(null, e));
       return n && n.key ? n.key : e;
-    }, this.removeKeyFromMap = function (r) {
+    };
+    this.removeKeyFromMap = function (r) {
       var o = t.remove(i.map, s.bind(null, r));
       o.length && e(n.INTERNAL_KEYS.KEYS_MAP, i);
     };
@@ -38,4 +41,4 @@ define("utils/common/cache/keyHasher", [
       return new r(e, t);
     }
   };
-})
+});

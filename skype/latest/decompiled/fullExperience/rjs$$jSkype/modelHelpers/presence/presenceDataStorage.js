@@ -17,7 +17,8 @@ define("jSkype/modelHelpers/presence/presenceDataStorage", [
   var n = e("lodash-compat"), r = e("jSkype/settings"), i = e("constants/common"), s = e("jSkype/modelHelpers/presence/cache/local"), o = e("jSkype/modelHelpers/presence/cache/session");
   t.getCache = function () {
     return u() ? s : o;
-  }, t.restoreData = function () {
+  };
+  t.restoreData = function () {
     if (u()) {
       var e = o.restore();
       if (!n.isEmpty(e)) {
@@ -36,4 +37,4 @@ define("jSkype/modelHelpers/presence/presenceDataStorage", [
       }), o.restore(), s.destroy();
     });
   };
-})
+});

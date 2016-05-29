@@ -24,4 +24,4 @@ define("ui/viewModels/people/properties/displayNameText", [
       params: { displayName: s }
     })), i.isPstnEndpoint(o) && (o = n.forceLTREmbedding(o)), o;
   }, o;
-})
+});

@@ -24,7 +24,8 @@ define("jSkype/modelHelpers/presence/presenceDataHandler", [
       };
     this.onInitialContacts = function (e) {
       t.serviceStarted ? y(e) : t.sendContacts = g(y, e);
-    }, this.onMePresenceSet = function (e) {
+    };
+    this.onMePresenceSet = function (e) {
       if (e.selfLink && e.status) {
         var t = r.get()._telemetryManager, n = {
             name: i.telemetry.presence.name.SET_ME_PRESENCE,
@@ -32,29 +33,37 @@ define("jSkype/modelHelpers/presence/presenceDataHandler", [
           };
         t.sendEvent(a.settings.telemetry.jSkypeTenantToken, i.telemetry.presence.TYPE, n);
       }
-    }, this.onSelfProperties = function (e) {
+    };
+    this.onSelfProperties = function (e) {
       var t = r.get().personsAndGroupsManager, n = t.mePerson, i = e.primaryMemberName, s = e.skypeName;
       if (!s || !i)
         return;
       s !== i && n._msaId._set(p.getKey(i, h.contactTypes.msn));
-    }, this.onPresence = function (e) {
+    };
+    this.onPresence = function (e) {
       if (e.selfLink && e.status) {
         var t = E(e.selfLink), n = p.getId(t), r = N(e), i = C(r);
         k(t) ? S(e.status) : x(n, e.status, e.lastSeenAt, i);
       }
-    }, this.onBatchPresenceUpdated = function (t) {
+    };
+    this.onBatchPresenceUpdated = function (t) {
       if (t && e) {
         var n = r.get()._telemetryManager, s = {
             name: i.telemetry.presence.name.GET_CONTACTS_PRESENCE,
             batchCount: t
           };
-        n.sendEvent(a.settings.telemetry.jSkypeTenantToken, i.telemetry.presence.TYPE, s), e = !1;
+        n.sendEvent(a.settings.telemetry.jSkypeTenantToken, i.telemetry.presence.TYPE, s);
+        e = !1;
       }
-    }, this.onServiceError = function (e) {
+    };
+    this.onServiceError = function (e) {
       e.actionName === s.SERVICE_CALLS.SET_USER_PRESENCE && S(u.onlineStatus.Hidden);
-    }, this.onServiceStarted = function () {
-      t.serviceStarted = !0, t.sendContacts && t.sendContacts();
-    }, this.onOnlineStateChanged = function (e) {
+    };
+    this.onServiceStarted = function () {
+      t.serviceStarted = !0;
+      t.sendContacts && t.sendContacts();
+    };
+    this.onOnlineStateChanged = function (e) {
       var t = r.get().personsAndGroupsManager, n = t.all.persons(), s = t.mePerson;
       e === i.onlineStates.OFFLINE ? (s.status._set(u.onlineStatus.Hidden), n.forEach(function (e) {
         !p.isPstn(e) && e.status() !== u.onlineStatus.Unknown && e.status._set(u.onlineStatus.Hidden);
@@ -93,7 +102,10 @@ define("jSkype/modelHelpers/presence/presenceDataHandler", [
     var i = d.getPersonById(e);
     if (i) {
       var s = c.map(t);
-      T(s, i) && i.status._set(s), i.endpointType._set(r), i.lastSeenAt(n), l.getCache().set(e, {
+      T(s, i) && i.status._set(s);
+      i.endpointType._set(r);
+      i.lastSeenAt(n);
+      l.getCache().set(e, {
         status: s,
         lastSeenAt: n,
         endpointType: r
@@ -121,4 +133,4 @@ define("jSkype/modelHelpers/presence/presenceDataHandler", [
   t.build = function () {
     return new m();
   };
-})
+});

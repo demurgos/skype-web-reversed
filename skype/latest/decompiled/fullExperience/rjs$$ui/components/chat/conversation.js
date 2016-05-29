@@ -15,5 +15,7 @@ define("ui/components/chat/conversation", [
     return a = new i(o), a.setContext(u), a.init(), a.dispatchEvent(r.navigation.COMPONENT_RENDERED), a;
   }
   var n = e("vendor/knockout"), r = e("constants/common").events, i = e("ui/viewModels/chat/conversation");
-  t.name = e("constants/components").chat.CONVERSATION, t.template = e("text!views/chat/conversation.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").chat.CONVERSATION;
+  t.template = e("text!views/chat/conversation.html");
+  t.viewModel = { createViewModel: s };
+});

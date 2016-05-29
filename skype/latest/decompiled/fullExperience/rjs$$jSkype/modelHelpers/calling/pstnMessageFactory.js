@@ -20,9 +20,11 @@ define("jSkype/modelHelpers/calling/pstnMessageFactory", [
   var n = e("swx-enums").activityType, r = e("utils/chat/dateTime");
   t.getInsuficientFundsMessage = function (e, t) {
     return i(n.PstnInsufficientFunds, e, t);
-  }, t.getInvalidNumberMessage = function (e, t) {
+  };
+  t.getInvalidNumberMessage = function (e, t) {
     return i(n.PstnInvalidNumber, e, t);
-  }, t.getForbiddenNumberMessage = function (e, t) {
+  };
+  t.getForbiddenNumberMessage = function (e, t) {
     return i(n.PstnForbiddenNumber, e, t);
   };
-})
+});

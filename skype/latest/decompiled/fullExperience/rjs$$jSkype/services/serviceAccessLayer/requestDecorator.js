@@ -27,4 +27,4 @@ define("jSkype/services/serviceAccessLayer/requestDecorator", [
       }
     ];
   return { build: s };
-})
+});

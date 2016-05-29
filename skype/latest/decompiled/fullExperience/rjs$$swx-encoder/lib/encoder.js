@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -19,10 +19,17 @@ function (e) {
       countryCodes: {},
       largeEmoticonClass: "large",
       init: function (e) {
-        e = e || {}, this.app = e.app, this.xml = r(e.xml, this.xml), this.emoticons = r(e.emoticons, this.emoticons), this.countryCodes = r(e.countries, n.CountryCodes), this.largeEmoticonClass = r(e.largeEmoticonClass, this.largeEmoticonClass);
+        e = e || {};
+        this.app = e.app;
+        this.xml = r(e.xml, this.xml);
+        this.emoticons = r(e.emoticons, this.emoticons);
+        this.countryCodes = r(e.countries, n.CountryCodes);
+        this.largeEmoticonClass = r(e.largeEmoticonClass, this.largeEmoticonClass);
       },
       encode: function (e, t) {
-        t = r(t, !0), !this.xml && t && (e = this.private.escapeXml(e)), e.search("<") !== -1 && this.xml && t && (e = this.private.escapeXml(e));
+        t = r(t, !0);
+        !this.xml && t && (e = this.private.escapeXml(e));
+        e.search("<") !== -1 && this.xml && t && (e = this.private.escapeXml(e));
         var n = "";
         for (var i = 0; i < e.length;) {
           var s = !0, o = i;
@@ -31,7 +38,8 @@ function (e) {
             var u = this.firstSeparator(e, i);
             u === -1 && (u = e.length);
             var a = e.substring(i, u), f = this.private.encodeWord(a, this);
-            f && (n += e.substring(o, i), n += f, s = !1), i = u;
+            f && (n += e.substring(o, i), n += f, s = !1);
+            i = u;
           } else
             i = e.length;
           s && (++i, n += e.substring(o, i));
@@ -151,7 +159,10 @@ function (e) {
         },
         createEmoticonElement: function (e, t, n, r, i, s) {
           var o = e.createElement("span"), u = ["emoticon"];
-          u.push(t), i || u.push("animated"), r && u.push(s), o.setAttribute("class", u.join(" "));
+          u.push(t);
+          i || u.push("animated");
+          r && u.push(s);
+          o.setAttribute("class", u.join(" "));
           var a = e.createElement("span");
           return a.textContent = n, a.setAttribute("class", "emoSprite"), o.appendChild(a), o;
         },
@@ -202,14 +213,17 @@ function (e) {
                   var f = e.substring(o - 1, r);
                   if (!s(f))
                     break;
-                  o--, a = e.substring(o, r);
+                  o--;
+                  a = e.substring(o, r);
                 }
-                n = t.private.createEmoticonXmlTag(i(a), a) + n, u = !0;
+                n = t.private.createEmoticonXmlTag(i(a), a) + n;
+                u = !0;
               } else if (!u && a[0] === "(") {
                 var l = a.match(/^\(flag:(\w\w)\)$/i), c = l && l[1];
                 c && t.countryCodes[c] && (n = t.private.createFlagXmlTag(c, a) + n, u = !0);
               }
-              u && (r = o), --o;
+              u && (r = o);
+              --o;
             }
             return n;
           }
@@ -221,9 +235,11 @@ function (e) {
           try {
             if (window.DOMParser) {
               var n = new DOMParser();
-              n.async = !1, t = n.parseFromString(e, "text/xml");
+              n.async = !1;
+              t = n.parseFromString(e, "text/xml");
             } else {
-              t = new ActiveXObject("Microsoft.XMLDOM"), t.async = !1;
+              t = new ActiveXObject("Microsoft.XMLDOM");
+              t.async = !1;
               if (t.loadXML(e))
                 return t;
             }
@@ -272,4 +288,4 @@ function (e) {
   }
   var n = e("./countryCodes");
   t.build = i;
-})
+}));

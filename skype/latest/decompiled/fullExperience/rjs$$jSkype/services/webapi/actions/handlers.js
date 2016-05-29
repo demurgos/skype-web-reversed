@@ -9,7 +9,8 @@ define("jSkype/services/webapi/actions/handlers", [
   t.buildMessageSuccess = function (e, t) {
     return function (i) {
       var s = i.response, o = r.getSyncStateFromResponse(s), u = !!s._metadata.backwardLink;
-      n.set(e, o), t(s.messages || [], u);
+      n.set(e, o);
+      t(s.messages || [], u);
     };
   };
-})
+});

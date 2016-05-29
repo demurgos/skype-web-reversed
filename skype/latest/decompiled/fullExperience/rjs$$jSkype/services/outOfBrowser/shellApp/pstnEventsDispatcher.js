@@ -18,4 +18,4 @@ define("jSkype/services/outOfBrowser/shellApp/pstnEventsDispatcher", [
   }
   var t = e("constants/outOfBrowser");
   return n;
-})
+});

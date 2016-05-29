@@ -26,4 +26,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/participantUpdateRequest", [
     };
     return i;
   }, i;
-})
+});

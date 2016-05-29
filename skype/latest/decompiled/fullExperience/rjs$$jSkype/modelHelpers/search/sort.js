@@ -7,7 +7,8 @@ define("jSkype/modelHelpers/search/sort", [
   function r(e) {
     var t = {};
     return e.forEach(function (e) {
-      t[e.rank] || (t[e.rank] = []), t[e.rank].push(e);
+      t[e.rank] || (t[e.rank] = []);
+      t[e.rank].push(e);
     }), t;
   }
   function i(e) {
@@ -26,4 +27,4 @@ define("jSkype/modelHelpers/search/sort", [
     var t = r(e);
     return t = i(t), s(t);
   };
-})
+});

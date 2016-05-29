@@ -11,5 +11,7 @@ define("ui/components/chat/sidebar", [
     return e.init(), e;
   }
   var n = e("ui/viewModels/chat/sidebar");
-  t.name = e("constants/components").chat.SIDEBAR, t.template = e("text!views/chat/sidebar.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.SIDEBAR;
+  t.template = e("text!views/chat/sidebar.html");
+  t.viewModel = { createViewModel: r };
+});

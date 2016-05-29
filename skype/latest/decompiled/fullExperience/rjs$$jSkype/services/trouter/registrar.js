@@ -21,13 +21,15 @@ define("jSkype/services/trouter/registrar", [
         b(n);
         return;
       }
-      w(), t && t(c);
+      w();
+      t && t(c);
     }
     function b(e) {
       u && u(e);
     }
     function w() {
-      clearTimeout(l), h.duration() + d < v && (l = r.delay(g, d));
+      clearTimeout(l);
+      h.duration() + d < v && (l = r.delay(g, d));
     }
     function E() {
       n.clearTimeout(l);
@@ -46,4 +48,4 @@ define("jSkype/services/trouter/registrar", [
   t.build = function (e, t, n) {
     return new u(e, t, n);
   };
-})
+});

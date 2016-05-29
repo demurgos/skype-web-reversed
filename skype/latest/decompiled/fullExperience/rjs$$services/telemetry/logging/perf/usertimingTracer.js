@@ -10,19 +10,22 @@ define("services/telemetry/logging/perf/usertimingTracer", [
   }
   var t = e("usertiming");
   return function (r) {
-    this.logger = r, this.startTrace = function (e) {
+    this.logger = r;
+    this.startTrace = function (e) {
       if (n(e))
         return;
       typeof t.mark == "function" && t.mark(e);
-    }, this.stopTrace = function (e) {
+    };
+    this.stopTrace = function (e) {
       if (!n(e))
         return;
       typeof t.measure == "function" && (t.measure(e + "_measure", e), t.clearMarks(e));
-    }, this.dumpMeasurements = function () {
+    };
+    this.dumpMeasurements = function () {
       if (typeof t.getEntriesByType != "function")
         return {};
       var e = t.getEntriesByType("measure") || {};
       return e.length === 0 ? e : (this.logger.perf(e), typeof t.clearMeasures == "function" && t.clearMeasures(), e);
     };
   };
-})
+});

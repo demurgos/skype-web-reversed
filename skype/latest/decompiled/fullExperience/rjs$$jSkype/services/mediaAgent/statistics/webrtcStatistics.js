@@ -4,7 +4,8 @@ define("jSkype/services/mediaAgent/statistics/webrtcStatistics", ["../helper"], 
       var n = [];
       return e.forEach(function (e) {
         var r = { tracks: [] };
-        n.push(r), e.getTracks().forEach(function (n) {
+        n.push(r);
+        e.getTracks().forEach(function (n) {
           ("audio" === n.kind && t.audio || "video" === n.kind && t.video) && r.tracks.push({
             stream: e,
             track: n
@@ -22,11 +23,14 @@ define("jSkype/services/mediaAgent/statistics/webrtcStatistics", ["../helper"], 
       };
     this.setNegotiatedModalities = function (e) {
       r = e;
-    }, this.setPeerConnection = function (e) {
+    };
+    this.setPeerConnection = function (e) {
       n = e;
-    }, this.setSdesSrtp = function (e) {
+    };
+    this.setSdesSrtp = function (e) {
       i.webrtc.Extensions.SdesSrtp = e;
-    }, this.getReport = function () {
+    };
+    this.getReport = function () {
       return new Promise(function (t) {
         n && (i.localStreams = s(n.getLocalStreams(), {
           audio: e.hasSendDirectionality(r.audio),
@@ -34,7 +38,8 @@ define("jSkype/services/mediaAgent/statistics/webrtcStatistics", ["../helper"], 
         }), i.remoteStreams = s(n.getRemoteStreams(), {
           audio: e.hasReceiveDirectionality(r.audio),
           video: e.hasReceiveDirectionality(r.video)
-        })), t(i);
+        }));
+        t(i);
       });
     };
   }
@@ -43,4 +48,4 @@ define("jSkype/services/mediaAgent/statistics/webrtcStatistics", ["../helper"], 
       return new t(e);
     }
   };
-})
+});

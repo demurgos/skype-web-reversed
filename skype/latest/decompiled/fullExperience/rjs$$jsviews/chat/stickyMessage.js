@@ -29,12 +29,15 @@ define("jsviews/chat/stickyMessage", [
       }, 10);
     }
     var u = this;
-    u.lastPollElement = r.observable(null), u.scrollToLastPollElement = function () {
+    u.lastPollElement = r.observable(null);
+    u.scrollToLastPollElement = function () {
       var n = u.lastPollElement(), r = t.getElement(".conversation.scrollable", e.parentElement), i = Math.min(n.offsetTop - 25, r.scrollHeight - r.offsetHeight);
-      t.removeClass(n, "highlight"), f(r, i, o, function () {
+      t.removeClass(n, "highlight");
+      f(r, i, o, function () {
         t.addClass(n, "highlight");
       });
-    }, u.checkPollIsVisible = function (e, t) {
+    };
+    u.checkPollIsVisible = function (e, t) {
       var r = !1, i = e.key();
       return n.some(t, function (e) {
         if (e.getAttribute("data-id") === i)
@@ -44,4 +47,4 @@ define("jsviews/chat/stickyMessage", [
   }
   var t = e("browser/dom"), n = e("lodash-compat"), r = e("vendor/knockout"), i = e("browser/window"), s = e("browser/document"), o = 200;
   return u;
-})
+});

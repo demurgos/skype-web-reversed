@@ -32,7 +32,8 @@ define("services/cqf/cqfSettings", [
     return e.get = function () {
       var e = new Promise(function (e) {
         o().then(function (n) {
-          t = !0, e(a(n));
+          t = !0;
+          e(a(n));
         }, function () {
           e(u());
         });
@@ -44,4 +45,4 @@ define("services/cqf/cqfSettings", [
   t.build = function () {
     return s || (s = new o()), s;
   };
-})
+});

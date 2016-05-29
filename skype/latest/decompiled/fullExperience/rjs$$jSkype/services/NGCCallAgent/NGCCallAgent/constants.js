@@ -204,4 +204,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/constants", [], function () {
       ADD_PARTICIPANT_URL_MISSING: "AddParticipantUrlMissing"
     }
   };
-})
+});

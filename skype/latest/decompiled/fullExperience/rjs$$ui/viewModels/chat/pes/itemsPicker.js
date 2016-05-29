@@ -22,7 +22,8 @@ define("ui/viewModels/chat/pes/itemsPicker", [
             ariaLabel: e.ariaLabel,
             items: []
           };
-          n.packs.push(i), e.items.forEach(function (e) {
+          n.packs.push(i);
+          e.items.forEach(function (e) {
             a.isItemVisible(e) && i.items.push(e);
           });
         }
@@ -77,45 +78,60 @@ define("ui/viewModels/chat/pes/itemsPicker", [
       }, c = f;
     a.isItemVisible = function (e) {
       return e.visible || a.tab().showHiddenItems;
-    }, a.tab = e.context, a.tabVM = s.computed(h), a.showEmptyMruTabMessage = s.computed(p), a.navigateContext = {}, a.tab.subscribe(function () {
+    };
+    a.tab = e.context;
+    a.tabVM = s.computed(h);
+    a.showEmptyMruTabMessage = s.computed(p);
+    a.navigateContext = {};
+    a.tab.subscribe(function () {
       n.execute(function () {
         a.navigateContext.startup = !0;
       });
-    }), a.init = function () {
-      r.init(), a.registerEvent(i.expressionPicker.OPEN_REQUEST, function () {
+    });
+    a.init = function () {
+      r.init();
+      a.registerEvent(i.expressionPicker.OPEN_REQUEST, function () {
         r.adjustToRTLLayout();
       });
-    }, a.onMouseOver = function (e, t) {
+    };
+    a.onMouseOver = function (e, t) {
       var n = v(e, t);
       if (!n)
         return;
       return c.onOver(n, t);
-    }, a.onMouseOut = function (e, t) {
+    };
+    a.onMouseOut = function (e, t) {
       var n = v(e, t);
       if (!n)
         return;
       return c.onOut(n, t);
-    }, a.onMouseClick = function (e, t) {
+    };
+    a.onMouseClick = function (e, t) {
       var n = v(e, t);
       if (!n)
         return;
       return c.onClick(n, t);
-    }, a.onEnterKey = function (e, t) {
+    };
+    a.onEnterKey = function (e, t) {
       var n = v(e, t);
       if (!n)
         return;
       return t.stopPropagation(), t.preventDefault(), c.onClick(n, t);
-    }, a.onTouchEnd = function (t, n) {
+    };
+    a.onTouchEnd = function (t, n) {
       var r = v(t, n);
       if (!r)
         return;
       return l.onClick(r, n);
-    }, a.onPointerOver = function (t, n) {
+    };
+    a.onPointerOver = function (t, n) {
       n.pointerType === "touch" && (c = l);
-    }, a.dispose = function () {
-      r.dispose(), a.showEmptyMruTabMessage.dispose();
+    };
+    a.dispose = function () {
+      r.dispose();
+      a.showEmptyMruTabMessage.dispose();
     };
   }
   var t = e("lodash-compat"), n = e("utils/common/async"), r = e("utils/common/eventMixin"), i = e("constants/common").events, s = e("vendor/knockout"), o = e("services/pes/constants"), u = e("services/pes/utils");
   return t.assign(a.prototype, r), a;
-})
+});

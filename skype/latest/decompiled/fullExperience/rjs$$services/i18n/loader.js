@@ -10,7 +10,8 @@ define("services/i18n/loader", [
 ], function (e) {
   function a() {
     function c(e) {
-      n.locale = n.locale || {}, n.locale.i18n = e;
+      n.locale = n.locale || {};
+      n.locale.i18n = e;
     }
     var e = this, a = "/", f = "Strings.js", l = "strings.js";
     e.load = function (e, n, h) {
@@ -44,4 +45,4 @@ define("services/i18n/loader", [
   }
   var t = e("swx-utils-common").loader, n = e("experience/settings"), r = e("swx-i18n").resources, i = e("services/i18n/pluralizer"), s = e("services/i18n/cultureInfo"), o = e("constants/common"), u = e("services/i18n/swx/default");
   return new a();
-})
+});

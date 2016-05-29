@@ -19,7 +19,8 @@ define("services/pes/emoticons/styleDefinitionFactory", [
     }
     function o(e, t, n, r, s, o, u) {
       var a = e.id, f = e.id, l = e.styleDef.duration, c = e.styleDef.frameCount;
-      u = u || i, o && (f += "_" + o);
+      u = u || i;
+      o && (f += "_" + o);
       var h = "\n .swx .largeAllowed span.emoticon." + a + ".animated";
       return o && (h += "." + o), h += " span.emoSprite \n", h += "{ \n", h += " -ms-high-contrast-adjust: none;\n", h += " background-image: url('" + t + "');\n", h += " background-size: " + n + "px " + r + "px; \n", h += " height: " + r + "px; \n", h += u(s) + "\n", h += " -moz-animation: " + f + " " + l + " steps(" + c + ") infinite; \n", h += " -webkit-animation: " + f + " " + l + " steps(" + c + ") infinite; \n", h += " animation: " + f + " " + l + " steps(" + c + ") infinite; \n", h += "} ", h;
     }
@@ -42,4 +43,4 @@ define("services/pes/emoticons/styleDefinitionFactory", [
   }
   var t = e("services/pes/constants");
   return new n();
-})
+});

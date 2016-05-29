@@ -18,24 +18,29 @@ define("jSkype/modelHelpers/propertyModelHelper", [
       var r = n(e, t);
       r >= 0 && e.remove(r);
     }, t;
-  }, t.createPropertyWithSetter = function (e, t, r) {
+  };
+  t.createPropertyWithSetter = function (e, t, r) {
     var i = n.property({ value: !!r }), s = n.command(t, i), o = n.property({
         value: e,
         set: s
       });
     return o.set._enabled = i, o;
-  }, t.createCommandWithSetter = function (e, t) {
+  };
+  t.createCommandWithSetter = function (e, t) {
     var r = n.command(e, t);
     return r._enabled = t, r;
-  }, t.createResolvedPromise = function (e) {
+  };
+  t.createResolvedPromise = function (e) {
     var t = n.task();
     return t.resolve(e), t.promise;
-  }, t.createRejectedPromise = function (e) {
+  };
+  t.createRejectedPromise = function (e) {
     var t = n.task();
     return t.reject(e), t.promise;
-  }, t.createCancellablePromiseFunction = function (e, n) {
+  };
+  t.createCancellablePromiseFunction = function (e, n) {
     return function () {
       return n() ? t.createRejectedPromise() : e();
     };
   };
-})
+});

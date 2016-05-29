@@ -20,7 +20,9 @@ define("jSkype/services/outOfBrowser/extensionCommandHandler", [
       var t = {};
       n.get().personsAndGroupsManager.all.persons().forEach(function (e) {
         t[e.id()] = { status: e.status() };
-      }), u.get().log("[ExtensionCommand] updating shell with contacts"), e.sendCommand(l.commands.CONTACTS_DATA_RESPONSE, { contactsData: t });
+      });
+      u.get().log("[ExtensionCommand] updating shell with contacts");
+      e.sendCommand(l.commands.CONTACTS_DATA_RESPONSE, { contactsData: t });
     }
     function h(e) {
       try {
@@ -56,10 +58,17 @@ define("jSkype/services/outOfBrowser/extensionCommandHandler", [
     function g(e) {
       return n.get().conversationsManager._getOrCreateConversation(e);
     }
-    e.registerCommandHandler(l.commands.PLUGIN_ERROR, t), e.registerCommandHandler(l.commands.CHANGE_STATE, p), e.registerCommandHandler(l.commands.PSTN_EVENT, d), e.registerCommandHandler(l.commands.MUTE, m(!0)), e.registerCommandHandler(l.commands.UNMUTE, m(!1)), e.registerCommandHandler(l.commands.CALL_INFO, v), e.registerCommandHandler(l.commands.CONTACTS_DATA_REQUEST, c), r.isFeatureOn(i.featureFlags.SHELL_APP_LOGS) && e.registerCommandHandler(l.commands.SHELL_APP_LOG, h);
+    e.registerCommandHandler(l.commands.PLUGIN_ERROR, t);
+    e.registerCommandHandler(l.commands.CHANGE_STATE, p);
+    e.registerCommandHandler(l.commands.PSTN_EVENT, d);
+    e.registerCommandHandler(l.commands.MUTE, m(!0));
+    e.registerCommandHandler(l.commands.UNMUTE, m(!1));
+    e.registerCommandHandler(l.commands.CALL_INFO, v);
+    e.registerCommandHandler(l.commands.CONTACTS_DATA_REQUEST, c);
+    r.isFeatureOn(i.featureFlags.SHELL_APP_LOGS) && e.registerCommandHandler(l.commands.SHELL_APP_LOG, h);
   }
   var n = e("jSkype/client"), r = e("jSkype/settings"), i = e("constants/common"), s = e("jSkype/services/calling/environmentInspector"), o = e("swx-enums"), u = e("jSkype/telemetry/logging/callingLogTracer"), a = e("constants/plugin.const"), f = e("jSkype/modelHelpers/participantHelper"), l = e("constants/outOfBrowser");
   t.build = function (e) {
     return new c(e);
   };
-})
+});

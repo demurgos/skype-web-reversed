@@ -29,7 +29,9 @@ define("jSkype/services/serviceAccessLayer/decorations/retry", [
       EXPONENTIAL: "exponential",
       FIXED: "fixed"
     };
-  r.settings.retry = r.settings.retry || {}, t.STRATEGIES = s, t.build = function (t, n) {
+  r.settings.retry = r.settings.retry || {};
+  t.STRATEGIES = s;
+  t.build = function (t, n) {
     var a = n.limit || r.settings.retry.limit || 1, c = n.delay || r.settings.retry.delay || 1000, h = n.strategy || r.settings.retry.strategy || s.FIXED, p = n.isTransientCheck || l, d = n.isSuccessCheck || l;
     return function (n) {
       return new Promise(function (e, r) {
@@ -52,4 +54,4 @@ define("jSkype/services/serviceAccessLayer/decorations/retry", [
       });
     };
   };
-})
+});

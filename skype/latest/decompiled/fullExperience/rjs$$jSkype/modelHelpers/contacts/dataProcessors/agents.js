@@ -22,7 +22,8 @@ define("jSkype/modelHelpers/contacts/dataProcessors/agents", [
           errorMessage: e.responseText || r.telemetry.NOT_AVAILABLE,
           verb: "GET",
           host: i.settings.agentProvisioningService.host
-        }), f.resolve(s);
+        });
+        f.resolve(s);
       }), t.concat(f), t;
     }
     this.process = function (e) {
@@ -37,4 +38,4 @@ define("jSkype/modelHelpers/contacts/dataProcessors/agents", [
       return new a(t);
     }
   };
-})
+});

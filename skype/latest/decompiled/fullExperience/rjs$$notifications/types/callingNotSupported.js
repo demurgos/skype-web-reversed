@@ -12,10 +12,11 @@ define("notifications/types/callingNotSupported", [
   }
   function u(e, r) {
     var i, u;
-    e ? i = s.fetch({ key: "notification_text_osNotSupported" }) : i = s.fetch({ key: "notification_text_browserNotSupported" }), u = o(i, r.topic());
+    e ? i = s.fetch({ key: "notification_text_osNotSupported" }) : i = s.fetch({ key: "notification_text_browserNotSupported" });
+    u = o(i, r.topic());
     var a = new t(n.notifications.WARNING);
     return a.title(u), a;
   }
   var t = e("notifications/common/notification"), n = e("constants/common"), r = e("utils/people/userDataProcessor"), i = e("constants/calling.resources").notifications.incomingCall, s = e("swx-i18n").localization;
   return { build: u };
-})
+});

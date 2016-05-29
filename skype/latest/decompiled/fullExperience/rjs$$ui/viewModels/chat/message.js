@@ -45,7 +45,8 @@ define("ui/viewModels/chat/message", [
     function Y() {
       var e = {}, n = m.isRead(), r = m.group() === f.activityItemGroups.TEXT || m.group() === f.activityItemGroups.MEDIA || m.group() === f.activityItemGroups.CONTACT_INFO || m.group() === f.activityItemGroups.POLL, i;
       return e.me = m.isMyself && r, e.their = !e.me, e.first = m.isFirstMessage(), e.last = m.isLastMessage(), e.read = n, e.edited = m.isEdited, e.unread = !n, e.showTimestamp = m.showTimestamp, e.sticker = m.isSticker(), e.spacesWelcomeMessage = U, e.deliveryFailed = m.deliveryFailed, e.hearts = m.heartsVM.canHeart() || m.heartsVM.heartsEnabled(), e.urlPreview = m.isUrlPreview(), e.mojiItem = m.isMoji(), e.integrated = m.isIntegrated, e.picture = m.isPicture(), e.copyLink = m.copyLinkEnabled(), e.lastInBubble = m.isLastMessageInBubble(), t.forIn(f.activityItemGroups, function (t) {
-        i = t && t.toLowerCase(), i && (e[i] = !1);
+        i = t && t.toLowerCase();
+        i && (e[i] = !1);
       }), m.group() === f.activityItemGroups.PSTN ? e[f.activityItemGroups.CALL] = !0 : e[m.group()] = !0, m.group() === f.activityItemGroups.CONTACT_REQUEST && Z(e), m.group() === f.activityItemGroups.CUSTOM && (e.participant = !0), t.trim(t.reduce(e, function (e, t, n) {
         return w.unwrap(t) ? e + " " + n : e;
       }, m.customMessageClasses || ""));
@@ -67,7 +68,9 @@ define("ui/viewModels/chat/message", [
           v.activityType.ContactRequestIncomingInviteFree
         ], m.model.type());
       }
-      e.contactMessage = n(), e.their = !e.me && !n(), e.participant = r();
+      e.contactMessage = n();
+      e.their = !e.me && !n();
+      e.participant = r();
     }
     function et(e) {
       var t = e.type() === v.activityType.ParticipantJoined, n = e.persons();
@@ -84,18 +87,28 @@ define("ui/viewModels/chat/message", [
         return !N.isMePerson(e);
       }
       var t = u.newObservableProperty(e.context), n = e.persons().filter(s), r;
-      e.reason && (r = e.reason()), m.participantsWithoutAuthor = n.map(o);
+      e.reason && (r = e.reason());
+      m.participantsWithoutAuthor = n.map(o);
       if (et(e)) {
         var i = u.newObservableProperty(R.selfParticipant.role);
-        m.participantsWithoutMyself = n.filter(a).map(o), m.contentTemplate(G(f.customActivityItemTemplates.SPACES_WELCOME_MESSAGE)), m.spaceLink = u.newObservableProperty(R.uri), m.isJoiningEnabled = u.newObservableProperty(R.isJoiningEnabled), m.conversation = R, m.showSpacesCTA = w.computed(function () {
+        m.participantsWithoutMyself = n.filter(a).map(o);
+        m.contentTemplate(G(f.customActivityItemTemplates.SPACES_WELCOME_MESSAGE));
+        m.spaceLink = u.newObservableProperty(R.uri);
+        m.isJoiningEnabled = u.newObservableProperty(R.isJoiningEnabled);
+        m.conversation = R;
+        m.showSpacesCTA = w.computed(function () {
           return i() === v.participantRole.Leader;
-        }), m.welcomeMessage = w.computed(function () {
+        });
+        m.welcomeMessage = w.computed(function () {
           return b.fetch({ key: m.isJoiningEnabled() ? "spaces_welcomeMessage" : "spaces_welcomeMessageWithoutLink" });
-        }), m.editTopicAction = function () {
+        });
+        m.editTopicAction = function () {
           m.dispatchEvent(g.conversation.OPEN_PROFILE, { editTopic: !0 }, m.DIRECTION.PARENT);
-        }, m.settingsAction = function () {
+        };
+        m.settingsAction = function () {
           m.dispatchEvent(g.conversation.OPEN_PROFILE, { editTopic: !1 }, m.DIRECTION.PARENT);
-        }, m.othersAddedMessageContent = w.computed(function () {
+        };
+        m.othersAddedMessageContent = w.computed(function () {
           if (m.participantsWithoutMyself.length > 0)
             return x.getMessageFromParticipantActivityItem(e.type(), m.author, m.participantsWithoutMyself, t, r, R);
         });
@@ -110,7 +123,8 @@ define("ui/viewModels/chat/message", [
           key: "label_text_openConversation",
           params: { displayName: e.sender.displayName() }
         });
-      })), m.direction = e.direction && e.direction();
+      }));
+      m.direction = e.direction && e.direction();
     }
     function rt(e, t) {
       if (t.translation) {
@@ -193,19 +207,29 @@ define("ui/viewModels/chat/message", [
       }
     }
     function st() {
-      Q && Q.dispose(), Q = m.isDeleted.subscribe(function (e) {
+      Q && Q.dispose();
+      Q = m.isDeleted.subscribe(function (e) {
         if (!e)
           return;
-        Q.dispose(), Q = null, m.group(f.activityItemGroups.TEXT), m.contentTemplate("textMessageContentTemplate"), m.isUrlPreview(!1), m.previews && (vt(m.previews()), m.previews([]));
+        Q.dispose();
+        Q = null;
+        m.group(f.activityItemGroups.TEXT);
+        m.contentTemplate("textMessageContentTemplate");
+        m.isUrlPreview(!1);
+        m.previews && (vt(m.previews()), m.previews([]));
       });
     }
     function ot() {
-      m.showSpacesCTA && m.showSpacesCTA.dispose(), m.welcomeMessage && m.welcomeMessage.dispose(), m.othersAddedMessageContent && m.othersAddedMessageContent.dispose(), m.participantsWithoutMyself && t.forEach(m.participantsWithoutMyself, function (e) {
+      m.showSpacesCTA && m.showSpacesCTA.dispose();
+      m.welcomeMessage && m.welcomeMessage.dispose();
+      m.othersAddedMessageContent && m.othersAddedMessageContent.dispose();
+      m.participantsWithoutMyself && t.forEach(m.participantsWithoutMyself, function (e) {
         e.dispose();
       });
     }
     function ut() {
-      ot(), m.participantsWithoutAuthor && t.forEach(m.participantsWithoutAuthor, function (e) {
+      ot();
+      m.participantsWithoutAuthor && t.forEach(m.participantsWithoutAuthor, function (e) {
         e.dispose();
       });
     }
@@ -232,7 +256,9 @@ define("ui/viewModels/chat/message", [
     }
     function lt(e) {
       var t;
-      t = q.conversationsManager.getConversation(e), q.conversationsManager.conversations.add(t), A.publish(g.navigation.OPEN_CONVERSATION, {
+      t = q.conversationsManager.getConversation(e);
+      q.conversationsManager.conversations.add(t);
+      A.publish(g.navigation.OPEN_CONVERSATION, {
         model: t,
         origin: f.telemetry.historyLoadOrigin.AUTHOR_SWITCH
       });
@@ -262,24 +288,90 @@ define("ui/viewModels/chat/message", [
     var m = this, q = i.get(), R, U = !1, z, W, X = !e || !e.noUrlPreview, V = e && e.noTranslationItem, $ = O.resolve(f.serviceLocator.FEATURE_FLAGS), J = q.translatorService, K = J && q.translatorService.state() === f.translatorServiceState.Authenticated, Q;
     this.init = function (e, t) {
       var n = O.resolve(f.serviceLocator.FEATURE_FLAGS), r = e.key();
-      z = n.isFeatureOn(f.featureFlags.SPACES), W = n.isFeatureOn(f.featureFlags.MESSAGE_ENFORCE_TEXT_FORMAT), R = t, m.isEdited = w.observable(!1), m.messageDeliveryIndicatorEnabledSW4B = n.isFeatureOn(f.featureFlags.SHOW_MESSAGE_DELIVERY_INDICATOR_SW4B), m.messageDeliveryStatusEnabled = n.isFeatureOn(f.featureFlags.SHOW_MESSAGE_DELIVERY_STATUS) && e.type() !== v.activityType.SystemMessage, m.isDeleted = w.observable(!1), m.isMyself = !1, m.clientmessageid = r, m.contentId = r ? "msg_" + r : null, m.timestamp = e.timestamp(), m.setTimestamp = w.observable("00:00"), m.showTimestamp = w.observable(!0), m.isRead = u.newObservableProperty(e.isRead), m.isFirstMessage = w.observable(!1), m.isLastMessage = w.observable(!1), m.isLastMessageInBubble = w.observable(!1), m.model = e, m.group = w.observable(x.getActivityItemGroup(e.type())), m.isGroupConversation = R.isGroupConversation(), m.renderAuthorInfo = w.observable(!1), m.showAuthorInfo = w.observable(!1), m.liveSessionDuration = !1, m.isCallActivityItem = w.computed(function () {
+      z = n.isFeatureOn(f.featureFlags.SPACES);
+      W = n.isFeatureOn(f.featureFlags.MESSAGE_ENFORCE_TEXT_FORMAT);
+      R = t;
+      m.isEdited = w.observable(!1);
+      m.messageDeliveryIndicatorEnabledSW4B = n.isFeatureOn(f.featureFlags.SHOW_MESSAGE_DELIVERY_INDICATOR_SW4B);
+      m.messageDeliveryStatusEnabled = n.isFeatureOn(f.featureFlags.SHOW_MESSAGE_DELIVERY_STATUS) && e.type() !== v.activityType.SystemMessage;
+      m.isDeleted = w.observable(!1);
+      m.isMyself = !1;
+      m.clientmessageid = r;
+      m.contentId = r ? "msg_" + r : null;
+      m.timestamp = e.timestamp();
+      m.setTimestamp = w.observable("00:00");
+      m.showTimestamp = w.observable(!0);
+      m.isRead = u.newObservableProperty(e.isRead);
+      m.isFirstMessage = w.observable(!1);
+      m.isLastMessage = w.observable(!1);
+      m.isLastMessageInBubble = w.observable(!1);
+      m.model = e;
+      m.group = w.observable(x.getActivityItemGroup(e.type()));
+      m.isGroupConversation = R.isGroupConversation();
+      m.renderAuthorInfo = w.observable(!1);
+      m.showAuthorInfo = w.observable(!1);
+      m.liveSessionDuration = !1;
+      m.isCallActivityItem = w.computed(function () {
         return m.group() === f.activityItemGroups.CALL || m.group() === f.activityItemGroups.PSTN;
-      }), m.isSticker = w.observable(), m.isMoji = w.observable(!1), m.isPicture = w.observable(!1), m.isUrlPreview = w.observable(!1), m.deliveryFailed = w.observable(!1), m.deliveryFailedMessage = b.fetch({ key: "message_not_delivered_text" }), m.statusText = w.observable(), m.deliveryStatusIconCssClass = w.observable(), m.isMyLastMessageInChat = w.observable(!1), m.isIntegrated = M.get().isIntegratedProperty(), m.copyLinkEnabled = w.observable(!1), m.copyActive = w.observable(!1), m.heartsVM = y.build(m, R, function (e) {
+      });
+      m.isSticker = w.observable();
+      m.isMoji = w.observable(!1);
+      m.isPicture = w.observable(!1);
+      m.isUrlPreview = w.observable(!1);
+      m.deliveryFailed = w.observable(!1);
+      m.deliveryFailedMessage = b.fetch({ key: "message_not_delivered_text" });
+      m.statusText = w.observable();
+      m.deliveryStatusIconCssClass = w.observable();
+      m.isMyLastMessageInChat = w.observable(!1);
+      m.isIntegrated = M.get().isIntegratedProperty();
+      m.copyLinkEnabled = w.observable(!1);
+      m.copyActive = w.observable(!1);
+      m.heartsVM = y.build(m, R, function (e) {
         m.dispatchEvent(g.userListPopup.POPUP_TOGGLE, e);
-      }), m.heartsVM.init(), m.contentTemplate = w.observable(G(e.type())), m.typeClasses = {}, it(e, R.isGroupConversation()), m.cssClass = w.computed(Y, this), m.messageDeliveryIndicatorEnabledSW4B && m.model.status.changed(ft), m.messageDeliveryStatusEnabled && m.isMyLastMessageInChat.subscribe(pt), q.personsAndGroupsManager.all.persons.added(ct), V || (m.translationItem = D.build(m, R), m.translationItem.init()), m.forwardEvent(g.videoPlayer.FULLSCREEN_ON, m.DIRECTION.PARENT, null, m.DIRECTION.CHILD), m.forwardEvent(g.videoPlayer.FULLSCREEN_OFF, m.DIRECTION.PARENT, null, m.DIRECTION.CHILD);
-    }, this.dispose = function () {
-      Q && Q.dispose(), m.content && m.content.dispose && m.content.dispose(), m.cssClass && m.cssClass.dispose(), m.author && m.author.dispose(), m.isCallActivityItem && m.isCallActivityItem.dispose(), m.checkedAnswerSubscription && m.checkedAnswerSubscription.dispose && m.checkedAnswerSubscription.dispose(), m.peopleVotedNumSubscription && m.peopleVotedNumSubscription.dispose && m.peopleVotedNumSubscription.dispose(), ut(), m.model && (m.messageDeliveryIndicatorEnabledSW4B || m.messageDeliveryStatusEnabled) && m.model.status.changed.off(ft), m.heartsVM && m.heartsVM.dispose(), q.personsAndGroupsManager.all.persons.added.off(ct), m.translationItem && m.translationItem.dispose(), m.previews && (vt(m.previews()), m.previews([]));
-    }, this.onRendered = function () {
-      m.isRendered = !0, m.dispatchEvent(g.message.RENDERED);
-    }, this.onBeforeExpanded = function () {
+      });
+      m.heartsVM.init();
+      m.contentTemplate = w.observable(G(e.type()));
+      m.typeClasses = {};
+      it(e, R.isGroupConversation());
+      m.cssClass = w.computed(Y, this);
+      m.messageDeliveryIndicatorEnabledSW4B && m.model.status.changed(ft);
+      m.messageDeliveryStatusEnabled && m.isMyLastMessageInChat.subscribe(pt);
+      q.personsAndGroupsManager.all.persons.added(ct);
+      V || (m.translationItem = D.build(m, R), m.translationItem.init());
+      m.forwardEvent(g.videoPlayer.FULLSCREEN_ON, m.DIRECTION.PARENT, null, m.DIRECTION.CHILD);
+      m.forwardEvent(g.videoPlayer.FULLSCREEN_OFF, m.DIRECTION.PARENT, null, m.DIRECTION.CHILD);
+    };
+    this.dispose = function () {
+      Q && Q.dispose();
+      m.content && m.content.dispose && m.content.dispose();
+      m.cssClass && m.cssClass.dispose();
+      m.author && m.author.dispose();
+      m.isCallActivityItem && m.isCallActivityItem.dispose();
+      m.checkedAnswerSubscription && m.checkedAnswerSubscription.dispose && m.checkedAnswerSubscription.dispose();
+      m.peopleVotedNumSubscription && m.peopleVotedNumSubscription.dispose && m.peopleVotedNumSubscription.dispose();
+      ut();
+      m.model && (m.messageDeliveryIndicatorEnabledSW4B || m.messageDeliveryStatusEnabled) && m.model.status.changed.off(ft);
+      m.heartsVM && m.heartsVM.dispose();
+      q.personsAndGroupsManager.all.persons.added.off(ct);
+      m.translationItem && m.translationItem.dispose();
+      m.previews && (vt(m.previews()), m.previews([]));
+    };
+    this.onRendered = function () {
+      m.isRendered = !0;
+      m.dispatchEvent(g.message.RENDERED);
+    };
+    this.onBeforeExpanded = function () {
       m.dispatchEvent(g.message.BEFORE_EXPANDED);
-    }, this.onAfterExpanded = function () {
+    };
+    this.onAfterExpanded = function () {
       m.dispatchEvent(g.message.AFTER_EXPANDED);
-    }, this.openConversationWithAuthor = function () {
+    };
+    this.openConversationWithAuthor = function () {
       if (R.selfParticipant.isAnonymous() || N.isGuest(m.model.sender))
         return !1;
       lt(m.model.sender);
-    }, this.navigateToDialPad = function () {
+    };
+    this.navigateToDialPad = function () {
       function e() {
         return {
           page: a.calling.SKYPEOUT_PAGE,
@@ -287,45 +379,60 @@ define("ui/viewModels/chat/message", [
         };
       }
       A.publish(f.events.navigation.NAVIGATE, e());
-    }, this.sendContactRequest = function () {
+    };
+    this.sendContactRequest = function () {
       function o(e, t, n) {
         function i(r) {
           r.name() === F.defaultBusinessContactsGroup && (q.personsAndGroupsManager.all.groups.added.off(i), u(r, e, t, n));
         }
         var r;
-        r = q.personsAndGroupsManager.createGroup(), r.name.set(F.defaultBusinessContactsGroup), q.personsAndGroupsManager.all.groups.add(r).then(function () {
+        r = q.personsAndGroupsManager.createGroup();
+        r.name.set(F.defaultBusinessContactsGroup);
+        q.personsAndGroupsManager.all.groups.add(r).then(function () {
           q.personsAndGroupsManager.all.groups.added(i);
         }, n);
       }
       function u(e, t, n, r) {
         e.persons.add(t.id()).then(function () {
-          R.historyService.removeCustomActivityItem(v.activityType.ContactRequestOutgoing), R.historyService.removeCustomActivityItem(v.activityType.ContactRequestIsNowContact), R.historyService.addCustomActivityItem(v.activityType.ContactRequestIsNowContact, { sender: t }), n();
+          R.historyService.removeCustomActivityItem(v.activityType.ContactRequestOutgoing);
+          R.historyService.removeCustomActivityItem(v.activityType.ContactRequestIsNowContact);
+          R.historyService.addCustomActivityItem(v.activityType.ContactRequestIsNowContact, { sender: t });
+          n();
         }, r);
       }
       function a() {
-        r === v.activityType.ContactRequestOutgoing && i.recordAction(n.contacts.contactRequestSent, { isResend: !1 }), r === v.activityType.ContactRequestOutgoingAgent && i.recordAction(n.contacts.contactRequestSent, { isResend: !1 }), r === v.activityType.ContactRequestOutgoingResend && i.recordAction(n.contacts.contactRequestSent, { isResend: !0 }), r === v.activityType.SuggestedContact && i.recordAction(n.contacts.contactRequestSuggestedSent);
+        r === v.activityType.ContactRequestOutgoing && i.recordAction(n.contacts.contactRequestSent, { isResend: !1 });
+        r === v.activityType.ContactRequestOutgoingAgent && i.recordAction(n.contacts.contactRequestSent, { isResend: !1 });
+        r === v.activityType.ContactRequestOutgoingResend && i.recordAction(n.contacts.contactRequestSent, { isResend: !0 });
+        r === v.activityType.SuggestedContact && i.recordAction(n.contacts.contactRequestSuggestedSent);
       }
       var e, t = m.model.sender, r = m.model.type(), i = O.resolve(f.serviceLocator.ACTION_TELEMETRY), s;
       return m.actionInProgress(!0), q.conversationsManager.conversations.add(R), $.isFeatureOn(f.featureFlags.ENABLE_BUSINESS_CONTACT_MANAGEMENT) ? e = new Promise(function (e, n) {
         q.personsAndGroupsManager.all.groups.get().then(function (r) {
           s = r.filter(function (e) {
             return e.name() === F.defaultBusinessContactsGroup;
-          }), s.length > 0 ? u(s[0], t, e, n) : o(t, e, n);
+          });
+          s.length > 0 ? u(s[0], t, e, n) : o(t, e, n);
         }, n);
       }) : e = q.personsAndGroupsManager.all.persons.add(t, t.id(), undefined, r), a(), e.then(dt, dt), e;
-    }, this.acceptContactRequest = function () {
+    };
+    this.acceptContactRequest = function () {
       var e, t = m.model.sender, r = O.resolve(f.serviceLocator.ACTION_TELEMETRY);
       return m.actionInProgress(!0), e = q.personsAndGroupsManager.all.persons.add(t, t.id(), undefined, v.activityType.ContactRequestIncoming), r.recordAction(n.contacts.contactRequestAccepted), e.then(dt, dt), e;
-    }, this.declineContactRequest = function () {
+    };
+    this.declineContactRequest = function () {
       var e, t = O.resolve(f.serviceLocator.ACTION_TELEMETRY);
       return m.actionInProgress(!0), e = q.conversationsManager.conversations.remove(R, v.activityType.ContactRequestIncoming), t.recordAction(n.contacts.contactRequestDeclined), e.then(dt, dt), e;
-    }, this.blockContactRequest = function () {
+    };
+    this.blockContactRequest = function () {
       var e = { source: r.contactRequestIncomingActivityItem }, t = new o(m.author.getPerson(), e), n = b.fetch({ key: "modal_blockContact_text_aria_label" });
       return T.build(o.ELEMENT_ID, t, s), T.show(o.ELEMENT_ID, n), Promise.resolve();
-    }, this.unblockContact = function () {
+    };
+    this.unblockContact = function () {
       var e, t = m.model.sender, i = O.resolve(f.serviceLocator.ACTION_TELEMETRY);
       return m.actionInProgress(!0), i.recordAction(n.contacts.contactUnblocked, { source: r.unblockActivityItem }), t.isBlocked.set.enabled() ? e = t.isBlocked.set(!1) : e = Promise.resolve(), e.then(dt, dt), e;
-    }, this.openUrlPreview = function (e, t) {
+    };
+    this.openUrlPreview = function (e, t) {
       function n() {
         if (!$.isFeatureOn(f.featureFlags.URL_PREVIEW_LOAD_YOUTUBE_PLAYER))
           return !1;
@@ -340,29 +447,36 @@ define("ui/viewModels/chat/message", [
           participantCount: R.participantsCount()
         };
       return B.publishActionEvent(i), r && j.render(r, m, R, e) ? !1 : !0;
-    }, this.isPSTNContactMessage = function (e) {
+    };
+    this.isPSTNContactMessage = function (e) {
       var t = ht(e);
       return N.isPstn(t);
-    }, this.contactHasFullName = function (e) {
+    };
+    this.contactHasFullName = function (e) {
       var t = ht(e);
       return t.displayName() !== e || N.isPstn(t);
-    }, this.isMePersonContactMessage = function (e) {
+    };
+    this.isMePersonContactMessage = function (e) {
       return N.isMePersonId(e);
-    }, this.openConversationWithUser = function (e) {
+    };
+    this.openConversationWithUser = function (e) {
       var t = ht(e);
-      lt(t), c.publishActionEvent({
+      lt(t);
+      c.publishActionEvent({
         person: t,
         participantsCount: R.participantsCount(),
         timeInStale: m.timestamp.getTime()
       });
-    }, this.addCreditTelemetry = function (e, t) {
+    };
+    this.addCreditTelemetry = function (e, t) {
       var n = f.telemetry.pstn;
       return t.target.className === n.cssClasses.ADD_CREDIT ? L.addingCredit(n.entryPoint.NO_CREDIT_CALL_END) : t.target.className === n.cssClasses.ADD_SUBSCRIPTION && L.addingSubscription(n.entryPoint.NO_SUBSCRIPTION_CALL_END), !0;
-    }, this.activateFirstLink = function (e, t) {
+    };
+    this.activateFirstLink = function (e, t) {
       var n = e.elementInfo.element.querySelector(".content a");
       n && t.target.tagName !== "A" && (n.click(), t.preventDefault(), t.stopPropagation());
     };
   }
   var t = e("lodash-compat"), n = e("ui/telemetry/actions/actionNames"), r = e("ui/telemetry/actions/actionSources"), i = e("cafe/applicationInstance"), s = e("text!views/people/blockContactModal.html"), o = e("ui/viewModels/people/blockContactModal"), u = e("utils/common/cafeObservable"), a = e("constants/components"), f = e("constants/common"), l = e("ui/viewModels/people/contactBuilder"), c = e("telemetry/chat/contactInfoEvent"), h = e("ui/contactInfoMessage/contactInfoMessage"), p = e("ui/viewModels/people/contactName"), d = e("constants/contentTemplates"), v = e("swx-enums"), m = e("utils/common/eventMixin"), g = f.events, y = e("ui/viewModels/chat/hearts"), b = e("swx-i18n").localization, w = e("vendor/knockout"), E = e("ui/viewModels/chat/messageMediaTypesHandlers"), S = e("utils/chat/messageSanitizer"), x = e("utils/chat/message"), T = e("ui/modalDialog/modalDialog"), N = e("ui/modelHelpers/personHelper"), C = e("ui/viewModels/chat/pollAvatars"), k = e("telemetry/chat/poll"), L = e("telemetry/calling/pstn/pstn"), A = e("services/pubSub/pubSub"), O = e("services/serviceLocator"), M = e("utils/common/styleModeHelper"), _ = e("ui/viewModels/chat/messageParsers/swiftCard"), D = e("ui/viewModels/chat/translator/translationItem"), P = e("utils/chat/translatorHelper"), H = e("ui/urlPreview/urlPreview"), B = e("telemetry/chat/urlPreviewAction"), j = e("ui/players/ytPlayer"), F = e("experience/settings"), I = /<span class="emoticon\s?\w*\s?(animated)?\s+\w*large"><span class="emoSprite">.*<\/span><\/span>/i;
   return t.assign(q.prototype, m), q;
-})
+});

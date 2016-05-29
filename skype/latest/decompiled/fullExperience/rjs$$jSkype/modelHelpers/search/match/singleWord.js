@@ -9,4 +9,4 @@ define("jSkype/modelHelpers/search/match/singleWord", [
     var r = new RegExp(n.escapeRegExp(t), "i");
     return !!e.match(r);
   };
-})
+});

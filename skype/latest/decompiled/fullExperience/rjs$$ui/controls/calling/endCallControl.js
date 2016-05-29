@@ -10,7 +10,10 @@ define("ui/controls/calling/endCallControl", [
     name: r.CONTROLS.END_CALL_CONTROL,
     render: function (e, r) {
       var s, o = document.createElement("div"), u = e.conversation;
-      s = i.build(u), o.innerHTML = t, n.applyBindings(s, o), r(o.firstElementChild);
+      s = i.build(u);
+      o.innerHTML = t;
+      n.applyBindings(s, o);
+      r(o.firstElementChild);
     }
   };
-})
+});

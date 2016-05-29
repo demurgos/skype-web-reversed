@@ -37,4 +37,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/joinConversationForConnectedCa
       };
     return s;
   }, i;
-})
+});

@@ -14,7 +14,8 @@ define("jSkype/services/outOfBrowser/shellApp/messagingChannel", [
           }, o = function () {
             e.sendCommand(s);
           }, u = function (t) {
-            s.error = t, e.sendCommand(s);
+            s.error = t;
+            e.sendCommand(s);
           }, a;
         try {
           var f = t[i.name];
@@ -26,9 +27,11 @@ define("jSkype/services/outOfBrowser/shellApp/messagingChannel", [
       }
     }
     var e = this, t = {};
-    window.shellApp.addEventListener(n.shellAppEvents.MessageReceived, r), e.sendCommand = function (e) {
+    window.shellApp.addEventListener(n.shellAppEvents.MessageReceived, r);
+    e.sendCommand = function (e) {
       window.shellApp.invoke(n.shellAppMethods.PostMessage, { message: e });
-    }, e.registerCommandHandler = function (e, n) {
+    };
+    e.registerCommandHandler = function (e, n) {
       t[e] = n;
     };
   }
@@ -36,4 +39,4 @@ define("jSkype/services/outOfBrowser/shellApp/messagingChannel", [
   t.build = function () {
     return new r();
   };
-})
+});

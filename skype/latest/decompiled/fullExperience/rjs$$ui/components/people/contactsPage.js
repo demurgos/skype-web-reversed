@@ -18,5 +18,7 @@ define("ui/components/people/contactsPage", [
     };
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/people/contactsPage");
-  t.name = e("constants/components").people.CONTACTS_PAGE, t.template = e("text!views/people/contactsPage.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").people.CONTACTS_PAGE;
+  t.template = e("text!views/people/contactsPage.html");
+  t.viewModel = { createViewModel: i };
+});

@@ -13,5 +13,7 @@ define("ui/components/chat/headerNewConversation", [
     return o.setContext(n.dataFor(t.element)), o;
   }
   var n = e("vendor/knockout"), r = e("telemetry/chat/newConversationFlow"), i = e("ui/viewModels/chat/headerNewConversation");
-  t.name = e("constants/components").chat.HEADER_NEW_CONVERSATION, t.template = e("text!views/chat/headerNewConversation.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").chat.HEADER_NEW_CONVERSATION;
+  t.template = e("text!views/chat/headerNewConversation.html");
+  t.viewModel = { createViewModel: s };
+});

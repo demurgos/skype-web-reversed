@@ -10,5 +10,7 @@ define("ui/components/chat/conversationCard", [
     return new n(e);
   }
   var n = e("ui/viewModels/chat/conversationCard");
-  t.name = e("constants/components").chat.CONVERSATION_CARD, t.template = e("text!views/chat/conversationCard.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.CONVERSATION_CARD;
+  t.template = e("text!views/chat/conversationCard.html");
+  t.viewModel = { createViewModel: r };
+});

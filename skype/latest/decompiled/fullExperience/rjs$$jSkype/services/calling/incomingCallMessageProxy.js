@@ -28,14 +28,18 @@ define("jSkype/services/calling/incomingCallMessageProxy", [
       v(o, e.convoCallId) || (t.push(e.convoCallId), u.mark(c.CALLING.INCOMING.P2P_IN_PLUGINLESS_START));
     }
     function y(e) {
-      o.push(e.convoCallId), v(t, e.convoCallId) && (u.mark(c.CALLING.INCOMING.P2P_IN_PLUGINLESS_END), u.measure(h.CALLING.INCOMING.TBN, c.CALLING.INCOMING.P2P_IN_PLUGINLESS_START, c.CALLING.INCOMING.P2P_IN_PLUGINLESS_END), m(), u.clearMarks(c.CALLING.INCOMING.P2P_IN_PLUGINLESS_START), u.clearMarks(c.CALLING.INCOMING.P2P_IN_PLUGINLESS_END), u.clearMeasures(h.CALLING.INCOMING.TBN));
+      o.push(e.convoCallId);
+      v(t, e.convoCallId) && (u.mark(c.CALLING.INCOMING.P2P_IN_PLUGINLESS_END), u.measure(h.CALLING.INCOMING.TBN, c.CALLING.INCOMING.P2P_IN_PLUGINLESS_START, c.CALLING.INCOMING.P2P_IN_PLUGINLESS_END), m(), u.clearMarks(c.CALLING.INCOMING.P2P_IN_PLUGINLESS_START), u.clearMarks(c.CALLING.INCOMING.P2P_IN_PLUGINLESS_END), u.clearMeasures(h.CALLING.INCOMING.TBN));
     }
     function b() {
-      a.clearTimeout(d), i.handleIncoming(e), e = null;
+      a.clearTimeout(d);
+      i.handleIncoming(e);
+      e = null;
     }
     var e = null, t = [], o = [], d;
     this.handleMessage = function (t) {
-      e = t, s.get().isPluginlessCallingSupported() && t.evt === l.INCOMING_CALL ? (g(t), d = a.setTimeout(function () {
+      e = t;
+      s.get().isPluginlessCallingSupported() && t.evt === l.INCOMING_CALL ? (g(t), d = a.setTimeout(function () {
         b();
       }, r.settings.incomingCalls.p2pToNgcNotificationTimeout)) : (y(t), b());
     };
@@ -44,4 +48,4 @@ define("jSkype/services/calling/incomingCallMessageProxy", [
   t.build = function () {
     return new d();
   };
-})
+});

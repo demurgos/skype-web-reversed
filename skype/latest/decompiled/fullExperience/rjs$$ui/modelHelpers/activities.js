@@ -6,4 +6,4 @@ define("ui/modelHelpers/activities", {
   "off-work": "offWork",
   "out-of-office": "outOfOffice",
   presenting: "presenting"
-})
+});

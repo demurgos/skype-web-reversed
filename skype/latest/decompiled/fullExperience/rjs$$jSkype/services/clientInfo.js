@@ -17,4 +17,4 @@ define("jSkype/services/clientInfo", [
     },
     getClientInfo: r
   };
-})
+});

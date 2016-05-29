@@ -18,4 +18,4 @@ define("jSkype/services/serviceAccessLayer/builders/factory", [
       }
     };
   return i;
-})
+});

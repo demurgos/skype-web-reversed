@@ -61,7 +61,8 @@ define("services/pes.v2/configSync", [
       });
     }
     var e = this, m = 0, g;
-    e.latestToken = "", e.init = function () {
+    e.latestToken = "";
+    e.init = function () {
       function v() {
         var e, t;
         return d.pesConfigUrl ? t = Promise.resolve({ pes_config: d.pesConfigUrl }) : (e = n.get().personsAndGroupsManager.mePerson, t = e.id.get().then(function (e) {
@@ -84,7 +85,10 @@ define("services/pes.v2/configSync", [
               var e = i.prefetch(l.getConfiguration());
               i.register(e);
             }).catch(function () {
-              e._requiresCDNUrlAuthentication = !0, n._requiresCDNUrlAuthentication = !0, n._cdnToken = e.latestToken, l.init(n);
+              e._requiresCDNUrlAuthentication = !0;
+              n._requiresCDNUrlAuthentication = !0;
+              n._cdnToken = e.latestToken;
+              l.init(n);
               var t = i.prefetch(l.getConfiguration());
               i.register(t);
             });
@@ -105,7 +109,8 @@ define("services/pes.v2/configSync", [
       }
       var l;
       return g = p.resolve(s.serviceLocator.FEATURE_FLAGS), g.isFeatureOn(s.featureFlags.PES_V2_ENABLED) ? (d.locale = d.locale || {}, d.initParams = d.initParams || {}, d.locale.pes = o.getPesLocale(d.initParams.locale), l = p.resolve(s.serviceLocator.PES_2_CONFIG_SERVICE), v().then(w).catch(b)) : c.init();
-    }, e.fetchConfiguration = function (r) {
+    };
+    e.fetchConfiguration = function (r) {
       function i() {
         var e, t = Promise.resolve();
         return g.isFeatureOn(s.featureFlags.PES_CDN_AUTH_ENABLED) && (e = n.get().signInManager._skypeToken(), t = Promise.resolve(e).then(b).then(E)), t;
@@ -134,10 +139,11 @@ define("services/pes.v2/configSync", [
       }).catch(function () {
         return o(r);
       }).catch(u);
-    }, e.dispose = function () {
+    };
+    e.dispose = function () {
       m && v.clearTimeout(m);
     };
   }
   var t = e("lodash-compat"), n = e("cafe/applicationInstance"), r = e("services/ecs/configLoader"), i = e("services/pes.v2/configProcessor"), s = e("constants/common"), o = e("services/i18n/cultureInfo"), u = e("swx-enums"), a = e("services/pes/constants"), f = e("utils/chat/pesUtils"), l = e("services/pubSub/pubSub"), c = e("services/pes/configSync"), h = e("reqwest"), p = e("services/serviceLocator"), d = e("experience/settings"), v = e("browser/window");
   return new m();
-})
+});

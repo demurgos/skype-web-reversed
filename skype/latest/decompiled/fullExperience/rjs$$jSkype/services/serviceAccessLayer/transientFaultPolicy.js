@@ -21,4 +21,4 @@ define("jSkype/services/serviceAccessLayer/transientFaultPolicy", [], function (
       return n(i) ? t(i) || r(i, e.serverError) : !1;
     }
   };
-})
+});

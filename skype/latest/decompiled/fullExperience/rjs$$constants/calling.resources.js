@@ -11,4 +11,4 @@ define("constants/calling.resources", [], function () {
       privacy: "<a href=\"https://www.skype.com/en/legal/privacy/\" target=\"_blank\">{pluginInstall_steps_text_privacyLink}</a>"
     }
   };
-})
+});

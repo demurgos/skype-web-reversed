@@ -14,8 +14,11 @@ define("jSkype/models/account", [
           return e.entitlements();
         });
       }
-    }), e.displayBalance = t.property({ readOnly: !0 }), e._currency = t.property({ readOnly: !0 }), e._balance = t.property({ readOnly: !0 });
+    });
+    e.displayBalance = t.property({ readOnly: !0 });
+    e._currency = t.property({ readOnly: !0 });
+    e._balance = t.property({ readOnly: !0 });
   }
   var t = e("jcafe-property-model"), n = e("jSkype/client"), r = e("jSkype/modelHelpers/account/dataHandlers/entitlements"), i = e("jSkype/services/serviceFactory");
   return s;
-})
+});

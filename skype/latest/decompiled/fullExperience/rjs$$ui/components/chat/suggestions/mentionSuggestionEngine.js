@@ -9,7 +9,8 @@ define("ui/components/chat/suggestions/mentionSuggestionEngine", [
 ], function (e) {
   function a() {
     var e = s.resolve(n.serviceLocator.FEATURE_FLAGS);
-    this.isEnabled = e.isFeatureOn(n.featureFlags.MENTIONS_ENABLED), this.matchImplicitByContains = e.isFeatureOn(n.featureFlags.AGGRESSIVE_IMPLICT_MENTIONS_MATCHING);
+    this.isEnabled = e.isFeatureOn(n.featureFlags.MENTIONS_ENABLED);
+    this.matchImplicitByContains = e.isFeatureOn(n.featureFlags.AGGRESSIVE_IMPLICT_MENTIONS_MATCHING);
   }
   function f(e, n) {
     if (!e)
@@ -48,4 +49,4 @@ define("ui/components/chat/suggestions/mentionSuggestionEngine", [
       })
     };
   }, a;
-})
+});

@@ -8,4 +8,4 @@ define("experience/api/visibility", [
   t.setFocus = function (e) {
     n.isVisible(e);
   };
-})
+});

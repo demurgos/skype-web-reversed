@@ -37,18 +37,21 @@ define("ui/components/chat/pes.v2/localSearchTab/localSearchTab", [
         o = t.filter(o, function (e) {
           var t = e.id in s;
           return t || (s[e.id] = !0), !t;
-        }), o.length && (u = t.cloneDeep(e), u.items = t.map(o, function (e) {
+        });
+        o.length && (u = t.cloneDeep(e), u.items = t.map(o, function (e) {
           return t.find(r._configuredItems, { id: e.id });
         }), i.packs.push(u));
       });
-    }), o.pesSearchServices.localSearchGroupByType && a.groupByType.run(i);
+    });
+    o.pesSearchServices.localSearchGroupByType && a.groupByType.run(i);
   }
   function c(e, n) {
     n.packs = [{
         ariaLabel: r.fetch({ key: i.localSearch.ariaLabelLocKey }),
         title: r.fetch({ key: i.localSearch.titleLocKey }),
         id: i.localSearch.PACK_PREFIX + "categories"
-      }], n.packs[0].items = t(o.pesSearchServices.localSearchCategories).map(function (e) {
+      }];
+    n.packs[0].items = t(o.pesSearchServices.localSearchCategories).map(function (e) {
       return {
         id: e,
         type: i.itemTypes.message.id,
@@ -59,11 +62,15 @@ define("ui/components/chat/pes.v2/localSearchTab/localSearchTab", [
   }
   function h(e, r, o) {
     var a = t.find(r.tabs, { id: i.localSearch.TAB_ID }), f = s.resolve(n.serviceLocator.PES_2_CONFIG_SERVICE), h = f.getConfiguration();
-    e = (e || "").toLowerCase(), a._currentQuery = e, e ? l(h, e, r, a) : c(r, a), u.setSelectionState.run(r), o(r, [
+    e = (e || "").toLowerCase();
+    a._currentQuery = e;
+    e ? l(h, e, r, a) : c(r, a);
+    u.setSelectionState.run(r);
+    o(r, [
       "selectedTab",
       "selectedItem"
     ]);
   }
   var t = e("lodash-compat"), n = e("constants/common"), r = e("swx-i18n").localization, i = e("services/pes/constants"), s = e("services/serviceLocator"), o = e("experience/settings"), u = e("services/pes.v2/interactors/picker"), a = e("services/pes.v2/interactors/localSearch");
   return { doLocalSearch: h };
-})
+});

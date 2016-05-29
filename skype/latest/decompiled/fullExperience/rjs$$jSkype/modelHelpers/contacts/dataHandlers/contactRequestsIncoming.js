@@ -7,7 +7,8 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactRequestsIncoming", [
   function r(e) {
     this.onSuccess = function (t) {
       t.response && e.process(t.response);
-    }, this.onError = function (e) {
+    };
+    this.onError = function (e) {
     };
   }
   var n = e("jSkype/modelHelpers/contacts/dataProcessors/contactRequests");
@@ -15,4 +16,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactRequestsIncoming", [
     var e = n.build();
     return new r(e);
   };
-})
+});

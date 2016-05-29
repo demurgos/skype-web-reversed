@@ -32,19 +32,32 @@ define("ui/modalDialog/modalDialog", [
   t.build = function (e, t, n) {
     var r = c(e, n);
     return i.applyBindings(t, r), r;
-  }, t.show = function (e, t, r) {
+  };
+  t.show = function (e, t, r) {
     var i, s, o = u.isOverlayDisplayed();
-    r = r || "", u.display(e, t, r, {
+    r = r || "";
+    u.display(e, t, r, {
       containerClasses: [
         a.base.SWX,
         a.base.DESKTOP
       ]
-    }), o || f.initFocusRing(u.getOverlayContainer()), i = n.getElementById(e), s = n.getParentWithClass(i, a.base.OVERLAY_CONTAINER), l.initLocaleDirection(s), n.removeClass(i, a.HIDE), p();
-  }, t.hide = function (e) {
-    var t = n.getElementById(e) || h();
-    d(), u.hide(), t && n.addClass(t, a.HIDE);
-  }, t.dispose = function (e) {
-    var r = n.getElementById(e) || h();
-    t.hide(e), r && i.removeNode(r);
+    });
+    o || f.initFocusRing(u.getOverlayContainer());
+    i = n.getElementById(e);
+    s = n.getParentWithClass(i, a.base.OVERLAY_CONTAINER);
+    l.initLocaleDirection(s);
+    n.removeClass(i, a.HIDE);
+    p();
   };
-})
+  t.hide = function (e) {
+    var t = n.getElementById(e) || h();
+    d();
+    u.hide();
+    t && n.addClass(t, a.HIDE);
+  };
+  t.dispose = function (e) {
+    var r = n.getElementById(e) || h();
+    t.hide(e);
+    r && i.removeNode(r);
+  };
+});

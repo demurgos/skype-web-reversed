@@ -34,6 +34,7 @@ define("telemetry/chat/urlPreviewAction", [
       s.get().sendEvent(n.telemetry.uiTenantToken, t, r);
     }
     var t;
-    t = r(), c(t);
+    t = r();
+    c(t);
   };
-})
+});

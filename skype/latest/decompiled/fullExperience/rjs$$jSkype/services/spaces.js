@@ -12,10 +12,13 @@ define("jSkype/services/spaces", [
   var n = e("jSkype/client"), r = e("swx-enums"), i = e("jcafe-property-model"), s = e("services/ecs/configLoader"), o = e("reqwest"), u = e("jSkype/settings"), a = null;
   t.fetchConfig = function () {
     return a || (a = s.loadConfig(r.ecsClientNames.Skype, u.settings.ecsSpacesKey)), a;
-  }, t.getSpacesData = function (e) {
+  };
+  t.getSpacesData = function (e) {
     function u(t, n) {
       var i = "https://" + n.UrlGeneratorService.Host;
-      n.UrlGeneratorService.Port !== 443 && (i += ":" + n.UrlGeneratorService.Port), i += n.UrlGeneratorService.Endpoints.Threads, r = {
+      n.UrlGeneratorService.Port !== 443 && (i += ":" + n.UrlGeneratorService.Port);
+      i += n.UrlGeneratorService.Endpoints.Threads;
+      r = {
         method: "post",
         url: i,
         dataType: "json",
@@ -26,7 +29,8 @@ define("jSkype/services/spaces", [
           threadId: e
         }),
         crossOrigin: !0
-      }, o.compat(r).then(s.resolve.bind(s), s.reject.bind(s));
+      };
+      o.compat(r).then(s.resolve.bind(s), s.reject.bind(s));
     }
     function a() {
       s.reject(new Error("Loading of ecs configuration for spaces failed"));
@@ -36,4 +40,4 @@ define("jSkype/services/spaces", [
       t.fetchConfig().then(u.bind(null, e), a);
     }), s.promise;
   };
-})
+});

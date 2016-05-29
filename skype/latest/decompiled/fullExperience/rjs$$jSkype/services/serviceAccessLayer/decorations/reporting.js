@@ -66,13 +66,16 @@ define("jSkype/services/serviceAccessLayer/decorations/reporting", [
         };
       }
       function d(e) {
-        a.reportSuccess(i, f(e)), e.retryCount && o.get().publish(p(e, !1));
+        a.reportSuccess(i, f(e));
+        e.retryCount && o.get().publish(p(e, !1));
       }
       function v(e) {
         e.retryCount && o.get().publish(p(e, !0));
         if (h(i)) {
           var t = f();
-          e instanceof XMLHttpRequest && (t.faultCode = e.status), a.reportFail(i, t), c(t, e);
+          e instanceof XMLHttpRequest && (t.faultCode = e.status);
+          a.reportFail(i, t);
+          c(t, e);
         }
       }
       function m(e) {
@@ -86,4 +89,4 @@ define("jSkype/services/serviceAccessLayer/decorations/reporting", [
       return s.then(d, v), s;
     };
   };
-})
+});

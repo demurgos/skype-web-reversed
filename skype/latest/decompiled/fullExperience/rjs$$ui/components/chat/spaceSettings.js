@@ -12,5 +12,7 @@ define("ui/components/chat/spaceSettings", [
     return i.setContext(n.dataFor(t.element)), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/spaceSettings");
-  t.name = e("constants/components").chat.SPACE_SETTINGS, t.template = e("text!views/chat/spaceSettings.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.SPACE_SETTINGS;
+  t.template = e("text!views/chat/spaceSettings.html");
+  t.viewModel = { createViewModel: i };
+});

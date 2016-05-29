@@ -7,13 +7,21 @@ define("jSkype/telemetry/poll", [
   function i() {
     this.sendPoll = function (s) {
       var o = e(s, n.telemetry.poll.activityType.SEND);
-      t.get()._telemetryManager.sendEvent(r.settings.telemetry.jSkypeTenantToken, n.telemetry.poll.eventName.ACTIVITY, o), s.pollAnswers().forEach(function (e) {
+      t.get()._telemetryManager.sendEvent(r.settings.telemetry.jSkypeTenantToken, n.telemetry.poll.eventName.ACTIVITY, o);
+      s.pollAnswers().forEach(function (e) {
         var i = {};
-        i[n.telemetry.poll.property.CONVERSATION_ID] = s.conversationId(), i[n.telemetry.poll.property.ANSWER_LENGTH] = e.answerText.length, t.get()._telemetryManager.sendEvent(r.settings.telemetry.jSkypeTenantToken, n.telemetry.poll.eventName.ANSWER_LENGTH, i);
+        i[n.telemetry.poll.property.CONVERSATION_ID] = s.conversationId();
+        i[n.telemetry.poll.property.ANSWER_LENGTH] = e.answerText.length;
+        t.get()._telemetryManager.sendEvent(r.settings.telemetry.jSkypeTenantToken, n.telemetry.poll.eventName.ANSWER_LENGTH, i);
       });
-    }, this.error = function (i, s, o, u) {
+    };
+    this.error = function (i, s, o, u) {
       var a = {};
-      a[n.telemetry.poll.property.CONVERSATION_ID] = i, s && (a[n.telemetry.poll.property.MESSAGE_ID] = s), a[n.telemetry.poll.property.XMM_TYPE] = o, a[n.telemetry.poll.property.ERROR_TYPE] = u, t.get()._telemetryManager.sendEvent(r.settings.telemetry.jSkypeTenantToken, n.telemetry.poll.eventName.ERROR, a);
+      a[n.telemetry.poll.property.CONVERSATION_ID] = i;
+      s && (a[n.telemetry.poll.property.MESSAGE_ID] = s);
+      a[n.telemetry.poll.property.XMM_TYPE] = o;
+      a[n.telemetry.poll.property.ERROR_TYPE] = u;
+      t.get()._telemetryManager.sendEvent(r.settings.telemetry.jSkypeTenantToken, n.telemetry.poll.eventName.ERROR, a);
     };
     var e = function (t, r) {
       var i = {};
@@ -22,4 +30,4 @@ define("jSkype/telemetry/poll", [
   }
   var t = e("jSkype/client"), n = e("constants/common"), r = e("jSkype/settings");
   return new i();
-})
+});

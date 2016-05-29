@@ -23,9 +23,13 @@ define("ui/viewModels/people/discoverAgentsPage", [
 ], function (e) {
   function L() {
     var e = this;
-    c.call(e), e.menuItems = [], e.searchInProgress = g.observable(!1), e.hasResults = g.computed(function () {
+    c.call(e);
+    e.menuItems = [];
+    e.searchInProgress = g.observable(!1);
+    e.hasResults = g.computed(function () {
       return !e.searchInProgress() && !!e.contactGroups().length;
-    }), e.hasZeroResults = g.computed(function () {
+    });
+    e.hasZeroResults = g.computed(function () {
       return !e.searchInProgress() && e.contactGroups().length === 0;
     });
   }
@@ -40,7 +44,8 @@ define("ui/viewModels/people/discoverAgentsPage", [
       timeToComplete: n.ttc.duration.toString(),
       timeToRender: n.ttr.duration.toString(),
       contactsCount: e.toString()
-    }, f.get().sendEvent(a.telemetry.uiTenantToken, r.telemetry.agents.type.AGENTS, t)), D();
+    }, f.get().sendEvent(a.telemetry.uiTenantToken, r.telemetry.agents.type.AGENTS, t));
+    D();
   }
   function M() {
     return {
@@ -52,12 +57,17 @@ define("ui/viewModels/people/discoverAgentsPage", [
     return n.getEntriesByName(T.OPENED).length > 0;
   }
   function D() {
-    n.clearMarks(T.OPENED), n.clearMarks(T.INITIALIZED), n.clearMarks(T.RENDERED), n.clearMeasures(N.TTC), n.clearMeasures(N.TTR);
+    n.clearMarks(T.OPENED);
+    n.clearMarks(T.INITIALIZED);
+    n.clearMarks(T.RENDERED);
+    n.clearMeasures(N.TTC);
+    n.clearMeasures(N.TTR);
   }
   function P(e) {
     E.execute(function () {
       e.focus();
-    }), w.subscribe(i.FRAGMENT_LOADED, H);
+    });
+    w.subscribe(i.FRAGMENT_LOADED, H);
   }
   function H(e) {
     e === s.people.DISCOVER_AGENTS_PAGE && S.focus();
@@ -67,7 +77,11 @@ define("ui/viewModels/people/discoverAgentsPage", [
     var r;
     return S = o.getElement("." + v.discoverAgents.PAGE, t), _() && (n.mark(T.INITIALIZED), n.measure(N.TTC, T.OPENED, T.INITIALIZED)), r = c.prototype.init.call(this, e, S), P(S), r;
   }, L.prototype.dispose = function () {
-    S = null, this.hasResults.dispose(), this.hasZeroResults.dispose(), w.unsubscribe(i.FRAGMENT_LOADED, H), c.prototype.dispose.call(this);
+    S = null;
+    this.hasResults.dispose();
+    this.hasZeroResults.dispose();
+    w.unsubscribe(i.FRAGMENT_LOADED, H);
+    c.prototype.dispose.call(this);
   }, L.prototype.afterRender = function () {
     function r() {
       _() && (n.mark(T.RENDERED), n.measure(N.TTR, T.OPENED, T.RENDERED), O(e.contactsCount()));
@@ -80,7 +94,8 @@ define("ui/viewModels/people/discoverAgentsPage", [
       target: { expandProfile: !0 },
       telemetryContext: k
     };
-    A(u.discoverAgents.openConversation), c.prototype.openConversation.call(this, e, t, n);
+    A(u.discoverAgents.openConversation);
+    c.prototype.openConversation.call(this, e, t, n);
   }, L.prototype.showContextMenu = function (e, t) {
     var n = [new y.ViewPersonProfileMenuItem(e.getPerson(), C, k)];
     b.show(n, t, k);
@@ -88,15 +103,17 @@ define("ui/viewModels/people/discoverAgentsPage", [
     return !d.personExistsInCollection(e, t);
   }, L.prototype.populate = function (e) {
     function a() {
-      n.exclusionList = o(), u.then(f);
+      n.exclusionList = o();
+      u.then(f);
     }
     function f() {
       var t = i.results().map(function (e) {
         return e.result;
       });
-      n.populateGroups(t, e), n.searchInProgress(!1);
+      n.populateGroups(t, e);
+      n.searchInProgress(!1);
     }
     var n = this, i = t.get().personsAndGroupsManager.createPersonSearchQuery(), s = h.resolve(r.serviceLocator.SUBSCRIPTION_PROVIDER), o = s.getPersonsObservable(), u;
     return n.searchInProgress(!0), n.exclusionList = o(), i.sources(m.searchScope.Agent), u = i.getMore(), u.then(f), n.subscriptions.persons = o.subscribe(a, null, "arrayChange"), u;
   }, L;
-})
+});

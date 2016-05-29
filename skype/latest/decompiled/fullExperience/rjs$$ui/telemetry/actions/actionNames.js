@@ -109,4 +109,4 @@ define("ui/telemetry/actions/actionNames", {
     toggleAutoBuddy: "sc_toggle_autoBuddy",
     togglePhoneProof: "sc_toggle_phoneProof"
   }
-})
+});

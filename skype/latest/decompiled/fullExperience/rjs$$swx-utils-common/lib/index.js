@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -32,4 +32,4 @@ function (e) {
   t.cancelation = a;
   var f = e("./url");
   t.url = f;
-})
+}));

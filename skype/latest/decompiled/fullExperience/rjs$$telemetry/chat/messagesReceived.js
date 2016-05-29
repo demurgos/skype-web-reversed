@@ -22,4 +22,4 @@ define("telemetry/chat/messagesReceived", [
   }
   var t = e("services/telemetry/skypeData"), n = e("telemetry/chat/activityItemHelper");
   return r;
-})
+});

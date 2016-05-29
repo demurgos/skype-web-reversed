@@ -33,29 +33,41 @@ define("jSkype/modelHelpers/contacts/dataHandlers/factory", [
   };
   t.getMeProfileHandlers = function () {
     return n.meProfile.build();
-  }, t.getUserInfoHandlers = function () {
+  };
+  t.getUserInfoHandlers = function () {
     return n.userInfo.build();
-  }, t.getPeopleSettingsHandlers = function () {
+  };
+  t.getPeopleSettingsHandlers = function () {
     return n.peopleSettings.build();
-  }, t.getABCHProfileServiceHandlers = function () {
+  };
+  t.getABCHProfileServiceHandlers = function () {
     return n.ABCHProfileService.build();
-  }, t.getProfilePhoneNumberUpdateHandlers = function () {
+  };
+  t.getProfilePhoneNumberUpdateHandlers = function () {
     return n.phoneUpdate.build();
-  }, t.getBatchProfileHandlers = function () {
+  };
+  t.getBatchProfileHandlers = function () {
     return n.batchProfiles.build();
-  }, t.getContactListHandlers = function () {
+  };
+  t.getContactListHandlers = function () {
     return n.contactList.build();
-  }, t.getContactBlockedHandlers = function () {
+  };
+  t.getContactBlockedHandlers = function () {
     return n.contactBlocked.build();
-  }, t.getContactUnblockedHandlers = function () {
+  };
+  t.getContactUnblockedHandlers = function () {
     return n.contactUnblocked.build();
-  }, t.getContactDeletedHandlers = function () {
+  };
+  t.getContactDeletedHandlers = function () {
     return n.contactDeleted.build();
-  }, t.getContactRequestAcceptedHandlers = function () {
+  };
+  t.getContactRequestAcceptedHandlers = function () {
     return n.contactRequestAccepted.build();
-  }, t.getContactRequestSentHandlers = function () {
+  };
+  t.getContactRequestSentHandlers = function () {
     return n.contactRequestSent.build();
-  }, t.getContactRequestsIncomingHandlers = function () {
+  };
+  t.getContactRequestsIncomingHandlers = function () {
     return n.contactRequestsIncoming.build();
   };
-})
+});

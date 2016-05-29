@@ -16,5 +16,7 @@ define("ui/components/me/area", [
     return o;
   }
   var n = e("ui/viewModels/me/area"), r = e("utils/common/focusRestrictor");
-  t.name = e("constants/components").me.AREA, t.template = e("text!views/me/area.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").me.AREA;
+  t.template = e("text!views/me/area.html");
+  t.viewModel = { createViewModel: i };
+});

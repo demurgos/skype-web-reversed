@@ -38,10 +38,18 @@ define("jSkype/application", [
         telemetryToken: d.settings.telemetry ? d.settings.telemetry.logReportingToken : null
       }
     }), T._standbyMode = s.property({ value: d.isFeatureOn(n.featureFlags.SUPPORT_STANDBY_MODE) }), T._telemetryManager = e.telemetryManager, T._telemetry = e.telemetry, T.signInManager = o.build(), T.personsAndGroupsManager = new h(), T.conversationsManager = new l(), T.devicesManager = new c(), T.suspended = s.boolProperty(!1), T.marketplaceManager = new f(), m.preSignInInitialize(), d.isFeatureOn(n.featureFlags.TRANSLATOR_SENDING_ENABLED) && (T.translatorService = u.build()), d.isFeatureOn(n.featureFlags.CONTENT_SEARCH) && (T._messagesSearchService = a.build()), T.signInManager.state.when(r.loginState.SignedIn, function () {
-      S.get().init(g), p.initialize(), m.postSignInInitialize(), w.fetchConfig();
+      S.get().init(g);
+      p.initialize();
+      m.postSignInInitialize();
+      w.fetchConfig();
     }), T.signInManager.state.when(r.loginState.SigningOut, function () {
-      S.get().destroy(), m.destroy(), T.suspended(!1), T.devicesManager._reset(), T.conversationsManager._reset().then(function () {
-        T.personsAndGroupsManager._reset(), T.signInManager.state._set(r.loginState.SignedOut);
+      S.get().destroy();
+      m.destroy();
+      T.suspended(!1);
+      T.devicesManager._reset();
+      T.conversationsManager._reset().then(function () {
+        T.personsAndGroupsManager._reset();
+        T.signInManager.state._set(r.loginState.SignedOut);
       });
     }), T.signInManager._skypeToken.changed(function (e) {
       v.authenticate(e);
@@ -52,7 +60,9 @@ define("jSkype/application", [
           T.isEndpointActive(!1);
         }
         function r() {
-          y.getPresenceService().activateEndpoint(), e && clearTimeout(e), e = setTimeout(n, b.ACTIVATE_ENDPOINT_TIMEOUT);
+          y.getPresenceService().activateEndpoint();
+          e && clearTimeout(e);
+          e = setTimeout(n, b.ACTIVATE_ENDPOINT_TIMEOUT);
         }
         var e = null, i = t.debounce(r, 0, {
             leading: !0,
@@ -68,4 +78,4 @@ define("jSkype/application", [
   e("helpers/polyfills");
   var t = e("lodash-compat"), n = e("constants/common"), r = e("swx-enums"), i = e("jSkype/client"), s = e("jcafe-property-model"), o = e("jSkype/models/signInManager"), u = e("jSkype/models/translatorService"), a = e("jSkype/services/messageSearch/main"), f = e("jSkype/models/marketplaceManager"), l = e("jSkype/models/conversationsManager"), c = e("jSkype/models/devicesManager"), h = e("jSkype/models/personsAndGroupsManager"), p = e("jSkype/modelHelpers/dataOrchestrator"), d = e("jSkype/settings"), v = e("jSkype/services/asyncMedia/main"), m = e("jSkype/services/calling/callingInitializer"), g = e("jSkype/services/keyEncryption"), y = e("jSkype/services/serviceFactory"), b = e("jSkype/services/webapi/constants"), w = e("jSkype/services/spaces"), E = e("utils/common/logTracer/api"), S = e("utils/common/cache/instance"), x = e("swx-utils-common").sessionStorage;
   return T;
-})
+});

@@ -16,4 +16,4 @@ define("experience/authContext", [
     get: i,
     reset: s
   };
-})
+});

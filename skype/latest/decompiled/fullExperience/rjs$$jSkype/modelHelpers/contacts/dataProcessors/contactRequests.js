@@ -24,7 +24,10 @@ define("jSkype/modelHelpers/contacts/dataProcessors/contactRequests", [
         var n = l.build();
         e.forEach(function (e) {
           var n, r, f, l, c, h, d = a(e.sender);
-          n = t.getConversation(d), t.conversations.add(n), c = s.getContactRequestIncomingActivityItem(n), r = new Date(e.event_time_iso).getTime();
+          n = t.getConversation(d);
+          t.conversations.add(n);
+          c = s.getContactRequestIncomingActivityItem(n);
+          r = new Date(e.event_time_iso).getTime();
           if (!c || c._id !== r)
             d.status._set(i.onlineStatus.Unknown), s.clearContactRequestActivityItems(n), f = u.escapeIncomingHTML(u.removeAnchorTags(e.greeting)), l = o.getIncoming(d, r, f), h = s.getContactRequestIncomingInviteFreeActivityItem(n), p() && !h && n.historyService._processRawMessage(o.getIncomingInviteFree(d, r)), n.historyService._processRawMessage(l);
         });
@@ -38,4 +41,4 @@ define("jSkype/modelHelpers/contacts/dataProcessors/contactRequests", [
   t.build = function () {
     return new h();
   };
-})
+});

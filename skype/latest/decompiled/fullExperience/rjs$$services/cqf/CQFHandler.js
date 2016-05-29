@@ -16,7 +16,8 @@ define("services/cqf/CQFHandler", [
     return t;
   }
   function w() {
-    h = !0, l._dmDisposeAll();
+    h = !0;
+    l._dmDisposeAll();
   }
   function E(e) {
     if (e.video.channels(0)) {
@@ -35,11 +36,20 @@ define("services/cqf/CQFHandler", [
       var n = e.selfParticipant.video.channels(0).stream.state.once(u.mediaStreamState.Started, w);
       l.registerDisposable(n);
     }
-  }, t.updateCallData = function (e) {
+  };
+  t.updateCallData = function (e) {
     if (!b())
       return;
-    c = e.audioService.callId(), m = e._callData.nodeId(), g = e._callData.ngcEndpointId(), y = e._callData.ngcParticipantId(), p = e.audioService.callConnected() ? f.Date.now() - e.audioService.callConnected() : 0, d = e.isGroupConversation(), v = i.isConversationWithPstn(e), l._dmDisposeAll();
-  }, t.setupCQF = function () {
+    c = e.audioService.callId();
+    m = e._callData.nodeId();
+    g = e._callData.ngcEndpointId();
+    y = e._callData.ngcParticipantId();
+    p = e.audioService.callConnected() ? f.Date.now() - e.audioService.callConnected() : 0;
+    d = e.isGroupConversation();
+    v = i.isConversationWithPstn(e);
+    l._dmDisposeAll();
+  };
+  t.setupCQF = function () {
     if (!b())
       return Promise.reject();
     var e = new Promise(function (e, t) {
@@ -61,5 +71,6 @@ define("services/cqf/CQFHandler", [
       }).catch(t);
     });
     return e;
-  }, n.extend(l, o);
-})
+  };
+  n.extend(l, o);
+});

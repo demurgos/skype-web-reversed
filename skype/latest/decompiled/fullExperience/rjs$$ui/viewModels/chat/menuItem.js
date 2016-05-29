@@ -14,13 +14,28 @@ define("ui/viewModels/chat/menuItem", [
 ], function (e, t) {
   function c(e) {
     var t = this, n = h(e), c = l.build(), p = u.resolve(o.serviceLocator.FEATURE_FLAGS);
-    t.id = n.id ? "menuItem-" + n.id : n.id, t.icon = n.icon, t.text = n.text, t.page = n.navigation.page, t.isActive = r.observable(!1), t.isDisabled = n.isDisabled ? n.isDisabled : r.observable(!1), t.isNavigationMenuIconsEnabled = p.isFeatureOn(o.featureFlags.NAVIGATION_MENU_ICONS_ENABLED), t.onKeyDown = function (e, n) {
+    t.id = n.id ? "menuItem-" + n.id : n.id;
+    t.icon = n.icon;
+    t.text = n.text;
+    t.page = n.navigation.page;
+    t.isActive = r.observable(!1);
+    t.isDisabled = n.isDisabled ? n.isDisabled : r.observable(!1);
+    t.isNavigationMenuIconsEnabled = p.isFeatureOn(o.featureFlags.NAVIGATION_MENU_ICONS_ENABLED);
+    t.onKeyDown = function (e, n) {
       var r = s.isActivation(n);
       return r && t.onClick(), !r;
-    }, t.onClick = function () {
+    };
+    t.onClick = function () {
       var r = n.telemetry, s = u.resolve(o.serviceLocator.PUBSUB), l = u.resolve(o.serviceLocator.ACTION_TELEMETRY);
-      r.uiAction && l.recordAction(r.uiAction), r.perfMarker && i.mark(r.perfMarker), r.event && f.get().sendEvent(a.uiTenantToken, r.event.name, r.event.data), e.ordinal = t.ordinal, c.publish(e), t.isActive(!0), s.publish(o.events.navigation.NAVIGATE, e.navigation);
-    }, t.getTitleText = function () {
+      r.uiAction && l.recordAction(r.uiAction);
+      r.perfMarker && i.mark(r.perfMarker);
+      r.event && f.get().sendEvent(a.uiTenantToken, r.event.name, r.event.data);
+      e.ordinal = t.ordinal;
+      c.publish(e);
+      t.isActive(!0);
+      s.publish(o.events.navigation.NAVIGATE, e.navigation);
+    };
+    t.getTitleText = function () {
       if (t.isNavigationMenuIconsEnabled)
         return t.text;
     };
@@ -46,4 +61,4 @@ define("ui/viewModels/chat/menuItem", [
   t.build = function (e) {
     return new c(e);
   };
-})
+});

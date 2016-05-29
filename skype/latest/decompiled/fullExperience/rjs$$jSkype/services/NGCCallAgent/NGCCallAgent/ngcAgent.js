@@ -41,13 +41,21 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/ngcAgent", [
       y.hasOwnProperty(s) && !e.hasOwnProperty(s) && L(t, y[s]);
     for (s in e)
       e.hasOwnProperty(s) && !y.hasOwnProperty(s) && k(t, e[s]);
-    y = e, r && !e.hasOwnProperty(r.deviceId()) && (t.microphones.size() === 0 ? t.selectedMicrophone(null, "ActiveDeviceUnplugged") : t.selectedMicrophone(N(), "ActiveDeviceUnplugged")), !r && t.microphones.size() > 0 && t.selectedMicrophone(N(), "FirstDevicePlugged"), i && !e.hasOwnProperty(i.deviceId()) && (t.cameras.size() === 0 ? t.selectedCamera(null, "ActiveDeviceUnplugged") : t.selectedCamera(C(), "ActiveDeviceUnplugged")), !i && t.cameras.size() > 0 && t.selectedCamera(C(), "FirstDevicePlugged");
+    y = e;
+    r && !e.hasOwnProperty(r.deviceId()) && (t.microphones.size() === 0 ? t.selectedMicrophone(null, "ActiveDeviceUnplugged") : t.selectedMicrophone(N(), "ActiveDeviceUnplugged"));
+    !r && t.microphones.size() > 0 && t.selectedMicrophone(N(), "FirstDevicePlugged");
+    i && !e.hasOwnProperty(i.deviceId()) && (t.cameras.size() === 0 ? t.selectedCamera(null, "ActiveDeviceUnplugged") : t.selectedCamera(C(), "ActiveDeviceUnplugged"));
+    !i && t.cameras.size() > 0 && t.selectedCamera(C(), "FirstDevicePlugged");
   }
   function O() {
     var e = E.getDeviceManager();
-    g[d.MEDIA_DEVICE.microphone] = s.deviceType.Microphone, g[d.MEDIA_DEVICE.camera] = s.deviceType.Camera, g[d.MEDIA_DEVICE.speaker] = s.deviceType.Speaker, e.enumerateDevicesAsync().then(function (e) {
+    g[d.MEDIA_DEVICE.microphone] = s.deviceType.Microphone;
+    g[d.MEDIA_DEVICE.camera] = s.deviceType.Camera;
+    g[d.MEDIA_DEVICE.speaker] = s.deviceType.Speaker;
+    e.enumerateDevicesAsync().then(function (e) {
       var t = n.get().devicesManager;
-      t.cameras._removeAll(), t.microphones._removeAll();
+      t.cameras._removeAll();
+      t.microphones._removeAll();
       for (var r in e)
         e.hasOwnProperty(r) && k(t, e[r]);
       y = e;
@@ -79,7 +87,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/ngcAgent", [
       getLogger: function () {
         return x;
       }
-    }), S.queryRelaysOnStartupAsync();
+    });
+    S.queryRelaysOnStartupAsync();
   }
   function _() {
     var e = {
@@ -95,8 +104,15 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/ngcAgent", [
   }
   var n = e("jSkype/client"), r = e("jSkype/settings"), i = e("services/ecs/configLoader"), s = e("swx-enums"), o = e("utils/common/logTracer/api"), u = e("browser/detect"), a = e("jSkype/services/trouter/trouter"), f = e("jSkype/services/NGCCallAgent/NGCCallAgent/incomingNotificationMessageHandler"), l = e("jSkype/services/NGCCallAgent/NGCCallAgent/signalingAgentConfig"), c = e("jSkype/services/NGCCallAgent/NGCCallAgent/signalingAgent"), h = e("jSkype/services/NGCCallAgent/NGCCallAgent/callHandler"), p = e("jSkype/services/mediaAgent/mediaAgent"), d = e("jSkype/services/mediaAgent/constants"), v = e("jSkype/models/device"), m = e("jSkype/services/relayManager/relayManager"), g = {}, y = {}, b, w, E, S, x;
   t.initialize = function () {
-    x = o.getLogger("NGC"), T(), M(), _(), O(), b = new f(w), a.registerMessageHandler(b);
-  }, t.callHandler = {
+    x = o.getLogger("NGC");
+    T();
+    M();
+    _();
+    O();
+    b = new f(w);
+    a.registerMessageHandler(b);
+  };
+  t.callHandler = {
     initialize: function () {
       return !0;
     },
@@ -109,4 +125,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/ngcAgent", [
       return new h(t, E, w, e);
     }
   };
-})
+});

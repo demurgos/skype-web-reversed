@@ -8,7 +8,8 @@ define("jSkype/services/entitlement/facade", [
       return n.build().then(function (t) {
         return e.get(s, t);
       });
-    }, this.getEntitlementListingData = function (r) {
+    };
+    this.getEntitlementListingData = function (r) {
       var i = t.getEntitlementListingEndpoint(r);
       return n.build().then(function (t) {
         return e.get(i, t);
@@ -17,4 +18,4 @@ define("jSkype/services/entitlement/facade", [
   }
   var t = e("jSkype/services/entitlement/serviceSettings");
   return n;
-})
+});

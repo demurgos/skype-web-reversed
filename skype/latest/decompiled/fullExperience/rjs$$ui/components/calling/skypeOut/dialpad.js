@@ -12,5 +12,7 @@ define("ui/components/calling/skypeOut/dialpad", [
     return s.setContext(i), s;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/calling/skypeOut/skypeOutDialpadViewModel");
-  t.name = e("constants/components").calling.SKYPEOUT_DIALPAD, t.template = e("text!views/calling/skypeOut/dialpad.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").calling.SKYPEOUT_DIALPAD;
+  t.template = e("text!views/calling/skypeOut/dialpad.html");
+  t.viewModel = { createViewModel: i };
+});

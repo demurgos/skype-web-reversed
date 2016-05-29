@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -19,18 +19,22 @@ function (e) {
     function e(e) {
       return e in this._listeners || (this._listeners[e] = []), this._listeners[e];
     }
-    this._listeners = {}, this.add = function (t, n) {
+    this._listeners = {};
+    this.add = function (t, n) {
       var r = e.call(this, t), i = r.indexOf(n);
       i === -1 && r.push(n);
-    }, this.remove = function (t, n) {
+    };
+    this.remove = function (t, n) {
       var r = e.call(this, t), i = r.indexOf(n);
       i !== -1 && r.splice(i, 1);
-    }, this.dispatchEvent = function (t) {
+    };
+    this.dispatchEvent = function (t) {
       var n = e.call(this, t.type).slice();
       for (var r = 0; r < n.length; r++)
         n[r].call(this, t);
       return !t.defaultPrevented;
-    }, this.invokeHandlerWithMessage = function (t) {
+    };
+    this.invokeHandlerWithMessage = function (t) {
       var n = e.call(this, t.cookie).slice();
       if (n.length > 0) {
         for (var r = 0; r < n.length; r++)
@@ -48,59 +52,76 @@ function (e) {
   function l(e, t) {
     return new Promise(function (r, s) {
       function l(e) {
-        clearTimeout(a), f.remove(o, l), "error" in e ? s(e.error) : r(e.data);
+        clearTimeout(a);
+        f.remove(o, l);
+        "error" in e ? s(e.error) : r(e.data);
       }
       function c() {
-        f.remove(o, l), s(new Error("Chrome Extension reply timeout: (" + i + " ms passed)"));
+        f.remove(o, l);
+        s(new Error("Chrome Extension reply timeout: (" + i + " ms passed)"));
       }
       var o = u(), a = null;
-      a = setTimeout(c, i), f.add(o, l), t.cookie = o, e.postMessage({
+      a = setTimeout(c, i);
+      f.add(o, l);
+      t.cookie = o;
+      e.postMessage({
         origin: n,
         message: t
       }, "*");
     });
   }
   function c(e) {
-    this.nmHost = e, this.postMessage = function (e) {
+    this.nmHost = e;
+    this.postMessage = function (e) {
       return this.nmHost.postMessage({
         method: "messageToWindow",
         args: { message: e }
       });
-    }, this.addMessageHandler = function (e) {
+    };
+    this.addMessageHandler = function (e) {
       this.nmHost.addMessageHandler("messageFromWindow", function (t) {
         e(t.message);
       });
     };
   }
   function h(e, t) {
-    this.id = e, this.extension = t, this.hostWindow = null, this.postMessage = function (e) {
+    this.id = e;
+    this.extension = t;
+    this.hostWindow = null;
+    this.postMessage = function (e) {
       return this.extension.postMessage({
         name: "MessageToNativeMessagingHost",
         nmHostID: this.id,
         content: e
       });
-    }, this.invokeMethod = function (e, t) {
+    };
+    this.invokeMethod = function (e, t) {
       return t || (t = {}), this.postMessage({
         method: e,
         args: t
       });
-    }, this.getVersion = function () {
+    };
+    this.getVersion = function () {
       return this.invokeMethod("getVersion").then(function (e) {
         return e.message.result;
       });
-    }, this.openWindow = function (e) {
+    };
+    this.openWindow = function (e) {
       var t = this;
       return new Promise(function (n, r) {
         t.invokeMethod("openWindow", e).then(function () {
-          t.hostWindow = new c(t), n(t.hostWindow);
+          t.hostWindow = new c(t);
+          n(t.hostWindow);
         }).catch(r);
       });
-    }, this.addMessageHandler = function (e, t) {
+    };
+    this.addMessageHandler = function (e, t) {
       this.extension.addMessageHandler("NMHostMessage", function (n) {
         var r = n.message;
         r.event == e && t(r.args);
       });
-    }, this.onDisconnected = function (e) {
+    };
+    this.onDisconnected = function (e) {
       var t = this;
       this.extension.addMessageHandler("NMHostConnectionChange", function (n) {
         if (n.nmHostID != t.id)
@@ -112,8 +133,10 @@ function (e) {
     };
     var n = this;
     this.onDisconnected(function (e) {
-      n.hostWindow != null && (n.hostWindow.nmHost = null, n.hostWindow = null), n.extension != null && (n.extension.nmHost = null);
-    }), this.disconnect = function () {
+      n.hostWindow != null && (n.hostWindow.nmHost = null, n.hostWindow = null);
+      n.extension != null && (n.extension.nmHost = null);
+    });
+    this.disconnect = function () {
       return this.extension.postMessage({
         name: "DisconnectNativeMessagingHost",
         nmHostId: this.id
@@ -121,13 +144,19 @@ function (e) {
     };
   }
   function p(e, t) {
-    this.id = e, this.version = t, this.nmHost = null, this.postMessage = function (e) {
+    this.id = e;
+    this.version = t;
+    this.nmHost = null;
+    this.postMessage = function (e) {
       return l(window, e);
-    }, this.addMessageHandler = function (e, t) {
+    };
+    this.addMessageHandler = function (e, t) {
       f.add(e, t);
-    }, this.removeMessageHandler = function (e, t) {
+    };
+    this.removeMessageHandler = function (e, t) {
       f.remove(e, t);
-    }, this.onDisconnected = function (e) {
+    };
+    this.onDisconnected = function (e) {
       var t = this;
       this.addMessageHandler("ExtensionConnectionChange", function (n) {
         if (n.extensionID != t.id)
@@ -139,52 +168,69 @@ function (e) {
     };
     var n = this;
     this.onDisconnected(function () {
-      n.nmHost != null && (n.nmHost.extension = null, n.nmHost = null), s = null;
-    }), this.connectNMHost = function (e) {
+      n.nmHost != null && (n.nmHost.extension = null, n.nmHost = null);
+      s = null;
+    });
+    this.connectNMHost = function (e) {
       var t = this;
       return new Promise(function (n, r) {
         t.postMessage({
           name: "ConnectNativeMessagingHost",
           nmHostId: e
         }).then(function (r) {
-          t.nmHost = new h(e, t), n(t.nmHost);
+          t.nmHost = new h(e, t);
+          n(t.nmHost);
         }).catch(r);
       });
     };
   }
   function d(e) {
-    this.nmHost = e, this.postMessage = function (e) {
+    this.nmHost = e;
+    this.postMessage = function (e) {
       return this.nmHost.extension.postMessage({
         method: "messageToWindow",
         args: e
       });
-    }, this.addMessageHandler = function (e) {
+    };
+    this.addMessageHandler = function (e) {
       this.nmHost.extension.addMessageHandler("messageFromWindow", function (t) {
         e(t.message);
       });
     };
   }
   function v(e, t) {
-    this.id = e, this.extension = t, this.hostWindow = null, this.invokeMethod = function (e, t) {
+    this.id = e;
+    this.extension = t;
+    this.hostWindow = null;
+    this.invokeMethod = function (e, t) {
       return t || (t = {}), this.extension.invokeMethod(e, t);
-    }, this.getVersion = function () {
+    };
+    this.getVersion = function () {
       return this.invokeMethod("getVersion");
-    }, this.openWindow = function (e) {
+    };
+    this.openWindow = function (e) {
       var t = this;
       return new Promise(function (n, r) {
         t.invokeMethod("openWindow", e).then(function () {
-          t.hostWindow = new d(t), n(t.hostWindow);
+          t.hostWindow = new d(t);
+          n(t.hostWindow);
         }).catch(r);
       });
-    }, this.addMessageHandler = function (e, t) {
+    };
+    this.addMessageHandler = function (e, t) {
       f.add(e, t);
-    }, this.onDisconnected = function (e) {
-    }, this.disconnect = function () {
+    };
+    this.onDisconnected = function (e) {
+    };
+    this.disconnect = function () {
       this.extension.port.Disconnect();
     };
   }
   function m(e, t, n) {
-    this.version = t, this.id = e, this.nmHost = null, this.port = n;
+    this.version = t;
+    this.id = e;
+    this.nmHost = null;
+    this.port = n;
     var r = this;
     this.invokeMethod = function (e, t) {
       return new Promise(function (n, s) {
@@ -193,10 +239,12 @@ function (e) {
           t.cookie == a && (clearTimeout(l), f.remove(o, c), "error" in t ? s(t.error) : n(t.result));
         }
         function h() {
-          f.remove(o, c), s(new Error("EdgeActiveX reply timeout: (" + i + " ms passed)"));
+          f.remove(o, c);
+          s(new Error("EdgeActiveX reply timeout: (" + i + " ms passed)"));
         }
         var o = "MessageReceived", a = u(), l = null;
-        l = setTimeout(h, i), f.add(o, c);
+        l = setTimeout(h, i);
+        f.add(o, c);
         var p = {
           cookie: a,
           method: e,
@@ -204,23 +252,31 @@ function (e) {
         };
         r.port.PostMessage(p);
       });
-    }, this.postMessage = function (e) {
+    };
+    this.postMessage = function (e) {
       var t = e.name;
       if (t == undefined || t == null)
         t = e.method;
       return this.invokeMethod(t, { message: e.args });
-    }, this.addMessageHandler = function (e, t) {
+    };
+    this.addMessageHandler = function (e, t) {
       f.add(e, t);
-    }, this.removeMessageHandler = function (e, t) {
+    };
+    this.removeMessageHandler = function (e, t) {
       f.remove(e, t);
-    }, this.onDisconnected = function (e) {
+    };
+    this.onDisconnected = function (e) {
       f.add("NMHostConnectionChange", e);
-    }, this.connectNMHost = function (e) {
+    };
+    this.connectNMHost = function (e) {
       var t = this;
       return new Promise(function (n, r) {
-        t.port.Connect(), t.nmHost = new v(e, t), n(t.nmHost);
+        t.port.Connect();
+        t.nmHost = new v(e, t);
+        n(t.nmHost);
       });
-    }, this.onPluginMessage = function (e) {
+    };
+    this.onPluginMessage = function (e) {
       f.dispatchEvent({
         type: "MessageReceived",
         data: e
@@ -232,7 +288,8 @@ function (e) {
         message: e.args.message,
         data: e.args.message
       }) : f.dispatchEvent({ type: e.event });
-    }, this.onPluginDisconnected = function () {
+    };
+    this.onPluginDisconnected = function () {
       var e = {
         type: "NMHostConnectionChange",
         data: { isConnected: !1 }
@@ -254,11 +311,14 @@ function (e) {
     connect: function (e, t) {
       return t != undefined && t != null ? new Promise(function (n, r) {
         var i = document.createElement("object");
-        i.setAttribute("type", e), i.setAttribute("class", "pluginNoSize");
+        i.setAttribute("type", e);
+        i.setAttribute("class", "pluginNoSize");
         var s = t;
         s.appendChild(i);
         var o = i.GetVersion(), u = new m(e, o, i);
-        i.OnMessage = u.onPluginMessage, i.OnDisconnected = u.onPluginDisconnected, n(u);
+        i.OnMessage = u.onPluginMessage;
+        i.OnDisconnected = u.onPluginDisconnected;
+        n(u);
       }) : new Promise(function (t, n) {
         l(window, {
           name: "ExtensionConnect",
@@ -279,7 +339,8 @@ function (e) {
           return;
         }
         n.connect(e, t).then(function (e) {
-          s = e, r(s);
+          s = e;
+          r(s);
         }).catch(i);
       });
     },
@@ -314,4 +375,4 @@ function (e) {
   t.SkypeExtension = g;
   var y = e("global-portable");
   y["default"].SkypeExtension = g;
-})
+}));

@@ -6,13 +6,15 @@ define("jSkype/services/ABCHProfile/facade", [
 ], function (e, t) {
   function r(e, t) {
     function r(e) {
-      t.setServiceName(e), t.setHeader("PS-ApplicationId", n.settings.profileService.appId);
+      t.setServiceName(e);
+      t.setHeader("PS-ApplicationId", n.settings.profileService.appId);
     }
     this.getProfile = function () {
       return r("profileServiceGetProfile"), t.build().then(function (t) {
         return e.get(n.settings.profileService.profileEndpoint, t);
       });
-    }, this.updatePhoneNumber = function (i) {
+    };
+    this.updatePhoneNumber = function (i) {
       var s = {
         Attributes: [{
             Edit: [{
@@ -28,7 +30,8 @@ define("jSkype/services/ABCHProfile/facade", [
       return r("profileServiceUpdatePhoneNumber"), t.setOption("payload", JSON.stringify(s)), t.setHeader("Content-Type", "application"), t.build().then(function (t) {
         return e.post(n.settings.profileService.profileEndpoint, t);
       });
-    }, this.deletePhoneNumber = function (i) {
+    };
+    this.deletePhoneNumber = function (i) {
       var s = {
         Attributes: [{
             Edit: null,
@@ -49,4 +52,4 @@ define("jSkype/services/ABCHProfile/facade", [
   t.build = function (e, t) {
     return new r(e, t);
   };
-})
+});

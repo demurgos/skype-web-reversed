@@ -17,7 +17,8 @@ define("jSkype/services/mediaAgent/mediaAgent", [
       a.forEach(function (e) {
         e._deviceSelectionChanged();
       });
-    }, this.createSession = function (t, n, i) {
+    };
+    this.createSession = function (t, n, i) {
       var o = s.createChild("Session").createChild(n), u = {
           getDeviceManager: l,
           getLogger: function () {
@@ -30,7 +31,9 @@ define("jSkype/services/mediaAgent/mediaAgent", [
         var t = a.indexOf(e);
         t !== -1 && a.splice(t, 1);
       }, a.push(f), f;
-    }, this.getDeviceManager = l, this.getCapabilities = function () {
+    };
+    this.getDeviceManager = l;
+    this.getCapabilities = function () {
       return f;
     };
   };
@@ -44,4 +47,4 @@ define("jSkype/services/mediaAgent/mediaAgent", [
     constants: r,
     helper: i
   };
-})
+});

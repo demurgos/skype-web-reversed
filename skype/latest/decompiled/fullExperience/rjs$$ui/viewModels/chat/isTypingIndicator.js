@@ -18,7 +18,9 @@ define("ui/viewModels/chat/isTypingIndicator", [
         return a.truncateDisplayName(e.displayName());
       }
       var e = [], t = 0, n;
-      h.forEach(r), n = e.length + t, l.typingParticipantsCount(n);
+      h.forEach(r);
+      n = e.length + t;
+      l.typingParticipantsCount(n);
       switch (n) {
       case 0:
         return "";
@@ -47,21 +49,31 @@ define("ui/viewModels/chat/isTypingIndicator", [
       }
     }
     function g(e, t) {
-      t ? h.push(e) : h = i.without(h, e), l.isTypingLabel(m());
+      t ? h.push(e) : h = i.without(h, e);
+      l.isTypingLabel(m());
     }
     function y(e) {
       e.__isTypingSubscription = e.chat.isTyping.changed(g.bind(null, e));
     }
     function b(e) {
       var t = i.indexOf(h, e);
-      t > -1 && (r.removeFrom(h, t), l.isTypingLabel(m())), w(e);
+      t > -1 && (r.removeFrom(h, t), l.isTypingLabel(m()));
+      w(e);
     }
     function w(e) {
       e.__isTypingSubscription && (e.__isTypingSubscription.dispose(), delete e.__isTypingSubscription);
     }
     var l = this, c = f.participants, h = [], p = u.resolve(n.serviceLocator.FEATURE_FLAGS), d, v;
-    this.avatar = t.observable(""), this.typingParticipantsCount = t.observable(0), this.isTypingLabel = t.observable(""), this.isFeatureOn = p.isFeatureOn(n.featureFlags.IS_TYPING_INDICATOR), d = c.added(y), v = c.removed(b), this.dispose = function () {
-      d.dispose(), v.dispose(), c.each(w);
+    this.avatar = t.observable("");
+    this.typingParticipantsCount = t.observable(0);
+    this.isTypingLabel = t.observable("");
+    this.isFeatureOn = p.isFeatureOn(n.featureFlags.IS_TYPING_INDICATOR);
+    d = c.added(y);
+    v = c.removed(b);
+    this.dispose = function () {
+      d.dispose();
+      v.dispose();
+      c.each(w);
     };
   };
-})
+});

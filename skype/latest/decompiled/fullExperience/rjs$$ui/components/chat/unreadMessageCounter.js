@@ -5,5 +5,6 @@ define("ui/components/chat/unreadMessageCounter", [
   "constants/components",
   "text!views/chat/unreadMessageCounter.html"
 ], function (e, t) {
-  t.name = e("constants/components").chat.UNREAD_MESSAGE_COUNTER, t.template = e("text!views/chat/unreadMessageCounter.html");
-})
+  t.name = e("constants/components").chat.UNREAD_MESSAGE_COUNTER;
+  t.template = e("text!views/chat/unreadMessageCounter.html");
+});

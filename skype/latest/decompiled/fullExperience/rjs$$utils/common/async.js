@@ -13,10 +13,12 @@ define("utils/common/async", [
         if (s)
           throw new Error("The nextValue for this observable is already settled");
         return s = !0, t = r(t), e(t.actual), t;
-      }, n = function (e) {
+      };
+      n = function (e) {
         if (s)
           throw new Error("The nextValue for this observable is already settled");
-        s = !0, i(e);
+        s = !0;
+        i(e);
       };
     }), {
       actual: i,
@@ -35,4 +37,4 @@ define("utils/common/async", [
     execute: i,
     makeObservableValue: r
   };
-})
+});

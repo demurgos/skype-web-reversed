@@ -96,11 +96,15 @@ define("jSkype/services/plugin/skypeCoreComponent", [
     this._invokeMethod("RequestCallInfo", null, t, n);
   }, s.prototype.setSoundLevelEventMode = function (t, n, r) {
     var s, u;
-    i.SOUND_LEVEL_EVENT_MODE[t.mode] || r("Sound level model not supported", t.mode), t.mode === i.SOUND_LEVEL_EVENT_MODE.Boolean && !o(t.threshold) && r("Threshold value not supported", t.threshold), s = typeof t.getLocalParticipantLevel == "boolean" ? t.getLocalParticipantLevel : !0, u = {
+    i.SOUND_LEVEL_EVENT_MODE[t.mode] || r("Sound level model not supported", t.mode);
+    t.mode === i.SOUND_LEVEL_EVENT_MODE.Boolean && !o(t.threshold) && r("Threshold value not supported", t.threshold);
+    s = typeof t.getLocalParticipantLevel == "boolean" ? t.getLocalParticipantLevel : !0;
+    u = {
       mode: t.mode,
       threshold: t.threshold,
       myself: s
-    }, this._invokeMethod("SetSoundLevelEventMode", u, n, r);
+    };
+    this._invokeMethod("SetSoundLevelEventMode", u, n, r);
   }, s.prototype.setParticipantFrameSink = function (t, n, r, i) {
     var s = {
       participantId: t,
@@ -121,4 +125,4 @@ define("jSkype/services/plugin/skypeCoreComponent", [
     };
     this._invokeMethod("ShowParticipantVideo", s, i);
   }, s;
-})
+});

@@ -8,36 +8,47 @@ define("jSkype/services/mediaAgent/webRtcSessionDescription", [
     var c = t.settings, h = t.logger, p = t.adapter, d = n.parse(s), v = new r(t), m;
     this.getModalities = function () {
       return a(d);
-    }, this.hasDtls = function () {
+    };
+    this.hasDtls = function () {
       return d.media.some(function (e) {
         return "RTP/SAVPF" !== e.protocol;
       });
-    }, this.toOffer = function (e) {
+    };
+    this.toOffer = function (e) {
       return d = n.parse(e), f(d, function (e, t) {
-        t.port !== 0 && !m[e] && (h.warn("toOffer _applyMediaFixups disable", "type:", e), o(t)), u(c, t);
+        t.port !== 0 && !m[e] && (h.warn("toOffer _applyMediaFixups disable", "type:", e), o(t));
+        u(c, t);
       }), c.disableMsSdp || v.toMsSdp(d, { type: i }), n.write(d);
-    }, this.toAnswer = function (e) {
+    };
+    this.toAnswer = function (e) {
       return d = n.parse(e), f(d, function (e, t) {
         u(c, t);
       }), c.disableMsSdp || v.toMsSdp(d, { type: i }), n.write(d);
-    }, this.toLocal = function (e) {
+    };
+    this.toLocal = function (e) {
       return m = e, n.write(d);
-    }, this.toRemote = function (t) {
+    };
+    this.toRemote = function (t) {
       return m = t, f(d, function (t, n) {
-        n.port !== 0 && !m[t] && (h.warn("toRemote _applyMediaFixups disable", "type:", t), o(n)), m[t] === e.MEDIA_STATE.send && n.direction.toLowerCase() !== "recvonly" && (h.warn("toRemote _applyMediaFixups direction => recvonly", "type:", t, "olddirection:", n.direction), n.direction = "recvonly");
+        n.port !== 0 && !m[t] && (h.warn("toRemote _applyMediaFixups disable", "type:", t), o(n));
+        m[t] === e.MEDIA_STATE.send && n.direction.toLowerCase() !== "recvonly" && (h.warn("toRemote _applyMediaFixups direction => recvonly", "type:", t, "olddirection:", n.direction), n.direction = "recvonly");
       }), p.toRemote(d), n.write(d);
-    }, this.needToWaitIceCandidates = function () {
+    };
+    this.needToWaitIceCandidates = function () {
       return d.media && d.media.some(function (e) {
         return e.port === 9;
       });
-    }, function () {
+    };
+    (function () {
       l && !c.disableMsSdp && v.fromMsSdp(d, { type: i });
-    }();
+    }());
   }
   function s(e, t, i, s) {
     var a = e.settings, l = new r(e), c = n.parse(i);
     return f(c, function (e, t) {
-      t.port !== 0 && !s[e] && o(t), t.direction = "inactive", u(a, t);
+      t.port !== 0 && !s[e] && o(t);
+      t.direction = "inactive";
+      u(a, t);
     }), a.disableMsSdp || l.toMsSdp(c, { type: t }), n.write(c);
   }
   function o(e) {
@@ -92,4 +103,4 @@ define("jSkype/services/mediaAgent/webRtcSessionDescription", [
       };
     }
   };
-})
+});

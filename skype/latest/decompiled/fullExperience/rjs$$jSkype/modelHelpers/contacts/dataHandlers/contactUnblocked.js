@@ -11,8 +11,10 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactUnblocked", [
   function u() {
     this.onSuccess = function (e) {
       var t = n.getPerson(e);
-      r.setUnblocked(t), a();
-    }, this.onError = function (e) {
+      r.setUnblocked(t);
+      a();
+    };
+    this.onError = function (e) {
     };
   }
   function a() {
@@ -23,4 +25,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactUnblocked", [
   t.build = function () {
     return new u();
   };
-})
+});

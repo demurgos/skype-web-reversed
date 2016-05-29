@@ -22,10 +22,11 @@ define("ui/contextMenu/items/removeConversationHistory", [
     }
     if (!e)
       throw new Error("Parameter missing: conversation is required");
-    n.call(this, f.TYPE, a(), t), this.isEnabled = function () {
+    n.call(this, f.TYPE, a(), t);
+    this.isEnabled = function () {
       return r.canDeleteConversation(e);
     };
   }
   var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("ui/modalDialog/removeConversationHistoryDialog"), i = e("services/serviceLocator"), s = e("constants/common");
   return f.prototype = Object.create(n.prototype), f.TYPE = "RemoveConversationHistoryMenuItem", f;
-})
+});

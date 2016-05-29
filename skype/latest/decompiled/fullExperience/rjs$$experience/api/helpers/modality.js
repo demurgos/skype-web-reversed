@@ -38,7 +38,8 @@ define("experience/api/helpers/modality", [
     }
     function w(e) {
       var t = u.resolve(r.serviceLocator.ACTION_TELEMETRY), n = e ? o.audioVideo.apiVideoCall : o.audioVideo.apiAudioCall;
-      t.recordAction(n), s.placeCall(v, e, "integrationAPI");
+      t.recordAction(n);
+      s.placeCall(v, e, "integrationAPI");
     }
     var d = e.modalities, v = e.conversation, m = "";
     if (!d || n.isEmpty(d)) {
@@ -53,6 +54,9 @@ define("experience/api/helpers/modality", [
       y(f.MODALITY_TYPE_NOT_SUPPORTED);
       return;
     }
-    l(d) && (v.videoService.start.enabled() ? v.videoService.start() : b(v.videoService)), c(d) && (v.audioService.start.enabled() ? v.audioService.start() : b(v.audioService)), h(d) && v.chatService.start.enabled() && e.startChatService && v.chatService.start(), m === "" ? g() : y(m);
+    l(d) && (v.videoService.start.enabled() ? v.videoService.start() : b(v.videoService));
+    c(d) && (v.audioService.start.enabled() ? v.audioService.start() : b(v.audioService));
+    h(d) && v.chatService.start.enabled() && e.startChatService && v.chatService.start();
+    m === "" ? g() : y(m);
   };
-})
+});

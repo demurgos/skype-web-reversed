@@ -10,4 +10,4 @@ define("experience/componentsLoader", [
   }
   var t = e("experience/componentsInitializer"), n = e("componentsToLoad");
   return { init: r };
-})
+});

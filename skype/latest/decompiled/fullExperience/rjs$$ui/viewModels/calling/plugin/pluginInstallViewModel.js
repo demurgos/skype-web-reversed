@@ -30,7 +30,12 @@ define("ui/viewModels/calling/plugin/pluginInstallViewModel", [
       }
       function I() {
         var e = C.isBrowserDefaultToBlockPlugin, t = C.isInBrowserPluginSupported, n = C.browserName === b.BROWSERS.EDGE, r = C.browserName === b.BROWSERS.CHROME, i = Boolean(c.querySelector(v.META_SELECTOR));
-        H && P && (t || n) && R(), r && !t && !i && (U(), z(), W()), X({ isUnblockStepIncluded: e }), e && V(), P && $(), q();
+        H && P && (t || n) && R();
+        r && !t && !i && (U(), z(), W());
+        X({ isUnblockStepIncluded: e });
+        e && V();
+        P && $();
+        q();
       }
       function q() {
         var e = {
@@ -82,13 +87,15 @@ define("ui/viewModels/calling/plugin/pluginInstallViewModel", [
       }
       function X(e) {
         var t;
-        e = e || {}, t = {
+        e = e || {};
+        t = {
           onPluginInstallEnded: tt,
           next: P || e.isUnblockStepIncluded ? G : J,
           close: Q,
           conversation: P,
           suppressEndedEvent: e.isUnblockStepIncluded
-        }, A.push(n.build(t));
+        };
+        A.push(n.build(t));
       }
       function V() {
         var e = {
@@ -111,19 +118,27 @@ define("ui/viewModels/calling/plugin/pluginInstallViewModel", [
         A.push(f.build(e));
       }
       function J() {
-        st(), w.hide();
+        st();
+        w.hide();
       }
       function K() {
-        O = M, Z("next");
+        O = M;
+        Z("next");
       }
       function Q() {
-        M = O, O = A.length - 1, et(_, "next");
+        M = O;
+        O = A.length - 1;
+        et(_, "next");
       }
       function G() {
-        M = O, O++, Z("next");
+        M = O;
+        O++;
+        Z("next");
       }
       function Y() {
-        M = O, O += 2, Z("next");
+        M = O;
+        O += 2;
+        Z("next");
       }
       function Z(e) {
         if (O >= A.length) {
@@ -134,10 +149,13 @@ define("ui/viewModels/calling/plugin/pluginInstallViewModel", [
         et(t, e);
       }
       function et(e, t) {
-        N.activeStep(e), w.show(e.id, e.label, t), e.show && e.show();
+        N.activeStep(e);
+        w.show(e.id, e.label, t);
+        e.show && e.show();
       }
       function tt(e, t, n) {
-        rt(e, t, n), T.done && T.done(e, t);
+        rt(e, t, n);
+        T.done && T.done(e, t);
       }
       function nt() {
         var e = {
@@ -167,7 +185,8 @@ define("ui/viewModels/calling/plugin/pluginInstallViewModel", [
       }
       function it() {
         T.conversation ? j = S.setInterval(function () {
-          T.conversation.videoService.start.enabled.get(), T.conversation.audioService.start.enabled.get();
+          T.conversation.videoService.start.enabled.get();
+          T.conversation.audioService.start.enabled.get();
         }, x) : j = S.setInterval(function () {
           E.get().devicesManager.checkMediaCapabilities();
         }, x);
@@ -179,11 +198,18 @@ define("ui/viewModels/calling/plugin/pluginInstallViewModel", [
         throw new Error("source param is mandatory");
       T = T || {};
       var N = this, C = b.getBrowserInfo(), k = C.browserName === b.BROWSERS.FIREFOX, L = h.create(), A = [], O = 0, M = 0, _, D, P = T.conversation, H = T.isOutgoing, B, j;
-      D = F(P), this.activeStep = d.observable(), this.start = function () {
-        B = y.build(), I(), O = 0, Z(""), it(), nt();
+      D = F(P);
+      this.activeStep = d.observable();
+      this.start = function () {
+        B = y.build();
+        I();
+        O = 0;
+        Z("");
+        it();
+        nt();
       };
     };
   t.build = function (e, t) {
     return new T(e, t);
   };
-})
+});

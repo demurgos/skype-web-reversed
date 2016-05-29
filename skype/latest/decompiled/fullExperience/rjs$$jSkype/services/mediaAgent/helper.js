@@ -84,7 +84,8 @@ define("jSkype/services/mediaAgent/helper", ["./constants"], function (e) {
   }
   function m() {
     var e, t, n = !0, r = new Promise(function (n, r) {
-        e = n, t = r;
+        e = n;
+        t = r;
       });
     return {
       isPending: function () {
@@ -133,4 +134,4 @@ define("jSkype/services/mediaAgent/helper", ["./constants"], function (e) {
     delay: g,
     timeout: y
   };
-})
+});

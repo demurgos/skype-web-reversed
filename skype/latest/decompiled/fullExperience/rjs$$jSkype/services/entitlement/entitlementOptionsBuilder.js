@@ -32,4 +32,4 @@ define("jSkype/services/entitlement/entitlementOptionsBuilder", [
       });
     }
   }), a;
-})
+});

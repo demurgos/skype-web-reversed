@@ -16,4 +16,4 @@ define("telemetry/translator/translatorTelemetry", [
   t.build = function () {
     return new i();
   };
-})
+});

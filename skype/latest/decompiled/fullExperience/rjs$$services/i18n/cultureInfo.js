@@ -587,10 +587,11 @@ define("services/i18n/cultureInfo", [], function () {
           return n.pesLocale;
       }
       return "default";
-    }, e.getLocale = function (t) {
+    };
+    e.getLocale = function (t) {
       var n, r = i(t);
       return r ? r.defaultLocale : (n = t.lastIndexOf("-"), n > -1 ? e.getLocale(t.substring(0, n)) : t);
     };
   }
   return new e();
-})
+});

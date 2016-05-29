@@ -22,4 +22,4 @@ define("telemetry/chat/youtubeShowEvent", [
   }
   var t = e("experience/settings"), n = e("services/telemetry/hashingService"), r = e("ui/telemetry/telemetryClient");
   return new i();
-})
+});

@@ -5,17 +5,28 @@ define("jSkype/services/systemCommands/commands/alerts", [
   "jSkype/services/systemCommands/commandsHelper"
 ], function (e, t) {
   function r() {
-    this.isAvailableFor = n.availableAlways, this.help = "", this.showInHelp = !0, this.action = function (e) {
+    this.isAvailableFor = n.availableAlways;
+    this.help = "";
+    this.showInHelp = !0;
+    this.action = function (e) {
       e.chatService._updateNotificationSettings(!1);
     };
   }
   function i() {
-    this.isAvailableFor = n.availableAlways, this.help = "[keywords]", this.showInHelp = !0, this.action = function (e, t) {
+    this.isAvailableFor = n.availableAlways;
+    this.help = "[keywords]";
+    this.showInHelp = !0;
+    this.action = function (e, t) {
       e.chatService._updateNotificationSettings(!0, t);
     };
   }
   function s() {
-    this.on = new i(), this.off = new r(), this.isAvailableFor = n.availableAlways, this.help = "off | on [keywords]", this.showInHelp = !0, this.action = function (e, t) {
+    this.on = new i();
+    this.off = new r();
+    this.isAvailableFor = n.availableAlways;
+    this.help = "off | on [keywords]";
+    this.showInHelp = !0;
+    this.action = function (e, t) {
       function r(t) {
         n.sendSystemMessage(e, "Unknown argument, use: /alerts " + t);
       }
@@ -32,11 +43,13 @@ define("jSkype/services/systemCommands/commands/alerts", [
     build: function () {
       return new r();
     }
-  }, t.on = {
+  };
+  t.on = {
     build: function () {
       return new i();
     }
-  }, t.build = function () {
+  };
+  t.build = function () {
     return new s();
   };
-})
+});

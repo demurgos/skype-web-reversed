@@ -25,12 +25,15 @@ define("jSkype/modelHelpers/presence/presenceMapper", [
       var t = o[e.toLowerCase()];
       return t === r.onlineStatus.Unknown ? undefined : t;
     }
-  }, t.toCafeStatus = function (e) {
+  };
+  t.toCafeStatus = function (e) {
     return r.onlineStatus[n.capitalize(e)];
-  }, t.canMapToOnline = function (e) {
+  };
+  t.canMapToOnline = function (e) {
     var t = r.onlineStatus.Offline.toLowerCase(), n = r.onlineStatus.Idle.toLowerCase();
     return e = e.toLowerCase(), t === e || n === e;
-  }, t.mapToSelf = function (e) {
+  };
+  t.mapToSelf = function (e) {
     if (!n.isString(e))
       return r.onlineStatus.Hidden;
     if (i.isFeatureOn(s.featureFlags.NEW_SELF_PRESENCE)) {
@@ -39,4 +42,4 @@ define("jSkype/modelHelpers/presence/presenceMapper", [
     }
     return e.toLowerCase() === r.onlineStatus.Online.toLowerCase() ? r.onlineStatus.Online : r.onlineStatus.Hidden;
   };
-})
+});

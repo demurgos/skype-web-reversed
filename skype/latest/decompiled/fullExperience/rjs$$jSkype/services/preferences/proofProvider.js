@@ -9,7 +9,8 @@ define("jSkype/services/preferences/proofProvider", [
     var t = this;
     t.read = function () {
       return Promise.resolve(e.isSearchable);
-    }, t.update = function (t) {
+    };
+    t.update = function (t) {
       var i = r.getProfilePhoneNumberUpdateHandlers();
       return t === null ? n.getABCHProfileService().deletePhoneNumber(e).then(i.onSuccess, i.onError) : (e.isSearchable = t, n.getABCHProfileService().updatePhoneNumber(e).then(i.onSuccess, i.onError));
     };
@@ -18,4 +19,4 @@ define("jSkype/services/preferences/proofProvider", [
   t.build = function (e) {
     return new i(e);
   };
-})
+});

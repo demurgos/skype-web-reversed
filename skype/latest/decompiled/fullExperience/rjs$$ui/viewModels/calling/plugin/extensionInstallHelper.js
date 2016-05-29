@@ -9,7 +9,8 @@ define("ui/viewModels/calling/plugin/extensionInstallHelper", [
       this.buildLinkElement = function () {
         var t = n.createElement("link");
         return t.setAttribute("rel", "chrome-webstore-item"), t.setAttribute("href", r.shellApp.chromeExtensionWebstoreUrl), t;
-      }, this.buildContentScriptElement = function () {
+      };
+      this.buildContentScriptElement = function () {
         var t = n.createElement("script"), i = "chrome-extension://" + r.shellApp.chromeExtensionId + "/content-script.js";
         return t.setAttribute("src", i), t;
       };
@@ -17,4 +18,4 @@ define("ui/viewModels/calling/plugin/extensionInstallHelper", [
   t.build = function () {
     return new i();
   };
-})
+});

@@ -7,4 +7,4 @@ define("jSkype/models/mediaStreamSource", [
   }
   var t = e("jSkype/models/mediaStreamSink");
   return n;
-})
+});

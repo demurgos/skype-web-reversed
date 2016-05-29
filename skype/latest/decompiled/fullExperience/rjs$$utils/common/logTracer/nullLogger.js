@@ -5,7 +5,12 @@ define("utils/common/logTracer/nullLogger", [
   "lodash-compat"
 ], function (e, t) {
   function r() {
-    this.log = n.noop, this.info = n.noop, this.warn = n.noop, this.error = n.noop, this.debug = n.noop, this.createChild = function () {
+    this.log = n.noop;
+    this.info = n.noop;
+    this.warn = n.noop;
+    this.error = n.noop;
+    this.debug = n.noop;
+    this.createChild = function () {
       return this;
     };
   }
@@ -13,4 +18,4 @@ define("utils/common/logTracer/nullLogger", [
   t.build = function () {
     return new r();
   };
-})
+});

@@ -23,14 +23,21 @@ define("ui/viewModels/experience/splashScreen", [
   function w() {
     function L() {
       var n = document.createElement("div");
-      n.id = "splashScreenElement", n.innerHTML = a, t.applyBindings(e, n), S && S.appendChild(n);
+      n.id = "splashScreenElement";
+      n.innerHTML = a;
+      t.applyBindings(e, n);
+      S && S.appendChild(n);
     }
     function A() {
-      e.showLoader(!1), e.showSignIn(!1), C.publish();
+      e.showLoader(!1);
+      e.showSignIn(!1);
+      C.publish();
     }
     function O(t) {
       var n = v.assign({ text: m.fetch({ key: "splashScreen_text_loading" }) }, t);
-      e.showSignIn(!1), e.showLoader(!0), r.updateAriaLiveHtml(e.loadingText, n.text);
+      e.showSignIn(!1);
+      e.showLoader(!0);
+      r.updateAriaLiveHtml(e.loadingText, n.text);
     }
     function M(t) {
       var n = l.get().implicitSignIn || l.get().implicitSignOut, i = v.assign({
@@ -42,14 +49,28 @@ define("ui/viewModels/experience/splashScreen", [
           showLearnMore: !1,
           isFeedbackEnabled: !1
         }, t);
-      e.showLoader(!1), e.showSignIn(!0), e.signInTitle(""), e.signInDescription(""), i.title && r.updateAriaLiveHtml(e.signInTitle, i.title), i.description && r.updateAriaLiveHtml(e.signInDescription, i.description), e.isSignInEnabled(i.showButton), e.isSignInExternalEnabled(i.isSignInExternalEnabled), e.isLearnMoreLinkVisible(i.showLearnMore), e.isFeedbackEnabled(i.isFeedbackEnabled), k.setSignInPopup(i.isSignInPopupEnabled), e.isSignInNotificationEnabled(k.isEnabled());
+      e.showLoader(!1);
+      e.showSignIn(!0);
+      e.signInTitle("");
+      e.signInDescription("");
+      i.title && r.updateAriaLiveHtml(e.signInTitle, i.title);
+      i.description && r.updateAriaLiveHtml(e.signInDescription, i.description);
+      e.isSignInEnabled(i.showButton);
+      e.isSignInExternalEnabled(i.isSignInExternalEnabled);
+      e.isLearnMoreLinkVisible(i.showLearnMore);
+      e.isFeedbackEnabled(i.isFeedbackEnabled);
+      k.setSignInPopup(i.isSignInPopupEnabled);
+      e.isSignInNotificationEnabled(k.isEnabled());
     }
     function D() {
-      M(), C.startSplashScreenMeasure(e.showSignIn(), e.isLearnMoreLinkVisible());
+      M();
+      C.startSplashScreenMeasure(e.showSignIn(), e.isLearnMoreLinkVisible());
       var t = n.get().signInManager.state;
       t.when(o.loginState.SigningIn, function () {
         O({ text: J("splashScreen_text_signingIn") });
-      }), t.when(o.loginState.SigningOut, j), t.when(o.loginState.SignedOut, F);
+      });
+      t.when(o.loginState.SigningOut, j);
+      t.when(o.loginState.SignedOut, F);
     }
     function P() {
       var e = h.getBrowserInfo();
@@ -63,10 +84,18 @@ define("ui/viewModels/experience/splashScreen", [
       };
       if (R(e))
         return;
-      U(e) && (t.title = m.fetch({ key: "splashScreen_signInFailed_description_age_restriction" }), t.description = "", t.isFeedbackEnabled = !1), T && (t.description = m.fetch({ key: "skypeUnavailable_title" }), t.isFeedbackEnabled = !1), z(e) && (t.description = m.fetch({ key: "splashScreen_signInFailed_description_exceeded_endpoints" }), t.isFeedbackEnabled = !1), W(e) && (t.title = m.fetch({ key: "splashScreen_signInFailed_title_security_validation" }), t.description = "", t.isSignInExternalEnabled = !0, t.isFeedbackEnabled = !1), X(e) && (t.description = m.fetch({ key: "splashScreen_signInFailed_aad_description" }), t.isFeedbackEnabled = !1, t.isSignInPopupEnabled = !0), t.showLearnMore = !!c.splashScreen.learnMoreUrl && !!P(), M(t);
+      U(e) && (t.title = m.fetch({ key: "splashScreen_signInFailed_description_age_restriction" }), t.description = "", t.isFeedbackEnabled = !1);
+      T && (t.description = m.fetch({ key: "skypeUnavailable_title" }), t.isFeedbackEnabled = !1);
+      z(e) && (t.description = m.fetch({ key: "splashScreen_signInFailed_description_exceeded_endpoints" }), t.isFeedbackEnabled = !1);
+      W(e) && (t.title = m.fetch({ key: "splashScreen_signInFailed_title_security_validation" }), t.description = "", t.isSignInExternalEnabled = !0, t.isFeedbackEnabled = !1);
+      X(e) && (t.description = m.fetch({ key: "splashScreen_signInFailed_aad_description" }), t.isFeedbackEnabled = !1, t.isSignInPopupEnabled = !0);
+      t.showLearnMore = !!c.splashScreen.learnMoreUrl && !!P();
+      M(t);
     }
     function B(e) {
-      T = !1, M(e), E.publish(s.apiUIEvents.SWX_ON_SIGN_OUT);
+      T = !1;
+      M(e);
+      E.publish(s.apiUIEvents.SWX_ON_SIGN_OUT);
     }
     function j() {
       B({ showButton: w.isFeatureOn(s.featureFlags.RE_AUTH_ENABLED) && !k.isEnabled() });
@@ -86,7 +115,8 @@ define("ui/viewModels/experience/splashScreen", [
       }
       E.subscribe(s.apiUIEvents.SWX_SINGLE_CONVERSATION, function (n) {
         if (!n) {
-          e.showLoader(!1), e.showSignIn(!1);
+          e.showLoader(!1);
+          e.showSignIn(!1);
           return;
         }
         M({
@@ -96,7 +126,9 @@ define("ui/viewModels/experience/splashScreen", [
       });
     }
     function q() {
-      E.subscribe(s.events.system.EXPERIENCE_READY, D), E.subscribe(s.events.auth.SIGNIN_FAILED, H), I();
+      E.subscribe(s.events.system.EXPERIENCE_READY, D);
+      E.subscribe(s.events.auth.SIGNIN_FAILED, H);
+      I();
     }
     function R(e) {
       try {
@@ -136,27 +168,57 @@ define("ui/viewModels/experience/splashScreen", [
       return m.fetch({ key: N ? e + "_wac" : e });
     }
     var e = this, w = i.resolve(s.serviceLocator.FEATURE_FLAGS), E = i.resolve(s.serviceLocator.PUBSUB), S, x = "swx-container", T = !1, N = w.isFeatureOn(s.featureFlags.SINGLE_CONVERSATION_MODE), C = g.build(), k = b.build();
-    this.showLoader = t.observable(!1), this.showSignIn = t.observable(!1), this.isVisible = t.computed(function () {
+    this.showLoader = t.observable(!1);
+    this.showSignIn = t.observable(!1);
+    this.isVisible = t.computed(function () {
       return e.showLoader() || e.showSignIn();
-    }), this.isSignInEnabled = t.observable(!1), this.isSignInExternalEnabled = t.observable(!1), this.isSignInNotificationEnabled = t.observable(!1), this.isLearnMoreLinkVisible = t.observable(!1), this.isFeedbackEnabled = t.observable(!1), this.useBusinessWording = w.isFeatureOn(s.featureFlags.USE_BUSINESS_WORDING), this.showLogo = !N, this.loadingText = t.observable(""), this.signInTitle = t.observable(""), this.signInDescription = t.observable(""), this.signInLearnMoreText = m.fetch({ key: "splashScreen_learn_more" }), this.learnMoreUrl = c.splashScreen.learnMoreUrl, this.signIn = function (e) {
-      f.signIn(A, H, e), T = !0;
-    }, this.signInExternal = function () {
+    });
+    this.isSignInEnabled = t.observable(!1);
+    this.isSignInExternalEnabled = t.observable(!1);
+    this.isSignInNotificationEnabled = t.observable(!1);
+    this.isLearnMoreLinkVisible = t.observable(!1);
+    this.isFeedbackEnabled = t.observable(!1);
+    this.useBusinessWording = w.isFeatureOn(s.featureFlags.USE_BUSINESS_WORDING);
+    this.showLogo = !N;
+    this.loadingText = t.observable("");
+    this.signInTitle = t.observable("");
+    this.signInDescription = t.observable("");
+    this.signInLearnMoreText = m.fetch({ key: "splashScreen_learn_more" });
+    this.learnMoreUrl = c.splashScreen.learnMoreUrl;
+    this.signIn = function (e) {
+      f.signIn(A, H, e);
+      T = !0;
+    };
+    this.signInExternal = function () {
       var t, n, r = V();
-      $(u.externalSignIn.signIn), t = p.open(r), n = p.setInterval(function () {
+      $(u.externalSignIn.signIn);
+      t = p.open(r);
+      n = p.setInterval(function () {
         t.closed && (e.signIn({ isExternalSignIn: !0 }), p.clearInterval(n));
       }, 100);
-    }, this.notifySignIn = k.notify, this.getSignInButtonText = J.bind(null, "splashScreen_signIn_button"), this.feedbackPageUrl = t.pureComputed(function () {
+    };
+    this.notifySignIn = k.notify;
+    this.getSignInButtonText = J.bind(null, "splashScreen_signIn_button");
+    this.feedbackPageUrl = t.pureComputed(function () {
       return y.getFeedbackPageUrl();
-    }), this.feedbackPageTarget = function () {
+    });
+    this.feedbackPageTarget = function () {
       return y.getFeedbackPageTarget();
-    }, this.init = function (n) {
+    };
+    this.init = function (n) {
       if (!n)
         return;
-      S = n, S.classList.add(x);
+      S = n;
+      S.classList.add(x);
       var r = document.getElementById("splashScreenElement");
-      r && t.removeNode(r), L(), !e.showLoader() && !e.showSignIn() && O(), T = !1, E.publish(s.apiUIEvents.SWX_SPLASHSCREEN_LOADED);
-    }, q();
+      r && t.removeNode(r);
+      L();
+      !e.showLoader() && !e.showSignIn() && O();
+      T = !1;
+      E.publish(s.apiUIEvents.SWX_SPLASHSCREEN_LOADED);
+    };
+    q();
   }
   var t = e("vendor/knockout"), n = e("cafe/applicationInstance"), r = e("utils/common/accessibility"), i = e("services/serviceLocator"), s = e("constants/common"), o = e("swx-enums"), u = e("ui/telemetry/actions/actionNames"), a = e("text!views/experience/splashScreen.html"), f = e("experience/api/authentication"), l = e("experience/authContext"), c = e("experience/settings"), h = e("browser/detect"), p = e("browser/window"), d = e("browser/document"), v = e("lodash-compat"), m = e("swx-i18n").localization, g = e("telemetry/chat/splashScreenEvent"), y = e("utils/common/feedback"), b = e("utils/common/signInNotificationHandler");
   return w;
-})
+});

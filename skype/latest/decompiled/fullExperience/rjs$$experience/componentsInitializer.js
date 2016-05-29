@@ -9,7 +9,8 @@ define("experience/componentsInitializer", [], function () {
       });
     }
     function a() {
-      n = null, r("Initialization not completed by timeout period.");
+      n = null;
+      r("Initialization not completed by timeout period.");
     }
     var i = 0, s = window.setTimeout(a, e);
     t.forEach(function (e) {
@@ -18,4 +19,4 @@ define("experience/componentsInitializer", [], function () {
   }
   var e = 3000;
   return { init: t };
-})
+});

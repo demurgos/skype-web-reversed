@@ -13,5 +13,7 @@ define("ui/components/chat/groupSearch", [
     return e.init(), e;
   }
   var n = e("ui/viewModels/chat/groupSearch"), r = e("ui/viewModels/chat/message"), i = e("ui/viewModels/chat/recent");
-  t.name = e("constants/components").chat.GROUP_SEARCH, t.template = e("text!views/chat/groupSearch.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").chat.GROUP_SEARCH;
+  t.template = e("text!views/chat/groupSearch.html");
+  t.viewModel = { createViewModel: s };
+});

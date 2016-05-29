@@ -1,2 +1,2 @@
 define("fullExperience", function () {
-})
+});

@@ -29,7 +29,8 @@ define("jSkype/services/mediaAgent/ortcMediaChannel", [
     }
     function S(e) {
       var t, n, i;
-      T() ? (n = h.getObject().getAudioTracks()[0], t = e.getObject().getAudioTracks()) : (n = h.getObject().getVideoTracks()[0], t = e.getObject().getVideoTracks()), i = t.length ? t[0] : null;
+      T() ? (n = h.getObject().getAudioTracks()[0], t = e.getObject().getAudioTracks()) : (n = h.getObject().getVideoTracks()[0], t = e.getObject().getVideoTracks());
+      i = t.length ? t[0] : null;
       if (i === null) {
         r.error("media track is not available");
         return;
@@ -39,7 +40,8 @@ define("jSkype/services/mediaAgent/ortcMediaChannel", [
     }
     function x(e, n) {
       p || (r.debug("RTCSrtpSdesTransport", "local:", JSON.stringify(n.sdesParamsList[0]), "remote:", JSON.stringify(n.remoteSdesParams)), p = new RTCSrtpSdesTransport(e, n.sdesParamsList[0], n.remoteSdesParams), p.onerror = function (e) {
-        r.log("RTCSrtpSdesTransport.onerror", "event:", e), u({
+        r.log("RTCSrtpSdesTransport.onerror", "event:", e);
+        u({
           type: t.MEDIA_ERROR.srtpError,
           detail: e
         });
@@ -73,7 +75,9 @@ define("jSkype/services/mediaAgent/ortcMediaChannel", [
         var n = y.length === e.length && e.every(function (e, t) {
           return e === y[t];
         });
-        n || (r.debug("contributing sources changed", "sources:", e), f.onContributingSourcesChanged && f.onContributingSourcesChanged(e)), y = e, setTimeout(k, m);
+        n || (r.debug("contributing sources changed", "sources:", e), f.onContributingSourcesChanged && f.onContributingSourcesChanged(e));
+        y = e;
+        setTimeout(k, m);
       } else
         r.debug("receiver is missing, stop polling for contributing sources");
     }
@@ -97,8 +101,10 @@ define("jSkype/services/mediaAgent/ortcMediaChannel", [
         c = new RTCRtpReceiver(e.dtlsTransport, s);
       } else
         x(e.iceTransport, n), c = new RTCRtpReceiver(p, s);
-      g = c.track, c.onerror = function (e) {
-        r.error("_rtpReceiver.onerror", "event:", e), u({
+      g = c.track;
+      c.onerror = function (e) {
+        r.error("_rtpReceiver.onerror", "event:", e);
+        u({
           type: t.MEDIA_ERROR.internalError,
           detail: e
         });
@@ -106,7 +112,8 @@ define("jSkype/services/mediaAgent/ortcMediaChannel", [
     }
     function O(e, n, i) {
       var s;
-      T() ? s = n.getObject().getAudioTracks()[0] : s = n.getObject().getVideoTracks()[0], r.log("_rtpSender create trackID:", s.id);
+      T() ? s = n.getObject().getAudioTracks()[0] : s = n.getObject().getVideoTracks()[0];
+      r.log("_rtpSender create trackID:", s.id);
       if (i.enableDtls) {
         if (!i.rtcpMux)
           throw new Error("rtcpMux=false not supported with dtls!");
@@ -114,11 +121,13 @@ define("jSkype/services/mediaAgent/ortcMediaChannel", [
       } else
         x(e.iceTransport, i), l = new RTCRtpSender(s, p);
       l.onerror = function (e) {
-        r.error("_rtpSender.onerror", "event:", e), u({
+        r.error("_rtpSender.onerror", "event:", e);
+        u({
           type: t.MEDIA_ERROR.internalError,
           detail: e
         });
-      }, l.onssrcconflict = function (e) {
+      };
+      l.onssrcconflict = function (e) {
         r.error("_rtpSender.onssrcconflict", "event:", e);
       };
     }
@@ -131,9 +140,12 @@ define("jSkype/services/mediaAgent/ortcMediaChannel", [
     function D(e, n) {
       function i() {
         var n = M(e);
-        r.debug("_rtpReceiver.receive:", JSON.stringify(n)), c.receive(n), T() ? k() : f.subscribedMsi !== t.MSI.unsubscribe && L(f.subscribedMsi);
+        r.debug("_rtpReceiver.receive:", JSON.stringify(n));
+        c.receive(n);
+        T() ? k() : f.subscribedMsi !== t.MSI.unsubscribe && L(f.subscribedMsi);
       }
-      c && j(e) && (r.log("SSRC changed, resetting receiver"), c.stop(), c = null), c ? v && i() : (A(n, e), i());
+      c && j(e) && (r.log("SSRC changed, resetting receiver"), c.stop(), c = null);
+      c ? v && i() : (A(n, e), i());
     }
     function P() {
       c && (r.log("_rtpReceiver stop & destroy"), c.stop(), c = null, g = null, l || C());
@@ -141,9 +153,12 @@ define("jSkype/services/mediaAgent/ortcMediaChannel", [
     function H(e, t, n) {
       function i() {
         var t = _(e);
-        r.debug("_rtpSender.send:", JSON.stringify(t)), l.send(t), h ? S(n) : h = n.clone();
+        r.debug("_rtpSender.send:", JSON.stringify(t));
+        l.send(t);
+        h ? S(n) : h = n.clone();
       }
-      l && j(e) && (r.log("SSRC changed, resetting sender"), l.stop(), l = null), l ? v && i() : (O(t, n, e), i());
+      l && j(e) && (r.log("SSRC changed, resetting sender"), l.stop(), l = null);
+      l ? v && i() : (O(t, n, e), i());
     }
     function B() {
       l && (r.log("_rtpSender stop & destroy"), l.stop(), l = null, c || C(), h.dispose(), h = null);
@@ -155,51 +170,78 @@ define("jSkype/services/mediaAgent/ortcMediaChannel", [
       if (!v) {
         if (c) {
           var t = M(e);
-          r.debug("_rtpReceiver.receive:", JSON.stringify(t)), r.log("_rtpReceiver.receive ACTIVE -> INACTIVE"), t.encodings[0].active = !1, c.receive(t);
+          r.debug("_rtpReceiver.receive:", JSON.stringify(t));
+          r.log("_rtpReceiver.receive ACTIVE -> INACTIVE");
+          t.encodings[0].active = !1;
+          c.receive(t);
         }
         if (l) {
           var n = _(e);
-          r.debug("_rtpSender.send", "params:", JSON.stringify(n)), r.log("_rtpSender.send ACTIVE -> INACTIVE"), n.encodings[0].active = !1, l.send(n);
+          r.debug("_rtpSender.send", "params:", JSON.stringify(n));
+          r.log("_rtpSender.send ACTIVE -> INACTIVE");
+          n.encodings[0].active = !1;
+          l.send(n);
         }
         v = !0;
       }
     }
     var f = this, l = null, c = null, h = null, p = null, d = null, v = !1, m = 1000, g = null, y = [], b = null;
-    this.type = s, this.label = o, this.subscribedMsi = t.MSI.unsubscribe, this.onContributingSourcesChanged = null, i.disableSdes || (d = RTCSrtpSdesTransport.getLocalParameters().filter(E)), this.getLocalParameters = function () {
+    this.type = s;
+    this.label = o;
+    this.subscribedMsi = t.MSI.unsubscribe;
+    this.onContributingSourcesChanged = null;
+    i.disableSdes || (d = RTCSrtpSdesTransport.getLocalParameters().filter(E));
+    this.getLocalParameters = function () {
       return {
         sdesParamsList: d,
         rtpCaps: w(),
         ssrcRange: a
       };
-    }, this.configureChannel = function (e, t, n) {
+    };
+    this.configureChannel = function (e, t, n) {
       r.log("configureChannel", "type:", s, "descr:", JSON.stringify(n.descr));
       if (n.descr.enabled) {
         var i = !n.descr.send && !n.descr.recv;
-        i ? F(n) : (n.descr.recv ? D(n, e) : P(), n.descr.send ? H(n, e, t) : B(), v = !1), b = n.remoteSsrcRange;
+        i ? F(n) : (n.descr.recv ? D(n, e) : P(), n.descr.send ? H(n, e, t) : B(), v = !1);
+        b = n.remoteSsrcRange;
       } else
         P(), B();
-    }, this.updateLocalMediaStream = function (e) {
+    };
+    this.updateLocalMediaStream = function (e) {
       l && S(e);
-    }, this.canSubscribe = function () {
+    };
+    this.canSubscribe = function () {
       return c && f.subscribedMsi === t.MSI.unsubscribe && N();
-    }, this.subscribe = function (e) {
+    };
+    this.subscribe = function (e) {
       if (f.subscribedMsi === t.MSI.unsubscribe && N())
         return f.subscribedMsi = e, L(f.subscribedMsi);
       throw new Error("invalid call for subscribe:" + f.subscribedMsi + "type:" + s);
-    }, this.unsubscribe = function () {
+    };
+    this.unsubscribe = function () {
       if (f.subscribedMsi === t.MSI.unsubscribe || !N())
         throw new Error("invalid call for unsubscribe:" + f.subscribedMsi + "type:" + s);
-      f.subscribedMsi = t.MSI.unsubscribe, L(f.subscribedMsi);
-    }, this.getReportsAsync = function () {
+      f.subscribedMsi = t.MSI.unsubscribe;
+      L(f.subscribedMsi);
+    };
+    this.getReportsAsync = function () {
       var e = c ? c.transport.transport : l ? l.transport.transport : null, t = n.build({ logger: r }, e, l, c);
       return t.getReport();
-    }, this.getSendTrack = function () {
+    };
+    this.getSendTrack = function () {
       return l && !v ? l.track : null;
-    }, this.getRecvTrack = function () {
+    };
+    this.getRecvTrack = function () {
       return v ? null : g;
-    }, this.terminate = function () {
-      l = null, c = null, g = null, C(), h && (h.dispose(), h = null), r.log("termiated");
+    };
+    this.terminate = function () {
+      l = null;
+      c = null;
+      g = null;
+      C();
+      h && (h.dispose(), h = null);
+      r.log("termiated");
     };
   }
   return r;
-})
+});

@@ -13,5 +13,7 @@ define("ui/components/chat/textarea", [
     return u.setContext(a), u.init(), u;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/textarea"), i = e("jsviews/chat/textarea");
-  t.name = e("constants/components").chat.TEXTAREA, t.template = e("text!views/chat/textarea.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").chat.TEXTAREA;
+  t.template = e("text!views/chat/textarea.html");
+  t.viewModel = { createViewModel: s };
+});

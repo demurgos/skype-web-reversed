@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -15,11 +15,13 @@ function (e) {
         var u = e.utils.unwrapObservable(r()), a = u.params, f, l;
         for (l in a)
           a.hasOwnProperty(l) && typeof a[l] == "function" && (a[l] = e.utils.unwrapObservable(a[l]()));
-        f = n.fetch(u), e.bindingHandlers.html.update(t, function () {
+        f = n.fetch(u);
+        e.bindingHandlers.html.update(t, function () {
           return f;
         }, i, s, o);
       }
-    }, e.bindingHandlers.l10n_attr = {
+    };
+    e.bindingHandlers.l10n_attr = {
       update: function (t, r, i, s, o) {
         function l() {
           var e = {};
@@ -33,4 +35,4 @@ function (e) {
   }
   var n = e("./localization");
   t.init = r;
-})
+}));

@@ -36,7 +36,9 @@ define("experience/api/builder", [
     e.subscribeUI = c.subscribeUI;
   }
   function S(e) {
-    e.renderContent = d.renderContent, e.renderSidebar = d.renderSidebar, e.renderMe = d.renderMe;
+    e.renderContent = d.renderContent;
+    e.renderSidebar = d.renderSidebar;
+    e.renderMe = d.renderMe;
   }
   function x(e) {
     e.me = i.expose();
@@ -48,7 +50,9 @@ define("experience/api/builder", [
     e.setNotificationHandler = u.setNotificationHandler;
   }
   function C(e) {
-    e.startConversation = o.startConversation, e.joinConversation = o.joinConversation, e.newConversation = o.newConversation;
+    e.startConversation = o.startConversation;
+    e.joinConversation = o.joinConversation;
+    e.newConversation = o.newConversation;
   }
   function k(e) {
     e.activity = { unreadConversations: a.getInstance().getCount };
@@ -63,7 +67,10 @@ define("experience/api/builder", [
     e.calling = f.buildApi();
   }
   function M(e) {
-    l.init(), e.setAuthProvider = l.setAuthProvider, e.signIn = l.signIn, e.signOut = l.signOut;
+    l.init();
+    e.setAuthProvider = l.setAuthProvider;
+    e.signIn = l.signIn;
+    e.signOut = l.signOut;
   }
   function _(e) {
     e.getVersion = function () {
@@ -95,4 +102,4 @@ define("experience/api/builder", [
     var t = {};
     return v.API.version === 1 && (M(t), x(t), T(t), N(t), S(t), C(t), k(t), L(t), A(t), E(t), _(t), O(t), b(t), y(t), F(t)), v.API.version === 2 && (H(t), D(t), P(t), B(t), j(t)), v.API.exposeCafe && w(t), t;
   };
-})
+});

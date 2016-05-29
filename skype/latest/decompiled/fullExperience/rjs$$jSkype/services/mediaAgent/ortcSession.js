@@ -13,8 +13,20 @@ define("jSkype/services/mediaAgent/ortcSession", [
       throw new Error("Invalid state change:" + e.state + " " + t + " changing: " + e.changing);
     }
     var e = this;
-    this.STABLE = "stable", this.NEGOTIATION_REQUESTED = "negotiation_requested", this.HAVE_LOCAL_OFFER = "have_local_offer", this.HAVE_REMOTE_PRANSWER = "have_remote_pranswer", this.HAVE_REMOTE_ANSWER = "have_remote_answer", this.HAVE_REMOTE_OFFER = "have_remote_offer", this.HAVE_LOCAL_PRANSWER = "have_local_pranswer", this.HAVE_LOCAL_ANSWER = "have_local_answer", this.TERMINATED = "terminated", this.state = e.STABLE, this.changing = !1, this.change = function (n, r) {
-      e.busy && t(n), r && (e.changing = r);
+    this.STABLE = "stable";
+    this.NEGOTIATION_REQUESTED = "negotiation_requested";
+    this.HAVE_LOCAL_OFFER = "have_local_offer";
+    this.HAVE_REMOTE_PRANSWER = "have_remote_pranswer";
+    this.HAVE_REMOTE_ANSWER = "have_remote_answer";
+    this.HAVE_REMOTE_OFFER = "have_remote_offer";
+    this.HAVE_LOCAL_PRANSWER = "have_local_pranswer";
+    this.HAVE_LOCAL_ANSWER = "have_local_answer";
+    this.TERMINATED = "terminated";
+    this.state = e.STABLE;
+    this.changing = !1;
+    this.change = function (n, r) {
+      e.busy && t(n);
+      r && (e.changing = r);
       switch (n) {
       case e.STABLE:
         e.state !== e.HAVE_REMOTE_ANSWER && e.state !== e.HAVE_LOCAL_ANSWER && t(n);
@@ -42,7 +54,8 @@ define("jSkype/services/mediaAgent/ortcSession", [
         t(n);
       }
       e.state = n;
-    }, this.complete = function () {
+    };
+    this.complete = function () {
       e.changing = !1;
     };
   }
@@ -77,7 +90,8 @@ define("jSkype/services/mediaAgent/ortcSession", [
       return e;
     }
     function F(e) {
-      m.error("Media error occurred", "type:", e.type, "detail:", e.detail), y.onSessionErrorOccurred && y.onSessionErrorOccurred(e);
+      m.error("Media error occurred", "type:", e.type, "detail:", e.detail);
+      y.onSessionErrorOccurred && y.onSessionErrorOccurred(e);
     }
     function I() {
       for (var e in x)
@@ -105,14 +119,20 @@ define("jSkype/services/mediaAgent/ortcSession", [
         if (!e || !e.audio && !e.video)
           throw new Error("Invalid parameters!" + JSON.stringify(e));
         var n = !L || !o.areNegotiatedDirectionsFulfilled(e, k);
-        L = e, n && z(), t();
+        L = e;
+        n && z();
+        t();
       });
     }
     function X(e) {
       return new Promise(function (t) {
-        m.debug("PROCESS OFFER", "sdp:", e), N.change(N.HAVE_REMOTE_OFFER);
+        m.debug("PROCESS OFFER", "sdp:", e);
+        N.change(N.HAVE_REMOTE_OFFER);
         var n;
-        n = T.sdpToParams(e), E.processOffer(n), w = n.transportParams, t(o.invertModalities(i.getModalitiesFromParams(n)));
+        n = T.sdpToParams(e);
+        E.processOffer(n);
+        w = n.transportParams;
+        t(o.invertModalities(i.getModalitiesFromParams(n)));
       });
     }
     function V(e) {
@@ -153,7 +173,8 @@ define("jSkype/services/mediaAgent/ortcSession", [
     }
     function $() {
       return new Promise(function (e) {
-        N.change(N.HAVE_LOCAL_OFFER, !0), A = L;
+        N.change(N.HAVE_LOCAL_OFFER, !0);
+        A = L;
         var t = E.createMediaDescriptorsForOffer(A), n = _.assureInitAsync("controlling", [
             !!A.audio,
             !!A.video
@@ -180,7 +201,9 @@ define("jSkype/services/mediaAgent/ortcSession", [
         else {
           N.change(N.HAVE_REMOTE_ANSWER);
           var r;
-          r = T.sdpToParams(e), E.processAnswer(r), n(o.invertModalities(i.getModalitiesFromParams(r)));
+          r = T.sdpToParams(e);
+          E.processAnswer(r);
+          n(o.invertModalities(i.getModalitiesFromParams(r)));
         }
       });
     }
@@ -206,7 +229,8 @@ define("jSkype/services/mediaAgent/ortcSession", [
             for (var r = 0; r < t.media.length; r++)
               if (t.media[r].descr.label === s.MEDIA_LABEL.audio) {
                 var u = C[r].getRecvTrack();
-                C[r].configureChannel(_.audioTransport, n, t.media[r]), C[r].getRecvTrack() && C[r].getRecvTrack() !== u ? (R(C[r].getRecvTrack()), C[r].onContributingSourcesChanged = function () {
+                C[r].configureChannel(_.audioTransport, n, t.media[r]);
+                C[r].getRecvTrack() && C[r].getRecvTrack() !== u ? (R(C[r].getRecvTrack()), C[r].onContributingSourcesChanged = function () {
                   y.onContributingSourcesChanged && y.onContributingSourcesChanged.apply(y, arguments);
                 }) : !C[r].getRecvTrack() && u && (U(), C[r].onContributingSourcesChanged = null);
               } else
@@ -214,7 +238,9 @@ define("jSkype/services/mediaAgent/ortcSession", [
           } finally {
             n && n.dispose();
           }
-          I(), N.complete(), k = i.getModalitiesFromParams(t);
+          I();
+          N.complete();
+          k = i.getModalitiesFromParams(t);
           var a = O || !o.areNegotiatedDirectionsAcceptable(L, A, k);
           return a && z(), m.log("_completeNegotiationAsync: configured:", JSON.stringify(L), "_negotiatingModalities:", JSON.stringify(A), "activeModalities:", JSON.stringify(k)), {
             isComplete: !a,
@@ -227,7 +253,10 @@ define("jSkype/services/mediaAgent/ortcSession", [
     function G(e, t) {
       return new Promise(function (n) {
         var r = e === s.RENEGOTIATION_ERROR.local;
-        N.state = N.STABLE, m.error("negotiation failed", "error:", e), t && (m.log("retrying failed negotiation"), z()), n({
+        N.state = N.STABLE;
+        m.error("negotiation failed", "error:", e);
+        t && (m.log("retrying failed negotiation"), z());
+        n({
           isComplete: r,
           activeModalities: k,
           configuredModalities: L
@@ -239,15 +268,21 @@ define("jSkype/services/mediaAgent/ortcSession", [
         g.Renderer.call(this, e, t);
         var n = this, r = this.dispose, i = !1, u = o.defer(), a, f;
         this._unsubscribeIfSubscribed = function () {
-          a && (a.remove(n), a = void 0), f = void 0;
-        }, this._updateRecvTrack = function (e, t) {
-          m.log("renderer._updateRecvTrack - attachMediaStream", "msi:", e, "track:", t), f = e, n._attachMediaStream(t ? new MediaStream([t]) : null);
-        }, this.subscribeVideoAsync = function (e) {
+          a && (a.remove(n), a = void 0);
+          f = void 0;
+        };
+        this._updateRecvTrack = function (e, t) {
+          m.log("renderer._updateRecvTrack - attachMediaStream", "msi:", e, "track:", t);
+          f = e;
+          n._attachMediaStream(t ? new MediaStream([t]) : null);
+        };
+        this.subscribeVideoAsync = function (e) {
           return m.info("subscribeVideoAsync", "msi:", e), new Promise(function (t) {
             typeof e == "undefined" && (e = s.MSI.subscribeAny);
             if (!i) {
               var r = f !== e;
-              r && n._unsubscribeIfSubscribed(), u.isPending() && (u.resolve(), u = o.defer());
+              r && n._unsubscribeIfSubscribed();
+              u.isPending() && (u.resolve(), u = o.defer());
               if (e === s.MSI.unsubscribe || !r)
                 u.resolve();
               else {
@@ -259,7 +294,8 @@ define("jSkype/services/mediaAgent/ortcSession", [
                         for (var t = 0; t < C.length; t++) {
                           var n = C[t];
                           if (n && n.canSubscribe() && n.subscribe(e)) {
-                            h = n, l.resolve();
+                            h = n;
+                            l.resolve();
                             break;
                           }
                         }
@@ -272,7 +308,9 @@ define("jSkype/services/mediaAgent/ortcSession", [
                     };
                   x[e] = {
                     add: function (e, t) {
-                      l.promise.then(t.resolve, t.reject), c.push(e), m();
+                      l.promise.then(t.resolve, t.reject);
+                      c.push(e);
+                      m();
                     },
                     remove: function (e) {
                       var t = c.indexOf(e);
@@ -282,13 +320,19 @@ define("jSkype/services/mediaAgent/ortcSession", [
                     dispose: v
                   };
                 }
-                a = x[e], a.add(n, u);
+                a = x[e];
+                a.add(n, u);
               }
             }
             t(u.promise);
           });
-        }, this.dispose = function () {
-          m.debug("disposing remote renderer"), n._unsubscribeIfSubscribed(), u.isPending() && u.reject(new Error("disposing")), i = !0, r();
+        };
+        this.dispose = function () {
+          m.debug("disposing remote renderer");
+          n._unsubscribeIfSubscribed();
+          u.isPending() && u.reject(new Error("disposing"));
+          i = !0;
+          r();
         };
       };
       return new n(e, t);
@@ -301,7 +345,9 @@ define("jSkype/services/mediaAgent/ortcSession", [
         video: t
       }).then(function (n) {
         var r;
-        e && (r = B(C, s.MEDIA_LABEL.audio), r.updateLocalMediaStream(n)), t && (r = B(C, s.MEDIA_LABEL.video), r.updateLocalMediaStream(n)), n.dispose();
+        e && (r = B(C, s.MEDIA_LABEL.audio), r.updateLocalMediaStream(n));
+        t && (r = B(C, s.MEDIA_LABEL.video), r.updateLocalMediaStream(n));
+        n.dispose();
       }).catch(function (e) {
         F({
           type: s.MEDIA_ERROR.internalError,
@@ -318,16 +364,20 @@ define("jSkype/services/mediaAgent/ortcSession", [
         n && n.getSendTrack() && t.localStreams[0].tracks.push({
           stream: null,
           track: n.getSendTrack()
-        }), r && r.getSendTrack() && t.localStreams[0].tracks.push({
+        });
+        r && r.getSendTrack() && t.localStreams[0].tracks.push({
           stream: null,
           track: r.getSendTrack()
-        }), n && n.getRecvTrack() && t.remoteStreams[0].tracks.push({
+        });
+        n && n.getRecvTrack() && t.remoteStreams[0].tracks.push({
           stream: null,
           track: n.getRecvTrack()
-        }), r && r.getRecvTrack() && t.remoteStreams[0].tracks.push({
+        });
+        r && r.getRecvTrack() && t.remoteStreams[0].tracks.push({
           stream: null,
           track: r.getRecvTrack()
-        }), Promise.all([
+        });
+        Promise.all([
           n ? n.getReportsAsync() : {},
           r ? r.getReportsAsync() : {}
         ]).then(function (n) {
@@ -335,20 +385,42 @@ define("jSkype/services/mediaAgent/ortcSession", [
             CorrelationId: f,
             mainAudio: n[0],
             mainVideo: n[1]
-          }, e(t);
+          };
+          e(t);
         }).catch(function (n) {
-          m.error("getting statistics should never fail:", n), e(t);
+          m.error("getting statistics should never fail:", n);
+          e(t);
         });
       }), D);
     }
     function tt() {
-      m.log("terminate"), et().then(function () {
-        N.change(N.TERMINATED), _.stop(), U(), q(), C.forEach(function (e) {
+      m.log("terminate");
+      et().then(function () {
+        N.change(N.TERMINATED);
+        _.stop();
+        U();
+        q();
+        C.forEach(function (e) {
           e.terminate();
-        }), y._onTerminated && y._onTerminated(y);
+        });
+        y._onTerminated && y._onTerminated(y);
       });
     }
-    this.configureModalitiesAsync = W, this.processOfferAsync = X, this.createAnswerAsync = V, this.createOfferAsync = $, this.processAnswerAsync = J, this.completeNegotiationAsync = Q, this.rejectNegotiationAsync = G, this.createRemoteRenderer = Y, this.getStatsAsync = et, this.terminate = tt, this._deviceSelectionChanged = Z, this._onTerminated = null, this.onNegotiationRequired = null, this.onContributingSourcesChanged = null, this.onSessionErrorOccurred = null;
+    this.configureModalitiesAsync = W;
+    this.processOfferAsync = X;
+    this.createAnswerAsync = V;
+    this.createOfferAsync = $;
+    this.processAnswerAsync = J;
+    this.completeNegotiationAsync = Q;
+    this.rejectNegotiationAsync = G;
+    this.createRemoteRenderer = Y;
+    this.getStatsAsync = et;
+    this.terminate = tt;
+    this._deviceSelectionChanged = Z;
+    this._onTerminated = null;
+    this.onNegotiationRequired = null;
+    this.onContributingSourcesChanged = null;
+    this.onSessionErrorOccurred = null;
     var l = a.maContext.settings, c = a.config.isConference && l.numVideoChannelsGvc ? l.numVideoChannelsGvc : 1, h = Math.floor(Math.random() * 4294967295), p = {
         min: h,
         max: h
@@ -358,7 +430,8 @@ define("jSkype/services/mediaAgent/ortcSession", [
             m.log("ICE-reinvite disabled - triggerIceReinvite skipped");
             return;
           }
-          m.log("triggerIceReinvite"), z(!0);
+          m.log("triggerIceReinvite");
+          z(!0);
         },
         raiseError: F
       }, _ = new e(m, l, M, a.maContext.getRelayManager(), a.config.isRemoteClientLync, b), D = Promise.resolve({});
@@ -369,4 +442,4 @@ define("jSkype/services/mediaAgent/ortcSession", [
       return new a(e, t, n);
     }
   };
-})
+});

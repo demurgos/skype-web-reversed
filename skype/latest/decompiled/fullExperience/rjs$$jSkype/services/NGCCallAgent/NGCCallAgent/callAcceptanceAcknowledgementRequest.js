@@ -26,4 +26,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callAcceptanceAcknowledgementR
     };
     return i;
   }, i;
-})
+});

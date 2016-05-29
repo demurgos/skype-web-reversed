@@ -11,9 +11,10 @@ define("jSkype/services/stratus/dispatcher", [
     this.success = function (e) {
       var n = r(e.response);
       t.get().publish("stratus:data", n);
-    }, this.error = function (e) {
+    };
+    this.error = function (e) {
       var n = r(e);
       t.get().publish("stratus:error", n);
     };
   };
-})
+});

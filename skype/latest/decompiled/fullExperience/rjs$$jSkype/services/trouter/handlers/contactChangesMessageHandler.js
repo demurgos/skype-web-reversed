@@ -23,4 +23,4 @@ define("jSkype/services/trouter/handlers/contactChangesMessageHandler", [
   t.build = function (e) {
     return new s(e);
   };
-})
+});

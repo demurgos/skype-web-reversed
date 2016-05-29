@@ -112,7 +112,8 @@ define("services/pes/config", [
         var n = [];
         t.items.forEach(function (t) {
           n.push(y(e.items, t));
-        }), t.items = n;
+        });
+        t.items = n;
       });
     }
     function C(e) {
@@ -131,8 +132,12 @@ define("services/pes/config", [
         var n = [];
         t.sections.forEach(function (t) {
           var r = y(e.packs, t.pack);
-          r.isHidden = !1, n.push(r);
-        }), t.packs = n, t.type = u.itemTypes.tab.id, t.thumbnailUrl = g(t, e.tabsRoot).thumbnailUrl;
+          r.isHidden = !1;
+          n.push(r);
+        });
+        t.packs = n;
+        t.type = u.itemTypes.tab.id;
+        t.thumbnailUrl = g(t, e.tabsRoot).thumbnailUrl;
       });
     }
     var e;
@@ -146,14 +151,22 @@ define("services/pes/config", [
         return i >= 0 ? r.items.splice(0, 0, r.items.splice(i, 1)[0]) : r.items.splice(0, 0, n), r.items = E(r, n.type), C(e);
       }
       return Promise.resolve();
-    }, this.getConfiguration = function () {
+    };
+    this.getConfiguration = function () {
       return e;
-    }, this.init = function (t) {
-      e = p(), h(t, e), N(e), t.tabs ? (k(e), e.tabs.unshift(d())) : e.tabs = T(e.packs, e.packsRoot);
+    };
+    this.init = function (t) {
+      e = p();
+      h(t, e);
+      N(e);
+      t.tabs ? (k(e), e.tabs.unshift(d())) : e.tabs = T(e.packs, e.packsRoot);
       var n = y(e.tabs, u.mru.TAB_ID);
       return n.packs = m(), e.packs = e.packs.concat(n.packs), f.publish(s.personalExpression.CONFIG_INITIALIZED, e), x(e);
-    }, e = p(), e.tabs.push(d()), e.packs = e.tabs[0].packs = m();
+    };
+    e = p();
+    e.tabs.push(d());
+    e.packs = e.tabs[0].packs = m();
   }
   var t = "pes", n = e("lodash-compat"), r = e("utils/common/cache/instance"), i = e("constants/common"), s = e("constants/common").events, o = e("swx-i18n").localization, u = e("services/pes/constants"), a = e("utils/chat/pesUtils"), f = e("services/pubSub/pubSub"), l = e("services/serviceLocator"), c = e("experience/settings"), h = e("utils/common/builderMixin");
   return n.extend(p, h), p;
-})
+});

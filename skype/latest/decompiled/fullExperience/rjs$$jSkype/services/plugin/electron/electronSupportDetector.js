@@ -24,7 +24,8 @@ define("jSkype/services/plugin/electron/electronSupportDetector", [
       isSupported: !1,
       reason: i.callingNotSupportedReasons.PluginBlocked
     });
-  }, t.build = function () {
+  };
+  t.build = function () {
     return new s();
   };
-})
+});

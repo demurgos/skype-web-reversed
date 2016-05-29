@@ -15,7 +15,9 @@ define("services/subscriptions/subscriptionProvider", [
           timeout: 50,
           method: "notifyWhenChangesStop"
         }
-      }), t.persons.subscribe(), t.persons.changed(n);
+      });
+      t.persons.subscribe();
+      t.persons.changed(n);
     }
     var e = {
       persons: {
@@ -29,4 +31,4 @@ define("services/subscriptions/subscriptionProvider", [
   }
   var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("cafe/applicationInstance");
   return i;
-})
+});

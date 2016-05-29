@@ -6,7 +6,10 @@ define("jSkype/services/systemCommands/commands/kick", [
   "jSkype/modelHelpers/participantHelper"
 ], function (e, t) {
   function i() {
-    this.isAvailableFor = n.availableForGroupLeaders, this.help = "[skypename]", this.showInHelp = !0, this.action = function (e, t) {
+    this.isAvailableFor = n.availableForGroupLeaders;
+    this.help = "[skypename]";
+    this.showInHelp = !0;
+    this.action = function (e, t) {
       t[0] === "@" && (t = t.substring(1));
       var n = r.getParticipantFromConversation(e, t);
       if (!n)
@@ -19,4 +22,4 @@ define("jSkype/services/systemCommands/commands/kick", [
   t.build = function () {
     return new i();
   };
-})
+});

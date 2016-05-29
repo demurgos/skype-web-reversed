@@ -29,16 +29,22 @@ define("jSkype/services/webapiMapper/conversationDataHandlers", [
       var o = r.resource, l = a.getConversationIdFromUrl(o.conversationLink), c = i.get()._telemetry.messagesCollector;
       if (f.isPstnConversation(l) && !s.isFeatureOn(n.featureFlags.PSTN_ENABLED))
         return;
-      u.message(o), t._handleNewMessage(l, o), c.enqueueReceivedMessageInfo(o), [
+      u.message(o);
+      t._handleNewMessage(l, o);
+      c.enqueueReceivedMessageInfo(o);
+      [
         "ThreadActivity/AddMember",
         "ThreadActivity/DeleteMember"
       ].indexOf(o.messagetype) !== -1 && e.syncThread(l);
-    }, this.handleMessageUpdate = function (e) {
+    };
+    this.handleMessageUpdate = function (e) {
       var n = e.resource, r = a.getConversationIdFromUrl(n.conversationLink);
       if (f.isPstnConversation(r))
         return;
-      u.message(n), t._handleUpdatedMessage(r, n);
-    }, this.handleConversationUpdate = function (e) {
+      u.message(n);
+      t._handleUpdatedMessage(r, n);
+    };
+    this.handleConversationUpdate = function (e) {
       function n() {
         var t = e.resource.properties.clearedat;
         if (!t)
@@ -53,19 +59,25 @@ define("jSkype/services/webapiMapper/conversationDataHandlers", [
           return;
         }
       }
-      u.conversations([e.resource]), t._conversationPropertiesUpdated(e.resource);
-    }, this.handleThreadUpdate = function (e) {
+      u.conversations([e.resource]);
+      t._conversationPropertiesUpdated(e.resource);
+    };
+    this.handleThreadUpdate = function (e) {
       c.handleThreadSync(e.resource);
-    }, this.handleThreadSync = function (e) {
+    };
+    this.handleThreadSync = function (e) {
       var n;
-      n = h(e), t._threadPropertiesUpdated(n);
-    }, this.handleTypingControl = function (e) {
+      n = h(e);
+      t._threadPropertiesUpdated(n);
+    };
+    this.handleTypingControl = function (e) {
       var n = a.getConversationIdFromUrl(e.resource.conversationLink), r = a.getConversationIdFromUrl(e.resource.from), i = r ? o.getId(r) : "", s = e.resource.messagetype === l.MESSAGE_TYPE.SET_TYPING, u = t._getConversation(n);
       if (!u || !i)
         return;
       var f = u.participants(i);
       f && f.chat._setIsTyping(s);
-    }, this.handleReadReceipt = function (e) {
+    };
+    this.handleReadReceipt = function (e) {
       var n = e.resource.conversationId, r = t._getConversation(n);
       if (!r || r.isGroupConversation())
         return;
@@ -76,4 +88,4 @@ define("jSkype/services/webapiMapper/conversationDataHandlers", [
   t.build = function (e, t) {
     return new c(e, t);
   };
-})
+});

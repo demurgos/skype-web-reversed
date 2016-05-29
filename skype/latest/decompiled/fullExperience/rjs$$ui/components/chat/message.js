@@ -11,5 +11,7 @@ define("ui/components/chat/message", [
     return r.setContext(i), r.onRendered(), r.elementInfo = t, r;
   }
   var n = e("vendor/knockout");
-  t.name = e("constants/components").chat.MESSAGE, t.template = e("text!views/chat/message.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.MESSAGE;
+  t.template = e("text!views/chat/message.html");
+  t.viewModel = { createViewModel: r };
+});

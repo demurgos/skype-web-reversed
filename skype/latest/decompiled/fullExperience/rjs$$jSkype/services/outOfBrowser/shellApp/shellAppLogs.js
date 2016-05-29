@@ -34,4 +34,4 @@ define("jSkype/services/outOfBrowser/shellApp/shellAppLogs", [
       });
     });
   };
-})
+});

@@ -12,5 +12,7 @@ define("ui/components/chat/filePicker", [
     return i.setContext(r.dataFor(t.element)), i.init(), i;
   }
   var n = e("ui/viewModels/chat/filePicker"), r = e("vendor/knockout");
-  t.name = e("constants/components").chat.FILE_PICKER, t.template = e("text!views/chat/filePicker.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.FILE_PICKER;
+  t.template = e("text!views/chat/filePicker.html");
+  t.viewModel = { createViewModel: i };
+});

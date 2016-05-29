@@ -14,5 +14,7 @@ define("ui/components/chat/pes/itemsPicker", [
     return f.setContext(a), f.init(), f;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/pes/itemsPicker"), i = e("utils/common/scroll"), s = e("browser/dom");
-  t.name = e("constants/components").chat.EXPRESSION_ITEMS_PICKER, t.template = e("text!views/chat/pes/itemsPicker.html"), t.viewModel = { createViewModel: o };
-})
+  t.name = e("constants/components").chat.EXPRESSION_ITEMS_PICKER;
+  t.template = e("text!views/chat/pes/itemsPicker.html");
+  t.viewModel = { createViewModel: o };
+});

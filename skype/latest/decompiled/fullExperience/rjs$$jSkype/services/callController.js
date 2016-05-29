@@ -96,7 +96,10 @@ define("jSkype/services/callController", [
     });
   }
   function B(e) {
-    e.audioService.accept.enabled._set(!0), e.audioService.stop.enabled._set(!0), e.videoService.accept.enabled._set(!0), e.videoService.stop.enabled._set(!0);
+    e.audioService.accept.enabled._set(!0);
+    e.audioService.stop.enabled._set(!0);
+    e.videoService.accept.enabled._set(!0);
+    e.videoService.stop.enabled._set(!0);
   }
   function j(e, t) {
     var i = n.task();
@@ -109,7 +112,8 @@ define("jSkype/services/callController", [
         return e ? i : g.ignore;
       });
     }).then(function (e) {
-      f.log("[Call Controller] Incoming call policy is ", e), i.resolve(e);
+      f.log("[Call Controller] Incoming call policy is ", e);
+      i.resolve(e);
     }).catch(function () {
       i.resolve(g.ignore);
     }), i.promise;
@@ -129,22 +133,36 @@ define("jSkype/services/callController", [
     return e.conversationId !== "8:" + e.callerId;
   }
   function q(e) {
-    f.log("[Call Controller] Calling unregister with", e.conversationId), l.get().unregisterCall(e, e._callData.getCallIdFromCurrentCall()), e._callHandler && (e._callHandler.dispose(), e._callHandler = null), e._autoCallingService.reset(e.selfParticipant.audio.state.reason), k(e), e._callData.resetPluginCallState(), z(e), w(e), c.dispose(e), m[e.conversationId] && (m[e.conversationId].dispose(), delete m[e.conversationId]);
+    f.log("[Call Controller] Calling unregister with", e.conversationId);
+    l.get().unregisterCall(e, e._callData.getCallIdFromCurrentCall());
+    e._callHandler && (e._callHandler.dispose(), e._callHandler = null);
+    e._autoCallingService.reset(e.selfParticipant.audio.state.reason);
+    k(e);
+    e._callData.resetPluginCallState();
+    z(e);
+    w(e);
+    c.dispose(e);
+    m[e.conversationId] && (m[e.conversationId].dispose(), delete m[e.conversationId]);
   }
   function R(e) {
     function r(t, r, i) {
-      f.log("[Call Controller] Audio state changed", t, r, i), i !== undefined && t === p.callConnectionState.Disconnected && (q(e), n.dispose());
+      f.log("[Call Controller] Audio state changed", t, r, i);
+      i !== undefined && t === p.callConnectionState.Disconnected && (q(e), n.dispose());
     }
     var t = e.selfParticipant.audio.state, n = e.participants.subscribe();
-    f.log("[Call Controller] subscribe to audio state"), m[e.conversationId] = t.changed(r);
+    f.log("[Call Controller] subscribe to audio state");
+    m[e.conversationId] = t.changed(r);
   }
   function U(e) {
     function n() {
-      e._callHandler.dispose(), c.dispose(e), t(!1);
+      e._callHandler.dispose();
+      c.dispose(e);
+      t(!1);
     }
     var t = e.selfParticipant.audio._isFailedCall;
     t.once(!0, function () {
-      l.get().unregisterCall(e), e._callHandler.cancelCall(e).then(n, n);
+      l.get().unregisterCall(e);
+      e._callHandler.cancelCall(e).then(n, n);
     });
   }
   function z(e) {
@@ -173,7 +191,8 @@ define("jSkype/services/callController", [
     return N(e).then(y).then(k).then(t.setupCall).then(x).then(S).then(C).then(L.bind(null, e, n)).catch(function (t) {
       return f.log("[Call Controller] Failed to process placeCall", t), T(e, t);
     });
-  }, t.handleIncoming = function (t) {
+  };
+  t.handleIncoming = function (t) {
     var n = P(t);
     return l.get().registerCallIdMapping(n, t) ? j(n, t).then(function (e) {
       c.build(n, h.telemetry.calling.direction.INCOMING);
@@ -187,16 +206,21 @@ define("jSkype/services/callController", [
       }
       return Promise.reject();
     }) : (k(n), Promise.resolve());
-  }, t.cancelCall = function (t) {
+  };
+  t.cancelCall = function (t) {
     function n() {
       return t._callHandler ? t._callHandler.cancelCall(t) : Promise.resolve();
     }
     return f.log("[Call Controller] cancel call, audio cancellable", _(t)), _(t) ? n().then(function () {
-      E(t, p.callDisconnectionReason.Canceled), q(t);
+      E(t, p.callDisconnectionReason.Canceled);
+      q(t);
     }) : Promise.resolve();
-  }, t.endCall = function (e) {
+  };
+  t.endCall = function (e) {
     return e._callHandler ? e._callHandler.endCall() : (e.autoCall() && (f.log("[Call controller] No call handler, fake disconnect"), E(e)), Promise.resolve());
-  }, t.abortAutoCall = function (e) {
+  };
+  t.abortAutoCall = function (e) {
     E(e, p.callDisconnectionReason.AutoCallFailed);
-  }, t.setupCall = M;
-})
+  };
+  t.setupCall = M;
+});

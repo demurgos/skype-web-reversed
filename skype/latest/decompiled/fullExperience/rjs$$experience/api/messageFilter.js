@@ -18,4 +18,4 @@ define("experience/api/messageFilter", [
     setOutgoingMessageFilter: r,
     setChatLogMessageFilter: i
   };
-})
+});

@@ -16,5 +16,7 @@ define("ui/components/chat/pes.v2/expressionPicker", [
     return a.init(), u.init(a, o), a;
   }
   var n = e("ui/components/chat/pes.v2/expressionPickerController"), r = e("ui/viewModels/chat/pes.v2/expressionPicker"), i = e("vendor/knockout");
-  t.name = e("constants/components").chat.EXPRESSION_PICKER, t.template = e("text!views/chat/pes.v2/expressionPicker.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").chat.EXPRESSION_PICKER;
+  t.template = e("text!views/chat/pes.v2/expressionPicker.html");
+  t.viewModel = { createViewModel: s };
+});

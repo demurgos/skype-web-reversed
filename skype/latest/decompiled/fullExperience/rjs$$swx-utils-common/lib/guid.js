@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -28,5 +28,6 @@ function (e) {
     var e = r();
     return e[0] + e[1] + e[2] + e[3] + e[4] + e[5] + e[6] + e[7];
   }
-  t.create = i, t.createRaw = s;
-})
+  t.create = i;
+  t.createRaw = s;
+}));

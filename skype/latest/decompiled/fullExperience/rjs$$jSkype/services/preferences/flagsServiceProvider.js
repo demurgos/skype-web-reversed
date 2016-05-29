@@ -10,7 +10,8 @@ define("jSkype/services/preferences/flagsServiceProvider", [
     o = n.build(i.settings.flagsApiUrl);
   }
   function a(e) {
-    this.flagId = e, o || u();
+    this.flagId = e;
+    o || u();
   }
   var t = e("lodash-compat"), n = e("swx-flags-service-api"), r = e("jSkype/client"), i = e("jSkype/settings"), s = e("utils/common/builderMixin"), o;
   return a.prototype.read = function () {
@@ -24,4 +25,4 @@ define("jSkype/services/preferences/flagsServiceProvider", [
       return o.update(n.flagId, t, e);
     });
   }, t.assign(a, s), a._resetGlobalState = u, a;
-})
+});

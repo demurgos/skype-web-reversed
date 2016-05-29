@@ -31,13 +31,15 @@ define("telemetry/chat/pes", [
           emo_tab_index: r.tabIndex + ""
         });
       });
-    }, this.mojiPlayed = function (t, r) {
+    };
+    this.mojiPlayed = function (t, r) {
       s.get().sendEvent(i.telemetry.uiTenantToken, n.telemetry.pes.eventName.MOJI_PLAYED, {
         moji_id: t.id + "",
         moji_name: t.pickerTitle + "",
         cause: r + ""
       });
-    }, this.mojiSent = function (t, r) {
+    };
+    this.mojiSent = function (t, r) {
       s.get().sendEvent(i.telemetry.uiTenantToken, n.telemetry.pes.eventName.MOJI_SENT, {
         moji_id: t.id + "",
         moji_name: t.pickerTitle + "",
@@ -46,7 +48,8 @@ define("telemetry/chat/pes", [
         moji_tab_name: r.tabName + "",
         moji_tab_index: r.tabIndex + ""
       });
-    }, this.imageSent = function (t, r) {
+    };
+    this.imageSent = function (t, r) {
       s.get().sendEvent(i.telemetry.uiTenantToken, n.telemetry.pes.eventName.IMAGE_SENT, {
         image_id: t.id + "",
         image_query: r.query + "",
@@ -60,4 +63,4 @@ define("telemetry/chat/pes", [
   }
   var t = e("lodash-compat"), n = e("constants/common"), r = e("swx-utils-common").guid, i = e("experience/settings"), s = e("ui/telemetry/telemetryClient");
   return new o();
-})
+});

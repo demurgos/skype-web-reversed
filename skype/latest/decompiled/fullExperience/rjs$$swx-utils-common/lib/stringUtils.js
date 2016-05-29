@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -23,7 +23,8 @@ function (e) {
     if (!e)
       return e;
     while (i < e.length) {
-      o += e.charAt(i), a = e.charCodeAt(i);
+      o += e.charAt(i);
+      a = e.charCodeAt(i);
       if (a < t || a > r)
         u += n.has(s, o) ? s[o] : o, o = "";
       i++;
@@ -349,5 +350,16 @@ function (e) {
       "ˢ": "s",
       "ˣ": "x"
     };
-  t.anyWordStartsWith = o, t.clean = u, t.normalize = a, t.inject = f, t.isEmpty = l, t.isNotEmpty = c, t.isCarriageReturn = h, t.isNewLine = p, t.isWhiteSpace = d, t.wordAt = v, t.wordBoundariesAt = m, t.forceLTREmbedding = g;
-})
+  t.anyWordStartsWith = o;
+  t.clean = u;
+  t.normalize = a;
+  t.inject = f;
+  t.isEmpty = l;
+  t.isNotEmpty = c;
+  t.isCarriageReturn = h;
+  t.isNewLine = p;
+  t.isWhiteSpace = d;
+  t.wordAt = v;
+  t.wordBoundariesAt = m;
+  t.forceLTREmbedding = g;
+}));

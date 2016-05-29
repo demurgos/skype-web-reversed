@@ -58,4 +58,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/joinGivenConversationRequest",
     };
     return u;
   }, i;
-})
+});

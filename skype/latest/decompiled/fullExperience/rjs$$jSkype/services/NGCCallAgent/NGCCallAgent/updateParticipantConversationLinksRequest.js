@@ -34,4 +34,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/updateParticipantConversationL
     };
     return i;
   }, i;
-})
+});

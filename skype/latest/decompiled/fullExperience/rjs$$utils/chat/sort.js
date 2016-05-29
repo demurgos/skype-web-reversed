@@ -10,4 +10,4 @@ define("utils/chat/sort", [], function () {
       return t.timestamp - e.timestamp;
     }
   };
-})
+});

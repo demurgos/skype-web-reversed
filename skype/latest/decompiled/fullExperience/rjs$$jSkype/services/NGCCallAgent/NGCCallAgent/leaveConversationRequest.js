@@ -5,7 +5,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/leaveConversationRequest", [
 ], function (e) {
   var t = e("jSkype/services/NGCCallAgent/NGCCallAgent/utils"), n = e("jSkype/services/NGCCallAgent/NGCCallAgent/constants"), r = {};
   return r.getPayload = function (e, r) {
-    t.assertNotNull(e, "signalingSession cannot be null"), t.assertCallEndReason(r);
+    t.assertNotNull(e, "signalingSession cannot be null");
+    t.assertCallEndReason(r);
     var i = {
       payload: {
         participants: {
@@ -26,4 +27,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/leaveConversationRequest", [
     };
     return i;
   }, r;
-})
+});

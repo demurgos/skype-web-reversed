@@ -12,11 +12,12 @@ define("jSkype/modelHelpers/contacts/dataHandlers/phoneUpdate", [
     }
     this.onSuccess = function (n) {
       return e(n) ? Promise.reject(t(n)) : Promise.resolve();
-    }, this.onError = function (e) {
+    };
+    this.onError = function (e) {
       return Promise.reject(e);
     };
   }
   t.build = function () {
     return new n();
   };
-})
+});

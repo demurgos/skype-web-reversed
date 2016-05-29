@@ -14,12 +14,17 @@ define("jSkype/services/serviceAccessLayer/serviceQosReporter", [
       var u = r;
       n.forIn(s, function (e, t) {
         l(t) && (u += t + e);
-      }), t[u] || (t[u] = {
+      });
+      t[u] || (t[u] = {
         total: 0,
         success: 0,
         serviceName: r,
         payload: s
-      }), i && t[u].success++, t[u].total++, e++, e >= o && (a(), t = {}, e = 0);
+      });
+      i && t[u].success++;
+      t[u].total++;
+      e++;
+      e >= o && (a(), t = {}, e = 0);
     }
     function a() {
       Object.keys(t).forEach(function (e) {
@@ -49,7 +54,8 @@ define("jSkype/services/serviceAccessLayer/serviceQosReporter", [
     var e = 0, t = {}, o = i.settings.serviceQosReporter.iterationCountBeforeFlushingQoSMetrics;
     this.reportSuccess = function (t, n) {
       return u(t, !0, n);
-    }, this.reportFail = function (t, n) {
+    };
+    this.reportFail = function (t, n) {
       return u(t, !1, n);
     };
   }
@@ -57,4 +63,4 @@ define("jSkype/services/serviceAccessLayer/serviceQosReporter", [
   t.build = function () {
     return new o();
   };
-})
+});

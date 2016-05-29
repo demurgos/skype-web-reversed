@@ -7,9 +7,12 @@ define("jsviews/calling/callScreenFooter", [
     var i;
     this.getButtonsWidth = function () {
       return e.querySelector(t).offsetWidth;
-    }, this.init = function (e) {
-      i = e, r.addEventListener(n.events.browser.RESIZE, i);
-    }, this.dispose = function () {
+    };
+    this.init = function (e) {
+      i = e;
+      r.addEventListener(n.events.browser.RESIZE, i);
+    };
+    this.dispose = function () {
       r.removeEventListener(n.events.browser.RESIZE, i);
     };
   }
@@ -19,4 +22,4 @@ define("jsviews/calling/callScreenFooter", [
       return new i(e);
     }
   };
-})
+});

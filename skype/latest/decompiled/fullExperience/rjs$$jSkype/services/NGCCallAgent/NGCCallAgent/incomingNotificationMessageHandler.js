@@ -21,4 +21,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/incomingNotificationMessageHan
   }
   var t = e("jSkype/services/NGCCallAgent/NGCCallAgent/constants");
   return n;
-})
+});

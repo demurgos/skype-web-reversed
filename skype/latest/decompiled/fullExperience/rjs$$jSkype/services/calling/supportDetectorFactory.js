@@ -13,5 +13,6 @@ define("jSkype/services/calling/supportDetectorFactory", [
   var n = e("utils/calling/callingStack"), r = e("jSkype/services/plugin/pluginSupportDetector"), i = e("jSkype/services/pluginless/pluginlessSupportDetector"), s = e("jSkype/services/outOfBrowser/outOfBrowserSupportDetector");
   t.buildSupportDetector = function () {
     return n.get().isPluginlessCallingSupported() ? i.build() : o();
-  }, t.buildPluginBasedSupportDetector = o;
-})
+  };
+  t.buildPluginBasedSupportDetector = o;
+});

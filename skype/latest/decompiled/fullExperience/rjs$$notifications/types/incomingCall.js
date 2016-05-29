@@ -12,11 +12,13 @@ define("notifications/types/incomingCall", [
   function f(e, f) {
     function d(n, r) {
       var i = r ? u.audioVideo.acceptWithVideo : u.audioVideo.acceptWithAudio, s = a.resolve(t.serviceLocator.ACTION_TELEMETRY);
-      s.recordAction(i), n ? o.acceptCall(e, r) : o.installPlugin(c, e, !1, r);
+      s.recordAction(i);
+      n ? o.acceptCall(e, r) : o.installPlugin(c, e, !1, r);
     }
     function v() {
       var n = a.resolve(t.serviceLocator.ACTION_TELEMETRY);
-      n.recordAction(u.audioVideo.reject), o.rejectCall(e);
+      n.recordAction(u.audioVideo.reject);
+      o.rejectCall(e);
     }
     var l = t.notifications.AUDIO, c = "incoming", h = {
         key: s.KEYS.CALL_INCOMING,
@@ -31,4 +33,4 @@ define("notifications/types/incomingCall", [
   }
   var t = e("constants/common"), n = e("notifications/common/notification"), r = e("services/pubSub/pubSub"), i = e("notifications/common/sender"), s = e("ui/controls/calling/sounds"), o = e("ui/viewModels/calling/helpers/callingFacade"), u = e("ui/telemetry/actions/actionNames"), a = e("services/serviceLocator");
   return { build: f };
-})
+});

@@ -49,7 +49,8 @@ define("jSkype/services/mediaAgent/ortcHelper", [
         var u = r[o];
         if (n(e.name, u.name) && n(e.kind, u.kind) && e.numChannels === u.numChannels && e.clockRate === u.clockRate) {
           var a = t.shallowClone(e);
-          a.preferredPayloadType = i ? e.preferredPayloadType : u.preferredPayloadType, s.push(a);
+          a.preferredPayloadType = i ? e.preferredPayloadType : u.preferredPayloadType;
+          s.push(a);
           break;
         }
       }
@@ -181,4 +182,4 @@ define("jSkype/services/mediaAgent/ortcHelper", [
     RTCRtcpParameters: w,
     RTCRtpEncodingParameters: E
   };
-})
+});

@@ -14,9 +14,15 @@ define("services/pes.v2/mruService", [
   function l(e, n) {
     t.forEach(e, function (e) {
       var r, i, s;
-      i = e.id, s = e.type, n.configuration[s] = n.configuration[s] || [], r = t.findIndex(n.configuration[s], function (e) {
+      i = e.id;
+      s = e.type;
+      n.configuration[s] = n.configuration[s] || [];
+      r = t.findIndex(n.configuration[s], function (e) {
         return e === i;
-      }), r >= 0 && n.configuration[s].splice(r, 1), n.configuration[s].unshift(i), n.configuration[s] = f(n.configuration[s], s);
+      });
+      r >= 0 && n.configuration[s].splice(r, 1);
+      n.configuration[s].unshift(i);
+      n.configuration[s] = f(n.configuration[s], s);
     });
   }
   function c(e) {
@@ -40,10 +46,15 @@ define("services/pes.v2/mruService", [
   }
   function v() {
     var e = this, t;
-    this.configuration = {}, this.registeredEvents = {}, p().then(function (t) {
+    this.configuration = {};
+    this.registeredEvents = {};
+    p().then(function (t) {
       var n = e.getMRUItems();
-      e.configuration = t, l(n, e), c(e);
-    }), u.resolve(n.serviceLocator.FEATURE_FLAGS).isFeatureOn(n.featureFlags.PES_V2_ENABLED) && (t = u.resolve(n.serviceLocator.PES_MRU_SERVICE), t.addItemsToMru = this.addItemsToMru.bind(this));
+      e.configuration = t;
+      l(n, e);
+      c(e);
+    });
+    u.resolve(n.serviceLocator.FEATURE_FLAGS).isFeatureOn(n.featureFlags.PES_V2_ENABLED) && (t = u.resolve(n.serviceLocator.PES_MRU_SERVICE), t.addItemsToMru = this.addItemsToMru.bind(this));
   }
   var t = e("lodash-compat"), n = e("constants/common"), r = n.events, i = e("utils/common/cache/instance"), s = e("utils/common/builderMixin"), o = e("services/pes/constants"), u = e("services/serviceLocator"), a = "pes2";
   return v.prototype.addItemsToMru = function (e) {
@@ -69,4 +80,4 @@ define("services/pes.v2/mruService", [
       return e === r;
     })) : null;
   }, t.extend(v, s), v;
-})
+});

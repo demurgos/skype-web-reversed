@@ -22,7 +22,8 @@ define("jSkype/settings", [
       appId: "",
       profileEndpoint: ""
     }
-  }, t.isFeatureOn = function (e) {
+  };
+  t.isFeatureOn = function (e) {
     return t.settings.featureFlags ? Boolean(t.settings.featureFlags[e]) : !1;
   };
-})
+});

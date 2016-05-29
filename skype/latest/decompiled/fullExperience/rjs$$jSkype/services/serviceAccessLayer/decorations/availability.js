@@ -30,4 +30,4 @@ define("jSkype/services/serviceAccessLayer/decorations/availability", [
       return f(s).catch(l);
     };
   };
-})
+});

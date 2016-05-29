@@ -16,4 +16,4 @@ define("ui/components/chat/suggestions/suggestionList", [
       }
     }
   };
-})
+});

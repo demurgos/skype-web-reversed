@@ -23,4 +23,4 @@ define("experience/api/helpers/conversationsSynchronizer", [
     var t = n.get().conversationsManager.conversations.get();
     return t.then(r);
   };
-})
+});

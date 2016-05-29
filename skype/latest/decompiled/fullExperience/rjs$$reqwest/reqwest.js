@@ -18,7 +18,8 @@
     var n = t.headers || {}, r;
     n.Accept = n.Accept || defaultHeaders.accept[t.type] || defaultHeaders.accept["*"];
     var i = typeof FormData != "undefined" && t.data instanceof FormData;
-    !t.crossOrigin && !n[requestedWith] && (n[requestedWith] = defaultHeaders.requestedWith), !n[contentType] && !i && (n[contentType] = t.contentType || defaultHeaders.contentType);
+    !t.crossOrigin && !n[requestedWith] && (n[requestedWith] = defaultHeaders.requestedWith);
+    !n[contentType] && !i && (n[contentType] = t.contentType || defaultHeaders.contentType);
     for (r in n)
       n.hasOwnProperty(r) && "setRequestHeader" in e && e.setRequestHeader(r, n[r]);
   }
@@ -36,10 +37,19 @@
     return a ? a[3] === "?" ? r = r.replace(u, "$1=" + o) : o = a[3] : r = urlappend(r, s + "=" + o), context[o] = generalCallback, f.type = "text/javascript", f.src = r, f.async = !0, typeof f.onreadystatechange != "undefined" && !c && (f.htmlFor = f.id = "_reqwest_" + i), f.onload = f.onreadystatechange = function () {
       if (f[readyState] && f[readyState] !== "complete" && f[readyState] !== "loaded" || l)
         return !1;
-      f.onload = f.onreadystatechange = null, f.onclick && f.onclick(), t(lastValue), lastValue = undefined, head.removeChild(f), l = 1;
+      f.onload = f.onreadystatechange = null;
+      f.onclick && f.onclick();
+      t(lastValue);
+      lastValue = undefined;
+      head.removeChild(f);
+      l = 1;
     }, head.appendChild(f), {
       abort: function () {
-        f.onload = f.onreadystatechange = null, n({}, "Request is aborted: timeout", {}), lastValue = undefined, head.removeChild(f), l = 1;
+        f.onload = f.onreadystatechange = null;
+        n({}, "Request is aborted: timeout", {});
+        lastValue = undefined;
+        head.removeChild(f);
+        l = 1;
       }
     };
   }
@@ -51,7 +61,9 @@
     }, 200) : o.send(s), o);
   }
   function Reqwest(e, t) {
-    this.o = e, this.fn = t, init.apply(this, arguments);
+    this.o = e;
+    this.fn = t;
+    init.apply(this, arguments);
   }
   function setType(e) {
     if (e === null)
@@ -67,7 +79,8 @@
   }
   function init(o, fn) {
     function complete(e) {
-      o.timeout && clearTimeout(self.timeout), self.timeout = null;
+      o.timeout && clearTimeout(self.timeout);
+      self.timeout = null;
       while (self._completeHandlers.length > 0)
         self._completeHandlers.shift()(e);
     }
@@ -97,33 +110,54 @@
         case "xml":
           resp = resp.responseXML && resp.responseXML.parseError && resp.responseXML.parseError.errorCode && resp.responseXML.parseError.reason ? null : resp.responseXML;
         }
-      self._responseArgs.resp = resp, self._fulfilled = !0, fn(resp), self._successHandler(resp);
+      self._responseArgs.resp = resp;
+      self._fulfilled = !0;
+      fn(resp);
+      self._successHandler(resp);
       while (self._fulfillmentHandlers.length > 0)
         resp = self._fulfillmentHandlers.shift()(resp);
       complete(resp);
     }
     function timedOut() {
-      self._timedOut = !0, self.request.abort();
+      self._timedOut = !0;
+      self.request.abort();
     }
     function error(e, t, n) {
-      e = self.request, self._responseArgs.resp = e, self._responseArgs.msg = t, self._responseArgs.t = n, self._erred = !0;
+      e = self.request;
+      self._responseArgs.resp = e;
+      self._responseArgs.msg = t;
+      self._responseArgs.t = n;
+      self._erred = !0;
       while (self._errorHandlers.length > 0)
         self._errorHandlers.shift()(e, t, n);
       complete(e);
     }
-    this.url = typeof o == "string" ? o : o.url, this.timeout = null, this._fulfilled = !1, this._successHandler = function () {
-    }, this._fulfillmentHandlers = [], this._errorHandlers = [], this._completeHandlers = [], this._erred = !1, this._responseArgs = {};
+    this.url = typeof o == "string" ? o : o.url;
+    this.timeout = null;
+    this._fulfilled = !1;
+    this._successHandler = function () {
+    };
+    this._fulfillmentHandlers = [];
+    this._errorHandlers = [];
+    this._completeHandlers = [];
+    this._erred = !1;
+    this._responseArgs = {};
     var self = this;
     fn = fn || function () {
-    }, o.timeout && (this.timeout = setTimeout(function () {
+    };
+    o.timeout && (this.timeout = setTimeout(function () {
       timedOut();
-    }, o.timeout)), o.success && (this._successHandler = function () {
+    }, o.timeout));
+    o.success && (this._successHandler = function () {
       o.success.apply(o, arguments);
-    }), o.error && this._errorHandlers.push(function () {
+    });
+    o.error && this._errorHandlers.push(function () {
       o.error.apply(o, arguments);
-    }), o.complete && this._completeHandlers.push(function () {
+    });
+    o.complete && this._completeHandlers.push(function () {
       o.complete.apply(o, arguments);
-    }), this.request = getRequest.call(this, success, error);
+    });
+    this.request = getRequest.call(this, success, error);
   }
   function reqwest(e, t) {
     return new Reqwest(e, t);
@@ -230,7 +264,8 @@
     };
   return Reqwest.prototype = {
     abort: function () {
-      this._aborted = !0, this.request.abort();
+      this._aborted = !0;
+      this.request.abort();
     },
     retry: function () {
       init.call(this, this.o, this.fn);
@@ -264,7 +299,8 @@
     return e = n.pop(), e && e.nodeType && n.push(e) && (e = null), e && (e = e.type), e == "map" ? t = serializeHash : e == "array" ? t = reqwest.serializeArray : t = serializeQueryString, t.apply(null, n);
   }, reqwest.toQueryString = function (e, t) {
     var n, r, i = t || !1, s = [], o = encodeURIComponent, u = function (e, t) {
-        t = "function" == typeof t ? t() : t == null ? "" : t, s[s.length] = o(e) + "=" + o(t);
+        t = "function" == typeof t ? t() : t == null ? "" : t;
+        s[s.length] = o(e) + "=" + o(t);
       };
     if (isArray(e))
       for (r = 0; e && r < e.length; r++)
@@ -282,4 +318,4 @@
     for (var t in e)
       globalSetupOptions[t] = e[t];
   }, reqwest;
-})
+});

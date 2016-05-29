@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -38,5 +38,8 @@ function (e) {
     }
   }
   var n = e("swx-browser-globals");
-  t.set = r, t.get = i, t.remove = s, t.clear = o;
-})
+  t.set = r;
+  t.get = i;
+  t.remove = s;
+  t.clear = o;
+}));

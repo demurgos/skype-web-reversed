@@ -9,8 +9,10 @@ define("ui/viewModels/userSettings/aboutViewModel", [
         return e[0];
     }
     var e = this;
-    e.appVersion = t.version, e.assetsVersion = n(), e.faqLink = t.faqPageUrl;
+    e.appVersion = t.version;
+    e.assetsVersion = n();
+    e.faqLink = t.faqPageUrl;
   }
   var t = e("experience/settings");
   return n;
-})
+});

@@ -17,7 +17,9 @@ define("jSkype/modelHelpers/mePersonSettings", [
       return e === i.selfSettings.linkedMSA ? new Promise(function (t) {
         n.get().signInManager._skypeToken().then(function (n) {
           var r = !1, i = s.extractCIDFromToken(n);
-          i !== undefined && (r = !0), a(e, r), t(r);
+          i !== undefined && (r = !0);
+          a(e, r);
+          t(r);
         });
       }) : Promise.reject("Key not recognized");
     }
@@ -33,4 +35,4 @@ define("jSkype/modelHelpers/mePersonSettings", [
   t.build = function () {
     return new u();
   };
-})
+});

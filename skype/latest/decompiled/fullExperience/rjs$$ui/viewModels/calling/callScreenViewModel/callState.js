@@ -23,20 +23,27 @@ define("ui/viewModels/calling/callScreenViewModel/callState", [
       s.state() !== r.EARLY_MEDIA && s.state(r.CALLING);
     }
     function m() {
-      v(), s.state(r.EARLY_MEDIA);
+      v();
+      s.state(r.EARLY_MEDIA);
     }
     function g() {
-      l = e.audioService.callConnected(), s.state(r.CONNECTED), y();
+      l = e.audioService.callConnected();
+      s.state(r.CONNECTED);
+      y();
     }
     function y() {
-      x(f), x(a);
+      x(f);
+      x(a);
     }
     function b(e) {
       function t(t, n) {
         var r = e.audio.state.when(t, n);
-        r.participant = e, f.push(r);
+        r.participant = e;
+        f.push(r);
       }
-      t(n.callConnectionState.Ringing, v), t(n.callConnectionState.EarlyMedia, m), t(n.callConnectionState.Disconnected, E);
+      t(n.callConnectionState.Ringing, v);
+      t(n.callConnectionState.EarlyMedia, m);
+      t(n.callConnectionState.Disconnected, E);
     }
     function w(e) {
       for (var t = f.length; t--;) {
@@ -52,19 +59,28 @@ define("ui/viewModels/calling/callScreenViewModel/callState", [
       s.state() === r.EARLY_MEDIA && !t && s.state(r.CALLING);
     }
     function S() {
-      u.push(s.state.subscribe(c), e.selfParticipant.audio.state.when(n.callConnectionState.Connecting, p), e.selfParticipant.audio.state.when(n.callConnectionState.Connected, g), e.selfParticipant.audio.state.when(n.callConnectionState.Disconnecting, d), e.selfParticipant.audio.state.when(n.callConnectionState.Disconnected, d)), e.selfParticipant.audio.state() !== n.callConnectionState.Connected && a.push(e.participants.added(b)), a.push(e.participants.removed(w));
+      u.push(s.state.subscribe(c), e.selfParticipant.audio.state.when(n.callConnectionState.Connecting, p), e.selfParticipant.audio.state.when(n.callConnectionState.Connected, g), e.selfParticipant.audio.state.when(n.callConnectionState.Disconnecting, d), e.selfParticipant.audio.state.when(n.callConnectionState.Disconnected, d));
+      e.selfParticipant.audio.state() !== n.callConnectionState.Connected && a.push(e.participants.added(b));
+      a.push(e.participants.removed(w));
     }
     function x(e) {
       e.forEach(function (e) {
         e.dispose();
-      }), e.length = 0;
+      });
+      e.length = 0;
     }
     var s = this, o, u = [], a = [], f = [], l = null;
-    this.state = t.observable(r.CONNECTING), this.totalCallDuration = null, this.dispose = function () {
-      x(u), y(), window.clearTimeout(o);
-    }, this.getCurrentDuration = function () {
+    this.state = t.observable(r.CONNECTING);
+    this.totalCallDuration = null;
+    this.dispose = function () {
+      x(u);
+      y();
+      window.clearTimeout(o);
+    };
+    this.getCurrentDuration = function () {
       return l !== null ? Date.now() - l : null;
-    }, S();
+    };
+    S();
   }
   var t = e("vendor/knockout"), n = e("swx-enums"), r = e("constants/calling").CALL_STATES, i = 3500;
   return {
@@ -72,4 +88,4 @@ define("ui/viewModels/calling/callScreenViewModel/callState", [
       return new s(e);
     }
   };
-})
+});

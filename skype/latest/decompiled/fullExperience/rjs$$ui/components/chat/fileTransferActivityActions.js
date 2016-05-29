@@ -10,5 +10,7 @@ define("ui/components/chat/fileTransferActivityActions", [
     return n.build(e);
   }
   var n = e("ui/viewModels/chat/fileTransferActivityActions");
-  t.name = e("constants/components").chat.FILE_TRANSFER_ACTIVITY_ACTIONS, t.template = e("text!views/chat/fileTransferActivityActions.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.FILE_TRANSFER_ACTIVITY_ACTIONS;
+  t.template = e("text!views/chat/fileTransferActivityActions.html");
+  t.viewModel = { createViewModel: r };
+});

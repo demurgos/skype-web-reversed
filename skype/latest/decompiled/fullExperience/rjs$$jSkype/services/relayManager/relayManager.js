@@ -21,7 +21,8 @@ define("jSkype/services/relayManager/relayManager", [
       }).then(function (e) {
         return u = t, e;
       }).catch(function (t) {
-        u = null, e ? o.warn("failed to retrieve relays", t) : o.error("failed to retrieve relays", t);
+        u = null;
+        e ? o.warn("failed to retrieve relays", t) : o.error("failed to retrieve relays", t);
       });
       return t;
     }
@@ -31,7 +32,20 @@ define("jSkype/services/relayManager/relayManager", [
         return t.get(e, { headers: { "X-Skypetoken": n } });
       }).then(function (e) {
         var t = e.response, n = JSON.parse(JSON.stringify(t)), r = JSON.parse(JSON.stringify(t)), i = JSON.parse(JSON.stringify(t)), u = 0, a = s.Token.earlyRefreshMinutes, l = s.Token.earlyRefreshPercentage;
-        u = Math.max(t.expires - a * 60, t.expires * l / 100), window.setTimeout(f, 1000 * u), n.addresses = s.Relay.Skype.addresses, n.tcpPort = s.Relay.Skype.tcpPort, n.udpPort = s.Relay.Skype.udpPort, n.type = "msturn", r.addresses = s.Relay.Lync.addresses, r.tcpPort = s.Relay.Lync.tcpPort, r.udpPort = s.Relay.Lync.udpPort, r.type = "msturn", i.addresses = s.Relay.Turn.addresses, i.tcpPort = s.Relay.Turn.tcpPort, i.udpPort = s.Relay.Turn.udpPort, i.type = "turn";
+        u = Math.max(t.expires - a * 60, t.expires * l / 100);
+        window.setTimeout(f, 1000 * u);
+        n.addresses = s.Relay.Skype.addresses;
+        n.tcpPort = s.Relay.Skype.tcpPort;
+        n.udpPort = s.Relay.Skype.udpPort;
+        n.type = "msturn";
+        r.addresses = s.Relay.Lync.addresses;
+        r.tcpPort = s.Relay.Lync.tcpPort;
+        r.udpPort = s.Relay.Lync.udpPort;
+        r.type = "msturn";
+        i.addresses = s.Relay.Turn.addresses;
+        i.tcpPort = s.Relay.Turn.tcpPort;
+        i.udpPort = s.Relay.Turn.udpPort;
+        i.type = "turn";
         var c = {
           Skype: [n],
           Lync: [r],
@@ -42,7 +56,8 @@ define("jSkype/services/relayManager/relayManager", [
     }
     function c() {
       return Promise.resolve(n.configProvider()).then(function (t) {
-        e.merge(i, t), o.log("relayManager.getConfigAsync", "providedConfig", t, "merged config", s);
+        e.merge(i, t);
+        o.log("relayManager.getConfigAsync", "providedConfig", t, "merged config", s);
       }).catch(function (e) {
         o.warn("failed to retrieve configuration", e);
       });
@@ -89,4 +104,4 @@ define("jSkype/services/relayManager/relayManager", [
       u || (u = f(!0));
     }, r;
   };
-})
+});

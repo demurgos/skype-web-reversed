@@ -13,10 +13,16 @@ define("bindings/ko.overflowClass", [
             n = t[u], r = s(n), o(n, r.isOverflowingToLeft, i.left), o(n, r.isOverflowingToRight, i.right);
         }
         function a() {
-          r.removeEventListener("resize", u), e.removeEventListener("scroll", u), e.removeEventListener("DOMSubtreeModified", u);
+          r.removeEventListener("resize", u);
+          e.removeEventListener("scroll", u);
+          e.removeEventListener("DOMSubtreeModified", u);
         }
         var i = n();
-        t.utils.domNodeDisposal.addDisposeCallback(e, a), e.addEventListener("DOMSubtreeModified", u), e.addEventListener("scroll", u), r.addEventListener("resize", u), u();
+        t.utils.domNodeDisposal.addDisposeCallback(e, a);
+        e.addEventListener("DOMSubtreeModified", u);
+        e.addEventListener("scroll", u);
+        r.addEventListener("resize", u);
+        u();
       }
     };
   }
@@ -40,4 +46,4 @@ define("bindings/ko.overflowClass", [
   }
   var t = e("vendor/knockout"), n = e("browser/dom"), r = e("browser/window");
   return { register: i };
-})
+});

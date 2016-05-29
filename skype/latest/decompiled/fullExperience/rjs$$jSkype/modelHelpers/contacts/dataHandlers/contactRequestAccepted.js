@@ -10,8 +10,10 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactRequestAccepted", [
 ], function (e, t) {
   function u() {
     this.onSuccess = function (e) {
-      r.setAuthorization(e, i.AUTHORIZED), a(e);
-    }, this.onError = function (e) {
+      r.setAuthorization(e, i.AUTHORIZED);
+      a(e);
+    };
+    this.onError = function (e) {
     };
   }
   function a(e) {
@@ -28,4 +30,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactRequestAccepted", [
   t.build = function () {
     return new u();
   };
-})
+});

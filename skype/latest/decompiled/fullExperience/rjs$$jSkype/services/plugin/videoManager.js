@@ -12,7 +12,10 @@ define("jSkype/services/plugin/videoManager", [
     return r[t] || (r[t] = {}), r[t][n];
   }
   var t = e("jSkype/services/plugin/componentFactory"), n = e("constants/plugin.const"), r = e("constants/calling"), i = function (e, t) {
-      this._managerComponentId = e, this._skypeCore = t, this._localVideoMap = {}, this._participantVideos = {};
+      this._managerComponentId = e;
+      this._skypeCore = t;
+      this._localVideoMap = {};
+      this._participantVideos = {};
     };
   return i.prototype.showLocalPreview = function (r, i, o) {
     function l() {
@@ -23,7 +26,8 @@ define("jSkype/services/plugin/videoManager", [
     }
     function h(e) {
       u.setLocalFrameSink(e, function () {
-        a._localVideoMap[i].creatingLocalVideo = !1, u.showLocalVideo(!0, o);
+        a._localVideoMap[i].creatingLocalVideo = !1;
+        u.showLocalVideo(!0, o);
       });
     }
     function p(e) {
@@ -36,7 +40,14 @@ define("jSkype/services/plugin/videoManager", [
       embed: null,
       creatingLocalVideo: !0,
       disposingLocalVideo: !1
-    }, s(r), f = t.createVideoComponent(a._managerComponentId, r.id), a._localVideoMap[i].embed = f, f.onLoadComplete = c, f.onVideoResolutionChanged = p, f.load(), f.whenUnloaded.then(function () {
+    };
+    s(r);
+    f = t.createVideoComponent(a._managerComponentId, r.id);
+    a._localVideoMap[i].embed = f;
+    f.onLoadComplete = c;
+    f.onVideoResolutionChanged = p;
+    f.load();
+    f.whenUnloaded.then(function () {
       delete a._localVideoMap[i];
     });
   }, i.prototype.startSendingLocalVideo = function (t, n) {
@@ -47,7 +58,8 @@ define("jSkype/services/plugin/videoManager", [
       n && n();
     }
     function s() {
-      delete r._localVideoMap[t], i();
+      delete r._localVideoMap[t];
+      i();
     }
     function o() {
       return r._localVideoMap[t] && !r._localVideoMap[t].disposingLocalVideo;
@@ -72,7 +84,12 @@ define("jSkype/services/plugin/videoManager", [
     var f = this, l = f._skypeCore, c;
     if (!i || !u || o(f, i, a))
       return;
-    s(u), c = t.createVideoComponent(f._managerComponentId, u.id), f._participantVideos[i][a] = c, c.onLoadComplete = p, c.onVideoResolutionChanged = h, c.load();
+    s(u);
+    c = t.createVideoComponent(f._managerComponentId, u.id);
+    f._participantVideos[i][a] = c;
+    c.onLoadComplete = p;
+    c.onVideoResolutionChanged = h;
+    c.load();
   }, i.prototype.hideParticipant = function (t, n, r) {
     var i = o(this, t, n);
     i && (r || (this._skypeCore.showParticipantVideo(t, !1, n), this._skypeCore.setParticipantFrameSink(t, 0, n)), i.dispose(), delete this._participantVideos[t][n]);
@@ -83,7 +100,8 @@ define("jSkype/services/plugin/videoManager", [
       Object.keys(r).forEach(function (n) {
         t.hideParticipant(e, n);
       });
-    }), Object.keys(t._localVideoMap).forEach(function (e) {
+    });
+    Object.keys(t._localVideoMap).forEach(function (e) {
       t.hideLocalPreview(e);
     });
   }, {
@@ -91,4 +109,4 @@ define("jSkype/services/plugin/videoManager", [
       return new i(e, t);
     }
   };
-})
+});

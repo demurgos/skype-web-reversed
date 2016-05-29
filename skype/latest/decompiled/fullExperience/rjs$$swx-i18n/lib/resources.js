@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -14,14 +14,18 @@ function (e) {
       throw new Error("[i18n / resources] Specified destination for localizations resources is not reachable");
   }
   function s(e) {
-    i(e), r = e;
+    i(e);
+    r = e;
   }
   function o(e) {
-    i(e), r = n.merge(r, e);
+    i(e);
+    r = n.merge(r, e);
   }
   function u() {
     return r;
   }
   var n = e("lodash-compat"), r = {};
-  t.set = s, t.merge = o, t.get = u;
-})
+  t.set = s;
+  t.merge = o;
+  t.get = u;
+}));

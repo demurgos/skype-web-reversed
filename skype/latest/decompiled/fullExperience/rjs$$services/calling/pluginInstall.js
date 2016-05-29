@@ -12,7 +12,8 @@ define("services/calling/pluginInstall", [
   t.startInstallFlow = function (t, r) {
     var i = n.build(t, r);
     return o.build(u, i, s), i.start(), i;
-  }, t.isPluginInstalled = function (t, n) {
+  };
+  t.isPluginInstalled = function (t, n) {
     var s = r.get().personsAndGroupsManager.mePerson.capabilities.audio, o = r.get().personsAndGroupsManager.mePerson.capabilities.video;
     return n ? t.videoService.start.enabled.get().then(function (e) {
       return o.reason !== i.callingNotSupportedReasons.PluginNotInstalled && e;
@@ -20,4 +21,4 @@ define("services/calling/pluginInstall", [
       return s.reason !== i.callingNotSupportedReasons.PluginNotInstalled && e;
     });
   };
-})
+});

@@ -18,13 +18,16 @@ define("ui/viewModels/chat/sidebar", [
       e.itemsDisabled(!0);
     }
     function b(t) {
-      e.isNotificationsCenterActive(t), t && e.isSearchActive(!1);
+      e.isNotificationsCenterActive(t);
+      t && e.isSearchActive(!1);
     }
     function w(t) {
       var n = { source: f.search.reset.content }, r = e.userSettingsMenuItem();
       e.items.forEach(function (e) {
-        e.isActive(e.page === t.page), v.publish(c.search.RESET, n);
-      }), r.page !== t.page && r.isActive(!1);
+        e.isActive(e.page === t.page);
+        v.publish(c.search.RESET, n);
+      });
+      r.page !== t.page && r.isActive(!1);
     }
     function E() {
       e.isSearchActive(!1);
@@ -122,14 +125,38 @@ define("ui/viewModels/chat/sidebar", [
       };
     }
     var e = this, h = u.resolve(i.serviceLocator.FEATURE_FLAGS), p = h.isFeatureOn(i.featureFlags.PSTN_ENABLED), d = h.isFeatureOn(i.featureFlags.AGENTS_DISCOVERABLE), v = u.resolve(i.serviceLocator.PUBSUB), m = s.get().personsAndGroupsManager.mePerson.preferences();
-    e.items = [], e.itemsDisabled = t.observable(!0), e.userSettingsMenuItem = t.observable(), e.isSearchActive = t.observable(!1), e.isNotificationsCenterActive = t.observable(!1), e.isNavigationMenuIconsEnabled = h.isFeatureOn(i.featureFlags.NAVIGATION_MENU_ICONS_ENABLED), e.isNotificationsCenterEnabled = h.isFeatureOn(i.featureFlags.NOTIFICATIONS_CENTER), e.isSidebarInAlternativeLayout = h.isFeatureOn(i.featureFlags.ALTERNATIVE_SIDEBAR_LAYOUT_ENABLED), e.isUserSettingsEnabled = h.isFeatureOn(i.featureFlags.USER_SETTINGS_ENABLED) && !!m.length, e.hideRecents = t.computed(function () {
+    e.items = [];
+    e.itemsDisabled = t.observable(!0);
+    e.userSettingsMenuItem = t.observable();
+    e.isSearchActive = t.observable(!1);
+    e.isNotificationsCenterActive = t.observable(!1);
+    e.isNavigationMenuIconsEnabled = h.isFeatureOn(i.featureFlags.NAVIGATION_MENU_ICONS_ENABLED);
+    e.isNotificationsCenterEnabled = h.isFeatureOn(i.featureFlags.NOTIFICATIONS_CENTER);
+    e.isSidebarInAlternativeLayout = h.isFeatureOn(i.featureFlags.ALTERNATIVE_SIDEBAR_LAYOUT_ENABLED);
+    e.isUserSettingsEnabled = h.isFeatureOn(i.featureFlags.USER_SETTINGS_ENABLED) && !!m.length;
+    e.hideRecents = t.computed(function () {
       return e.isSearchActive() || e.isNotificationsCenterActive();
-    }), e.init = function () {
-      v.subscribe(c.search.RESET, E), v.subscribe(c.search.QUERY_CHANGED, S), v.subscribe(c.navigation.NAVIGATE, w), v.subscribe(c.navigation.NOTIFICATIONS_CENTER, b), v.subscribe(i.apiUIEvents.SWX_TIMELINE_LOADED, g), v.subscribe(i.apiUIEvents.SWX_ON_SIGN_OUT, y), Array.prototype.push.apply(e.items, x()), e.userSettingsMenuItem(a.build(L()));
-    }, e.dispose = function () {
-      v.unsubscribe(c.search.RESET, E), v.unsubscribe(c.search.QUERY_CHANGED, S), v.unsubscribe(c.navigation.NAVIGATE, w), v.unsubscribe(c.navigation.NOTIFICATIONS_CENTER, b), v.unsubscribe(i.apiUIEvents.SWX_TIMELINE_LOADED, g), v.unsubscribe(i.apiUIEvents.SWX_ON_SIGN_OUT, y), e.hideRecents.dispose();
+    });
+    e.init = function () {
+      v.subscribe(c.search.RESET, E);
+      v.subscribe(c.search.QUERY_CHANGED, S);
+      v.subscribe(c.navigation.NAVIGATE, w);
+      v.subscribe(c.navigation.NOTIFICATIONS_CENTER, b);
+      v.subscribe(i.apiUIEvents.SWX_TIMELINE_LOADED, g);
+      v.subscribe(i.apiUIEvents.SWX_ON_SIGN_OUT, y);
+      Array.prototype.push.apply(e.items, x());
+      e.userSettingsMenuItem(a.build(L()));
+    };
+    e.dispose = function () {
+      v.unsubscribe(c.search.RESET, E);
+      v.unsubscribe(c.search.QUERY_CHANGED, S);
+      v.unsubscribe(c.navigation.NAVIGATE, w);
+      v.unsubscribe(c.navigation.NOTIFICATIONS_CENTER, b);
+      v.unsubscribe(i.apiUIEvents.SWX_TIMELINE_LOADED, g);
+      v.unsubscribe(i.apiUIEvents.SWX_ON_SIGN_OUT, y);
+      e.hideRecents.dispose();
     };
   }
   var t = e("vendor/knockout"), n = e("swx-i18n").localization, r = e("constants/components"), i = e("constants/common"), s = e("cafe/applicationInstance"), o = e("ui/telemetry/actions/actionNames"), u = e("services/serviceLocator"), a = e("ui/viewModels/chat/menuItem"), f = e("ui/telemetry/actions/actionSources"), l = i.telemetry.historyLoadOrigin, c = i.events;
   return h;
-})
+});

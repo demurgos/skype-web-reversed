@@ -22,20 +22,25 @@ define("telemetry/chat/sendContactsTelemetry", [
     function h() {
       t.data.timeBeforeActionTaken = p(a, u.getDate());
       var e = s.stringify(t.data);
-      i.get().sendEvent(o.telemetry.uiTenantToken, r.TYPE, e), c();
+      i.get().sendEvent(o.telemetry.uiTenantToken, r.TYPE, e);
+      c();
     }
     function p(e, t) {
       return t - e;
     }
     var t = this, a = u.getDate(), f = n.telemetry.NOT_AVAILABLE, l = r.cta.MEDIABAR;
     t.canceled = function () {
-      t.data.action = r.action.CANCELED, h();
-    }, t.confirmed = function () {
-      t.data.action = r.action.CONFIRMED, h();
-    }, c();
+      t.data.action = r.action.CANCELED;
+      h();
+    };
+    t.confirmed = function () {
+      t.data.action = r.action.CONFIRMED;
+      h();
+    };
+    c();
   }
   var n = e("constants/common"), r = n.telemetry.sendContacts, i = e("ui/telemetry/telemetryClient"), s = e("telemetry/utils/telemetryUtils"), o = e("experience/settings"), u = e("utils/chat/dateTime");
   t.build = function (e) {
     return new a(e);
   };
-})
+});

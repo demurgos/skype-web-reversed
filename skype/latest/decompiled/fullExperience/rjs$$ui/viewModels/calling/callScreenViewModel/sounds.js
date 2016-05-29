@@ -31,11 +31,12 @@ define("ui/viewModels/calling/callScreenViewModel/sounds", [
     });
   }
   function a() {
-    t.stop(t.KEYS.CALL_OUTGOING_P1), t.stop(t.KEYS.CALL_OUTGOING_P2);
+    t.stop(t.KEYS.CALL_OUTGOING_P1);
+    t.stop(t.KEYS.CALL_OUTGOING_P2);
   }
   var t = e("ui/controls/calling/sounds"), n = e("constants/calling").CALL_STATES, r;
   return {
     init: i,
     dispose: s
   };
-})
+});

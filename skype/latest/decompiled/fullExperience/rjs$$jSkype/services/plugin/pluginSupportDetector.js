@@ -35,7 +35,8 @@ define("jSkype/services/plugin/pluginSupportDetector", [
       return n.navigator.plugins && n.navigator.plugins.refresh && n.navigator.plugins.refresh(), n.navigator.mimeTypes ? n.navigator.mimeTypes[i.MIME_TYPE] ? n.navigator.mimeTypes[i.MIME_TYPE].enabledPlugin !== undefined : !1 : !1;
     }
     function c() {
-      o.createPlugin(), h() ? e.resolve({
+      o.createPlugin();
+      h() ? e.resolve({
         isSupported: !0,
         reason: ""
       }) : e.resolve({
@@ -60,4 +61,4 @@ define("jSkype/services/plugin/pluginSupportDetector", [
   t.build = function () {
     return l() ? u.build() : new f();
   };
-})
+});

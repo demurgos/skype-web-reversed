@@ -10,7 +10,8 @@ define("experience/api/calling", [
   "swx-enums"
 ], function (e) {
   function h() {
-    p(), d();
+    p();
+    d();
   }
   function p() {
     i.subscribe(r.EVENTS.FULLSCREEN_CHANGED, function (e) {
@@ -47,4 +48,4 @@ define("experience/api/calling", [
   }
   var t = e("vendor/knockout"), n = e("cafe/applicationInstance"), r = e("constants/calling"), i = e("services/pubSub/pubSub"), s = e("ui/viewModels/calling/helpers/callingFacade"), o = e("constants/common"), u = e("constants/components"), a = e("swx-enums"), f, l = t.observable(!1), c = t.observable(!1);
   return f = { buildApi: g }, f;
-})
+});

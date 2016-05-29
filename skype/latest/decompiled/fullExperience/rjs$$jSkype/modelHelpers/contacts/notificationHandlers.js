@@ -15,11 +15,12 @@ define("jSkype/modelHelpers/contacts/notificationHandlers", [
     this.onContactListChangedNotification = function () {
       var t = n.get().personsAndGroupsManager.mePerson.id();
       r.getContactsService().getMyContacts(t, a.reasons.notification).then(e.onSuccess, e.onError);
-    }, this.onIncomingContactRequestNotification = o.get;
+    };
+    this.onIncomingContactRequestNotification = o.get;
   }
   var n = e("jSkype/client"), r = e("jSkype/services/serviceFactory"), i = e("jSkype/services/trouter/trouter"), s = e("jSkype/services/trouter/handlers/contactChangesMessageHandler"), o = e("jSkype/modelHelpers/contacts/incomingContactRequestsHelper"), u = e("jSkype/modelHelpers/contacts/dataHandlers/factory"), a = e("jSkype/services/contacts/serviceSettings");
   t.build = function () {
     var e = new f();
     return i.registerMessageHandler(s.build(e)), e;
   };
-})
+});

@@ -44,23 +44,36 @@ define("ui/components/chat/pes.v2/giphyTab/giphySearchTab", [
   }
   function v(e, n, r, s) {
     var o = u.createGiphyPacks.run(n), a;
-    s.throwIfCanceled(), t.remove(e._configuredItems, function (e) {
+    s.throwIfCanceled();
+    t.remove(e._configuredItems, function (e) {
       return e.type === i.itemTypes.image.id && t.find(o.items, { id: e.id });
-    }), e._configuredItems = e._configuredItems.concat(o.items), a = t.find(e.tabs, { id: i.giphyImageSearch.TAB_ID });
+    });
+    e._configuredItems = e._configuredItems.concat(o.items);
+    a = t.find(e.tabs, { id: i.giphyImageSearch.TAB_ID });
     var f = t.every(o.packs, function (e) {
       return e.items.length === 0;
     });
-    f ? a.emptyTabMessageKey = "message_text_emptySearchResults" : (a.packs = o.packs, a.emptyTabMessageKey = "expressionPicker_giphyImgTab_emptyText"), r(e);
+    f ? a.emptyTabMessageKey = "message_text_emptySearchResults" : (a.packs = o.packs, a.emptyTabMessageKey = "expressionPicker_giphyImgTab_emptyText");
+    r(e);
   }
   function m(e, r, s) {
     var o, u;
-    u = t.find(r.tabs, { id: i.giphyImageSearch.TAB_ID }), u && (u.emptyTabMessageKey = "expressionPicker_giphyImgTab_loadingText"), g(r), o = n.cancelableOperation(), r._currentOperation = o, u._currentQuery = e, u.packs = [], s(r), d(e, o.getToken()).then(function (e) {
+    u = t.find(r.tabs, { id: i.giphyImageSearch.TAB_ID });
+    u && (u.emptyTabMessageKey = "expressionPicker_giphyImgTab_loadingText");
+    g(r);
+    o = n.cancelableOperation();
+    r._currentOperation = o;
+    u._currentQuery = e;
+    u.packs = [];
+    s(r);
+    d(e, o.getToken()).then(function (e) {
       v(r, e, s, o.getToken());
     }).catch(function (e) {
       if (e instanceof n.OperationCanceledError)
         return;
       var o = t.find(r.tabs, { id: i.giphyImageSearch.TAB_ID });
-      o.emptyTabMessageKey = "expressionPicker_giphyImgTab_errorText", s(r);
+      o.emptyTabMessageKey = "expressionPicker_giphyImgTab_errorText";
+      s(r);
     });
   }
   function g(e) {
@@ -79,4 +92,4 @@ define("ui/components/chat/pes.v2/giphyTab/giphySearchTab", [
     getResultsFromGiphy: d,
     processResultsFromGiphy: v
   };
-})
+});

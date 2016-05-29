@@ -24,34 +24,50 @@ define("ui/contextMenu/items/baseCallingMenuItem", [
       }
       function o() {
         var e = n.resolve(r.serviceLocator.ACTION_TELEMETRY);
-        d = d || { source: m.getDefaultTelemetrySource() }, m.addTelemetryContextData(d), e.recordAction(m.getTelemetryActionName(), d);
+        d = d || { source: m.getDefaultTelemetrySource() };
+        m.addTelemetryContextData(d);
+        e.recordAction(m.getTelemetryActionName(), d);
       }
       var e, t;
       return o(), m.sendFeatureTelemetry(), e = u.get().conversationsManager, t = e.getConversation(v), i();
     }
     var v, m = this;
-    t.call(m, e, o, b), v = h.getPerson(), m.cssClass = l, m.featuresAreEnabled = function () {
+    t.call(m, e, o, b);
+    v = h.getPerson();
+    m.cssClass = l;
+    m.featuresAreEnabled = function () {
       return !1;
-    }, m.mePersonHasCallingCapability = function () {
+    };
+    m.mePersonHasCallingCapability = function () {
       return !1;
-    }, m.conversationHasCallingCapability = function (e) {
+    };
+    m.conversationHasCallingCapability = function (e) {
       return m.getCallingService(e).start.enabled();
-    }, m.personHasSkypeCallingCapability = function () {
+    };
+    m.personHasSkypeCallingCapability = function () {
       return !1;
-    }, m.getCallingService = function () {
-    }, m.isVideoCall = function () {
+    };
+    m.getCallingService = function () {
+    };
+    m.isVideoCall = function () {
       return !1;
-    }, m.getDefaultTelemetrySource = function () {
-    }, m.getTelemetryActionName = function () {
-    }, m.addTelemetryContextData = function () {
-    }, m.sendFeatureTelemetry = function () {
-    }, m.setCallingServiceEndpoint = function (e) {
+    };
+    m.getDefaultTelemetrySource = function () {
+    };
+    m.getTelemetryActionName = function () {
+    };
+    m.addTelemetryContextData = function () {
+    };
+    m.sendFeatureTelemetry = function () {
+    };
+    m.setCallingServiceEndpoint = function (e) {
       var t = n.resolve(r.serviceLocator.FEATURE_FLAGS);
       if (t.isFeatureOn(r.featureFlags.PSTN_ENABLED)) {
         var i = e.participants(0);
         i.audio.endpoint(i.person.id());
       }
-    }, m.isEnabled = function () {
+    };
+    m.isEnabled = function () {
       var e = f.getExistingConversationWithPerson(v);
       return !m.featuresAreEnabled() || c() || v.isBlocked() || !m.personHasSkypeCallingCapability(v) || y() ? !1 : !e || g(e) ? !0 : m.conversationHasCallingCapability(e) && m.mePersonHasCallingCapability();
     };
@@ -61,4 +77,4 @@ define("ui/contextMenu/items/baseCallingMenuItem", [
   }
   var t = e("ui/contextMenu/menuItem"), n = e("services/serviceLocator"), r = e("constants/common"), i = e("swx-enums"), s = e("ui/viewModels/calling/helpers/callingFacade"), o = e("ui/modelHelpers/personHelper"), u = e("cafe/applicationInstance"), a = e("ui/controls/calling/sounds"), f = e("ui/modelHelpers/conversationHelper");
   return l.prototype = Object.create(t.prototype), l;
-})
+});

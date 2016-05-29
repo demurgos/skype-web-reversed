@@ -3,8 +3,10 @@ define("jSkype/models/phoneNumber", [
   "jcafe-property-model"
 ], function (e) {
   function n() {
-    this.type = t.property({ readOnly: !0 }), this.telUri = t.property({ readOnly: !0 }), this.displayString = t.property({ readOnly: !0 });
+    this.type = t.property({ readOnly: !0 });
+    this.telUri = t.property({ readOnly: !0 });
+    this.displayString = t.property({ readOnly: !0 });
   }
   var t = e("jcafe-property-model");
   return n;
-})
+});

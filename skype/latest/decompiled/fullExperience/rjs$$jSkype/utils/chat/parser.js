@@ -19,4 +19,4 @@ define("jSkype/utils/chat/parser", [
       return n && n[1] ? n[1] : undefined;
     }
   };
-})
+});

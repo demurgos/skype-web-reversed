@@ -15,7 +15,9 @@ define("ui/modalDialog/leaveConversationDialog", [
       var e = "leave_conversation_confirmation_text";
       return h() ? n.fetch({ key: p(e) }) : n.fetch({ key: e });
     }
-    this.text = t(), this.avatar = e.avatarUrl(), this.isGroupConversation = e.isGroupConversation();
+    this.text = t();
+    this.avatar = e.avatarUrl();
+    this.isGroupConversation = e.isGroupConversation();
   }
   function l(e) {
     return e || i.telemetry.NOT_AVAILABLE;
@@ -36,7 +38,8 @@ define("ui/modalDialog/leaveConversationDialog", [
   var n = e("swx-i18n").localization, r = e("ui/modalDialog/confirmationDialog"), i = e("constants/common"), s = e("services/serviceLocator"), o = e("telemetry/chat/leaveConversationTelemetry"), u = e("utils/chat/messageSanitizer"), a = e("text!views/chat/leaveConversationDialogContent.html");
   t.start = function (e, t) {
     var i, s;
-    i = o.build(l(t), e), s = {
+    i = o.build(l(t), e);
+    s = {
       title: c(e),
       content: a,
       contentViewModel: new f(e),
@@ -49,9 +52,11 @@ define("ui/modalDialog/leaveConversationDialog", [
       onCancel: function () {
         i.canceled();
       }
-    }, r.build(s).show();
-  }, t.canLeaveConversation = function (e) {
+    };
+    r.build(s).show();
+  };
+  t.canLeaveConversation = function (e) {
     var t = s.resolve(i.serviceLocator.FEATURE_FLAGS), n = !t.isFeatureOn(i.featureFlags.DISABLE_LEAVE_CONVERSATION);
     return n && e.leave.enabled();
   };
-})
+});

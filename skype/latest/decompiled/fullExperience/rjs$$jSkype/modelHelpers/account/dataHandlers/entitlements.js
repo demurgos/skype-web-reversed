@@ -16,7 +16,9 @@ define("jSkype/modelHelpers/account/dataHandlers/entitlements", [
         return;
       }
       if (f(t)) {
-        e.displayBalance._set(t.balanceFormatted), e._balance._set(t.balance), e._currency._set(t.attributes.currency);
+        e.displayBalance._set(t.balanceFormatted);
+        e._balance._set(t.balance);
+        e._currency._set(t.attributes.currency);
         return;
       }
     }
@@ -31,7 +33,9 @@ define("jSkype/modelHelpers/account/dataHandlers/entitlements", [
       n ? c(n, t) : (n = new i(), c(n, t), e.entitlements.add(n, n.name()));
     }
     function c(e, t) {
-      e.name._set(t.id), e.type._set(t.service), e.active._set(t.active);
+      e.name._set(t.id);
+      e.type._set(t.service);
+      e.active._set(t.active);
     }
     function h(e, t) {
       return r.some(t, function (t) {
@@ -46,12 +50,14 @@ define("jSkype/modelHelpers/account/dataHandlers/entitlements", [
       }), r.forEach(s, function (n) {
         e.entitlements.remove(n.name());
       }), n.createResolvedPromise();
-    }, this.onError = function (e) {
+    };
+    this.onError = function (e) {
       return n.createRejectedPromise(e);
     };
   }
   var n = e("jSkype/modelHelpers/propertyModelHelper"), r = e("lodash-compat"), i = e("jSkype/models/subscription"), s = e("jSkype/services/entitlement/serviceSettings"), o = e("swx-enums"), u = e("jSkype/client");
-  t.classFunction = a, t.build = function () {
+  t.classFunction = a;
+  t.build = function () {
     return new a();
   };
-})
+});

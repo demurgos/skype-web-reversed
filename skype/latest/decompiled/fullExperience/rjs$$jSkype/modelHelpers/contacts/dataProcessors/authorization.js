@@ -18,4 +18,4 @@ define("jSkype/modelHelpers/contacts/dataProcessors/authorization", [
       return new i(e);
     }
   };
-})
+});

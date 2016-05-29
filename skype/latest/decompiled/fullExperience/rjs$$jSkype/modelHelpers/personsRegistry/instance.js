@@ -7,7 +7,8 @@ define("jSkype/modelHelpers/personsRegistry/instance", [
   var n = e("jSkype/modelHelpers/personsRegistry/registry"), r;
   t.reset = function () {
     r && (r.dispose(), r = null);
-  }, t.build = function () {
+  };
+  t.build = function () {
     return r || (r = new n()), r;
   };
-})
+});

@@ -24,7 +24,8 @@ define("jSkype/modelHelpers/contacts/groupCleaner", [
       return r.reduce(function (e, n) {
         return t.removeContact(n) ? e.concat(n) : e;
       }, []);
-    }, this.removeContact = function (e) {
+    };
+    this.removeContact = function (e) {
       var t = i.getPersonById(e);
       return t ? (o.setAuthorization(t, s.UNAUTHORIZED), !0) : !1;
     };
@@ -34,4 +35,4 @@ define("jSkype/modelHelpers/contacts/groupCleaner", [
     var e = u.build();
     return new a(e);
   };
-})
+});

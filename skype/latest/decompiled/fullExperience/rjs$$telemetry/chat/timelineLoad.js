@@ -70,4 +70,4 @@ define("telemetry/chat/timelineLoad", [
   }
   var t = e("usertiming"), n = e("browser/detect"), r = e("constants/common"), i = e("experience/settings"), s = e("services/telemetry/common/analyticsInfo"), o = e("services/telemetry/common/telemetryContext"), u = e("telemetry/chat/telemetryEnumerator"), a = e("telemetry/utils/telemetryUtils"), f = e("ui/telemetry/telemetryClient"), l = r.telemetry.timelineLoadEvent, c = r.telemetry.performanceMarks, h = r.telemetry.measurements;
   return p;
-})
+});

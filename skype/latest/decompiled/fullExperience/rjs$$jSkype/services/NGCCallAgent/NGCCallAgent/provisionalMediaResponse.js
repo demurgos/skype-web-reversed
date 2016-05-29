@@ -25,4 +25,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/provisionalMediaResponse", [
     };
     return r;
   }, n;
-})
+});

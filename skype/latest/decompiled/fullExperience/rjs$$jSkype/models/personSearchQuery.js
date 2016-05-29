@@ -15,7 +15,9 @@ define("jSkype/models/personSearchQuery", [
       var r, i, o, a, f = t.get().personsAndGroupsManager;
       if (!f._initialized())
         return p(f);
-      r = n.task(), o = e.sources(), a = f.all.persons;
+      r = n.task();
+      o = e.sources();
+      a = f.all.persons;
       switch (o) {
       case s.searchScope.Agent:
         i = u.agents(e);
@@ -35,14 +37,18 @@ define("jSkype/models/personSearchQuery", [
       return i.then(function (n) {
         n.forEach(function (t) {
           e.results._add(t);
-        }), h(o, e.text(), n), r.resolve();
+        });
+        h(o, e.text(), n);
+        r.resolve();
       }, function (t) {
         r.reject(t);
       }), r.promise;
     }
     function h(e, n, r) {
       var o = {}, u = n ? n.length : 0, a = r ? r.length : 0;
-      o.name = e, o.queryLength = u, o.resultCount = a;
+      o.name = e;
+      o.queryLength = u;
+      o.resultCount = a;
       if (e === s.searchScope.AddressBook) {
         var l = t.get().personsAndGroupsManager.all.persons().length;
         o.totalContactsCount = l;
@@ -56,8 +62,12 @@ define("jSkype/models/personSearchQuery", [
       }), e.promise;
     }
     var e = this, l = n.collection();
-    o.merge(e, new r()), l.add("id", "id"), l.add("phoneNumber", "phoneNumber"), e.supportedKeywords = a.exposeReadOnlyCollection(l), e.getMore = n.command(c, e.moreResultsAvailable);
+    o.merge(e, new r());
+    l.add("id", "id");
+    l.add("phoneNumber", "phoneNumber");
+    e.supportedKeywords = a.exposeReadOnlyCollection(l);
+    e.getMore = n.command(c, e.moreResultsAvailable);
   }
   var t = e("jSkype/client"), n = e("jcafe-property-model"), r = e("jSkype/models/searchQuery"), i = e("jSkype/settings"), s = e("swx-enums"), o = e("lodash-compat"), u = e("jSkype/modelHelpers/search/main"), a = e("jSkype/modelHelpers/propertyModelHelper"), f = e("constants/common");
   return l;
-})
+});

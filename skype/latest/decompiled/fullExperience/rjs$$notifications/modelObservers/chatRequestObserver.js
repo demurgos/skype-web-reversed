@@ -25,7 +25,8 @@ define("notifications/modelObservers/chatRequestObserver", [
       var n = t.build(r.notifications.CHAT, { conversation: e }), i;
       n.sender.uri() ? s.notify(n) : i = n.sender.uri.subscribe(function (e) {
         e && (s.notify(n), o());
-      }), e.chatService.accept.enabled.once(!1, function () {
+      });
+      e.chatService.accept.enabled.once(!1, function () {
         e.isGroupConversation() && e.meeting.state() === "Disconnected" ? n.decline() : n.active(!1);
       });
     }
@@ -39,4 +40,4 @@ define("notifications/modelObservers/chatRequestObserver", [
       return new o();
     }
   };
-})
+});

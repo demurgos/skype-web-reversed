@@ -15,4 +15,4 @@ define("jSkype/modelHelpers/search/directorySearchByIdDataHandler", [
       }
     }), t;
   };
-})
+});

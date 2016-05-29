@@ -8,4 +8,4 @@ define("jSkype/services/people/main", [
   t.getInstance = function (t, i) {
     return r || (r = n.build(t, i)), r;
   };
-})
+});

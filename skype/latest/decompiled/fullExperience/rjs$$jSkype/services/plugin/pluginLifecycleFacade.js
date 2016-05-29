@@ -17,7 +17,8 @@ define("jSkype/services/plugin/pluginLifecycleFacade", [
         t(r.PLUGIN_ERROR.INIT_TIMEOUT);
       }, r.PLUGIN_INIT_TIMEOUT);
       return c.then(b).then(function (t) {
-        f.clearTimeout(n), e(t);
+        f.clearTimeout(n);
+        e(t);
       }, t);
     });
   }
@@ -34,10 +35,13 @@ define("jSkype/services/plugin/pluginLifecycleFacade", [
     };
   }
   function E(e) {
-    e === r.PLUGIN_ERROR.INIT_TIMEOUT && S(), u.onManagerComponentCrashed(), t.dispose(!0);
+    e === r.PLUGIN_ERROR.INIT_TIMEOUT && S();
+    u.onManagerComponentCrashed();
+    t.dispose(!0);
   }
   function S() {
-    m || (m = a.getLogger()), m.logPluginInitializationTimeout();
+    m || (m = a.getLogger());
+    m.logPluginInitializationTimeout();
   }
   var n = e("jcafe-property-model"), r = e("constants/calling"), i = e("jSkype/modelHelpers/propertyModelHelper"), s = e("jSkype/services/plugin/pluginCore"), o = e("jSkype/services/plugin/videoManager"), u = e("jSkype/services/plugin/pluginEventDispatcher"), a = e("jSkype/telemetry/pluginTelemetry"), f = e("browser/window"), l, c = i.createResolvedPromise(), h, p, d, v, m;
   return t.initialize = function () {
@@ -50,4 +54,4 @@ define("jSkype/services/plugin/pluginLifecycleFacade", [
     var t = n.task();
     return h = null, p = null, v = null, m = null, c = t.promise, d && (d.dispose(), d = null), y().dispose(e).then(t.resolve.bind(t)).catch(t.resolve.bind(t)), t.promise;
   }, t;
-})
+});

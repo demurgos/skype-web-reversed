@@ -7,8 +7,12 @@ define("ui/controls/me/me", [
   "text!views/me/me.html"
 ], function (e, t) {
   var n = e("vendor/knockout"), r = e("browser/document"), i = e("text!views/me/me.html");
-  t.name = "me", t.render = function (e, t) {
+  t.name = "me";
+  t.render = function (e, t) {
     var s = r.createElement("div");
-    s.className = "swxMe", s.innerHTML = i, n.applyBindings(null, s), t(s);
+    s.className = "swxMe";
+    s.innerHTML = i;
+    n.applyBindings(null, s);
+    t(s);
   };
-})
+});

@@ -9,4 +9,4 @@ define("ui/components/userSettings/index", [
     e("ui/components/userSettings/shortCircuit"),
     e("ui/components/userSettings/about")
   ];
-})
+});

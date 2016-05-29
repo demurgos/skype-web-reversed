@@ -21,11 +21,13 @@ define("telemetry/chat/mediaPickerTelemetry", [
     var e = this, t = n.telemetry.NOT_AVAILABLE;
     e.publish = function () {
       var t = i.TYPE, n = u(e.data);
-      s.get().sendEvent(r.telemetry.uiTenantToken, t, n), o();
-    }, o();
+      s.get().sendEvent(r.telemetry.uiTenantToken, t, n);
+      o();
+    };
+    o();
   }
   var n = e("constants/common"), r = e("experience/settings"), i = n.telemetry.mediaBarEvent, s = e("ui/telemetry/telemetryClient");
   t.build = function () {
     return new o();
   };
-})
+});

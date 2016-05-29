@@ -38,9 +38,10 @@ define("jSkype/services/webapi/utils/sanitizer", [
   t.message = function (e) {
     for (var t in e)
       e.hasOwnProperty(t) && n.indexOf(t) === -1 && delete e[t];
-  }, t.conversations = function (e) {
+  };
+  t.conversations = function (e) {
     e.forEach(function (e) {
       t.message(e.lastMessage);
     });
   };
-})
+});

@@ -17,12 +17,14 @@ define("experience/api/helpers/contentNavigatorStore", [
       contentContainer: t,
       navigator: n
     });
-  }, t.get = function (e) {
+  };
+  t.get = function (e) {
     var t = i.getElement(e);
     return t ? n.find(s, function (e) {
       return e.contentContainer === t;
     }).navigator : o();
-  }, t.clear = function () {
+  };
+  t.clear = function () {
     s = [];
   };
-})
+});

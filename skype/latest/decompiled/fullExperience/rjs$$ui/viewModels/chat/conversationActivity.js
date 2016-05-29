@@ -18,7 +18,8 @@ define("ui/viewModels/chat/conversationActivity", [
       t.canJoinCall(a && n && i && l);
     }
     function d(e) {
-      h(e), p(e);
+      h(e);
+      p(e);
       switch (e) {
       case r.callConnectionState.Connected:
         g();
@@ -36,10 +37,13 @@ define("ui/viewModels/chat/conversationActivity", [
       t.isVideoCallingDisabled(i && s);
     }
     function g() {
-      t.callDuration(c), f = e.audioService.callConnected(), a = i.setInterval(b, l);
+      t.callDuration(c);
+      f = e.audioService.callConnected();
+      a = i.setInterval(b, l);
     }
     function y() {
-      a && i.clearInterval(a), t.callDuration(c);
+      a && i.clearInterval(a);
+      t.callDuration(c);
     }
     function b() {
       var e = new Date(), n = e - f;
@@ -49,12 +53,28 @@ define("ui/viewModels/chat/conversationActivity", [
       return t.isCallingDisabled() || !t.canJoinCall();
     }
     var t = this, a, f, l = 1000, c = -1;
-    t.callDuration = n.observable(c), t.isOnCall = n.observable(!1), t.isCallingDisabled = n.observable(!0), t.isVideoCallingDisabled = n.observable(!0), t.canJoinCall = n.observable(!1), t.isJoinCallDisabled = n.computed(w), e.selfParticipant.audio.state.changed(d), e.activeModalities.audio.changed(p), e.audioService.start.enabled.changed(v), e.videoService.start.enabled.changed(m), t.dispose = function () {
-      t.isJoinCallDisabled.dispose(), e.selfParticipant.audio.state.changed.off(d), e.activeModalities.audio.changed.off(p), e.audioService.start.enabled.changed.off(v), e.videoService.start.enabled.changed.off(m), a && i.clearInterval(a);
+    t.callDuration = n.observable(c);
+    t.isOnCall = n.observable(!1);
+    t.isCallingDisabled = n.observable(!0);
+    t.isVideoCallingDisabled = n.observable(!0);
+    t.canJoinCall = n.observable(!1);
+    t.isJoinCallDisabled = n.computed(w);
+    e.selfParticipant.audio.state.changed(d);
+    e.activeModalities.audio.changed(p);
+    e.audioService.start.enabled.changed(v);
+    e.videoService.start.enabled.changed(m);
+    t.dispose = function () {
+      t.isJoinCallDisabled.dispose();
+      e.selfParticipant.audio.state.changed.off(d);
+      e.activeModalities.audio.changed.off(p);
+      e.audioService.start.enabled.changed.off(v);
+      e.videoService.start.enabled.changed.off(m);
+      a && i.clearInterval(a);
     };
   }
   var n = e("vendor/knockout"), r = e("swx-enums"), i = e("browser/window"), s = e("constants/common"), o = e("constants/calling"), u = e("services/serviceLocator");
-  t.classFunction = a, t.build = function (e) {
+  t.classFunction = a;
+  t.build = function (e) {
     return new a(e);
   };
-})
+});

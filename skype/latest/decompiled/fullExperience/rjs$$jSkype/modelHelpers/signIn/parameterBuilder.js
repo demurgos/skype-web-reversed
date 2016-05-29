@@ -16,14 +16,16 @@ define("jSkype/modelHelpers/signIn/parameterBuilder", [
       password: e.password,
       type: n.authType.Password
     };
-  }, t.createImplicitOAuthSignInParameter = function (e) {
+  };
+  t.createImplicitOAuthSignInParameter = function (e) {
     if (!r.isString(e.client_id))
       throw new Error("client_id not defined");
     return {
       client_id: e.client_id,
       type: n.authType.ImplicitOAuth
     };
-  }, t.createTokenImplicitOAuthSignInParameter = function (e) {
+  };
+  t.createTokenImplicitOAuthSignInParameter = function (e) {
     if (!r.isString(e.client_id))
       throw new Error("client_id not defined");
     if (!r.isString(e.skypetoken))
@@ -40,14 +42,16 @@ define("jSkype/modelHelpers/signIn/parameterBuilder", [
       type: n.authType.ImplicitOAuth,
       site_name: e.site_name
     };
-  }, t.createGuestSignInParameter = function (e) {
+  };
+  t.createGuestSignInParameter = function (e) {
     if (!r.isString(e.displayName))
       throw new Error("DisplayName not defined");
     return {
       displayName: e.displayName,
       type: n.authType.Guest
     };
-  }, t.createTokenSignInParameter = function (e) {
+  };
+  t.createTokenSignInParameter = function (e) {
     if (!r.isFunction(e.getToken))
       throw new Error("getToken method is not defined");
     return {
@@ -55,4 +59,4 @@ define("jSkype/modelHelpers/signIn/parameterBuilder", [
       getToken: e.getToken
     };
   };
-})
+});

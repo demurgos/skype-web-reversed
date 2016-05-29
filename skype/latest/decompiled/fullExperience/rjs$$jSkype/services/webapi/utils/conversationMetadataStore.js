@@ -12,4 +12,4 @@ define("jSkype/services/webapi/utils/conversationMetadataStore", [], function ()
       delete e[t];
     }
   };
-})
+});

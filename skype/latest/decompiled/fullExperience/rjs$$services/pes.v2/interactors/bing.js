@@ -14,7 +14,8 @@ define("services/pes.v2/interactors/bing", [
     n.forEach(t, function (e) {
       e.aspectRatio = e.width / e.height;
     });
-  }), t.computeGridLayoutSizes = i.defineInteractor(function (e) {
+  });
+  t.computeGridLayoutSizes = i.defineInteractor(function (e) {
     function t(e, t) {
       var n = [], r, i;
       for (r = 0; r < e; r += 1) {
@@ -34,7 +35,8 @@ define("services/pes.v2/interactors/bing", [
         return e.map(function (e) {
           return [e];
         });
-      l = t(a, r), f = t(a - 1, r - 1);
+      l = t(a, r);
+      f = t(a - 1, r - 1);
       for (s = 0; s < a; s += 1)
         l[s][0] = e[s] + (s ? l[s - 1][0] : 0);
       for (o = 0; o < r; o += 1)
@@ -52,9 +54,13 @@ define("services/pes.v2/interactors/bing", [
             ]);
           u = n.min(h, function (e) {
             return e[0];
-          }), l[s][o] = u[0], f[s - 1][o - 1] = u[1];
+          });
+          l[s][o] = u[0];
+          f[s - 1][o - 1] = u[1];
         }
-      a -= 1, r -= 2, i = [];
+      a -= 1;
+      r -= 2;
+      i = [];
       while (r >= 0)
         i = [function () {
             var t, n, i, o;
@@ -72,7 +78,10 @@ define("services/pes.v2/interactors/bing", [
         }()].concat(i);
     }
     e(function (e, t, i, s, o) {
-      t = t || 6, i = i || 100, s = s || 100, o = o || 0;
+      t = t || 6;
+      i = i || 100;
+      s = s || 100;
+      o = o || 0;
       var u = e.items || [], a = s / t, f = u.reduce(function (e, t) {
           return e + t.aspectRatio * a;
         }, 0), l = Math.round(f / i) || 1, c = u.map(function (e) {
@@ -81,17 +90,20 @@ define("services/pes.v2/interactors/bing", [
       n.forEach(h, function (e) {
         var t = [], r = i - o * e.length;
         n.forEach(e, function () {
-          t.push(u[p]), p += 1;
+          t.push(u[p]);
+          p += 1;
         });
         var s = t.reduce(function (e, t) {
           return e + t.aspectRatio;
         }, 0);
         n.forEach(t, function (e) {
-          e.scaledWidth = parseInt(r / s * e.aspectRatio), e.scaledHeight = parseInt(r / s);
+          e.scaledWidth = parseInt(r / s * e.aspectRatio);
+          e.scaledHeight = parseInt(r / s);
         });
       });
     });
-  }), t.collectItemsToPack = i.defineSimpleInteractor(function (e) {
+  });
+  t.collectItemsToPack = i.defineSimpleInteractor(function (e) {
     var t = e.items || [], n = {
         ariaLabel: r.fetch({ key: e.packAriaLabelKey }),
         title: r.fetch({ key: e.packTitleKey }),
@@ -99,11 +111,17 @@ define("services/pes.v2/interactors/bing", [
         isHidden: !1,
         items: []
       };
-    n.items = n.items.concat(t), e.pack = n;
-  }), t.assignImageItemProperties = i.defineSimpleInteractor(function (e) {
+    n.items = n.items.concat(t);
+    e.pack = n;
+  });
+  t.assignImageItemProperties = i.defineSimpleInteractor(function (e) {
     var t = e.items || [], r = e.sizingUnit || "em";
     n.forEach(t, function (e) {
-      e.thumbnail = e.thumbnail.replace("http:", "https:"), e.staticThumbnail = e.thumbnail, e.type = "image", e.thumbnailStyle = "width: " + e.scaledWidth + r + "; height: " + e.scaledHeight + r + ";", [
+      e.thumbnail = e.thumbnail.replace("http:", "https:");
+      e.staticThumbnail = e.thumbnail;
+      e.type = "image";
+      e.thumbnailStyle = "width: " + e.scaledWidth + r + "; height: " + e.scaledHeight + r + ";";
+      [
         "aspectRatio",
         "height",
         "scaledHeight",
@@ -113,7 +131,8 @@ define("services/pes.v2/interactors/bing", [
         e.hasOwnProperty(t) && delete e[t];
       });
     });
-  }), t.createBingPacks = i.defineSimpleInteractor(function (e) {
+  });
+  t.createBingPacks = i.defineSimpleInteractor(function (e) {
     var r, s, u = i.defineComposer([
         t.computeAspectRatios,
         function (e) {
@@ -122,7 +141,10 @@ define("services/pes.v2/interactors/bing", [
         t.assignImageItemProperties,
         t.collectItemsToPack
       ]), a, f;
-    e.packs = [], e.items = [], e.featureGifsFirst ? (r = e.gifResults, s = e.memeResults) : (r = e.memeResults, s = e.gifResults), e.featureCombine ? (a = n.compact(n.flatten(n.flatten(n.zip(r, s)))), f = u.run(n.assign({
+    e.packs = [];
+    e.items = [];
+    e.featureGifsFirst ? (r = e.gifResults, s = e.memeResults) : (r = e.memeResults, s = e.gifResults);
+    e.featureCombine ? (a = n.compact(n.flatten(n.flatten(n.zip(r, s)))), f = u.run(n.assign({
       items: a,
       packTitleKey: "expressionPicker_bingPack_title",
       packAriaLabelKey: "expressionPicker_bingPack_ariaLabel",
@@ -153,7 +175,8 @@ define("services/pes.v2/interactors/bing", [
       "availableHeight",
       "lossToPadding"
     ]))), f.pack && (e.packs.push(f.pack), e.items = e.items.concat(f.items)));
-  }), t.putBingTab = i.defineSimpleInteractor(function (e) {
+  });
+  t.putBingTab = i.defineSimpleInteractor(function (e) {
     var t = {
       id: o.bingSearch.TAB_ID,
       type: o.itemTypes.tab.id,
@@ -164,8 +187,10 @@ define("services/pes.v2/interactors/bing", [
       styleOverride: "large-tab",
       packs: []
     };
-    n.remove(e.tabs, { id: o.bingSearch.TAB_ID }), e.tabs.push(t);
-  }), t.setBingTabProperties = i.defineSimpleInteractor(function (e) {
+    n.remove(e.tabs, { id: o.bingSearch.TAB_ID });
+    e.tabs.push(t);
+  });
+  t.setBingTabProperties = i.defineSimpleInteractor(function (e) {
     e.selectedTab && e.selectedTab.id === o.bingSearch.TAB_ID && (e.pickerMaximized = !0, e.searchCapabilityEnabled = !0);
   });
-})
+});

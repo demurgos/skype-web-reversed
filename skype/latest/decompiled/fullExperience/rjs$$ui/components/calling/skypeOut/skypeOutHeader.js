@@ -13,5 +13,7 @@ define("ui/components/calling/skypeOut/skypeOutHeader", [
     return u.setContext(a), u.init(o), u;
   }
   var n = e("browser/dom"), r = e("vendor/knockout"), i = e("ui/viewModels/calling/skypeOut/skypeOutHeaderViewModel");
-  t.name = e("constants/components").calling.SKYPEOUT_HEADER, t.template = e("text!views/calling/skypeOut/skypeOutHeader.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").calling.SKYPEOUT_HEADER;
+  t.template = e("text!views/calling/skypeOut/skypeOutHeader.html");
+  t.viewModel = { createViewModel: s };
+});

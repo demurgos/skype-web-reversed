@@ -6,7 +6,10 @@ define("jSkype/services/systemCommands/commands/topic", [
   "lodash-compat"
 ], function (e, t) {
   function i() {
-    this.isAvailableFor = n.availableForAllGroupMembers, this.help = "[text]", this.showInHelp = !0, this.action = function (e, t) {
+    this.isAvailableFor = n.availableForAllGroupMembers;
+    this.help = "[text]";
+    this.showInHelp = !0;
+    this.action = function (e, t) {
       if (r.isEmpty(r.trim(t)))
         return;
       e.topic.set.enabled() && e.topic.set(t).catch(function (e) {
@@ -17,4 +20,4 @@ define("jSkype/services/systemCommands/commands/topic", [
   t.build = function () {
     return new i();
   };
-})
+});

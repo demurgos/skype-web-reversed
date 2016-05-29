@@ -38,13 +38,17 @@ define("jSkype/services/trouter/requestBuilder", [
   function p(e, t, n) {
     var r = l.task(), i = h(e, t, n);
     return v().then(function (e) {
-      e.payload = JSON.stringify(i), e.reporting = { serviceName: "registrar" }, r.resolve(e);
+      e.payload = JSON.stringify(i);
+      e.reporting = { serviceName: "registrar" };
+      r.resolve(e);
     }), r.promise;
   }
   function d(e) {
     var t = l.task(), n = { sr: e };
     return v().then(function (e) {
-      e.payload = JSON.stringify(n), e.reporting = { serviceName: "authenticateUrl" }, t.resolve(e);
+      e.payload = JSON.stringify(n);
+      e.reporting = { serviceName: "authenticateUrl" };
+      t.resolve(e);
     }), t.promise;
   }
   function v() {
@@ -83,4 +87,4 @@ define("jSkype/services/trouter/requestBuilder", [
       });
     }
   };
-})
+});

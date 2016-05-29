@@ -34,4 +34,4 @@ define("jSkype/services/preferences/profileServiceProvider", [
   t.build = function () {
     return new f();
   };
-})
+});

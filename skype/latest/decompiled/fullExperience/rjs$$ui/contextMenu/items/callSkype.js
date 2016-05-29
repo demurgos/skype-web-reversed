@@ -12,21 +12,29 @@ define("ui/contextMenu/items/callSkype", [
 ], function (e) {
   function l(e, c, h) {
     var p, d, v = this;
-    p = n.fetch({ key: "label_text_call_skype_audio" }), d = u.contextMenu.items.CALL_SKYPE, t.call(v, l.TYPE, p, d, e, c, h), v.featuresAreEnabled = function () {
+    p = n.fetch({ key: "label_text_call_skype_audio" });
+    d = u.contextMenu.items.CALL_SKYPE;
+    t.call(v, l.TYPE, p, d, e, c, h);
+    v.featuresAreEnabled = function () {
       var e = r.resolve(i.serviceLocator.FEATURE_FLAGS);
       return e.isFeatureOn(i.featureFlags.CALLING);
-    }, v.mePersonHasCallingCapability = function () {
+    };
+    v.mePersonHasCallingCapability = function () {
       return f.get().personsAndGroupsManager.mePerson.capabilities.audio();
-    }, v.personHasSkypeCallingCapability = function (e) {
+    };
+    v.personHasSkypeCallingCapability = function (e) {
       return !a.isPstn(e) && e.capabilities.audio();
-    }, v.getCallingService = function (e) {
+    };
+    v.getCallingService = function (e) {
       return e.audioService;
-    }, v.getDefaultTelemetrySource = function () {
+    };
+    v.getDefaultTelemetrySource = function () {
       return o.contextMenuItem.callSkype;
-    }, v.getTelemetryActionName = function () {
+    };
+    v.getTelemetryActionName = function () {
       return s.audioVideo.audioCall;
     };
   }
   var t = e("ui/contextMenu/items/baseCallingMenuItem"), n = e("swx-i18n").localization, r = e("services/serviceLocator"), i = e("constants/common"), s = e("ui/telemetry/actions/actionNames"), o = e("ui/telemetry/actions/actionSources"), u = e("constants/cssClasses"), a = e("ui/modelHelpers/personHelper"), f = e("cafe/applicationInstance");
   return l.prototype = Object.create(t.prototype), l.TYPE = "CallSkypeMenuItem", l;
-})
+});

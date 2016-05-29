@@ -19,7 +19,8 @@ define("services/telemetry/people/performance/performanceAnalyser", [
     var e = this;
     e.contactsLoaded = function (e) {
       if (e && f(s.CONTACTS.LIST_LOAD.START)) {
-        n.mark(s.CONTACTS.LIST_LOAD.END), n.measure(o.CONTACTS.LIST_LOAD.TTC, s.CONTACTS.LIST_LOAD.START, s.CONTACTS.LIST_LOAD.END);
+        n.mark(s.CONTACTS.LIST_LOAD.END);
+        n.measure(o.CONTACTS.LIST_LOAD.TTC, s.CONTACTS.LIST_LOAD.START, s.CONTACTS.LIST_LOAD.END);
         var h = {
           name: u.LOAD_CONTACTS,
           contactsCount: e.contactsCount ? e.contactsCount : 0,
@@ -27,7 +28,8 @@ define("services/telemetry/people/performance/performanceAnalyser", [
         };
         r.get().sendEvent(i.telemetry.uiTenantToken, t.telemetry.contacts.type.CONTACTS, h);
       }
-      a(s.CONTACTS.LIST_LOAD), c(o.CONTACTS.LIST_LOAD);
+      a(s.CONTACTS.LIST_LOAD);
+      c(o.CONTACTS.LIST_LOAD);
     };
   }
   function f(e) {
@@ -43,4 +45,4 @@ define("services/telemetry/people/performance/performanceAnalyser", [
       return new a();
     }
   };
-})
+});

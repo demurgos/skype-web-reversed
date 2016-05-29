@@ -14,4 +14,4 @@ define("jSkype/services/preferences/autoBuddyProvider", [
   }, s.prototype.update = function (e) {
     return r.getPeopleService().setSettings(e);
   }, t.assign(s, n), s;
-})
+});

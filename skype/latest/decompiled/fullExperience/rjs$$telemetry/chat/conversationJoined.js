@@ -27,18 +27,23 @@ define("telemetry/chat/conversationJoined", [
       return /^(.*):/.exec(e)[1];
     }
     function f() {
-      e._threadId = undefined, e._prefix = undefined;
+      e._threadId = undefined;
+      e._prefix = undefined;
     }
     var e = this;
     return e._threadId = undefined, e._prefix = undefined, e.onJoinConversation = function (n) {
       var r = n.prefix.indexOf(":") === -1, i = t(n.prefix);
-      e._threadId = n.uri, e._prefix = r ? "" : a(n.prefix), u(o.milestoneType.CLIENT_INIT, i);
+      e._threadId = n.uri;
+      e._prefix = r ? "" : a(n.prefix);
+      u(o.milestoneType.CLIENT_INIT, i);
     }, e.onJoinConversationError = function (e) {
-      u(o.milestoneType.ERROR, e), f();
+      u(o.milestoneType.ERROR, e);
+      f();
     }, e.onConversationJoined = function () {
       if (!e.isTriggered())
         return;
-      u(o.milestoneType.END, o.result.SUCCESS), f();
+      u(o.milestoneType.END, o.result.SUCCESS);
+      f();
     }, e.isTriggered = function () {
       return e._threadId;
     }, e;
@@ -47,4 +52,4 @@ define("telemetry/chat/conversationJoined", [
   t.get = function () {
     return u || (u = new a()), u;
   };
-})
+});

@@ -109,4 +109,4 @@ define("ui/components/chat/index", [
     e("ui/components/chat/heart"),
     e("ui/components/chat/pes.v2/store/browseTabs")
   ];
-})
+});

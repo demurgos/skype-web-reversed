@@ -11,13 +11,15 @@ define("jSkype/models/participantAudio", [
     function l(t) {
       var n;
       return a(!1), f && (t ? n = e._callHandler.mute() : n = e._callHandler.unmute()), n.then(function (e) {
-        u._set(e), a(!0);
+        u._set(e);
+        a(!0);
       }), n;
     }
     function c(e, t, n) {
       if (n === undefined || t === s.callDisconnectionReason.CallEscalated)
         return;
-      e === s.callConnectionState.Connecting && (a(!0), u._set(!1)), e === s.callConnectionState.Disconnected && (a(!1), u._set(!1));
+      e === s.callConnectionState.Connecting && (a(!0), u._set(!1));
+      e === s.callConnectionState.Disconnected && (a(!1), u._set(!1));
     }
     var o = n.property({
         readOnly: !0,
@@ -34,4 +36,4 @@ define("jSkype/models/participantAudio", [
   t.build = function (e, t) {
     return new o(e, t.id());
   };
-})
+});

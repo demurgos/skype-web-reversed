@@ -5,5 +5,6 @@ define("ui/components/calling/endCall", [
   "constants/components",
   "text!views/calling/endCall.html"
 ], function (e, t) {
-  t.name = e("constants/components").calling.END_CALL, t.template = e("text!views/calling/endCall.html");
-})
+  t.name = e("constants/components").calling.END_CALL;
+  t.template = e("text!views/calling/endCall.html");
+});

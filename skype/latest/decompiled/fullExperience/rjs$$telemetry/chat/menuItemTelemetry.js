@@ -24,13 +24,18 @@ define("telemetry/chat/menuItemTelemetry", [
     }
     var e = this, t = n.telemetry.NOT_AVAILABLE, f = u.resolve(n.serviceLocator.FEATURE_FLAGS);
     e.publish = function (u) {
-      e.data.narrow = o.get().currentMode() === s.NARROW, e.data.button = u.id || t, e.data.ordinal = u.ordinal || t, e.data.navigationMenuIconsEnabled = f.isFeatureOn(n.featureFlags.NAVIGATION_MENU_ICONS_ENABLED);
+      e.data.narrow = o.get().currentMode() === s.NARROW;
+      e.data.button = u.id || t;
+      e.data.ordinal = u.ordinal || t;
+      e.data.navigationMenuIconsEnabled = f.isFeatureOn(n.featureFlags.NAVIGATION_MENU_ICONS_ENABLED);
       var h = i.TYPE, p = c(e.data);
-      a.get().sendEvent(r.telemetry.uiTenantToken, h, p), l();
-    }, l();
+      a.get().sendEvent(r.telemetry.uiTenantToken, h, p);
+      l();
+    };
+    l();
   }
   var n = e("constants/common"), r = e("experience/settings"), i = n.telemetry.menuItemClicked, s = n.styleMode, o = e("utils/common/styleModeHelper"), u = e("services/serviceLocator"), a = e("ui/telemetry/telemetryClient");
   t.build = function () {
     return new f();
   };
-})
+});

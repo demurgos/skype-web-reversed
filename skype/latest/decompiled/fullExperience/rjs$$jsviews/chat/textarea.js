@@ -12,10 +12,15 @@ define("jsviews/chat/textarea", [
       }
     }
     var o = this, u = t.getElement("textarea", e);
-    s = t.getElement(s), o.updateSizing = function () {
+    s = t.getElement(s);
+    o.updateSizing = function () {
       var e;
-      u.style.height = "30px", e = u.value === "" ? a() : u.scrollHeight, e = Math.max(r, Math.min(e, i)), u.style.height = e + "px";
-    }, o.setCaretToEnd = function () {
+      u.style.height = "30px";
+      e = u.value === "" ? a() : u.scrollHeight;
+      e = Math.max(r, Math.min(e, i));
+      u.style.height = e + "px";
+    };
+    o.setCaretToEnd = function () {
       u.focus();
       if (typeof u.selectionStart == "number") {
         u.selectionStart = u.selectionEnd = u.value.length;
@@ -23,18 +28,24 @@ define("jsviews/chat/textarea", [
       }
       if (typeof u.createTextRange != "undefined") {
         var e = u.createTextRange();
-        e.collapse(!1), e.select();
+        e.collapse(!1);
+        e.select();
       }
-    }, o.getSelectionStart = function () {
+    };
+    o.getSelectionStart = function () {
       return u.selectionStart;
-    }, o.getSelectionEnd = function () {
+    };
+    o.getSelectionEnd = function () {
       return u.selectionEnd;
-    }, o.setCursorAt = function (e) {
-      u.selectionStart = e, u.selectionEnd = e;
-    }, o.editing = function (e) {
+    };
+    o.setCursorAt = function (e) {
+      u.selectionStart = e;
+      u.selectionEnd = e;
+    };
+    o.editing = function (e) {
       e ? s.addClass(n) : s.removeClass(n);
     };
   }
   var t = e("browser/dom"), n = "EDITING", r = 30, i = 180;
   return s;
-})
+});

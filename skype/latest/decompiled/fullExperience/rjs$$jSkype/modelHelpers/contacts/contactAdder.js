@@ -39,4 +39,4 @@ define("jSkype/modelHelpers/contacts/contactAdder", [
       return new f(e, t);
     }
   };
-})
+});

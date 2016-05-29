@@ -12,6 +12,9 @@ define("experience/components/experience", [
   var n = e("constants/common"), r = e("services/serviceLocator"), i = e("ui/controls/experience/sidebar"), s = e("ui/controls/experience/content"), o = e("ui/components/experience/index"), u = e("ui/components/registrar");
   t.init = function (e) {
     var t = r.resolve(n.serviceLocator.CONTROLS_BUILDER);
-    t.register(s), t.register(i), u.register(o), e();
+    t.register(s);
+    t.register(i);
+    u.register(o);
+    e();
   };
-})
+});

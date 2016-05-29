@@ -11,5 +11,7 @@ define("ui/components/people/contactProfilePhoneNumber", [
     return t;
   }
   var n = e("ui/viewModels/people/phoneNumber");
-  t.name = e("constants/components").people.CONTACT_PROFILE_PHONE_NUMBER, t.template = e("text!views/people/contactProfilePhoneNumber.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").people.CONTACT_PROFILE_PHONE_NUMBER;
+  t.template = e("text!views/people/contactProfilePhoneNumber.html");
+  t.viewModel = { createViewModel: r };
+});

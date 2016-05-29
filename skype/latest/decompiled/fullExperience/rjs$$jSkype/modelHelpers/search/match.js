@@ -15,11 +15,13 @@ define("jSkype/modelHelpers/search/match", [
     property: "displayName",
     rank: 1,
     method: r
-  }, t.idRule = {
+  };
+  t.idRule = {
     property: "id",
     rank: 2,
     method: i
-  }, t.phoneNumberRule = {
+  };
+  t.phoneNumberRule = {
     property: "phoneNumber",
     rank: 0,
     method: i
@@ -40,8 +42,9 @@ define("jSkype/modelHelpers/search/match", [
       if (u)
         return i = u, !0;
     }), i;
-  }, t.getMatch = function (e, t, r, i) {
+  };
+  t.getMatch = function (e, t, r, i) {
     var s = null, o = e.method.func(n.normalize(t), n.normalize(r));
     return o && (s = {}, s.rank = u(o, e), s.property = e.property, s.sortString = i.displayName(), s.person = i), s;
   };
-})
+});

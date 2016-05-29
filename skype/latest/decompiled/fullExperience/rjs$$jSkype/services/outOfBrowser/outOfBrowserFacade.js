@@ -43,7 +43,8 @@ define("jSkype/services/outOfBrowser/outOfBrowserFacade", [
       });
     }
     function x(e) {
-      d = e, d.selfParticipant.audio.state.changed(C);
+      d = e;
+      d.selfParticipant.audio.state.changed(C);
     }
     function T(e) {
       function f() {
@@ -66,7 +67,9 @@ define("jSkype/services/outOfBrowser/outOfBrowserFacade", [
       n && e === a.callConnectionState.Disconnected && (d.selfParticipant.audio.state.changed.off(C), d = null);
     }
     function k(e, t) {
-      s.setupCall(t), u.escalateCall(e, t), x(t);
+      s.setupCall(t);
+      u.escalateCall(e, t);
+      x(t);
     }
     function L(e) {
       var t = n.get().conversationsManager.conversations(e.oldConversationId), r = n.get().conversationsManager.conversations(e.newConversationId);
@@ -88,7 +91,8 @@ define("jSkype/services/outOfBrowser/outOfBrowserFacade", [
     var p, d, v, m, g, y = this, b = o.userSettings.preferences.SKYPE_VIDEO_CALLING_POLICY_SUPPORT;
     y.initialize = function () {
       return m || (p = f.build(e), p.onExtensionDisconnected(y.dispose), p.onShellAppWindowHidden(N), p.onShellAppCallEscalated(L), m = p.getVersion().then(T)), m;
-    }, y.start = function (e) {
+    };
+    y.start = function (e) {
       return x(e.conversation), y.initialize().then(E).then(A).then(function () {
         var t = Boolean(e.callHostId || e.accessToken), n = Boolean(e.conversation.autoCall()), r = e.conversation._autoCallingService.autoCallingMode(), i = e.conversation._autoCallingService.partnerId(), s = e.conversation._autoCallingService.callId();
         return S(l.commands.START, {
@@ -103,7 +107,8 @@ define("jSkype/services/outOfBrowser/outOfBrowserFacade", [
           endpoint: e.endpoint
         });
       });
-    }, y.hostCall = function (e) {
+    };
+    y.hostCall = function (e) {
       return d || x(e.conversation), y.initialize().then(function () {
         return S(l.commands.HOST_CALL, {
           withVideo: e.withVideo,
@@ -111,7 +116,8 @@ define("jSkype/services/outOfBrowser/outOfBrowserFacade", [
           endpoint: e.endpoint
         });
       });
-    }, y.joinCall = function (e) {
+    };
+    y.joinCall = function (e) {
       return d || x(e.conversation), y.initialize().then(function () {
         var t = Boolean(e.callHostId || e.accessToken), n = Boolean(e.conversation.autoCall()), r = e.conversation._autoCallingService.autoCallingMode();
         return S(l.commands.JOIN_CALL, {
@@ -124,40 +130,58 @@ define("jSkype/services/outOfBrowser/outOfBrowserFacade", [
           endpoint: e.endpoint
         });
       });
-    }, y.accept = function (e, t) {
+    };
+    y.accept = function (e, t) {
       return x(e), y.initialize().then(E).then(A).then(function () {
         return S(l.commands.ACCEPT, {
           incomingCallData: e._callData.getUnprocessedIncomingCallPayloads(),
           withVideo: t
         });
       });
-    }, y.updateIncomingCallPayload = function (e) {
+    };
+    y.updateIncomingCallPayload = function (e) {
       return y.initialize().then(function () {
         return S(l.commands.UPDATE_INCOMING_PAYLOAD, { incomingCallData: e._callData.getUnprocessedIncomingCallPayloads() });
       });
-    }, y.cancel = function () {
+    };
+    y.cancel = function () {
       return i.isFeatureOn(o.featureFlags.PRELOAD_SHELL_APP) ? y.initialize().then(function (e) {
         return e.initializesAsHidden ? S(l.commands.HIDE) : p.disconnect();
       }) : Promise.resolve();
-    }, y.stop = function () {
+    };
+    y.stop = function () {
       return S(l.commands.STOP);
-    }, y.mute = function () {
+    };
+    y.mute = function () {
       return S(l.commands.MUTE);
-    }, y.unmute = function () {
+    };
+    y.unmute = function () {
       return S(l.commands.UNMUTE);
-    }, y.requestCallInfo = function () {
+    };
+    y.requestCallInfo = function () {
       return d ? S(l.commands.CALL_INFO) : Promise.reject();
-    }, y.updateSettings = function (e, t) {
+    };
+    y.updateSettings = function (e, t) {
       return S(l.commands.SETTINGS_UPDATE, {
         settingsType: e,
         value: t
       });
-    }, y.dispose = function (e) {
-      e = e || {}, v = null, m = null, p.onShellAppWindowHidden(null), p.onExtensionDisconnected(null), p.onShellAppCallEscalated(null), p.dispose(), d && (d.selfParticipant.audio.state.changed.off(C), d.selfParticipant.audio.state._set(a.callConnectionState.Disconnected)), !e.preventReinitialisation && i.isFeatureOn(o.featureFlags.PERSISTENT_SHELL_APP) && y.initialize(), g && g.dispose();
+    };
+    y.dispose = function (e) {
+      e = e || {};
+      v = null;
+      m = null;
+      p.onShellAppWindowHidden(null);
+      p.onExtensionDisconnected(null);
+      p.onShellAppCallEscalated(null);
+      p.dispose();
+      d && (d.selfParticipant.audio.state.changed.off(C), d.selfParticipant.audio.state._set(a.callConnectionState.Disconnected));
+      !e.preventReinitialisation && i.isFeatureOn(o.featureFlags.PERSISTENT_SHELL_APP) && y.initialize();
+      g && g.dispose();
     };
   }
   var n = e("jSkype/client"), r = e("browser/detect"), i = e("jSkype/settings"), s = e("jSkype/services/callController"), o = e("constants/common"), u = e("jSkype/modelHelpers/calling/escalationHelper"), a = e("swx-enums"), f = e("jSkype/services/outOfBrowser/extensionLifecycleFacade"), l = e("constants/outOfBrowser"), c = e("utils/common/version");
   t.build = function (e, t, n) {
     return new h(e, t, n);
   };
-})
+});

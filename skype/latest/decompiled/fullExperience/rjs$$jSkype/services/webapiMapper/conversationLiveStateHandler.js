@@ -36,17 +36,22 @@ define("jSkype/services/webapiMapper/conversationLiveStateHandler", [
     if (i) {
       if (i.AccessToken === m)
         return;
-      r._setCanJoinCall(S(i), n, i), T(e, r), y.log("Enabling P2P black bar");
+      r._setCanJoinCall(S(i), n, i);
+      T(e, r);
+      y.log("Enabling P2P black bar");
     } else
       y.error("Unable to enable P2P black bar, wrong/missing payload");
   }
   function T(e, t) {
-    r.clearTimeout(g[t.conversationId]), g[t.conversationId] = r.setTimeout(N.bind(null, t), e);
+    r.clearTimeout(g[t.conversationId]);
+    g[t.conversationId] = r.setTimeout(N.bind(null, t), e);
   }
   function N(e) {
     if (u.getBrowserInfo().browserName === u.BROWSERS.SKYPE_SHELL)
       return;
-    r.clearTimeout(g[e.conversationId]), e._setCanJoinCall(!1), y.log("Disabling P2P black bar");
+    r.clearTimeout(g[e.conversationId]);
+    e._setCanJoinCall(!1);
+    y.log("Disabling P2P black bar");
   }
   var n = e("lodash-compat"), r = e("browser/window"), i = e("jSkype/client"), s = e("jSkype/settings"), o = e("constants/common"), u = e("browser/detect"), a = e("jSkype/utils/chat/parser"), f = e("utils/common/logTracer/api"), l = "2", c = "1", h = 1000, p = /1\/([12])\s([^ ]*)\s([01])(\s(\d*)\s(\{(.|[\r\n])*\}))?/, d = {
       PARSING_ERROR: "Could not properly parse LiveState message !",
@@ -67,13 +72,15 @@ define("jSkype/services/webapiMapper/conversationLiveStateHandler", [
     var o = n[1], u = n[2], f = n[3], d = n[5] * h, v = n[6];
     if (o !== l)
       return;
-    r = a.getConversationIdFromUrl(t), s = i.get().conversationsManager._getConversation(r);
+    r = a.getConversationIdFromUrl(t);
+    s = i.get().conversationsManager._getConversation(r);
     if (!s) {
       y.warn("Unable to find conversation");
       return;
     }
     f === c ? x(d, v, u, s) : N(s);
-  }, t.updateNGCCallState = function (e, t) {
+  };
+  t.updateNGCCallState = function (e, t) {
     var n = null, a = null, l, c, h = null, p = null, d = f.getLogger("NGCBlackBar"), v;
     if (!s.isFeatureOn(o.featureFlags.GVC_JOINING)) {
       d.log("conversationLiveStateHandler:updateNGCCallState: GVC Joining not supported");
@@ -89,7 +96,8 @@ define("jSkype/services/webapiMapper/conversationLiveStateHandler", [
       d.log("conversationLiveStateHandler:updateNGCCallState: GVC Joining is supported but no awareness_conversationLiveState");
       return;
     }
-    l = e, c = i.get().conversationsManager._getConversation(l);
+    l = e;
+    c = i.get().conversationsManager._getConversation(l);
     if (!c) {
       d.error("conversationLiveStateHandler::updateNGCCallState: no conversation found with id = " + l);
       return;
@@ -99,7 +107,11 @@ define("jSkype/services/webapiMapper/conversationLiveStateHandler", [
       return;
     }
     try {
-      v = JSON.parse(t.awareness_conversationLiveState), n = v.conversationUrl, a = v.conversationId, h = v.groupCallInitiator, p = v.expiration;
+      v = JSON.parse(t.awareness_conversationLiveState);
+      n = v.conversationUrl;
+      a = v.conversationId;
+      h = v.groupCallInitiator;
+      p = v.expiration;
     } catch (m) {
       d.error(m);
       return;
@@ -107,8 +119,9 @@ define("jSkype/services/webapiMapper/conversationLiveStateHandler", [
     if (n && a) {
       r.clearTimeout(g[c.conversationId]);
       var y = p * 1000 - new Date().getTime();
-      d.log("conversationLiveStateHandler::updateNGCCallState: setting timeout for : " + y + " ms"), y > 0 && (c._setCanJoinNGCCall(!0, h, n, a), g[c.conversationId] = r.setTimeout(b.bind(null, c), y));
+      d.log("conversationLiveStateHandler::updateNGCCallState: setting timeout for : " + y + " ms");
+      y > 0 && (c._setCanJoinNGCCall(!0, h, n, a), g[c.conversationId] = r.setTimeout(b.bind(null, c), y));
     } else
       b(c);
   };
-})
+});

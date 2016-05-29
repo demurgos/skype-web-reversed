@@ -24,7 +24,8 @@ define("ui/calling/invalidNumberRedirector", [
           origin: r.telemetry.historyLoadOrigin.SKYPEOUT_PAGE
         });
       }, e));
-    }, this.dispose = function () {
+    };
+    this.dispose = function () {
       a();
     };
   }
@@ -32,4 +33,4 @@ define("ui/calling/invalidNumberRedirector", [
   t.build = function () {
     return new u();
   };
-})
+});

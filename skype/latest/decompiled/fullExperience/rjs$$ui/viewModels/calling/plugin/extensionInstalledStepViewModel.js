@@ -18,15 +18,23 @@ define("ui/viewModels/calling/plugin/extensionInstalledStepViewModel", [
         t !== n.callingNotSupportedReasons.PluginNotInstalled && (l(), o());
       }
       var o = i.next, u = s.getInstallResources(), a = r.get().personsAndGroupsManager.mePerson.capabilities.audio;
-      this.id = t.STEP_ID, this.getPluginImageUrl = u.images.extensionInstallPlugin, this.isFirefox = i.isFirefox, this.show = function () {
+      this.id = t.STEP_ID;
+      this.getPluginImageUrl = u.images.extensionInstallPlugin;
+      this.isFirefox = i.isFirefox;
+      this.show = function () {
         a.reason === n.callingNotSupportedReasons.PluginNotInstalled ? f() : o();
-      }, this.close = function () {
-        l(), i.close();
-      }, this.installClick = function () {
-        l(), o();
+      };
+      this.close = function () {
+        l();
+        i.close();
+      };
+      this.installClick = function () {
+        l();
+        o();
       };
     };
-  t.STEP_ID = i.CALLING_SETUP_STEPS.OVERLAY_EXTENSION_INSTALLED, t.build = function (e) {
+  t.STEP_ID = i.CALLING_SETUP_STEPS.OVERLAY_EXTENSION_INSTALLED;
+  t.build = function (e) {
     return new o(e);
   };
-})
+});

@@ -16,7 +16,8 @@ define("services/telemetry/people/performance/performanceTelemetry", [
   var t = e("usertiming"), n = e("constants/common"), r = e("services/telemetry/eventBus"), i = e("services/telemetry/people/performance/performanceAnalyser");
   return {
     init: function () {
-      s(), o();
+      s();
+      o();
     }
   };
-})
+});

@@ -24,23 +24,29 @@ define("jSkype/modelHelpers/personsRegistry/registry", [
         return !e.match(n);
     }
     var e = {}, r = n.create(l), f = i.getBatchProfileHandlers();
-    this.defaultPersonAuthorization = a.UNKNOWN, this.get = function (t) {
+    this.defaultPersonAuthorization = a.UNKNOWN;
+    this.get = function (t) {
       return e[t];
-    }, this.add = function (t, n) {
+    };
+    this.add = function (t, n) {
       var i = t.id();
-      e[i] = t, n || (h(t) ? u.build().process([t]) : c(t) && r.add(i));
-    }, this.filter = function (e) {
+      e[i] = t;
+      n || (h(t) ? u.build().process([t]) : c(t) && r.add(i));
+    };
+    this.filter = function (e) {
       return this.toArray().filter(e);
-    }, this.toArray = function () {
+    };
+    this.toArray = function () {
       var t = [];
       return Object.keys(e).forEach(function (n) {
         var r = e[n];
         t.push(r);
       }), t;
-    }, this.dispose = function () {
+    };
+    this.dispose = function () {
       r.clear();
     };
   }
   var t = e("lodash-compat"), n = e("jSkype/utils/batch"), r = e("jSkype/constants/people"), i = e("jSkype/modelHelpers/contacts/dataHandlers/factory"), s = e("jSkype/services/serviceFactory"), o = e("jSkype/modelHelpers/contacts/dataMappers/dataMaps"), u = e("jSkype/modelHelpers/contacts/dataProcessors/agents"), a = r.authorizationStates;
   return f;
-})
+});

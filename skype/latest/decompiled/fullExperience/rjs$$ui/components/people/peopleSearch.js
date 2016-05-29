@@ -11,5 +11,7 @@ define("ui/components/people/peopleSearch", [
     return e.init(), e;
   }
   var n = e("ui/viewModels/people/contactList");
-  t.name = e("constants/components").people.PEOPLE_SEARCH, t.template = e("text!views/people/list.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").people.PEOPLE_SEARCH;
+  t.template = e("text!views/people/list.html");
+  t.viewModel = { createViewModel: r };
+});

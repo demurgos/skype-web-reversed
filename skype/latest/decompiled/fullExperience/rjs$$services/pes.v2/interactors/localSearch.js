@@ -20,10 +20,14 @@ define("services/pes.v2/interactors/localSearch", [
       styleOverride: "",
       packs: []
     };
-    e.tabs = e.tabs || [], n.remove(e.tabs, { id: o.localSearch.TAB_ID }), e.tabs.push(t);
-  }), t.setLocalSearchTabProperties = i.defineSimpleInteractor(function (e) {
+    e.tabs = e.tabs || [];
+    n.remove(e.tabs, { id: o.localSearch.TAB_ID });
+    e.tabs.push(t);
+  });
+  t.setLocalSearchTabProperties = i.defineSimpleInteractor(function (e) {
     e.selectedTab && e.selectedTab.id === o.localSearch.TAB_ID && (e.searchCapabilityEnabled = !0);
-  }), t.groupByType = i.defineSimpleInteractor(function (e) {
+  });
+  t.groupByType = i.defineSimpleInteractor(function (e) {
     var t = n([
       "emoticon",
       "flik"
@@ -37,9 +41,11 @@ define("services/pes.v2/interactors/localSearch", [
     }, {});
     n(e.packs).pluck("items").flatten().reduce(function (e, t) {
       return t.type in e && e[t.type].items.push(t), e;
-    }, t), e.packs = n(t).map(function (e) {
+    }, t);
+    e.packs = n(t).map(function (e) {
       return e;
-    }).value(), n.forEach(e.packs, function (e) {
+    }).value();
+    n.forEach(e.packs, function (e) {
       e.items.length === 0 && e.items.push({
         id: "",
         type: o.itemTypes.message.id,
@@ -48,4 +54,4 @@ define("services/pes.v2/interactors/localSearch", [
       });
     });
   });
-})
+});

@@ -1,3 +1,3 @@
 define("text!views/chat/groupSearch.html", [], function () {
   return "<!-- ko if: searchResults().length > 0 -->\r\n<ul class=\"groups\" data-bind=\"foreach: { data: searchResults }, keyboardNavigation: { itemSelector: 'a.group', persistSelection: false }\">\r\n    <!-- ko if: $index() === 0 -->\r\n    <li class=\"separator\">\r\n        <p class=\"strong\" data-bind=\"l10n: {key: 'message_text_groupSearchResultsTitle'}\"></p>\r\n    </li>\r\n    <!-- /ko -->\r\n\r\n    <swx-recent-item params=\"model: $data, dispose: $data.dispose\" class=\"list-selectable\" data-bind=\"attr: { 'data-title': $data.getSearchItemDetails($index()) }\"></swx-recent-item>\r\n</ul>\r\n<!-- /ko -->\r\n";
-})
+});

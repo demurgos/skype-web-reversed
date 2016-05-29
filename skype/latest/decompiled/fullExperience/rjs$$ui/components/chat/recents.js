@@ -14,5 +14,7 @@ define("ui/components/chat/recents", [
     return t.init(), t;
   }
   var n = e("ui/viewModels/chat/recentList"), r = e("ui/viewModels/chat/recent"), i = e("ui/viewModels/chat/message"), s = e("telemetry/chat/timelineLoad");
-  t.name = e("constants/components").chat.RECENTS, t.template = e("text!views/chat/recents.html"), t.viewModel = { createViewModel: o };
-})
+  t.name = e("constants/components").chat.RECENTS;
+  t.template = e("text!views/chat/recents.html");
+  t.viewModel = { createViewModel: o };
+});

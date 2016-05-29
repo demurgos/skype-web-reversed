@@ -13,4 +13,4 @@ define("notifications/common/notificationHub", [], function () {
   }, t.removeNotificationListener = function () {
     e && (e = null);
   }, t;
-})
+});

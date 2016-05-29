@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -10,5 +10,8 @@ function (e) {
       "./silentlogin"
     ], e);
 }(function (e, t) {
-  e("./linking"), e("./silentlogin"), t.linking = SKYPE.linking, t.silentLogin = SKYPE.login.Silent;
-})
+  e("./linking");
+  e("./silentlogin");
+  t.linking = SKYPE.linking;
+  t.silentLogin = SKYPE.login.Silent;
+}));

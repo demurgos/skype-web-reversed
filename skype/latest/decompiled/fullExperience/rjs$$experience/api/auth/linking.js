@@ -38,7 +38,8 @@ define("experience/api/auth/linking", [
       error: t.error,
       flow: e
     };
-    p(r), l.startAuthFailedFlow(t, n);
+    p(r);
+    l.startAuthFailedFlow(t, n);
   }
   function m(e) {
     function u(e) {
@@ -73,15 +74,21 @@ define("experience/api/auth/linking", [
       site_name: e.site_name || null,
       callback: function (t) {
         function r() {
-          g(e.onSuccess), i.destroy(), d(o);
+          g(e.onSuccess);
+          i.destroy();
+          d(o);
         }
         function s() {
-          g(e.onError, t), i.destroy();
+          g(e.onError, t);
+          i.destroy();
         }
         var n = e.callback || u;
         return y(t) && v(o, t, n), n(t).then(r, s);
       }
-    }, h(o), s.init(t), s.load(i.create());
+    };
+    h(o);
+    s.init(t);
+    s.load(i.create());
   }
   function g(e, t) {
     typeof e == "function" && e(t);
@@ -94,4 +101,4 @@ define("experience/api/auth/linking", [
   }
   var n = e("cafe/applicationInstance"), r = e("experience/settings"), i = e("ui/appOverlay/appOverlay"), s = e("swx-xco").linking, o = e("constants/common"), u = e("swx-enums"), a = e("telemetry/authentication/linking"), f = e("telemetry/authentication/signIn"), l = e("experience/api/auth/authEventHandler");
   t.start = m;
-})
+});

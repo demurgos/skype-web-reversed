@@ -8,7 +8,10 @@ define("jSkype/services/systemCommands/commands/swiftCard", [
   "lodash-compat"
 ], function (e, t) {
   function o() {
-    this.isAvailableFor = r.isFeatureOn(i.featureFlags.SWIFT_CARD_COMMAND) ? n.availableAlways : n.availableNever, this.help = "[swift card json]", this.showInHelp = !1, this.action = function (e, t) {
+    this.isAvailableFor = r.isFeatureOn(i.featureFlags.SWIFT_CARD_COMMAND) ? n.availableAlways : n.availableNever;
+    this.help = "[swift card json]";
+    this.showInHelp = !1;
+    this.action = function (e, t) {
       if (s.isEmpty(s.trim(t)))
         return;
       t = t.replace(/<a href[^>]+?>/gi, "").replace(/<\/a>/g, "");
@@ -25,4 +28,4 @@ define("jSkype/services/systemCommands/commands/swiftCard", [
   t.build = function () {
     return new o();
   };
-})
+});

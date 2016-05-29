@@ -1246,4 +1246,4 @@ define("constants/common", {
     },
     SIZE: { LARGE: "LARGE" }
   }
-})
+});

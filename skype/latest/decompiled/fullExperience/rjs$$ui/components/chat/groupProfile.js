@@ -14,5 +14,7 @@ define("ui/components/chat/groupProfile", [
     return f.setContext(a), f.init(), f;
   }
   var n = e("browser/dom"), r = e("utils/common/scroll"), i = e("ui/viewModels/chat/groupProfile"), s = e("vendor/knockout");
-  t.name = e("constants/components").chat.GROUP_PROFILE, t.template = e("text!views/chat/groupProfile.html"), t.viewModel = { createViewModel: o };
-})
+  t.name = e("constants/components").chat.GROUP_PROFILE;
+  t.template = e("text!views/chat/groupProfile.html");
+  t.viewModel = { createViewModel: o };
+});

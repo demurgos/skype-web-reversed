@@ -9,10 +9,11 @@ define("telemetry/utils/telemetryUtils", [
     for (var t in e)
       e.hasOwnProperty(t) && !(typeof e[t] == "string" || e[t] instanceof String) && (e[t] = e[t] + "");
     return e;
-  }, t.getOriginDescription = function (e, t) {
+  };
+  t.getOriginDescription = function (e, t) {
     for (var n in t)
       if (t.hasOwnProperty(n) && t[n] === e)
         return n;
     return r;
   };
-})
+});

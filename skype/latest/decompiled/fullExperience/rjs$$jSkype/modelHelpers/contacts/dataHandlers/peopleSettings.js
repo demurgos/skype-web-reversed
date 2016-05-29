@@ -29,7 +29,8 @@ define("jSkype/modelHelpers/contacts/dataHandlers/peopleSettings", [
       return new Promise(function (n) {
         n(t(e));
       });
-    }, this.onError = function (e) {
+    };
+    this.onError = function (e) {
       return new Promise(function (t, n) {
         n(e);
       });
@@ -39,4 +40,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/peopleSettings", [
   t.build = function () {
     return new r();
   };
-})
+});

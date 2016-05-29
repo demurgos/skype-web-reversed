@@ -11,7 +11,8 @@ define("services/pes.v2/mojis/fetcher", [
     var e = this;
     e.process = function () {
       return null;
-    }, e.getResources = function (e, u) {
+    };
+    e.getResources = function (e, u) {
       var a = [];
       if (e.type !== t.itemTypes.moji.id)
         return null;
@@ -25,4 +26,4 @@ define("services/pes.v2/mojis/fetcher", [
   }
   var t = e("services/pes/constants"), n = e("services/pes.v2/mojis/stylesFactory"), r = e("utils/chat/pesUtils"), i = e("services/serviceLocator"), s = e("constants/common"), o = e("experience/settings");
   return new u();
-})
+});

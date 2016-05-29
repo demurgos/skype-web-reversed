@@ -6,5 +6,6 @@ define("jSkype/root", [
   "jSkype/settings"
 ], function (e, t) {
   var n = e("jSkype/application"), r = e("jSkype/settings");
-  t.Application = n, t.version = r.version;
-})
+  t.Application = n;
+  t.version = r.version;
+});

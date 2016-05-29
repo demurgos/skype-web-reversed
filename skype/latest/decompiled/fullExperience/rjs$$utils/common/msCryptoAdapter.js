@@ -8,11 +8,14 @@ define("utils/common/msCryptoAdapter", [
     return new Promise(function (t, n) {
       e.oncomplete = function (e) {
         t(e.target.result);
-      }, e.onerror = n;
+      };
+      e.onerror = n;
     });
   }
   var n = e("msr-crypto").aes;
-  n.subtle.forceSync = !0, t.getRandomValues = n.getRandomValues, t.subtle = {
+  n.subtle.forceSync = !0;
+  t.getRandomValues = n.getRandomValues;
+  t.subtle = {
     generateKey: function (t, i, s) {
       return r(n.subtle.generateKey(t, i, s));
     },
@@ -29,4 +32,4 @@ define("utils/common/msCryptoAdapter", [
       return r(n.subtle.decrypt(t, i, s));
     }
   };
-})
+});

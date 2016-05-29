@@ -22,7 +22,8 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
   "jSkype/services/preferences/settingsUtils/privacySettingsUtil"
 ], function (e, t) {
   function x(e, t, n) {
-    E[e] || (E[e] = []), E[e].push({
+    E[e] || (E[e] = []);
+    E[e].push({
       handlerFn: t,
       data: n
     });
@@ -32,7 +33,8 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
   }
   function N(e, t) {
     E[e] && (E[e].forEach(function (e) {
-      e.data.convoIdentity = t, e.handlerFn(e.data);
+      e.data.convoIdentity = t;
+      e.handlerFn(e.data);
     }), T(e));
   }
   function C(e) {
@@ -51,7 +53,9 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
     var t = $(e), n = Q(e.convoIdentity) || Z(e.callId);
     if (!n)
       return;
-    n.audioService.callId._set(e.callId), n._callData.nodeId(w), J(e.callStatus, n);
+    n.audioService.callId._set(e.callId);
+    n._callData.nodeId(w);
+    J(e.callStatus, n);
     switch (e.callStatus) {
     case o.CALL_STATES.ringingForMe:
       n.isGroupConversation() && n._callData.pluginOthersAreLive(!0), n._callData.pluginAwaitCall() ? (n._callData.pluginAwaitCall(!1), d.updateParticipantAudioVideoState(n.selfParticipant, f.callConnectionState.Notified, t)) : n._callData.pluginRingingForMe(!0);
@@ -92,7 +96,10 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
     }
     if (d.isMeParticipant(n))
       return !1;
-    e.voiceStatus === i.ringing && d.handleParticipantRingingStateTransition(n, t), e.voiceStatus === i.leaving && d.handleParticipantLeavingStateTransition(n, e.callLeaveReason), e.voiceStatus === i.earlyMedia && d.updateParticipantAudioVideoState(n, f.callConnectionState.EarlyMedia), r.indexOf(e.voiceStatus) > -1 && d.handleParticipantJoiningStateTransition(n, t);
+    e.voiceStatus === i.ringing && d.handleParticipantRingingStateTransition(n, t);
+    e.voiceStatus === i.leaving && d.handleParticipantLeavingStateTransition(n, e.callLeaveReason);
+    e.voiceStatus === i.earlyMedia && d.updateParticipantAudioVideoState(n, f.callConnectionState.EarlyMedia);
+    r.indexOf(e.voiceStatus) > -1 && d.handleParticipantJoiningStateTransition(n, t);
   }
   function M(e) {
     if (!e.convoIdentity)
@@ -137,7 +144,9 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
     var t = h.get().activeCalls()[0], n;
     if (!t)
       return;
-    n = t.selfParticipant.video.channels(0), n.stream.width._set(e.width), n.stream.height._set(e.height);
+    n = t.selfParticipant.video.channels(0);
+    n.stream.width._set(e.width);
+    n.stream.height._set(e.height);
   }
   function P(e, t, n) {
     var r = h.get().activeCalls()[0], i = d.getOrCreateParticipantInConversation(r, t), s;
@@ -145,13 +154,19 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
       y.warn("Unable to get participant", t);
       return;
     }
-    s = n === l.PLUGIN_MEDIA_TYPES.SCREEN_SHARING ? i.screenSharing.stream : i.video.channels(0).stream, s.state() !== f.mediaStreamState.Stopped && s.state._set(f.mediaStreamState.Active), s.width._set(e.width), s.height._set(e.height);
+    s = n === l.PLUGIN_MEDIA_TYPES.SCREEN_SHARING ? i.screenSharing.stream : i.video.channels(0).stream;
+    s.state() !== f.mediaStreamState.Stopped && s.state._set(f.mediaStreamState.Active);
+    s.width._set(e.width);
+    s.height._set(e.height);
   }
   function H() {
     et(function (e) {
-      d.handleParticipantLeavingStateTransition(e.selfParticipant), e._callData.pluginOthersAreLive(!1);
+      d.handleParticipantLeavingStateTransition(e.selfParticipant);
+      e._callData.pluginOthersAreLive(!1);
       var t = e.participants.subscribe();
-      d.handleRemoteParticipantsLeavingStateTransition(e.participants()), T(), t.dispose();
+      d.handleRemoteParticipantsLeavingStateTransition(e.participants());
+      T();
+      t.dispose();
     });
   }
   function B(e) {
@@ -173,10 +188,13 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
     if (!r.isFeatureOn(a.featureFlags.GVC_ESCALATION))
       return;
     var t = Q(e.oldConvoIdentity);
-    t.selfParticipant.video.channels(0).isStarted.set._enabled(!1), t.selfParticipant.audio.isMuted.set.enabled._set(!1);
+    t.selfParticipant.video.channels(0).isStarted.set._enabled(!1);
+    t.selfParticipant.audio.isMuted.set.enabled._set(!1);
     if (!C(e.newConvoIdentity)) {
       var i = Q(e.newConvoIdentity);
-      p.setupCall(i), n.get().conversationsManager.conversations.add(i), v.escalateCall(t, i);
+      p.setupCall(i);
+      n.get().conversationsManager.conversations.add(i);
+      v.escalateCall(t, i);
     } else
       S[e.newConvoIdentity] = e.oldConvoIdentity;
   }
@@ -185,7 +203,10 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
     if (!S[t])
       return;
     var i = Q(S[t]), s = Q(r);
-    p.setupCall(s), n.get().conversationsManager.conversations.add(s), v.escalateCall(i, s), N(t, r);
+    p.setupCall(s);
+    n.get().conversationsManager.conversations.add(s);
+    v.escalateCall(i, s);
+    N(t, r);
   }
   function R(e) {
     var t = Q(e.convoIdentity);
@@ -221,7 +242,8 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
       y.error("Call technology changed for conversation that does not exist", e.convoIdentity);
       return;
     }
-    t._callData.callTechnology(e.callTechnology), t.mediaConnectionType(V(e.callTechnology));
+    t._callData.callTechnology(e.callTechnology);
+    t.mediaConnectionType(V(e.callTechnology));
   }
   function V(e) {
     switch (e) {
@@ -275,8 +297,26 @@ define("jSkype/services/plugin/pluginEventDispatcher", [
   }
   var n = e("jSkype/client"), r = e("jSkype/settings"), i = e("jSkype/services/plugin/participantVoiceState"), s = e("jSkype/services/plugin/participantVideoState"), o = e("jSkype/services/plugin/mappers/callStateMapper"), u = e("jSkype/services/plugin/mappers/callLeaveReasonMapper"), a = e("constants/common"), f = e("swx-enums"), l = e("constants/calling"), c = e("constants/plugin.const"), h = e("jSkype/services/callRegister"), p = e("jSkype/services/callController"), d = e("jSkype/modelHelpers/participantHelper"), v = e("jSkype/modelHelpers/calling/escalationHelper"), m = e("jSkype/modelHelpers/contacts/dataMappers/dataMaps"), g = e("jSkype/modelHelpers/propertyValidator"), y = e("jSkype/telemetry/logging/callingLogTracer").get(), b = e("jSkype/services/preferences/settingsUtils/privacySettingsUtil"), w = null, E = {}, S = {};
   t.startListeningOnSkypeCore = function (e) {
-    e.onCallStatusChanged = k(L), e.onParticipantVoiceStatusChanged = k(O), e.onParticipantVideoStatusChanged = k(_), e.onParticipantSoundLevelChanged = k(A), e.onParticipantLeaveReasonChanged = k(M), e.onParticipantJoined = k(R), e.onParticipantLeft = k(U), e.onMicrophoneMuted = k(z), e.onMicrophoneUnmuted = k(W), e.onErrorOccured = k(B), e.onCallTechnologyChanged = k(X), e.onTextMessage = k(F), e.onCallMoved = I, e.onConvoIdentityReceived = q, e.onConnectionStatusChanged = j;
-  }, t.startListeningOnVideoManager = function (e) {
-    e.onLocalResolutionChanged = D, e.onResolutionChanged = P;
-  }, t.onManagerComponentCrashed = H, t.clearTempConversationEvents = T;
-})
+    e.onCallStatusChanged = k(L);
+    e.onParticipantVoiceStatusChanged = k(O);
+    e.onParticipantVideoStatusChanged = k(_);
+    e.onParticipantSoundLevelChanged = k(A);
+    e.onParticipantLeaveReasonChanged = k(M);
+    e.onParticipantJoined = k(R);
+    e.onParticipantLeft = k(U);
+    e.onMicrophoneMuted = k(z);
+    e.onMicrophoneUnmuted = k(W);
+    e.onErrorOccured = k(B);
+    e.onCallTechnologyChanged = k(X);
+    e.onTextMessage = k(F);
+    e.onCallMoved = I;
+    e.onConvoIdentityReceived = q;
+    e.onConnectionStatusChanged = j;
+  };
+  t.startListeningOnVideoManager = function (e) {
+    e.onLocalResolutionChanged = D;
+    e.onResolutionChanged = P;
+  };
+  t.onManagerComponentCrashed = H;
+  t.clearTempConversationEvents = T;
+});

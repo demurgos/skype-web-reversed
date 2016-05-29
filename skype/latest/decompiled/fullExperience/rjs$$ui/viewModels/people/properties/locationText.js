@@ -14,7 +14,8 @@ define("ui/viewModels/people/properties/locationText", [
         country: t.location.country()
       });
     }, t.dispose = function () {
-      t.location.city.dispose(), t.location.country.dispose();
+      t.location.city.dispose();
+      t.location.country.dispose();
     }, t;
   }
   var t = e("swx-utils-common").stringUtils, n = e("utils/common/cafeObservable");
@@ -24,4 +25,4 @@ define("ui/viewModels/people/properties/locationText", [
     if (e && t.isNotEmpty(e.city) && t.isNotEmpty(e.country))
       return e.city + ", " + e.country;
   }, r;
-})
+});

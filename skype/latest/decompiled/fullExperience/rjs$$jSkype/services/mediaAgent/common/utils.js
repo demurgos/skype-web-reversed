@@ -4,4 +4,4 @@ define("jSkype/services/mediaAgent/common/utils", [], function () {
       e.hasOwnProperty(n) && t(e[n], n);
   }
   return { forOwn: e };
-})
+});

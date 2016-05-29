@@ -19,10 +19,13 @@ define("utils/people/lastSeenConverter", [
   function h(e) {
     var t, n, r, i = {};
     for (t = 0; t < o.length; t++) {
-      n = o[t], i = {};
+      n = o[t];
+      i = {};
       if (e > n.max)
         continue;
-      r = n.recalculate !== undefined ? Math.floor(e / n.recalculate) : e, i.key = n.msg, i.params = { number: r };
+      r = n.recalculate !== undefined ? Math.floor(e / n.recalculate) : e;
+      i.key = n.msg;
+      i.params = { number: r };
       break;
     }
     return i;
@@ -55,4 +58,4 @@ define("utils/people/lastSeenConverter", [
     var t, i, s = {};
     return typeof e != "number" ? "" : (c(e) ? (i = f(e), l(i) ? (s.key = u.TXT_DATE_SHORT, s.params = { shortdate: r.formatDate(i, a.date.DAY_MONTH) }) : (s.key = u.TXT_DATE_FULL, s.params = { fulldate: r.formatDate(i, a.date.DAY_MONTH_YEAR) })) : s = h(e), t = n.fetch(s), t);
   };
-})
+});

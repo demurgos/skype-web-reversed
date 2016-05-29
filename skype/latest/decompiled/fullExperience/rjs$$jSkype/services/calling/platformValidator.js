@@ -85,4 +85,4 @@ define("jSkype/services/calling/platformValidator", [
   }
   var t = e("browser/detect"), n = e("utils/calling/callingStack"), r = e("swx-enums");
   return { getPlatformSupport: i };
-})
+});

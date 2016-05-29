@@ -7,9 +7,12 @@ define("jsviews/calling/roster", [
     var s;
     this.getRosterWidth = function () {
       return e.querySelector(t).offsetWidth + n;
-    }, this.init = function (e) {
-      s = e, i.addEventListener(r.events.browser.RESIZE, s);
-    }, this.dispose = function () {
+    };
+    this.init = function (e) {
+      s = e;
+      i.addEventListener(r.events.browser.RESIZE, s);
+    };
+    this.dispose = function () {
       i.removeEventListener(r.events.browser.RESIZE, s);
     };
   }
@@ -19,4 +22,4 @@ define("jsviews/calling/roster", [
       return new s(e);
     }
   };
-})
+});

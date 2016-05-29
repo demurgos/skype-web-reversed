@@ -18,10 +18,14 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactRequestSent", [
         t = u.getOutgoingResend(e), a.historyService._processRawMessage(t), f.isResend = !0, f.suggested = !1, f.isAgent = !1;
       else {
         var l = e._authorization() === i.SUGGESTED;
-        r.setAuthorization(e, i.PENDING_OUTGOING), f.isResend = !1, f.suggested = l, f.isAgent = !1;
+        r.setAuthorization(e, i.PENDING_OUTGOING);
+        f.isResend = !1;
+        f.suggested = l;
+        f.isAgent = !1;
       }
       n.get()._telemetryManager.sendEvent(s.settings.telemetry.jSkypeTenantToken, o.telemetry.contacts.type.CONTACT_REQUESTS, f);
-    }, this.onError = function (e, t) {
+    };
+    this.onError = function (e, t) {
       t && t.isAgent() && n.get()._telemetryManager.sendEvent(s.settings.telemetry.jSkypeTenantToken, "ServiceFault", {
         serviceName: "agents-addToContacts",
         faultCode: e.status,
@@ -37,4 +41,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactRequestSent", [
   t.build = function () {
     return new a();
   };
-})
+});

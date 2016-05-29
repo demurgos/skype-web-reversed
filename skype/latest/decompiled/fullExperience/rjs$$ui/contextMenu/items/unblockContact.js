@@ -26,10 +26,15 @@ define("ui/contextMenu/items/unblockContact", [
     var c, h, p = i.resolve(s.serviceLocator.PUBSUB);
     if (!e)
       throw new Error("Parameter missing: contactVM is required");
-    h = e.getPerson(), l = l || { source: u.contextMenuItem.unblock }, c = t.fetch({ key: "label_text_unblockContact" }), n.call(this, f.TYPE, c, d), this.cssClass = a.contextMenu.items.UNBLOCK_CONTACT, this.isEnabled = function () {
+    h = e.getPerson();
+    l = l || { source: u.contextMenuItem.unblock };
+    c = t.fetch({ key: "label_text_unblockContact" });
+    n.call(this, f.TYPE, c, d);
+    this.cssClass = a.contextMenu.items.UNBLOCK_CONTACT;
+    this.isEnabled = function () {
       return h.isBlocked.set.enabled() && e.isBlocked() && !e.isPstn();
     };
   }
   var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("cafe/applicationInstance"), i = e("services/serviceLocator"), s = e("constants/common"), o = e("ui/telemetry/actions/actionNames"), u = e("ui/telemetry/actions/actionSources"), a = e("constants/cssClasses");
   return f.prototype = Object.create(n.prototype), f.TYPE = "UnblockContactMenuItem", f;
-})
+});

@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -29,7 +29,8 @@ function (e) {
   }
   var n = e("lodash-compat"), r = e("reqwest"), i = e("swx-browser-globals"), s = 1000, o = function () {
       function e(e) {
-        this.apiUrl = e, this._resetGlobalState();
+        this.apiUrl = e;
+        this._resetGlobalState();
       }
       return e.prototype.read = function (e, t) {
         return this.getAllFlags(t).then(function (t) {
@@ -50,4 +51,4 @@ function (e) {
       }, e;
     }();
   t.build = f;
-})
+}));

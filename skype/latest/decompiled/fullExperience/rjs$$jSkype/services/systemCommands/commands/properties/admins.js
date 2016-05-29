@@ -15,7 +15,8 @@ define("jSkype/services/systemCommands/commands/properties/admins", [
           });
         s.forEach(function (e) {
           t += e.person.id() + " ";
-        }), r.sendSystemMessage(e, t);
+        });
+        r.sendSystemMessage(e, t);
       }
     };
   }
@@ -23,4 +24,4 @@ define("jSkype/services/systemCommands/commands/properties/admins", [
   t.build = function () {
     return new s();
   };
-})
+});

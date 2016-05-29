@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -21,5 +21,6 @@ function (e) {
     return o.src = e, o.type = "text/javascript", o.async = !0, t && (o.onload = t), i && (o.onerror = i), r(s, o), o;
   }
   var n = e("swx-browser-globals");
-  t.loadStyle = i, t.loadScript = s;
-})
+  t.loadStyle = i;
+  t.loadScript = s;
+}));

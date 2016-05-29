@@ -8,4 +8,4 @@ define("jSkype/modelHelpers/account/dataHandlers/factory", [
   t.getAccountChangedHandler = function () {
     return n.account.build();
   };
-})
+});

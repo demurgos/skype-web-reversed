@@ -28,11 +28,15 @@ define("ui/viewModels/people/contactsPage", [
   "utils/common/async"
 ], function (e) {
   function _() {
-    d.call(this), D().isFeatureOn(s.featureFlags.SHOW_CONTACTS_PAGE_HINT) ? this.showHint = r.computed(function () {
+    d.call(this);
+    D().isFeatureOn(s.featureFlags.SHOW_CONTACTS_PAGE_HINT) ? this.showHint = r.computed(function () {
       return this.contactsCount() > 0;
     }, this) : this.showHint = function () {
       return !1;
-    }, this.showSignIn = I(), this.signInHtml = R(y.fetch({ key: "aggressiveLinking_intro_signin" })), this.menuItems = [];
+    };
+    this.showSignIn = I();
+    this.signInHtml = R(y.fetch({ key: "aggressiveLinking_intro_signin" }));
+    this.menuItems = [];
   }
   function D() {
     return v.resolve(s.serviceLocator.FEATURE_FLAGS);
@@ -48,7 +52,8 @@ define("ui/viewModels/people/contactsPage", [
       timeToComplete: n.ttc.duration.toString(),
       timeToRender: n.ttr.duration.toString(),
       contactsCount: e.toString()
-    }, h.get().sendEvent(c.telemetry.uiTenantToken, s.telemetry.contacts.type.CONTACTS, t)), F();
+    }, h.get().sendEvent(c.telemetry.uiTenantToken, s.telemetry.contacts.type.CONTACTS, t));
+    F();
   }
   function B() {
     return {
@@ -60,7 +65,11 @@ define("ui/viewModels/people/contactsPage", [
     return i.getEntriesByName(O.OPENED).length > 0;
   }
   function F() {
-    i.clearMarks(O.OPENED), i.clearMarks(O.INITIALIZED), i.clearMarks(O.RENDERED), i.clearMeasures(M.TTC), i.clearMeasures(M.TTR);
+    i.clearMarks(O.OPENED);
+    i.clearMarks(O.INITIALIZED);
+    i.clearMarks(O.RENDERED);
+    i.clearMeasures(M.TTC);
+    i.clearMeasures(M.TTR);
   }
   function I() {
     return D().isFeatureOn(s.featureFlags.SHOW_CONTACTS_PAGE_SIGN_IN) && q();
@@ -75,7 +84,9 @@ define("ui/viewModels/people/contactsPage", [
     var e = {}, t = D().isFeatureOn(s.featureFlags.SEARCH_EDUCATION_BUBBLE_BUSINESS), r = D().isFeatureOn(s.featureFlags.SEARCH_EDUCATION_BUBBLE);
     if (t && r)
       throw new Error("Search education bubble should not be set for business and consumer flavors in the same time.");
-    t && (e = N.SEARCH_EDUCATION_BUBBLE_BUSINESS), r && (e = N.SEARCH_EDUCATION_BUBBLE), (r || t) && n.get().personsAndGroupsManager.all.persons.get().then(function () {
+    t && (e = N.SEARCH_EDUCATION_BUBBLE_BUSINESS);
+    r && (e = N.SEARCH_EDUCATION_BUBBLE);
+    (r || t) && n.get().personsAndGroupsManager.all.persons.get().then(function () {
       var t = w.getPersonsOtherThanEchoAndAgents(), r = n.get().conversationsManager.conversations;
       t.length === 0 && r.size() === 0 && X(e);
     });
@@ -87,7 +98,8 @@ define("ui/viewModels/people/contactsPage", [
     e && n.get().personsAndGroupsManager.all.persons.get().then(function () {
       var e = w.getPersonsOtherThanEchoAndAgents(), n = e.length, r = t.filter(e, b.isSuggestedContact).length;
       n > 0 && r === n && X(N.CHAT_EDUCATION_BUBBLE);
-    }), r && n.get().personsAndGroupsManager.all.persons.get().then(function () {
+    });
+    r && n.get().personsAndGroupsManager.all.persons.get().then(function () {
       var e = w.getPersonsOtherThanEchoAndAgents(), t = e.length;
       t > 0 && X(N.CHAT_EDUCATION_BUBBLE_BUSINESS);
     });
@@ -102,7 +114,9 @@ define("ui/viewModels/people/contactsPage", [
   }
   function V() {
     function t(t) {
-      this.applyPropertyChangeToContacts = g.setObservablePropertyOnContacts.bind(this, "hideStrategy", t), this.applyPropertyChangeToContacts(this.contactGroups()), e.forEach(function (e) {
+      this.applyPropertyChangeToContacts = g.setObservablePropertyOnContacts.bind(this, "hideStrategy", t);
+      this.applyPropertyChangeToContacts(this.contactGroups());
+      e.forEach(function (e) {
         var n = e.strategy === t;
         e.selected(n);
       });
@@ -129,7 +143,8 @@ define("ui/viewModels/people/contactsPage", [
   function $(e) {
     k.execute(function () {
       e.focus();
-    }), C.subscribe(o.FRAGMENT_LOADED, J);
+    });
+    C.subscribe(o.FRAGMENT_LOADED, J);
   }
   function J(e) {
     e === u.people.CONTACTS_PAGE && L.focus();
@@ -139,7 +154,10 @@ define("ui/viewModels/people/contactsPage", [
     var n;
     return L = f.getElement(".ContactsPage", t), j() && (i.mark(O.INITIALIZED), i.measure(M.TTC, O.OPENED, O.INITIALIZED)), D().isFeatureOn(s.featureFlags.CONTACT_PAGE_FILTER_TABS) && (e.contactGroupConstructor = T), n = d.prototype.init.call(this, e, L), Array.prototype.push.apply(this.menuItems, V.call(this)), W.call(this), U(), z(), $(L), n;
   }, _.prototype.dispose = function () {
-    L = null, this.showHint.dispose && this.showHint.dispose(), C.unsubscribe(o.FRAGMENT_LOADED, J), d.prototype.dispose.call(this);
+    L = null;
+    this.showHint.dispose && this.showHint.dispose();
+    C.unsubscribe(o.FRAGMENT_LOADED, J);
+    d.prototype.dispose.call(this);
   }, _.prototype.afterRender = function () {
     function n() {
       j() && (i.mark(O.RENDERED), i.measure(M.TTR, O.OPENED, O.RENDERED), H(e.contactsCount()));
@@ -147,17 +165,20 @@ define("ui/viewModels/people/contactsPage", [
     var e = this, t = p(e.contactGroups().length, n);
     return d.prototype.afterRender.call(this, t);
   }, _.prototype.openConversation = function (e, t) {
-    P(l.contacts.openConversation), d.prototype.openConversation.call(this, e, t);
+    P(l.contacts.openConversation);
+    d.prototype.openConversation.call(this, e, t);
   }, _.prototype.showContextMenu = function (e, t) {
     var n = { source: m.contactsPage.contact };
     d.prototype.showContextMenu.call(this, e, t, n);
   }, _.prototype.launchShortCircuit = function () {
-    S.build().open(), v.resolve(s.serviceLocator.ACTION_TELEMETRY).recordAction(l.shortCircuit.contactsPageOpen);
+    S.build().open();
+    v.resolve(s.serviceLocator.ACTION_TELEMETRY).recordAction(l.shortCircuit.contactsPageOpen);
   }, _.prototype.openInformationalMessageLink = function () {
-    P(l.contacts.informationButtonClicked, { link: this.contactsPageInformationalMessage.link }), window.open(this.contactsPageInformationalMessage.link, "_blank");
+    P(l.contacts.informationButtonClicked, { link: this.contactsPageInformationalMessage.link });
+    window.open(this.contactsPageInformationalMessage.link, "_blank");
   }, _.prototype.shouldPersonBeIncluded = function (e, t) {
     return g.personExistsInCollection(e, t) ? !1 : b.isEchoContact(e) ? w.getPersonsOtherThanEcho().length > 0 : !0;
   }, _.prototype.startRelinkFlow = function () {
     n.get().signInManager.signIn({ relink: !0 });
   }, _;
-})
+});

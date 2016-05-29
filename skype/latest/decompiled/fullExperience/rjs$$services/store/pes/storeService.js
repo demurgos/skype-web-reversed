@@ -104,4 +104,4 @@ define("services/store/pes/storeService", [
       return e ? "success" : Promise.reject("error purchasing tab");
     })) : Promise.reject("Not a valid tab");
   }, t.extend(h, u), h;
-})
+});

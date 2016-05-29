@@ -130,4 +130,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/telemetryConstants", [], funct
       RENEGOTIATION_ANSWER_TIME: "RenegotiationAnswerTime"
     }
   };
-})
+});

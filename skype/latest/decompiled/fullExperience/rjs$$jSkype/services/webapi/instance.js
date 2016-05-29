@@ -18,4 +18,4 @@ define("jSkype/services/webapi/instance", [
     var c = new f(), h = new a(c), p = new o(i), d = new r(s, p, l);
     return i.setLockAndKey(h.generate()), new t(v, u, d);
   };
-})
+});

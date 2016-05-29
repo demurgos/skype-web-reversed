@@ -4,7 +4,10 @@ define("services/pes/constants", [
 ], function (e) {
   function n() {
     var e = t.getScreenInfo().pixelRatio > 1;
-    this.CACHE_KEY = "swx|pes", this.SAVED_DATA_VERSION = "v1.0", this.FEATURED_IN_PREFIX = "FeaturedIn-", this.itemTypes = {
+    this.CACHE_KEY = "swx|pes";
+    this.SAVED_DATA_VERSION = "v1.0";
+    this.FEATURED_IN_PREFIX = "FeaturedIn-";
+    this.itemTypes = {
       typeKeyName: "type",
       tab: {
         id: "tab",
@@ -26,21 +29,27 @@ define("services/pes/constants", [
       image: { id: "image" },
       message: { id: "message" },
       sticker: { id: "sticker" }
-    }, this.itemTypes.flik = this.itemTypes.moji, this.mru = {
+    };
+    this.itemTypes.flik = this.itemTypes.moji;
+    this.mru = {
       TAB_ID: "mru",
       PACK_PREFIX: "mru:"
-    }, this.bingSearch = {
+    };
+    this.bingSearch = {
       TAB_ID: "bing",
       PACK_PREFIX: "bing:"
-    }, this.giphyImageSearch = {
+    };
+    this.giphyImageSearch = {
       TAB_ID: "giphyImages",
       PACK_PREFIX: "giphy-imh:"
-    }, this.localSearch = {
+    };
+    this.localSearch = {
       TAB_ID: "localSearch",
       PACK_PREFIX: "local:",
       titleLocKey: "expressionPicker_localSearchPack_title",
       ariaLabelLocKey: "expressionPicker_localSearchPack_ariaLabel"
-    }, this.frameHeights = {
+    };
+    this.frameHeights = {
       emoticons: {
         SMALL: 20,
         LARGE: 40,
@@ -51,7 +60,8 @@ define("services/pes/constants", [
         KEYFRAME: 80
       },
       packs: { TAB: 19 }
-    }, this.profiles = {
+    };
+    this.profiles = {
       emoticons: {
         getSmall: function () {
           return e ? "default_40" : "default_20";
@@ -80,4 +90,4 @@ define("services/pes/constants", [
   }
   var t = e("browser/detect");
   return new n();
-})
+});

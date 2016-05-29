@@ -18,6 +18,7 @@ define("telemetry/settings/settingsPageTelemetry", [
     s.get().sendEvent(i.telemetry.uiTenantToken, r.telemetry.userSettings.eventName.PANEL_SHOWN, n);
   }, o.prototype.sendDismissPageEvent = function (t) {
     var n = u("");
-    n[r.telemetry.userSettings.property.OPERATION_DURATION] = isNaN(parseInt(t)) ? r.telemetry.userSettings.UNKNOWN : parseInt(t), s.get().sendEvent(i.telemetry.uiTenantToken, r.telemetry.userSettings.eventName.PAGE_DISMISSED, n);
+    n[r.telemetry.userSettings.property.OPERATION_DURATION] = isNaN(parseInt(t)) ? r.telemetry.userSettings.UNKNOWN : parseInt(t);
+    s.get().sendEvent(i.telemetry.uiTenantToken, r.telemetry.userSettings.eventName.PAGE_DISMISSED, n);
   }, t.assign(o, n), o;
-})
+});

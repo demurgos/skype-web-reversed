@@ -9,7 +9,8 @@ define("utils/common/version", [
         t = [
           n,
           n
-        ], r = !1;
+        ];
+        r = !1;
         return;
       }
       var i = o();
@@ -22,7 +23,8 @@ define("utils/common/version", [
       var e = 0;
       for (e = 0; e < t.length; ++e)
         if (!t[e] || isNaN(t[e])) {
-          t.push(n), r = !1;
+          t.push(n);
+          r = !1;
           break;
         }
     }
@@ -30,22 +32,29 @@ define("utils/common/version", [
       return e.indexOf(".") > -1 ? "." : e.indexOf("_") > -1 ? "_" : null;
     }
     var t, n = "U", r = !0;
-    i(), this.getMajor = function () {
+    i();
+    this.getMajor = function () {
       return t[0];
-    }, this.getMinor = function () {
+    };
+    this.getMinor = function () {
       return t[1];
-    }, this.getAllComponents = function () {
+    };
+    this.getAllComponents = function () {
       return t;
-    }, this.getOriginalString = function () {
+    };
+    this.getOriginalString = function () {
       return e;
-    }, this.isValid = function () {
+    };
+    this.isValid = function () {
       return r;
-    }, this.compareTo = function (e) {
+    };
+    this.compareTo = function (e) {
       var n = 0, r = 0, i = 0, s = e.getAllComponents();
       if (!this.isValid() || !e.isValid())
         throw new Error("Invalid version cannot be compared");
       for (n = 0; n < s.length; ++n) {
-        r = parseInt(t[n], 10), i = parseInt(s[n], 10);
+        r = parseInt(t[n], 10);
+        i = parseInt(s[n], 10);
         if (!r || r < i)
           return -1;
         if (r > i)
@@ -57,4 +66,4 @@ define("utils/common/version", [
   t.parse = function (e) {
     return new n(e);
   };
-})
+});

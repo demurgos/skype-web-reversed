@@ -11,7 +11,8 @@ define("jSkype/models/participantVideo", [
 ], function (e, t) {
   function a(e, t) {
     function h() {
-      l = i.get().devicesManager.selectedCamera.changed(p), c = i.get().devicesManager.cameras.removed(v);
+      l = i.get().devicesManager.selectedCamera.changed(p);
+      c = i.get().devicesManager.cameras.removed(v);
     }
     function p(e, t) {
       if (e) {
@@ -36,11 +37,13 @@ define("jSkype/models/participantVideo", [
     }), this.channels = r.exposeReadOnlyCollection(f), this._sourceId = n.property(), this._dispose = function () {
       a.channels().forEach(function (e) {
         e._dispose();
-      }), a.channels._removeAll(), s.isMePerson(t) && (l.dispose(), c.dispose());
+      });
+      a.channels._removeAll();
+      s.isMePerson(t) && (l.dispose(), c.dispose());
     }, s.isMePerson(t) ? h() : d(), this;
   }
   var n = e("jcafe-property-model"), r = e("jSkype/modelHelpers/propertyModelHelper"), i = e("jSkype/client"), s = e("jSkype/modelHelpers/personsAndGroupsHelper"), o = e("jSkype/models/videoChannel"), u = e("swx-enums");
   t.build = function (e, t) {
     return new a(e, t.id());
   };
-})
+});

@@ -5,4 +5,4 @@ define("services/pubSub/pubSub", [
 ], function (e) {
   var t = e("lodash-compat"), n = e("swx-pubsub").default, r = new n();
   return t.bindAll(r, "subscribe", "unsubscribe", "publish", "unsubscribeAll"), r;
-})
+});

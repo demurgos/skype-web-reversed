@@ -17,5 +17,7 @@ define("ui/components/people/name", [
     return e.person instanceof r ? e.person.getPerson() : e.person;
   }
   var n = e("ui/viewModels/people/name"), r = e("ui/viewModels/people/contact");
-  t.name = e("constants/components").people.NAME, t.template = e("text!views/people/name.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").people.NAME;
+  t.template = e("text!views/people/name.html");
+  t.viewModel = { createViewModel: i };
+});

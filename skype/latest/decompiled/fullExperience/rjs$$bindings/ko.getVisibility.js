@@ -18,4 +18,4 @@ define("bindings/ko.getVisibility", [
   }
   var t = e("vendor/knockout");
   return { register: n };
-})
+});

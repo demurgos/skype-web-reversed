@@ -33,7 +33,8 @@ define("utils/chat/dateTime", [
   }
   function w() {
     i.setTimeout(function () {
-      b() && s.publish(c), w();
+      b() && s.publish(c);
+      w();
     }, y() + o);
   }
   function E(e, t) {
@@ -79,7 +80,9 @@ define("utils/chat/dateTime", [
       this.amNotifyingDayChange || (this.amNotifyingDayChange = !0, h = p.getDate(), h.setHours(0, 0, 0, 0), w());
     },
     getTimeSinceTimestamp: function (e, n) {
-      n = n || {}, n.now = n.now || p.now(), n.key = n.key || "duration";
+      n = n || {};
+      n.now = n.now || p.now();
+      n.key = n.key || "duration";
       if (d(e) && d(n.now)) {
         var r = n.now - e;
         return Math.floor(r / f) > 0 ? t.fetch({
@@ -102,4 +105,4 @@ define("utils/chat/dateTime", [
       return "";
     }
   }, p;
-})
+});

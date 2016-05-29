@@ -26,4 +26,4 @@ define("constants/keys", {
   Z: 90,
   F6: 117,
   F10: 121
-})
+});

@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -16,5 +16,6 @@ function (e) {
     return i;
   }
   var n = e("global-portable"), r = n["default"].window, i = n["default"].document;
-  t.getWindow = s, t.getDocument = o;
-})
+  t.getWindow = s;
+  t.getDocument = o;
+}));

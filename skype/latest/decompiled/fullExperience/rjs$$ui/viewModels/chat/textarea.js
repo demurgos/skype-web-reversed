@@ -44,12 +44,15 @@ define("ui/viewModels/chat/textarea", [
       var e = i.conversationModel.chatService;
       if (!e.sendIsTyping.enabled())
         return;
-      z = !0, W = k.setTimeout(function () {
+      z = !0;
+      W = k.setTimeout(function () {
         z = !1;
-      }, m.THROTTLE), e.sendIsTyping();
+      }, m.THROTTLE);
+      e.sendIsTyping();
     }
     function it() {
-      R = H.messageBody().length, p.execute(e.updateSizing);
+      R = H.messageBody().length;
+      p.execute(e.updateSizing);
     }
     function st() {
       return !!H.messageBody().trim();
@@ -60,7 +63,8 @@ define("ui/viewModels/chat/textarea", [
     function ut(t, n) {
       var r = n.stopImmediatePropagation;
       return n._stopImmediatePropagationCalled = !1, n.stopImmediatePropagation = function () {
-        n._stopImmediatePropagationCalled = !0, r.apply(n, arguments);
+        n._stopImmediatePropagationCalled = !0;
+        r.apply(n, arguments);
       }, H.dispatchEvent(t, {
         event: n,
         viewModel: H,
@@ -79,7 +83,9 @@ define("ui/viewModels/chat/textarea", [
       nt() && J() === 1 && (n.user_to = [
         i.conversationModel.participants()[0].person.id(),
         k.skypeTelemetryManager.PIIType.Identity
-      ]), e.isEdited && (n.timedelta = e.timedelta), L.get().sendEvent(o.telemetry.uiTenantToken, t, n);
+      ]);
+      e.isEdited && (n.timedelta = e.timedelta);
+      L.get().sendEvent(o.telemetry.uiTenantToken, t, n);
     }
     function lt() {
       var e = B._translatorSettings && B._translatorSettings.isEnabled;
@@ -93,7 +99,9 @@ define("ui/viewModels/chat/textarea", [
       return d.isMessageWithEmoticonsOnly(e);
     }
     function pt() {
-      t.getInstance().startTrace("messagePostSuccess"), t.getInstance().startTrace("messagePost"), t.getInstance().startTrace("messageAdd");
+      t.getInstance().startTrace("messagePostSuccess");
+      t.getInstance().startTrace("messagePost");
+      t.getInstance().startTrace("messageAdd");
       if (at()) {
         if (lt() && !ht())
           D.requestTranslation(H.messageBody(), s.chat.messageType.OUTGOING, B, ct);
@@ -107,7 +115,10 @@ define("ui/viewModels/chat/textarea", [
             id: e,
             type: S.itemTypes.emoticon.id
           };
-        })), A.emoticonsSentInMessage(i, G), G = [], ft({
+        }));
+        A.emoticonsSentInMessage(i, G);
+        G = [];
+        ft({
           messageLength: H.messageBody().length,
           emoticonsCount: i.length
         });
@@ -119,7 +130,8 @@ define("ui/viewModels/chat/textarea", [
         }).length;
       n && (!e.translations || !e.translations().length || !i ? e._translationsArray.add(n) : e.translations().forEach(function (e) {
         x.isMePersonId(e.users[0].mri) && (e.users[0].value = n.users[0].value);
-      })), e.html(t.message);
+      }));
+      e.html(t.message);
     }
     function vt() {
       var e = d.getEmoticonNamesFromMessage(d.processOutgoingTextMessage(H.messageBody())), t = H.messageBody(), n = t.length, r = U.timestamp(), i = D.findMatchingTranslation(U.translations, B._translatorSettings), o = lt() && (i && i !== t || !i && U.html() !== t), u = {
@@ -128,10 +140,15 @@ define("ui/viewModels/chat/textarea", [
           isEdited: !0,
           timedelta: O.getMessageLifeDurationGroup(new Date() - r)
         };
-      o ? (D.requestTranslation(t, s.chat.messageType.OUTGOING, B, dt.bind(null, U)), ft(u)) : U.html() !== t && (U.translations && U.translations().length && U.translations.empty(), U.html(t), ft(u)), ot();
+      o ? (D.requestTranslation(t, s.chat.messageType.OUTGOING, B, dt.bind(null, U)), ft(u)) : U.html() !== t && (U.translations && U.translations().length && U.translations.empty(), U.html(t), ft(u));
+      ot();
     }
     function mt() {
-      H.messageBody("").length && H.messageBody(""), R = -1, it(), E.publish(a.textarea.HAS_INPUT, !1), H.dispatchEvent(a.textarea.INPUT, {
+      H.messageBody("").length && H.messageBody("");
+      R = -1;
+      it();
+      E.publish(a.textarea.HAS_INPUT, !1);
+      H.dispatchEvent(a.textarea.INPUT, {
         viewModel: H,
         view: e
       }, H.DIRECTION.CHILD);
@@ -150,23 +167,28 @@ define("ui/viewModels/chat/textarea", [
       yt({
         type: "button",
         isEditedMessage: U
-      }), Et();
+      });
+      Et();
     }
     function wt() {
       yt({
         type: "enter",
         isEditedMessage: U
-      }), Et();
+      });
+      Et();
     }
     function Et() {
       if (!st())
         return;
       if (!U && !at())
         return;
-      U ? vt() : pt(), U = null, mt();
+      U ? vt() : pt();
+      U = null;
+      mt();
     }
     function St() {
-      bt(), Ct(!0);
+      bt();
+      Ct(!0);
     }
     function xt(e) {
       if (U || at())
@@ -179,7 +201,9 @@ define("ui/viewModels/chat/textarea", [
       })[0];
     }
     function Nt(e) {
-      X.chatInput = e, H.dispatchEvent(a.textarea.CHANGED, e, H.DIRECTION.PARENT), E.publish(a.textarea.HAS_INPUT, !0);
+      X.chatInput = e;
+      H.dispatchEvent(a.textarea.CHANGED, e, H.DIRECTION.PARENT);
+      E.publish(a.textarea.HAS_INPUT, !0);
     }
     function Ct() {
       H.chatInputFocus(!0);
@@ -187,7 +211,8 @@ define("ui/viewModels/chat/textarea", [
     function kt() {
       if (!H.hasChatCapability())
         return;
-      H.handleBlur(), Ct();
+      H.handleBlur();
+      Ct();
     }
     function Lt() {
       k.setTimeout(H.handleFocus, 5000);
@@ -230,9 +255,20 @@ define("ui/viewModels/chat/textarea", [
     }
     var H = this, B = i.conversationModel, j = B && B.chatService.sendMessage, F = i.sendMessage || j, I = n.get(), q = I.translatorService, R = -1, U = null, z = !1, W, X, V, $, J = nt() ? b.newObservableProperty(i.conversationModel.participantsCount) : v.observable(1), K = nt() ? b.newObservableCollection(i.conversationModel.historyService.activityItems) : v.observableArray(), Q = "active", G = [], Y = g.resolve(s.serviceLocator.FEATURE_FLAGS), Z = Y.isFeatureOn(s.featureFlags.TRANSLATOR_SENDING_ENABLED), et, tt;
     H.init = function () {
-      nt() ? X = y.forModel(i.conversationModel) : X = { chatInput: null }, H.conversationModel = i.conversationModel, H.isEnabled = i.isEnabled, H.isServiceEnabled = i.isServiceEnabled, H.hasChatCapability = i.hasChatCapability, H.getSelectionStart = e.getSelectionStart, H.setBlurAndFocus = kt, H.messageMaxLength = s.textarea.MAX_LENGTH, H.topicViewModel = N.build(i.conversationModel), $ = H.isEnabled.subscribe(function (e) {
+      nt() ? X = y.forModel(i.conversationModel) : X = { chatInput: null };
+      H.conversationModel = i.conversationModel;
+      H.isEnabled = i.isEnabled;
+      H.isServiceEnabled = i.isServiceEnabled;
+      H.hasChatCapability = i.hasChatCapability;
+      H.getSelectionStart = e.getSelectionStart;
+      H.setBlurAndFocus = kt;
+      H.messageMaxLength = s.textarea.MAX_LENGTH;
+      H.topicViewModel = N.build(i.conversationModel);
+      $ = H.isEnabled.subscribe(function (e) {
         e && p.execute(kt);
-      }), H.messageBody = v.observable(X.chatInput || ""), H.label = v.pureComputed(function () {
+      });
+      H.messageBody = v.observable(X.chatInput || "");
+      H.label = v.pureComputed(function () {
         return J() < 2 ? w.fetch({
           key: "label_text_insertText_oneToOne",
           params: { displayName: H.topicViewModel.topic() }
@@ -243,44 +279,91 @@ define("ui/viewModels/chat/textarea", [
             participantsCount: J()
           }
         });
-      }), H.placeholder = v.computed(Ot), it(), V = H.messageBody.subscribe(Nt), H.registerEvent(a.textarea.SUBMIT_AND_FOCUS, St), H.registerEvent(a.emoticonPicker.EMOTICON_SELECTED, H.insertAtCursor), H.registerEvent(f.EVENTS.CALL_SCREEN_CLOSE, Ct), H.registerEvent(a.message.QUOTE, H.quoteMessageText), H.registerEvent(a.message.EDIT, H.requestEditMessageText), H.registerEvent(a.expressionPicker.CLOSE_REQUEST, kt), H.registerEvent(a.shareControl.SHARE_CONTROL_HIDE, Ct), E.subscribe(s.apiUIEvents.SWX_TIMELINE_LOADED, Lt), E.subscribe(a.newConversation.CANCELLED, Ct), E.subscribe(a.navigation.FRAGMENT_LOADED, kt), E.subscribe(a.navigation.LEAVE_EDIT_MODE, Ct), E.subscribe(a.expressionPicker.ITEM_SEND_REQUEST, H.insertAtCursor), H.dispatchEvent(a.textarea.INITIALIZATION_COMPLETE, H, H.DIRECTION.PARENT), kt();
-    }, H.dispose = function () {
-      k.clearTimeout(W), E.unsubscribe(s.apiUIEvents.SWX_TIMELINE_LOADED, Lt), E.unsubscribe(a.newConversation.CANCELLED, Ct), E.unsubscribe(a.navigation.LEAVE_EDIT_MODE, Ct), E.unsubscribe(a.navigation.FRAGMENT_LOADED, kt), E.unsubscribe(a.expressionPicker.ITEM_SEND_REQUEST, H.insertAtCursor), $.dispose(), V.dispose(), H.placeholder.dispose(), H.topicViewModel.dispose();
-    }, H.insertAtCursor = function (t, n) {
+      });
+      H.placeholder = v.computed(Ot);
+      it();
+      V = H.messageBody.subscribe(Nt);
+      H.registerEvent(a.textarea.SUBMIT_AND_FOCUS, St);
+      H.registerEvent(a.emoticonPicker.EMOTICON_SELECTED, H.insertAtCursor);
+      H.registerEvent(f.EVENTS.CALL_SCREEN_CLOSE, Ct);
+      H.registerEvent(a.message.QUOTE, H.quoteMessageText);
+      H.registerEvent(a.message.EDIT, H.requestEditMessageText);
+      H.registerEvent(a.expressionPicker.CLOSE_REQUEST, kt);
+      H.registerEvent(a.shareControl.SHARE_CONTROL_HIDE, Ct);
+      E.subscribe(s.apiUIEvents.SWX_TIMELINE_LOADED, Lt);
+      E.subscribe(a.newConversation.CANCELLED, Ct);
+      E.subscribe(a.navigation.FRAGMENT_LOADED, kt);
+      E.subscribe(a.navigation.LEAVE_EDIT_MODE, Ct);
+      E.subscribe(a.expressionPicker.ITEM_SEND_REQUEST, H.insertAtCursor);
+      H.dispatchEvent(a.textarea.INITIALIZATION_COMPLETE, H, H.DIRECTION.PARENT);
+      kt();
+    };
+    H.dispose = function () {
+      k.clearTimeout(W);
+      E.unsubscribe(s.apiUIEvents.SWX_TIMELINE_LOADED, Lt);
+      E.unsubscribe(a.newConversation.CANCELLED, Ct);
+      E.unsubscribe(a.navigation.LEAVE_EDIT_MODE, Ct);
+      E.unsubscribe(a.navigation.FRAGMENT_LOADED, kt);
+      E.unsubscribe(a.expressionPicker.ITEM_SEND_REQUEST, H.insertAtCursor);
+      $.dispose();
+      V.dispose();
+      H.placeholder.dispose();
+      H.topicViewModel.dispose();
+    };
+    H.insertAtCursor = function (t, n) {
       var r, s, o, u, a = t.item;
       if (a.type !== "emoticon" || t.conversation !== i.conversationModel)
         return;
-      _t(t), r = n || e.getSelectionStart(), s = H.messageBody(), o = a.shortcut + " ", u = T.inject(s, o, r), H.messageBody(u), e.setCursorAt(r + o.length), kt();
-    }, H.handleKeyDown = function (e, t) {
+      _t(t);
+      r = n || e.getSelectionStart();
+      s = H.messageBody();
+      o = a.shortcut + " ";
+      u = T.inject(s, o, r);
+      H.messageBody(u);
+      e.setCursorAt(r + o.length);
+      kt();
+    };
+    H.handleKeyDown = function (e, t) {
       if (ut(a.textarea.KEY_DOWN, t))
         return !1;
       var n = t.keyCode || t.which;
       return n === u.UP && e.messageBody() === "" && e.requestEditMessageText(), n === u.ESCAPE && e.messageBody() !== "" && (ot(), mt(), t.stopPropagation()), !0;
-    }, H.handleInput = function () {
-      H.messageBody().length !== R && it(), H.messageBody().length === 0 && (E.publish(a.textarea.HAS_INPUT, !1), ot()), H.dispatchEvent(a.textarea.INPUT, {
+    };
+    H.handleInput = function () {
+      H.messageBody().length !== R && it();
+      H.messageBody().length === 0 && (E.publish(a.textarea.HAS_INPUT, !1), ot());
+      H.dispatchEvent(a.textarea.INPUT, {
         viewModel: H,
         view: e
       }, H.DIRECTION.CHILD);
-    }, H.handleKeyPress = function (e, t) {
+    };
+    H.handleKeyPress = function (e, t) {
       if (ut(a.textarea.KEY_PRESS, t))
         return !1;
       var n = t.keyCode || t.which;
       return n === u.ENTER && !t.shiftKey ? xt(t) : z || rt(), !0;
-    }, H.onFocus = function () {
+    };
+    H.onFocus = function () {
       i.chatInputEl.addClass(Q);
-    }, H.onBlur = function () {
-      i.chatInputEl.removeClass(Q), e.updateSizing();
-    }, H.onBeforePaste = function (e, t) {
+    };
+    H.onBlur = function () {
+      i.chatInputEl.removeClass(Q);
+      e.updateSizing();
+    };
+    H.onBeforePaste = function (e, t) {
       return Dt(t);
-    }, H.onPaste = function (t, r) {
+    };
+    H.onPaste = function (t, r) {
       function w(e) {
-        e.name = P, o.push(e);
+        e.name = P;
+        o.push(e);
       }
       function E(e) {
         d ? At(e) && (m += e, v--, d = !1) : (m += e, v--, T.isNewLine(e) && (d = !0));
       }
       var i = r.clipboardData || k.clipboardData, o = [], u = !!k.clipboardData, a = Y.isFeatureOn(s.featureFlags.FILE_PASTE_ENABLED), f = H.conversationModel.fileTransferService.send.enabled(), l = a && n.get().personsAndGroupsManager.mePerson.preferences(s.userSettings.preferences.FILE_PASTE).value(), c = a && f && l, h, d, v, m, g, y, b;
-      r.originalEvent && (i = i || r.originalEvent.clipboardData), h = i.getData("Text");
+      r.originalEvent && (i = i || r.originalEvent.clipboardData);
+      h = i.getData("Text");
       if (!h && c) {
         u ? Array.prototype.forEach.call(i.files, function (e) {
           w(e);
@@ -293,22 +376,36 @@ define("ui/viewModels/chat/textarea", [
         if (o.length)
           return H.conversationModel.fileTransferService.send(o), Dt(r);
       }
-      h = i.getData("Text"), d = !0, m = "", g = H.messageBody(), y = e.getSelectionStart(), b = e.getSelectionEnd(), v = H.messageMaxLength - g.length + b - y;
+      h = i.getData("Text");
+      d = !0;
+      m = "";
+      g = H.messageBody();
+      y = e.getSelectionStart();
+      b = e.getSelectionEnd();
+      v = H.messageMaxLength - g.length + b - y;
       for (var S = 0; S < h.length && v > 0; S++)
         E(h[S]);
       return H.messageBody(T.inject(g, m, y, b)), p.execute(function () {
         e.setCursorAt(y + m.length);
       }), it(), Dt(r);
-    }, H.chatInputFocus = v.observable(!1), H.handleFocus = function () {
+    };
+    H.chatInputFocus = v.observable(!1);
+    H.handleFocus = function () {
       return M.isAnyElementFocused() || p.execute(function () {
         H.chatInputFocus(!0);
       }), !0;
-    }, H.handleBlur = function () {
+    };
+    H.handleBlur = function () {
       H.chatInputFocus(!1);
-    }, H.quoteMessageText = function (t) {
+    };
+    H.quoteMessageText = function (t) {
       var n = t.sender.displayName(), r = c.formatTimestamp(t.timestamp()), i = d.unboxHrefContent(t.text()), s = D.findMatchingTranslation(t.translations, B._translatorSettings), o = Z && s ? Pt(s) : i, u = "[" + r + "] " + n + ": " + o + " \n \n <<< ";
-      ot(), H.messageBody(u), it(), p.execute(e.setCaretToEnd);
-    }, H.requestEditMessageText = function (t) {
+      ot();
+      H.messageBody(u);
+      it();
+      p.execute(e.setCaretToEnd);
+    };
+    H.requestEditMessageText = function (t) {
       if (!nt())
         return;
       var n = i.conversationModel.historyService.activityItems();
@@ -319,10 +416,15 @@ define("ui/viewModels/chat/textarea", [
         return;
       if (t.html && t.html.set.enabled() && t.text) {
         var r = d.compactHtml(t.html()), s = D.findMatchingTranslation(t.translations, B._translatorSettings), o = Z && s ? s : r;
-        o = Pt(o), H.messageBody(o), U = t, it(), p.execute(e.setCaretToEnd), e.editing(!0);
+        o = Pt(o);
+        H.messageBody(o);
+        U = t;
+        it();
+        p.execute(e.setCaretToEnd);
+        e.editing(!0);
       }
     };
   }
   var t = e("services/telemetry/logging/perf/main"), n = e("cafe/applicationInstance"), r = e("lodash-compat"), i = e("utils/common/eventMixin"), s = e("constants/common"), o = e("experience/settings"), u = e("constants/keys"), a = s.events, f = e("constants/calling"), l = e("utils/common/encoder"), c = e("utils/chat/dateTime"), h = e("browser/detect"), p = e("utils/common/async"), d = e("utils/chat/messageSanitizer"), v = e("vendor/knockout"), m = s.isTyping, g = e("services/serviceLocator"), y = e("utils/chat/conversationCache"), b = e("utils/common/cafeObservable"), w = e("swx-i18n").localization, E = e("services/pubSub/pubSub"), S = e("services/pes/constants"), x = e("ui/modelHelpers/personHelper"), T = e("swx-utils-common").stringUtils, N = e("ui/viewModels/chat/conversationTopic"), C = e("ui/telemetry/actions/actionNames"), k = e("browser/window"), L = e("ui/telemetry/telemetryClient"), A = e("telemetry/chat/pes"), O = e("telemetry/chat/telemetryEnumerator"), M = e("utils/common/applicationFocusManager"), _ = e("swx-enums"), D = e("utils/chat/translatorHelper"), P = "fileFromClipboard";
   return r.assign(H.prototype, i), H;
-})
+});

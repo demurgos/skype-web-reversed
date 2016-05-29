@@ -16,4 +16,4 @@ define("utils/chat/urlParser", [], function () {
       return t || (t = /(?:youtube\.com|youtu\.be)\/([\w-]{11})/.exec(e)), t ? !0 : !1;
     }
   };
-})
+});

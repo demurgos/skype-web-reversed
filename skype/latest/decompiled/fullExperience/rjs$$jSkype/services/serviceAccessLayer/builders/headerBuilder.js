@@ -3,7 +3,8 @@ define("jSkype/services/serviceAccessLayer/builders/headerBuilder", [], function
     var e = {};
     this.get = function (t) {
       return t ? e[t] : e;
-    }, this.set = function (t, n) {
+    };
+    this.set = function (t, n) {
       var r = /\s/;
       if (!t || !n)
         throw new Error("incorrect number of arguments supplied - expecting \"key\" and \"value\"");
@@ -12,14 +13,16 @@ define("jSkype/services/serviceAccessLayer/builders/headerBuilder", [], function
       if (r.test(t))
         throw new SyntaxError("header name cannot contain any whitespace");
       e[t] = n;
-    }, this.populate = function (e) {
+    };
+    this.populate = function (e) {
       function r() {
         for (var t in e)
           e.hasOwnProperty(t) && n.set(t, e[t]);
       }
       var n = this;
       t(e) && r();
-    }, this.build = function (t) {
+    };
+    this.build = function (t) {
       function n() {
         for (var n in e)
           e.hasOwnProperty(n) && t(n, e[n]);
@@ -34,4 +37,4 @@ define("jSkype/services/serviceAccessLayer/builders/headerBuilder", [], function
     return !!e && t;
   }
   return e;
-})
+});

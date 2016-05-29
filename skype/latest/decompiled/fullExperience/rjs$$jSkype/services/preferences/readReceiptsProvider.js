@@ -15,4 +15,4 @@ define("jSkype/services/preferences/readReceiptsProvider", [
   }, i.prototype.update = function (e) {
     return n.prototype.update.call(this, e ? 0 : 1);
   }, t.assign(i, r), i;
-})
+});

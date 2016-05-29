@@ -16,4 +16,4 @@ define("jCafe", [
       eventBus: i.get()
     }, new n.Application(o);
   }, o.Application.create = o.Application, o;
-})
+});

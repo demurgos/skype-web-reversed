@@ -20,7 +20,8 @@ define("jSkype/utils/chat/generator", [
 ], function (e, t) {
   function N(e, n) {
     var r = "" + (e.originalContent || e.content);
-    e.content = t.processMentions(e.content), t.extendRawMessage(e, n);
+    e.content = t.processMentions(e.content);
+    t.extendRawMessage(e, n);
     var i = c.fetch(e.messagetype), s = c.parse(i, e);
     return s._id = e.id, s._actualId = e.id, s.key._set(e.key || e.clientmessageid), s.timestamp._set(new Date(e.originalarrivaltime)), s.isRead._set(p.canMessageBeMarkedAsUnreadInUI(e) ? !e.isUnread : !0), s.status._set(a.activityStatus.Succeeded), s._originalContent = r, s;
   }
@@ -65,7 +66,8 @@ define("jSkype/utils/chat/generator", [
   var n = e("lodash-compat"), r = e("jSkype/client"), i = e("jSkype/settings"), s = e("constants/common"), o = e("jSkype/models/conversationActivityItem"), u = e("utils/chat/dateTime"), a = e("swx-enums"), f = e("swx-i18n").localization, l = e("jSkype/utils/chat/mentionsParser"), c = e("jSkype/utils/chat/messageTypes"), h = e("jSkype/utils/chat/parser"), p = e("jSkype/utils/chat/message"), d = e("jSkype/modelHelpers/personHelper"), v = e("jSkype/modelHelpers/personsAndGroupsHelper"), m = e("utils/chat/pesUtils"), g = o.ContactRequestActivityItem, y = o.MojiMessageActivityItem, b = o.PictureMessageActivityItem, w = o.FileTransferActivityItem, E = o.ContactInfoMessageActivityItem, S = o.PluginFreeActivityItem, x = o.PstnActivityItem, T = o.TextMessageActivityItem;
   t.activityFromRawMessage = function (e, t) {
     return e.contactRequestType ? C(e, t) : e.pstnEventType ? _(e) : e.pluginFreeMessageType ? M(e) : N(e, t);
-  }, t.messageForService = function (e) {
+  };
+  t.messageForService = function (e) {
     var t = {
       content: e.content,
       messagetype: e.messagetype,
@@ -73,28 +75,38 @@ define("jSkype/utils/chat/generator", [
       contenttype: "text"
     };
     return e.skypeeditedid ? t.skypeeditedid = String(e.skypeeditedid) : t.clientmessageid = String(e.key), t;
-  }, t.outgoingTextMessageActivityItem = function (e, t) {
-    e.messagetype = "RichText", e.content = D(e.content);
+  };
+  t.outgoingTextMessageActivityItem = function (e, t) {
+    e.messagetype = "RichText";
+    e.content = D(e.content);
     var n = c.fetch(e.messagetype), i = r.get().personsAndGroupsManager.mePerson, s = new Date(), o;
     return e.isMyself = !0, e.conversationModel = t, e.author = d.getKey(i.id(), i._type()), o = c.parse(n, e), o._id = s.getTime(), o._actualId = o._id, o.key._set(String(s.getTime())), o.timestamp._set(s), o._htmlSetEnabled(!0), o.isRead._set(!0), o.status._set(a.activityStatus.Pending), o._originalContent = "" + (e.originalContent || e.content), o;
-  }, t.outgoingPollMessageActivityItem = function (e) {
+  };
+  t.outgoingPollMessageActivityItem = function (e) {
     var t = c.fetch(e.messagetype), n = c.parse(t, e);
     return n._id = e.timestamp, n._actualId = e.timestamp, n.isRead._set(!0), n._htmlSetEnabled(!0), n.sender = r.get().personsAndGroupsManager.mePerson, n.direction._set(a.direction.Outgoing), n.status._set(a.activityStatus.Pending), n.key._set(e.key), n.timestamp._set(new Date(e.timestamp)), n;
-  }, t.outgoingMojiActivityItem = function (e, t, n) {
+  };
+  t.outgoingMojiActivityItem = function (e, t, n) {
     var o = new y(n.conversationModel), u = "en", f, l;
     return i.isFeatureOn(s.featureFlags.PES_CDN_AUTH_ENABLED) && (e = m.rewriteUrls(e, i.settings.pesCDNAuthentication.rewriteRules)), f = e + "/" + t + "/views/default", l = e + "/" + t + "/views/thumbnail", i.settings.locale && i.settings.locale.pes && (u = i.settings.locale.pes), o._id = n.timestamp, o._actualId = o._id, o._htmlSetEnabled(!0), o._metaDataUri = e + "/views/meta." + u, o.direction._set(a.direction.Outgoing), o.type._set(a.activityType.MojiMessage), o.sender = r.get().personsAndGroupsManager.mePerson, o.thumbnailUrl._set(l), o.mojiUrl._set(f), o.key._set(n.key), o.timestamp._set(new Date(n.timestamp)), o.isRead._set(!0), o.status._set(a.activityStatus.Pending), o.html._set(n.content), o;
-  }, t.processMentions = function (e) {
+  };
+  t.processMentions = function (e) {
     var t, r, i = l.getMentions(e);
     return i.forEach(function (i) {
-      t = i.substring(1).toLowerCase(), r = l.getMentionUserData(t), r.defaultUserName && (e = e.replace(i, "<at id=\"" + t + "\">" + n.escape(r.defaultUserName) + "</at>"));
+      t = i.substring(1).toLowerCase();
+      r = l.getMentionUserData(t);
+      r.defaultUserName && (e = e.replace(i, "<at id=\"" + t + "\">" + n.escape(r.defaultUserName) + "</at>"));
     }), e;
-  }, t.outgoingContactInfoActivityItem = function (e, t) {
+  };
+  t.outgoingContactInfoActivityItem = function (e, t) {
     var n = new E(t), i = u.getDate();
     return n._htmlSetEnabled(!0), n.sender = r.get().personsAndGroupsManager.mePerson, n.direction._set(a.direction.Outgoing), n.status._set(a.activityStatus.Pending), n.key._set(String(i.getTime())), n.contacts(e), n.timestamp._set(i), n;
-  }, t.outgoingPictureActivityItem = function (e) {
+  };
+  t.outgoingPictureActivityItem = function (e) {
     var t = new b(e);
     return t._htmlSetEnabled(!0), t.sender = r.get().personsAndGroupsManager.mePerson, t.direction._set(a.direction.Outgoing), t.status._set(a.activityStatus.Pending), t.key._set(String(new Date().getTime())), t.timestamp._set(u.getDate()), t;
-  }, t.outgoingFileActivityItem = function (e, t) {
+  };
+  t.outgoingFileActivityItem = function (e, t) {
     function i(e) {
       if (!e)
         return "unknown";
@@ -103,8 +115,13 @@ define("jSkype/utils/chat/generator", [
     }
     var n = new w(t);
     return n._htmlSetEnabled(!0), n.fileName = e.name, n.fileType = i(e.name), n.sender = r.get().personsAndGroupsManager.mePerson, n.direction._set(a.direction.Outgoing), n.status._set(a.activityStatus.Pending), n.key._set(String(new Date().getTime())), n.fileSize = e.size ? e.size : 0, n.timestamp._set(u.getDate()), n;
-  }, t.extendRawMessage = function (e, t) {
-    var n = r.get().personsAndGroupsManager.mePerson;
-    e.myself = d.getKey(n.id(), n._type()), e.author = h.parseName(e.from), e.isMyself = e.author === e.myself, e.originalContent || (e.originalContent = "" + e.content), e.conversationModel = t;
   };
-})
+  t.extendRawMessage = function (e, t) {
+    var n = r.get().personsAndGroupsManager.mePerson;
+    e.myself = d.getKey(n.id(), n._type());
+    e.author = h.parseName(e.from);
+    e.isMyself = e.author === e.myself;
+    e.originalContent || (e.originalContent = "" + e.content);
+    e.conversationModel = t;
+  };
+});

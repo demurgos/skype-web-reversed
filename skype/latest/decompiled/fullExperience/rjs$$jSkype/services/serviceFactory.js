@@ -23,20 +23,25 @@ define("jSkype/services/serviceFactory", [
   t.getStratusService = function () {
     var e = a.build(i.getHost());
     return l.getInstance(e, new v());
-  }, t.getContactsService = function () {
+  };
+  t.getContactsService = function () {
     var e = n.get().personsAndGroupsManager.mePerson.id(), t = a.build(s.getHost());
     return f.getInstance(e, t, new m());
-  }, t.getPresenceService = function () {
+  };
+  t.getPresenceService = function () {
     var e = a.build(o.getHost());
     return p.getInstance(e);
-  }, t.getEntitlementService = function () {
+  };
+  t.getEntitlementService = function () {
     var e = a.build(u.getHost());
     return d.getInstance(e, new g());
-  }, t.getPeopleService = function () {
+  };
+  t.getPeopleService = function () {
     var e = a.build(r.settings.peopleService.host);
     return c.getInstance(e, new v());
-  }, t.getABCHProfileService = function () {
+  };
+  t.getABCHProfileService = function () {
     var e = a.build(r.settings.profileService.host);
     return h.getInstance(e, new v());
   };
-})
+});

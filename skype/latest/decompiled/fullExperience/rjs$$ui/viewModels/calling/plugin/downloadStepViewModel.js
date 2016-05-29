@@ -27,24 +27,42 @@ define("ui/viewModels/calling/plugin/downloadStepViewModel", [
           terms: "pluginInstall_steps_text_termsLink",
           privacy: "pluginInstall_steps_text_privacyLink"
         };
-      this.id = t.STEP_ID, this.label = u.fetch({ key: "pluginInstall_label_text_download" }), this.downloadImage = v.images.download, this.downloadText = v.text.download, this.installImage = v.images.install, this.installText = v.text.install, this.enjoyImage = v.images.enjoy, this.enjoyText = v.text.enjoy, h.conversation && h.conversation.audioService.start.enabled.reason === o.callingNotSupportedReasons.PluginNotInstalled && (m = h.conversation.audioService.start.enabled), this.show = function () {
+      this.id = t.STEP_ID;
+      this.label = u.fetch({ key: "pluginInstall_label_text_download" });
+      this.downloadImage = v.images.download;
+      this.downloadText = v.text.download;
+      this.installImage = v.images.install;
+      this.installText = v.text.install;
+      this.enjoyImage = v.images.enjoy;
+      this.enjoyText = v.text.enjoy;
+      h.conversation && h.conversation.audioService.start.enabled.reason === o.callingNotSupportedReasons.PluginNotInstalled && (m = h.conversation.audioService.start.enabled);
+      this.show = function () {
         var e = c.resolve(l.serviceLocator.ACTION_TELEMETRY);
         if (m.reason !== o.callingNotSupportedReasons.PluginNotInstalled) {
-          b(), p();
+          b();
+          p();
           return;
         }
-        y(), r.downloadPlatformSpecificInstaller(), e.recordAction(f.audioVideo.pluginInstall.installPlugin);
-      }, this.restartDownload = function () {
+        y();
+        r.downloadPlatformSpecificInstaller();
+        e.recordAction(f.audioVideo.pluginInstall.installPlugin);
+      };
+      this.restartDownload = function () {
         var e = c.resolve(l.serviceLocator.ACTION_TELEMETRY);
-        r.downloadPlatformSpecificInstaller(), e.recordAction(f.audioVideo.pluginInstall.restart);
-      }, this.close = function () {
-        b(), d();
-      }, this.getLink = function (e) {
+        r.downloadPlatformSpecificInstaller();
+        e.recordAction(f.audioVideo.pluginInstall.restart);
+      };
+      this.close = function () {
+        b();
+        d();
+      };
+      this.getLink = function (e) {
         var t = g[e], n = u.fetch({ key: t }), r = a[e];
         return r.replace("{" + t + "}", n);
       };
     };
-  t.STEP_ID = i.CALLING_SETUP_STEPS.OVERLAY_PLUGIN_STEPS, t.build = function (e) {
+  t.STEP_ID = i.CALLING_SETUP_STEPS.OVERLAY_PLUGIN_STEPS;
+  t.build = function (e) {
     return new h(e);
   };
-})
+});

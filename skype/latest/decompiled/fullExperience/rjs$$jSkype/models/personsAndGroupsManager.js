@@ -9,7 +9,10 @@ define("jSkype/models/personsAndGroupsManager", [
   "jSkype/constants/people"
 ], function (e) {
   function f() {
-    this._initialized = n.property({ value: !1 }), this.mePerson = new s(u), this.all = new i(this.mePerson), this.all.groups.add(l(), a);
+    this._initialized = n.property({ value: !1 });
+    this.mePerson = new s(u);
+    this.all = new i(this.mePerson);
+    this.all.groups.add(l(), a);
   }
   function l() {
     var e = new r(t.groupType.PrivacyRelationship);
@@ -34,6 +37,8 @@ define("jSkype/models/personsAndGroupsManager", [
   }, f.prototype.createGroup = function () {
     return new r(t.groupType.Custom);
   }, f.prototype._reset = function () {
-    this._initialized(!1), this.mePerson._reset(), this.all._reset();
+    this._initialized(!1);
+    this.mePerson._reset();
+    this.all._reset();
   }, f;
-})
+});

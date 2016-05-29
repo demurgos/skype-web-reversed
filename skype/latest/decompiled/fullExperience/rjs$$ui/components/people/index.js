@@ -25,4 +25,4 @@ define("ui/components/people/index", [
     e("ui/components/people/name"),
     e("ui/components/people/peopleSearch")
   ];
-})
+});

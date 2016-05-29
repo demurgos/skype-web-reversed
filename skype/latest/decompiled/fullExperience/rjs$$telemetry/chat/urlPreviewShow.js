@@ -22,7 +22,8 @@ define("telemetry/chat/urlPreviewShow", [
       };
     }
     function l() {
-      t.data.ttl = c(u, h()), t.data.ttlGroup = o.getSecondsDurationGroup(t.data.ttl);
+      t.data.ttl = c(u, h());
+      t.data.ttlGroup = o.getSecondsDurationGroup(t.data.ttl);
       var e = i.TYPE, r = t.data;
       s.get().sendEvent(n.telemetry.uiTenantToken, e, r);
     }
@@ -33,14 +34,19 @@ define("telemetry/chat/urlPreviewShow", [
       return new Date().getTime();
     }
     var t = this, u = h(), a = r.telemetry.NOT_AVAILABLE;
-    t.data = f(), t.error = function (e) {
-      e && (t.data.result = e), l();
-    }, t.succeeded = function (e, n) {
-      t.data.hasThumbnail = n, t.data.result = e, l();
+    t.data = f();
+    t.error = function (e) {
+      e && (t.data.result = e);
+      l();
+    };
+    t.succeeded = function (e, n) {
+      t.data.hasThumbnail = n;
+      t.data.result = e;
+      l();
     };
   }
   var n = e("experience/settings"), r = e("constants/common"), i = r.telemetry.urlPreviewShown, s = e("ui/telemetry/telemetryClient"), o = e("telemetry/chat/telemetryEnumerator");
   t.build = function (e) {
     return new u(e);
   };
-})
+});

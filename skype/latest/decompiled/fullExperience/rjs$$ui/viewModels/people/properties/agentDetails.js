@@ -30,11 +30,12 @@ define("ui/viewModels/people/properties/agentDetails", [
     return t.isFunction(e.isAgent) ? i.isAgent = r.newObservableProperty(e.isAgent) : i.isAgent = n.observable(!1), i.compute = function () {
       return i.isAgent() ? o() : u();
     }, i.dispose = function () {
-      i.isAgent.dispose && i.isAgent.dispose(), u();
+      i.isAgent.dispose && i.isAgent.dispose();
+      u();
     }, i;
   }
   var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("utils/common/cafeObservable");
   return i.build = function (e) {
     return new i(e);
   }, i;
-})
+});

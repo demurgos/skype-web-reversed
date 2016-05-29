@@ -12,5 +12,7 @@ define("ui/components/chat/moreActionsButton", [
     return i.setContext(s), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/moreActionsButton");
-  t.name = e("constants/components").chat.MORE_ACTIONS_BUTTON, t.template = e("text!views/chat/moreActionsButton.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.MORE_ACTIONS_BUTTON;
+  t.template = e("text!views/chat/moreActionsButton.html");
+  t.viewModel = { createViewModel: i };
+});

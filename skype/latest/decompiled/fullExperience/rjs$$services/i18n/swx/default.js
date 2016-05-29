@@ -805,4 +805,4 @@ define("services/i18n/swx/default", [], function () {
     favorites_add_to_favorite: "Add to Favorites",
     favorites_remove_from_favorite: "Remove from Favorites"
   };
-})
+});

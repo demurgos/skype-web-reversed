@@ -28,7 +28,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/utils", [
     if (typeof e.code == "undefined" || typeof e.subCode == "undefined" || typeof e.phrase == "undefined" || e.code < 0 || e.subCode < 0 || e.phrase === " ")
       throw new Error("callEndReason must specify code, subcode and phrase. Invalid reason : " + n.getPrintableObject(e));
   }, n.getMediaTypes = function (e) {
-    n.assertNotNull(e, "MediaTypes passed cannot be null"), n.assert(e.length > 0, "Atleast one mediaType must be specified");
+    n.assertNotNull(e, "MediaTypes passed cannot be null");
+    n.assert(e.length > 0, "Atleast one mediaType must be specified");
     var r = [];
     for (var i in t.MEDIA_TYPES)
       n.arrayContains(e, t.MEDIA_TYPES[i]) && r.push(t.MEDIA_TYPES[i]);
@@ -60,4 +61,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/utils", [
   }, n.safelyRejectPromise = function (e, t) {
     e && e.promise.state() === "pending" && e.reject(t);
   }, n;
-})
+});

@@ -3,19 +3,22 @@ define("jSkype/services/mediaAgent/statistics/sessionStatistics", [], function (
     function h() {
       return {
         started: function () {
-          n = "Offering", d();
+          n = "Offering";
+          d();
         }
       };
     }
     function p() {
       return {
         started: function () {
-          n = "Answering", d();
+          n = "Answering";
+          d();
         }
       };
     }
     function d() {
-      t = t || n, ++r;
+      t = t || n;
+      ++r;
     }
     function v() {
       return {
@@ -38,17 +41,25 @@ define("jSkype/services/mediaAgent/statistics/sessionStatistics", [], function (
       offering: h(),
       answering: p(),
       current: v()
-    }, this.terminated = function () {
-      a = new Date().getTime(), u = new Date().getTime() - e;
-    }, this.setMultiParty = function () {
+    };
+    this.terminated = function () {
+      a = new Date().getTime();
+      u = new Date().getTime() - e;
+    };
+    this.setMultiParty = function () {
       s = !0;
-    }, this.setMediaLegId = function (e) {
+    };
+    this.setMediaLegId = function (e) {
       o = e;
-    }, this.setId = function (e) {
+    };
+    this.setId = function (e) {
       f = e;
-    }, this.setError = function (e) {
-      c.type = e.type || "internalError", c.detail = e.detail || e.toString();
-    }, this.getReport = function () {
+    };
+    this.setError = function (e) {
+      c.type = e.type || "internalError";
+      c.detail = e.detail || e.toString();
+    };
+    this.getReport = function () {
       return {
         CorrelationId: f,
         CallNumber: 0,
@@ -73,4 +84,4 @@ define("jSkype/services/mediaAgent/statistics/sessionStatistics", [], function (
       return new e();
     }
   };
-})
+});

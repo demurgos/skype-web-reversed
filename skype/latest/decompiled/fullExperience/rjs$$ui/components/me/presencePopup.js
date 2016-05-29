@@ -12,5 +12,7 @@ define("ui/components/me/presencePopup", [
     return o.setContext(s), o.init(), o;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/me/presencePopup");
-  t.name = e("constants/components").me.PRESENCE_POPUP, t.template = e("text!views/me/presencePopup.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").me.PRESENCE_POPUP;
+  t.template = e("text!views/me/presencePopup.html");
+  t.viewModel = { createViewModel: i };
+});

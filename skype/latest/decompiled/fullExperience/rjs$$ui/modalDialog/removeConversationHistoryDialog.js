@@ -11,7 +11,9 @@ define("ui/modalDialog/removeConversationHistoryDialog", [
   "text!views/chat/removeConversationHistoryDialogContent.html"
 ], function (e, t) {
   function f(e) {
-    this.text = h(), this.avatar = e.avatarUrl(), this.isGroupConversation = e.isGroupConversation();
+    this.text = h();
+    this.avatar = e.avatarUrl();
+    this.isGroupConversation = e.isGroupConversation();
   }
   function l() {
     return s.resolve(o.serviceLocator.FEATURE_FLAGS).isFeatureOn(o.featureFlags.USE_BUSINESS_WORDING);
@@ -49,7 +51,9 @@ define("ui/modalDialog/removeConversationHistoryDialog", [
       c.canceled();
     }
     var r, l = n.get().conversationsManager, c, h;
-    h = s.resolve(o.serviceLocator.PUBSUB), c = u.build(t, e), r = i.build({
+    h = s.resolve(o.serviceLocator.PUBSUB);
+    c = u.build(t, e);
+    r = i.build({
       title: p(),
       content: a,
       contentViewModel: new f(e),
@@ -57,9 +61,11 @@ define("ui/modalDialog/removeConversationHistoryDialog", [
       onConfirm: v,
       onCancel: m,
       confirmButtonTitle: d()
-    }), r.show();
-  }, t.canDeleteConversation = function (e) {
+    });
+    r.show();
+  };
+  t.canDeleteConversation = function (e) {
     var t = s.resolve(o.serviceLocator.FEATURE_FLAGS), n = t.isFeatureOn(o.featureFlags.REMOVE_CONVERSATION_HISTORY);
     return n && e.historyService.removeAll.enabled();
   };
-})
+});

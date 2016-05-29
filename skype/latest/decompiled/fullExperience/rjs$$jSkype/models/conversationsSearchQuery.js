@@ -40,10 +40,13 @@ define("jSkype/models/conversationsSearchQuery", [
         });
       }
       function u() {
-        s = e.getAllItems(), Object.keys(a.keywords).forEach(o), s.map(function (e) {
+        s = e.getAllItems();
+        Object.keys(a.keywords).forEach(o);
+        s.map(function (e) {
           var n = new i(t.get().conversationsManager._getOrCreateConversation(e.id));
           a.results._add(n);
-        }), r.resolve();
+        });
+        r.resolve();
       }
       var r = n.task(), s;
       return e._syncAllConversations.enabled() ? e._syncAllConversations().then(u) : u(), r.promise;
@@ -75,10 +78,12 @@ define("jSkype/models/conversationsSearchQuery", [
           call: l
         }
       ];
-    s.merge(this, new r()), f.forEach(function (e) {
+    s.merge(this, new r());
+    f.forEach(function (e) {
       a.supportedKeywords._add(e.key);
-    }), a.getMore = n.command(p, a.moreResultsAvailable);
+    });
+    a.getMore = n.command(p, a.moreResultsAvailable);
   }
   var t = e("jSkype/client"), n = e("jcafe-property-model"), r = e("jSkype/models/searchQuery"), i = e("jSkype/models/searchResult"), s = e("lodash-compat"), o = e("jSkype/modelHelpers/propertyValidator"), u = e("jSkype/modelHelpers/personHelper");
   return a;
-})
+});

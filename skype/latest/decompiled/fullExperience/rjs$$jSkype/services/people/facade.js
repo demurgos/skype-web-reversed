@@ -6,13 +6,16 @@ define("jSkype/services/people/facade", [
 ], function (e, t) {
   function r(e, t) {
     function r(e) {
-      t.setServiceName(e), t.setHeader("X-AppId", n.settings.peopleService.appId), t.setHeader("X-SerializeAs", "purejson");
+      t.setServiceName(e);
+      t.setHeader("X-AppId", n.settings.peopleService.appId);
+      t.setHeader("X-SerializeAs", "purejson");
     }
     this.getSettings = function () {
       return r("peopleServiceGetSettings"), t.build().then(function (t) {
         return e.get(n.settings.peopleService.settingsEndpoint, t);
       });
-    }, this.setSettings = function (i) {
+    };
+    this.setSettings = function (i) {
       var s = {
         Settings: [{
             Name: "Skype.AutoBuddy",
@@ -28,4 +31,4 @@ define("jSkype/services/people/facade", [
   t.build = function (e, t) {
     return new r(e, t);
   };
-})
+});

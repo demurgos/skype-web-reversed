@@ -75,7 +75,8 @@ define("browser/dom", [
       return;
     }
     var r = " " + e.className + " ";
-    r.indexOf(t) < 0 && (r += t + " "), e.className = r.replace(/^\s\s*/, "").replace(/\s\s*$/, "");
+    r.indexOf(t) < 0 && (r += t + " ");
+    e.className = r.replace(/^\s\s*/, "").replace(/\s\s*$/, "");
   }
   function x(e, t) {
     if (e.classList) {
@@ -133,5 +134,26 @@ define("browser/dom", [
     return r.hidden;
   }
   var n = e("lodash-compat"), r = e("browser/document"), i = e("browser/window"), s = 1;
-  t.createElement = p, t.findElement = d, t.isElement = o, t.getElement = v, t.getElementById = m, t.getElements = y, t.getSibling = b, t.getNavigableChildren = w, t.isA = a, t.isVisible = f, t.hasClass = E, t.getParentWithClass = l, t.getParentMatching = c, t.addClass = S, t.setClass = g, t.removeClass = x, t.extendObject = T, t.createDomObserverSubscription = N, t.getElementOffset = C, t.findFirstCommonAncestor = k, t.getLastChildElement = L, t.isDocumentHidden = A;
-})
+  t.createElement = p;
+  t.findElement = d;
+  t.isElement = o;
+  t.getElement = v;
+  t.getElementById = m;
+  t.getElements = y;
+  t.getSibling = b;
+  t.getNavigableChildren = w;
+  t.isA = a;
+  t.isVisible = f;
+  t.hasClass = E;
+  t.getParentWithClass = l;
+  t.getParentMatching = c;
+  t.addClass = S;
+  t.setClass = g;
+  t.removeClass = x;
+  t.extendObject = T;
+  t.createDomObserverSubscription = N;
+  t.getElementOffset = C;
+  t.findFirstCommonAncestor = k;
+  t.getLastChildElement = L;
+  t.isDocumentHidden = A;
+});

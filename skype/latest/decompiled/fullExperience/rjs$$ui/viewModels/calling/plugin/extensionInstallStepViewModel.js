@@ -14,7 +14,8 @@ define("ui/viewModels/calling/plugin/extensionInstallStepViewModel", [
 ], function (e, t) {
   var n = e("browser/chrome"), r = e("browser/document"), i = e("experience/settings"), s = e("constants/calling"), o = e("ui/viewModels/calling/plugin/extensionInstallHelper"), u = e("ui/viewModels/calling/helpers/browserInstallContent"), a = e("ui/telemetry/actions/actionNames"), f = e("constants/common"), l = e("services/serviceLocator"), c = function (s) {
       function p() {
-        m(), s.next();
+        m();
+        s.next();
       }
       function d() {
         s.nextOnFailed();
@@ -28,12 +29,18 @@ define("ui/viewModels/calling/plugin/extensionInstallStepViewModel", [
         r.head.appendChild(e);
       }
       var c = u.getInstallResources(), h = o.build();
-      this.id = t.STEP_ID, this.skypeChromeImageUrl = c.images.extensionStart, this.isFirefox = s.isFirefox, this.show = function () {
+      this.id = t.STEP_ID;
+      this.skypeChromeImageUrl = c.images.extensionStart;
+      this.isFirefox = s.isFirefox;
+      this.show = function () {
         var e = l.resolve(f.serviceLocator.ACTION_TELEMETRY);
-        v(), e.recordAction(a.audioVideo.pluginInstall.installExtension);
-      }, this.close = function () {
+        v();
+        e.recordAction(a.audioVideo.pluginInstall.installExtension);
+      };
+      this.close = function () {
         s.close();
-      }, this.installClick = function () {
+      };
+      this.installClick = function () {
         try {
           n.webstore.install(i.shellApp.chromeExtensionWebstoreUrl, p, d);
         } catch (e) {
@@ -41,7 +48,8 @@ define("ui/viewModels/calling/plugin/extensionInstallStepViewModel", [
         }
       };
     };
-  t.STEP_ID = s.CALLING_SETUP_STEPS.OVERLAY_EXTENSION_INSTALL, t.build = function (e) {
+  t.STEP_ID = s.CALLING_SETUP_STEPS.OVERLAY_EXTENSION_INSTALL;
+  t.build = function (e) {
     return new c(e);
   };
-})
+});

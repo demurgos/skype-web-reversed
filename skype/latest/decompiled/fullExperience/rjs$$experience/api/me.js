@@ -11,7 +11,8 @@ define("experience/api/me", [
   "ui/telemetry/actions/actionTelemetryApi"
 ], function (e, t) {
   var n = e("vendor/knockout"), r = e("cafe/applicationInstance"), i = e("swx-enums"), s = e("ui/modelHelpers/personHelper"), o = e("utils/common/cafeObservable"), u = e("ui/telemetry/actions/actionNames"), a = e("ui/telemetry/actions/actionTelemetryApi"), f = n.observable(!1);
-  t.isExpanded = f, t.expose = function () {
+  t.isExpanded = f;
+  t.expose = function () {
     function v() {
       var e = [];
       return d() ? (e = h().filter(function (e) {
@@ -19,7 +20,8 @@ define("experience/api/me", [
       }), e.length) : 0;
     }
     function m(t) {
-      e.status(t), p.recordAction(u.presence.change, { presence: t });
+      e.status(t);
+      p.recordAction(u.presence.change, { presence: t });
     }
     function g() {
       e.status.reset();
@@ -46,4 +48,4 @@ define("experience/api/me", [
       isExpanded: f
     };
   };
-})
+});

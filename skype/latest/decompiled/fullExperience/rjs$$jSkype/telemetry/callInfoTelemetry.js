@@ -46,7 +46,8 @@ define("jSkype/telemetry/callInfoTelemetry", [
   var n = e("lodash-compat"), r = e("jSkype/client"), i = e("jSkype/settings"), s = e("jSkype/modelHelpers/contacts/dataMappers/dataMaps"), o = e("utils/calling/callingStack"), u = e("swx-enums"), a = e("swx-utils-common").guid, f = e("constants/common"), l = {};
   t.build = function (e, t) {
     return l[e.conversationId] || (l[e.conversationId] = h(e, t)), l[e.conversationId];
-  }, t.dispose = function (e) {
+  };
+  t.dispose = function (e) {
     l[e.conversationId] && (l[e.conversationId].dispose(), delete l[e.conversationId]);
   };
-})
+});

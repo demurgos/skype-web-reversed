@@ -3,7 +3,10 @@ define("utils/common/eventMixin", [
   "lodash-compat"
 ], function (e) {
   function n() {
-    this.listeners = null, this._disposeExtended = !1, this._parentContext = null, this._childrenContexts = null;
+    this.listeners = null;
+    this._disposeExtended = !1;
+    this._parentContext = null;
+    this._childrenContexts = null;
   }
   function r(e, t, n) {
     return e.filter(function (e) {
@@ -24,8 +27,10 @@ define("utils/common/eventMixin", [
       return;
     var t = e.dispose;
     e.dispose = function () {
-      e.disposeEvents(), t && t.call(e);
-    }, e._disposeExtended = !0;
+      e.disposeEvents();
+      t && t.call(e);
+    };
+    e._disposeExtended = !0;
   }
   var t = e("lodash-compat");
   return n.prototype.DIRECTION = {
@@ -38,16 +43,23 @@ define("utils/common/eventMixin", [
       o = s(e, t, n.DIRECTION.PARENT, r) || o;
     }), o) : !1;
   }, n.prototype.addChildContext = function (t) {
-    this._childrenContexts = this._childrenContexts || [], this._childrenContexts.push(t), o(this);
+    this._childrenContexts = this._childrenContexts || [];
+    this._childrenContexts.push(t);
+    o(this);
   }, n.prototype.removeChildContext = function (t) {
     if (this._childrenContexts) {
       var n = this._childrenContexts.indexOf(t);
       n !== -1 && this._childrenContexts.splice(n, 1);
     }
   }, n.prototype.setContext = function (t) {
-    this._parentContext = t, this._parentContext.addChildContext && this._parentContext.addChildContext(this), o(this);
+    this._parentContext = t;
+    this._parentContext.addChildContext && this._parentContext.addChildContext(this);
+    o(this);
   }, n.prototype.disposeEvents = function () {
-    this.listeners = null, this._childrenContexts = null, this._parentContext && this._parentContext.removeChildContext && this._parentContext.removeChildContext(this), this._parentContext = null;
+    this.listeners = null;
+    this._childrenContexts = null;
+    this._parentContext && this._parentContext.removeChildContext && this._parentContext.removeChildContext(this);
+    this._parentContext = null;
   }, n.prototype.registerEvent = function (t, s, u, a) {
     var f, l, c;
     return !t || !s ? null : (o(this), this.listeners = this.listeners || {}, this.listeners[t] = this.listeners[t] || [], f = this.listeners[t], (u & n.DIRECTION.ANY) === 0 && (a = u, u = n.DIRECTION.ANY), u = u || n.DIRECTION.ANY, l = r(f, s, a), l ? null : (c = {
@@ -60,8 +72,10 @@ define("utils/common/eventMixin", [
       }
     }));
   }, n.prototype.forwardEvent = function (t, r, i, s, o) {
-    (s & n.DIRECTION.ANY) === 0 && (o = s, s = n.DIRECTION.ANY), this.registerEvent(t, function (e) {
-      i && i.call(o, e), this.dispatchEvent(t, e, r, o);
+    (s & n.DIRECTION.ANY) === 0 && (o = s, s = n.DIRECTION.ANY);
+    this.registerEvent(t, function (e) {
+      i && i.call(o, e);
+      this.dispatchEvent(t, e, r, o);
     }, s, this);
   }, t.assign(n, n.prototype), n;
-})
+});

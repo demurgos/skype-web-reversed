@@ -17,5 +17,7 @@ define("ui/components/chat/chatLog", [
     return l.setContext(c), l.init(e.conversationModel, f, h, p), l;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/chatLog"), i = e("jsviews/chat/chatLog"), s = e("ui/viewModels/chat/message"), o = e("ui/viewModels/chat/conversationProcessor"), u = e("utils/common/resizeHandler"), a = e("telemetry/chat/conversationHistoryLoad");
-  t.name = e("constants/components").chat.CHAT_LOG, t.template = e("text!views/chat/chatLog.html"), t.viewModel = { createViewModel: f };
-})
+  t.name = e("constants/components").chat.CHAT_LOG;
+  t.template = e("text!views/chat/chatLog.html");
+  t.viewModel = { createViewModel: f };
+});

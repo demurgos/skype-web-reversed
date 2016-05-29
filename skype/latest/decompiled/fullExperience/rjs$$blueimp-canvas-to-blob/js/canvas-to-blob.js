@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   var t = e.HTMLCanvasElement && e.HTMLCanvasElement.prototype, n = e.Blob && function () {
       try {
         return Boolean(new Blob());
@@ -16,7 +16,12 @@ function (e) {
       t = e.match(s);
       if (!t)
         throw new Error("invalid data URI");
-      o = t[2] ? t[1] : "text/plain" + (t[3] || ";charset=US-ASCII"), u = !!t[4], a = e.slice(t[0].length), u ? f = atob(a) : f = decodeURIComponent(a), l = new ArrayBuffer(f.length), c = new Uint8Array(l);
+      o = t[2] ? t[1] : "text/plain" + (t[3] || ";charset=US-ASCII");
+      u = !!t[4];
+      a = e.slice(t[0].length);
+      u ? f = atob(a) : f = decodeURIComponent(a);
+      l = new ArrayBuffer(f.length);
+      c = new Uint8Array(l);
       for (h = 0; h < f.length; h += 1)
         c[h] = f.charCodeAt(h);
       return n ? new Blob([r ? c : l], { type: o }) : (p = new i(), p.append(l), p.getBlob(o));
@@ -25,7 +30,8 @@ function (e) {
     r && t.toDataURL && o ? e(o(this.toDataURL(n, r))) : e(this.mozGetAsFile("blob", n));
   } : t.toDataURL && o && (t.toBlob = function (e, t, n) {
     e(o(this.toDataURL(t, n)));
-  })), typeof define == "function" && define.amd ? define("blueimp-canvas-to-blob/js/canvas-to-blob", [], function () {
+  }));
+  typeof define == "function" && define.amd ? define("blueimp-canvas-to-blob/js/canvas-to-blob", [], function () {
     return o;
   }) : typeof module == "object" && module.exports ? module.exports = o : e.dataURLtoBlob = o;
-}(window)
+}(window));

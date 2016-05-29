@@ -27,10 +27,12 @@ define("notifications/modelObservers/incomingCallObserver", [
       if (o.getBrowserInfo().isShellApp)
         return;
       if (w(i) && !d()) {
-        h({ name: "LocalUserOffline" }), e.audioService.reject();
+        h({ name: "LocalUserOffline" });
+        e.audioService.reject();
         return;
       }
-      w(i) && v(e), b(i) && g(e);
+      w(i) && v(e);
+      b(i) && g(e);
     }
     function d() {
       return f.mePerson.status() === n.onlineStatus.Online;
@@ -96,13 +98,15 @@ define("notifications/modelObservers/incomingCallObserver", [
       var t, n, o = i.setTimeout(u, a.incomingCalls.notificationTimeout);
       n = e.active.subscribe(function (e) {
         e || (clearTimeout(o), n.dispose());
-      }), e.type === r.notifications.AUDIO ? e.sender.uri() ? s.notify(e) : t = e.sender.uri.subscribe(function (n) {
+      });
+      e.type === r.notifications.AUDIO ? e.sender.uri() ? s.notify(e) : t = e.sender.uri.subscribe(function (n) {
         n && (s.notify(e), t.dispose());
       }) : s.notify(e);
     }
     var e = [], f, l = u.get();
     this.observe = function (e) {
-      e.conversationsManager.conversations.added(c), f = e.personsAndGroupsManager;
+      e.conversationsManager.conversations.added(c);
+      f = e.personsAndGroupsManager;
     };
   }
   var t = e("notifications/factory"), n = e("swx-enums"), r = e("constants/common"), i = e("browser/window"), s = e("notifications/common/notificationHub"), o = e("browser/detect"), u = e("ui/telemetry/telemetryClient"), a = e("experience/settings");
@@ -111,4 +115,4 @@ define("notifications/modelObservers/incomingCallObserver", [
       return new f();
     }
   };
-})
+});

@@ -62,10 +62,11 @@ define("services/ecs/configLoader", [
             r.request(o, "onConfigurationLoaded_" + l, h, p);
         }
         var u = 0, a = 0, l = o;
-        o += 1, !f || !f.length ? t(new Error("no configuration service endpoint")) : (c(f[a]), a += 1);
+        o += 1;
+        !f || !f.length ? t(new Error("no configuration service endpoint")) : (c(f[a]), a += 1);
       });
     };
   }
   var t = e("lodash-compat"), n = e("experience/settings"), r = e("services/ecs/jsonp"), i = e("reqwest");
   return new s();
-})
+});

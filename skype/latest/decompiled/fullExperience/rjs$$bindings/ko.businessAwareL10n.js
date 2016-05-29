@@ -23,4 +23,4 @@ define("bindings/ko.businessAwareL10n", [
   }
   var t = e("vendor/knockout"), n = e("constants/common"), r = e("services/serviceLocator");
   return { register: i };
-})
+});

@@ -9,7 +9,8 @@ define("telemetry/shortCircuit/shortCircuit", [
   function s() {
     this.sendStartEvent = function () {
       n.get().sendEvent(i.telemetry.uiTenantToken, r.shortCircuit.START, {});
-    }, this.sendFinishedEvent = function () {
+    };
+    this.sendFinishedEvent = function () {
       n.get().sendEvent(i.telemetry.uiTenantToken, r.shortCircuit.FINISHED, {});
     };
   }
@@ -17,4 +18,4 @@ define("telemetry/shortCircuit/shortCircuit", [
   t.build = function () {
     return new s();
   };
-})
+});

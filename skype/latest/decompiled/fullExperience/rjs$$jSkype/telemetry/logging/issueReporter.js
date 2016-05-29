@@ -42,4 +42,4 @@ define("jSkype/telemetry/logging/issueReporter", [
   }
   var t = e("utils/common/logTracer/api"), n = e("jSkype/services/serviceAccessLayer/requestDispatcher"), r = e("lodash-compat"), i = e("jSkype/settings"), s = t.getLogger("issueReporter");
   return { report: u };
-})
+});

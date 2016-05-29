@@ -11,9 +11,10 @@ define("jSkype/services/webapi/boundary/dispatcher", [
     this.success = function (e) {
       var t = i(e.response);
       n.get().publish("webapi:data", t);
-    }, this.error = function (e) {
+    };
+    this.error = function (e) {
       var t = i(e);
       n.get().publish("webapi:error", t);
     };
   };
-})
+});

@@ -43,7 +43,8 @@ define("experience/experience", [
 ], function (e, t) {
   function q() {
     var e = h.platformId, t = R(), n = h.biAppName;
-    h.uiVersion = e + "/" + t + "//" + n, h.displayAppVersion && !F.get().isIntegratedProperty() && (document.title = "Skype " + t);
+    h.uiVersion = e + "/" + t + "//" + n;
+    h.displayAppVersion && !F.get().isIntegratedProperty() && (document.title = "Skype " + t);
   }
   function R() {
     try {
@@ -59,26 +60,33 @@ define("experience/experience", [
       configLoadDuration: e.configLoadDuration,
       packageLoadDuration: e.packageLoadDuration,
       experienceInitializeDuration: t.duration()
-    }), r.mark(I.EXPERIENCE.TTL_START);
+    });
+    r.mark(I.EXPERIENCE.TTL_START);
   }
   function z() {
     var e = P.get(), t;
-    D.addIdentityToAllEvents(e), t = f.Application.create({
+    D.addIdentityToAllEvents(e);
+    t = f.Application.create({
       settings: h,
       telemetryManager: e
-    }), a.set(t);
+    });
+    a.set(t);
   }
   function W() {
     var e = {};
     return e.serviceLocatorInitializer = S.registerDependencies({ settings: h }), e.initApplication = z(), e.overrideSettings = Q(), e.runtimeErrorsHandler = B.init(), e.instrumentTelemetryEvents = K(), e.loadCss = et(), e.initCallingStack = $(), e.initAutoCalling = J(), e.prefetcher = O.prefetchAssets(), e.appVisibilityProvider = x.init(), e.inAppActivityTracker = _.init(a.get().signInManager), e.appReactivationManager = N.init(), e.activityReportManager = C.init(), e.elementQueryHelper = k.initialiseSelectors(), e.notifications = v.init(), e.conversationTracker = H.init(), e.welcomeDialog = j.init(), e.subscribeVisibilityProvider = it(), e.loadYoutubePlayerAPI = Z(), e.initTranslatorService = G(), e.initUserPreferences = Y(), e;
   }
   function X(e) {
-    n.merge(h, e.config), n.merge(h.initParams, e.initParams), [
+    n.merge(h, e.config);
+    n.merge(h.initParams, e.initParams);
+    [
       "locale",
       "variant"
     ].forEach(function (e) {
       h.initParams[e] = h.initParams[e].toLowerCase();
-    }), h.sessionId = L.create(), V();
+    });
+    h.sessionId = L.create();
+    V();
   }
   function V() {
     var e = i.getBrowserInfo();
@@ -92,13 +100,15 @@ define("experience/experience", [
   }
   function K() {
     var e = p.build();
-    e.init("experience"), e.init("people");
+    e.init("experience");
+    e.init("people");
   }
   function Q() {
     var e = i.getBrowserInfo(), t = E.resolve(o.serviceLocator.FEATURE_FLAGS);
     if (t.isFeatureOn(o.featureFlags.URL_OVERRIDE_ENABLED)) {
       var n = e.getUrlParams();
-      n.locale && (h.initParams.locale = n.locale.toLowerCase()), n.variant && (h.initParams.variant = n.variant.toLowerCase());
+      n.locale && (h.initParams.locale = n.locale.toLowerCase());
+      n.variant && (h.initParams.variant = n.variant.toLowerCase());
     }
   }
   function G() {
@@ -113,7 +123,8 @@ define("experience/experience", [
     var e, t;
     return e = new Promise(function (e) {
       function t() {
-        n.unsubscribe(o.apiUIEvents.SWX_TIMELINE_LOADED, t), e();
+        n.unsubscribe(o.apiUIEvents.SWX_TIMELINE_LOADED, t);
+        e();
       }
       var n = E.resolve(o.serviceLocator.PUBSUB);
       n.subscribe(o.apiUIEvents.SWX_TIMELINE_LOADED, t);
@@ -135,14 +146,16 @@ define("experience/experience", [
   }
   function et() {
     var e = h.assetsBaseUrl, t = h.appBaseUrl;
-    A.loadStyle(e + "/css/common.css"), A.loadStyle(t + "/css/swx.css");
+    A.loadStyle(e + "/css/common.css");
+    A.loadStyle(t + "/css/swx.css");
   }
   function tt() {
     var e = i.getBrowserInfo(), t = E.resolve(o.serviceLocator.FEATURE_FLAGS);
     return t.isFeatureOn(o.featureFlags.FAIL_INITIALIZATION_FOR_IE_AND_EDGE) && (e.isEdge || e.isIeEngine);
   }
   function nt() {
-    rt(), a.get()._standbyMode && a.get()._standbyMode(!1);
+    rt();
+    a.get()._standbyMode && a.get()._standbyMode(!1);
   }
   function rt() {
     T.focusTrackingEnabled = !0;
@@ -153,7 +166,8 @@ define("experience/experience", [
   }
   e("helpers/polyfills");
   var n = e("lodash-compat"), r = e("usertiming"), i = e("browser/detect"), s = e("browser/window"), o = e("constants/common"), u = e("swx-enums"), a = e("cafe/applicationInstance"), f = e("jCafe"), l = e("experience/api/builder"), c = e("experience/componentsLoader"), h = e("experience/settings"), p = e("experience/telemetryFactory"), d = e("experience/koBindingsRegistrar"), v = e("notifications/init"), m = e("utils/calling/callingStack"), g = e("services/calling/autoCalling"), y = e("services/g11n/init"), b = e("services/i18n/init"), w = e("services/pes.v2/configSync"), E = e("services/serviceLocator"), S = e("experience/serviceLocatorInitializer"), x = e("utils/common/appVisibilityProvider"), T = e("utils/common/applicationFocusManager"), N = e("utils/common/applicationReactivationManager"), C = e("utils/common/activityReportManager"), k = e("utils/common/elementQueryHelper"), L = e("swx-utils-common").guid, A = e("swx-utils-common").loader, O = e("utils/common/prefetcher"), M = e("swx-utils-common").stopwatch, _ = e("telemetry/usage/inAppActivityTracker"), D = e("ui/telemetry/identityTelemetry"), P = e("ui/telemetry/telemetryClient"), H = e("ui/viewModels/calling/helpers/conversationTracker"), B = e("telemetry/errors/runtimeErrorsHandler"), j = e("ui/modalDialog/welcomeDialog"), F = e("utils/common/styleModeHelper"), I = o.telemetry.performanceMarks;
-  s._perfRefForUserTimingPolyfill = s.performance, t.init = function (t, n, r) {
+  s._perfRefForUserTimingPolyfill = s.performance;
+  t.init = function (t, n, r) {
     function f() {
       U(t, i);
     }
@@ -162,7 +176,8 @@ define("experience/experience", [
     }
     function v() {
       var e = E.resolve(o.serviceLocator.PUBSUB);
-      e.publish(o.events.system.EXPERIENCE_READY), a.get().signInManager.state.once(u.loginState.SignedIn, function () {
+      e.publish(o.events.system.EXPERIENCE_READY);
+      a.get().signInManager.state.once(u.loginState.SignedIn, function () {
         w.init();
       });
     }
@@ -175,5 +190,6 @@ define("experience/experience", [
     }), s.componentsReady = s.componentsLoaderInit.then(f), s.apiReady = s.componentsReady.then(p), s.experienceReady = s.apiReady.then(v), s.everything = s.experienceReady.catch(function (e) {
       return r(e), Promise.reject(e);
     }), d.registerBindings(), s);
-  }, s.Skype && s.Skype.onExperienceLoaded && s.Skype.onExperienceLoaded(t);
-})
+  };
+  s.Skype && s.Skype.onExperienceLoaded && s.Skype.onExperienceLoaded(t);
+});

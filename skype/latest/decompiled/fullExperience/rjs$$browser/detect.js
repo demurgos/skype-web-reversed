@@ -180,4 +180,4 @@ define("browser/detect", [
     DEVICE_TYPES: s,
     CSS_PROPERTIES: u
   };
-})
+});

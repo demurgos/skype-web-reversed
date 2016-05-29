@@ -8,4 +8,4 @@ define("jSkype/services/stratus/main", [
   t.getInstance = function (e, t) {
     return r || (r = new n(e, t)), r;
   };
-})
+});

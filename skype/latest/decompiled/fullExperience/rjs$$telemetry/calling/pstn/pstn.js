@@ -15,14 +15,17 @@ define("telemetry/calling/pstn/pstn", [
     }
     this.initiatingPSTNCall = function (t) {
       e(r.eventName.PSTN_CALL_INITIATED, t);
-    }, this.addingSubscription = function (t) {
+    };
+    this.addingSubscription = function (t) {
       e(r.eventName.ADD_SUBSCRIPTION, t);
-    }, this.addingCredit = function (t) {
+    };
+    this.addingCredit = function (t) {
       e(r.eventName.ADD_CREDIT, t);
-    }, this.updatingCreditBalance = function (e) {
+    };
+    this.updatingCreditBalance = function (e) {
       i(r.eventName.CREDIT_BALANCE_UPDATE_CALL_END, e);
     };
   }
   var t = e("experience/settings"), n = e("ui/telemetry/telemetryClient"), r = e("constants/common").telemetry.pstn;
   return new i();
-})
+});

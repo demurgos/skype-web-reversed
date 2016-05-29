@@ -24,7 +24,9 @@ define("ui/components/chat/pes/expressionPicker", [
   }
   function v(e) {
     l ? a.setTimeout(d.bind(null, e), 5000) : o.subscribe(r.apiUIEvents.SWX_TIMELINE_LOADED, function t() {
-      l = !0, o.unsubscribe(r.apiUIEvents.SWX_TIMELINE_LOADED, t), a.setTimeout(d.bind(null, e), 5000);
+      l = !0;
+      o.unsubscribe(r.apiUIEvents.SWX_TIMELINE_LOADED, t);
+      a.setTimeout(d.bind(null, e), 5000);
     });
   }
   function m() {
@@ -37,8 +39,17 @@ define("ui/components/chat/pes/expressionPicker", [
   }
   function y() {
     var e = u.resolve(r.serviceLocator.PES_CONFIG_SERVICE), n = e.getConfiguration();
-    s.process(n), t._setCachedModel(n), v(n), o.publish(c.personalExpression.CONFIG_PROCESSED, n);
+    s.process(n);
+    t._setCachedModel(n);
+    v(n);
+    o.publish(c.personalExpression.CONFIG_PROCESSED, n);
   }
   var n = e("vendor/knockout"), r = e("constants/common"), i = e("ui/viewModels/chat/pes/expressionPicker"), s = e("services/pes/configProcessor"), o = e("services/pubSub/pubSub"), u = e("services/serviceLocator"), a = e("browser/window"), f, l = !1, c = r.events;
-  o.subscribe(c.personalExpression.CONFIG_INITIALIZED, y), t.name = e("constants/components").chat.EXPRESSION_PICKER, t.template = e("text!views/chat/pes/expressionPicker.html"), t.viewModel = { createViewModel: g }, t._cachedViewModel = m, t._getCachedModel = h, t._setCachedModel = p;
-})
+  o.subscribe(c.personalExpression.CONFIG_INITIALIZED, y);
+  t.name = e("constants/components").chat.EXPRESSION_PICKER;
+  t.template = e("text!views/chat/pes/expressionPicker.html");
+  t.viewModel = { createViewModel: g };
+  t._cachedViewModel = m;
+  t._getCachedModel = h;
+  t._setCachedModel = p;
+});

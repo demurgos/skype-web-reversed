@@ -9,11 +9,15 @@ define("ui/viewModels/calling/baseCallControlViewModel", [
     this.isCallControlEnabled = t.computed(function () {
       var e = o();
       return s(e) && (!i || i());
-    }), this.isCallConnected = t.computed(function () {
+    });
+    this.isCallConnected = t.computed(function () {
       var e = o();
       return e === r.callConnectionState.Connected;
-    }), this.dispose = function () {
-      o.dispose(), this.isCallControlEnabled.dispose(), this.isCallConnected.dispose();
+    });
+    this.dispose = function () {
+      o.dispose();
+      this.isCallControlEnabled.dispose();
+      this.isCallConnected.dispose();
     };
   }
   function s(e) {
@@ -21,4 +25,4 @@ define("ui/viewModels/calling/baseCallControlViewModel", [
   }
   var t = e("vendor/knockout"), n = e("utils/common/cafeObservable"), r = e("swx-enums");
   return i;
-})
+});

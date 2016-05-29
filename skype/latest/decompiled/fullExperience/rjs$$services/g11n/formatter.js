@@ -105,4 +105,4 @@ define("services/g11n/formatter", [], function () {
     formatDate: t,
     formatDuration: i
   };
-})
+});

@@ -41,4 +41,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/callAcceptanceRequest", [
     };
     return u;
   }, i;
-})
+});

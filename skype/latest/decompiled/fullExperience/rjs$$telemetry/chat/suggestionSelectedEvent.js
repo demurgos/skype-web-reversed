@@ -33,9 +33,13 @@ define("telemetry/chat/suggestionSelectedEvent", [
           return t.telemetry.NOT_AVAILABLE;
         }
       }
-    }, e.data = {}, e.publish = function () {
-      e.data.selectedIndex !== t.telemetry.NOT_AVAILABLE && i.get().sendEvent(n.telemetry.uiTenantToken, s, e.data), e.reset();
-    }, e.reset = function () {
+    };
+    e.data = {};
+    e.publish = function () {
+      e.data.selectedIndex !== t.telemetry.NOT_AVAILABLE && i.get().sendEvent(n.telemetry.uiTenantToken, s, e.data);
+      e.reset();
+    };
+    e.reset = function () {
       e.data = {
         criteriaLength: t.telemetry.NOT_AVAILABLE,
         resolution: t.telemetry.NOT_AVAILABLE,
@@ -45,8 +49,9 @@ define("telemetry/chat/suggestionSelectedEvent", [
         trigger: t.telemetry.NOT_AVAILABLE,
         visibleMatchCount: t.telemetry.NOT_AVAILABLE
       };
-    }, e.reset();
+    };
+    e.reset();
   }
   var t = e("constants/common"), n = e("experience/settings"), r = e("constants/keys"), i = e("ui/telemetry/telemetryClient");
   return s;
-})
+});

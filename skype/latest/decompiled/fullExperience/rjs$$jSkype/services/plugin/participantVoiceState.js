@@ -6,4 +6,4 @@ define("jSkype/services/plugin/participantVoiceState", {
   earlyMedia: "EarlyMedia",
   leaving: "Leaving",
   finished: "Finished"
-})
+});

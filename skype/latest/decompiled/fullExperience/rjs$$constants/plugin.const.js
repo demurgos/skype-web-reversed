@@ -56,4 +56,4 @@ define("constants/plugin.const", [], function () {
       REASON_ALREADY_EXISTS: "AlreadyExists"
     }
   };
-})
+});

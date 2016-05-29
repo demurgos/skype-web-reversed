@@ -12,7 +12,11 @@ define("ui/viewModels/people/contactListMenuItem", [
 ], function (e, t) {
   function f(e) {
     var t = this, f = o.resolve(s.serviceLocator.ACTION_TELEMETRY);
-    t.id = e.id ? "menuItem-" + e.id : "", t.strategy = e.strategy, t.text = e.text || "", t.selected = r.observable(Boolean(e.selected)), t.onClick = function (t, r) {
+    t.id = e.id ? "menuItem-" + e.id : "";
+    t.strategy = e.strategy;
+    t.text = e.text || "";
+    t.selected = r.observable(Boolean(e.selected));
+    t.onClick = function (t, r) {
       return e.uiAction && f.recordAction(e.uiAction), e.perfMarker && i.mark(e.perfMarker), e.event && a.get().sendEvent(u.uiTenantToken, e.event.name, e.event.data), n.isFunction(e.callback) && e.callback(), r.preventDefault(), !0;
     };
   }
@@ -20,4 +24,4 @@ define("ui/viewModels/people/contactListMenuItem", [
   t.build = function (e) {
     return e || (e = {}), new f(e);
   };
-})
+});

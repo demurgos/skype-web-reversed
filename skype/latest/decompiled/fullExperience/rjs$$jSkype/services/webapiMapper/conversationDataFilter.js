@@ -22,13 +22,15 @@ define("jSkype/services/webapiMapper/conversationDataFilter", [
       n && n.call(e, t);
     }
     function u(e) {
-      e.type === "EventMessage" && e.resourceType === "ThreadUpdate" && e.resource.type === "Thread" && o.updateNGCCallState(e.resource.id, e.resource.properties), r(e);
+      e.type === "EventMessage" && e.resourceType === "ThreadUpdate" && e.resource.type === "Thread" && o.updateNGCCallState(e.resource.id, e.resource.properties);
+      r(e);
     }
     var t = i.isFeatureOn(s.featureFlags.GVC_JOINING);
     this.eventMessages = function (t) {
       var r, i, s;
       for (r = 0; r < t.length; r++) {
-        i = t[r], s = i.resource.messagetype;
+        i = t[r];
+        s = i.resource.messagetype;
         if (l(i))
           return;
         a.indexOf(s) > -1 ? e.handleTypingControl(i) : s === f ? n(i) : u(i);
@@ -42,4 +44,4 @@ define("jSkype/services/webapiMapper/conversationDataFilter", [
   t.build = function (e) {
     return new c(e);
   };
-})
+});

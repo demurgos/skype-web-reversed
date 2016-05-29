@@ -16,7 +16,8 @@ define("ui/viewModels/chat/conversationTopic", [
         d || (d = !0, i.execute(function () {
           if (!d)
             return;
-          t.topic(y()), d = !1;
+          t.topic(y());
+          d = !1;
         }));
       }
       function g() {
@@ -44,24 +45,32 @@ define("ui/viewModels/chat/conversationTopic", [
       function w() {
         p.forEach(function (e) {
           e.subscription.dispose();
-        }), p = [];
+        });
+        p = [];
       }
       function E() {
-        w(), l.participants.changed.off(g);
+        w();
+        l.participants.changed.off(g);
       }
       function S(e) {
         var n = e ? f.getSanitizedTopic(e) : v;
-        u.isPstnEndpoint(n) && (n = a.forceLTREmbedding(n)), t.topic(n), d = !1;
+        u.isPstnEndpoint(n) && (n = a.forceLTREmbedding(n));
+        t.topic(n);
+        d = !1;
       }
       function x(e) {
-        S(e), E();
+        S(e);
+        E();
       }
       var t = this, l = e, c = o.newObservableProperty(l.topic), h = c.subscribe(x), p = [], d, v = r.fetch({ key: "conversation_header_topic_untitled_conversation" });
-      t.topic = n.observable(v), c() ? S(c()) : b(), t.dispose = function () {
-        h.dispose(), E();
+      t.topic = n.observable(v);
+      c() ? S(c()) : b();
+      t.dispose = function () {
+        h.dispose();
+        E();
       };
     };
   t.build = function (e) {
     return new l(e);
   };
-})
+});

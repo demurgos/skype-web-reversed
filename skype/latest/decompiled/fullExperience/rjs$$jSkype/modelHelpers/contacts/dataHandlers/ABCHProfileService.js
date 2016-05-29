@@ -45,7 +45,8 @@ define("jSkype/modelHelpers/contacts/dataHandlers/ABCHProfileService", [
     }
     this.onSuccess = function (n) {
       return t(n) ? Promise.reject(o(n)) : Promise.resolve(e(n));
-    }, this.onError = function (e) {
+    };
+    this.onError = function (e) {
       return Promise.reject(e);
     };
   }
@@ -56,4 +57,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/ABCHProfileService", [
   t.build = function () {
     return new o();
   };
-})
+});

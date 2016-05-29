@@ -14,4 +14,4 @@ define("jSkype/services/internalPubSub", [
     get: i,
     reset: s
   };
-})
+});

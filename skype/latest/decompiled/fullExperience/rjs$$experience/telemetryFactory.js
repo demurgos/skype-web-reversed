@@ -26,4 +26,4 @@ define("experience/telemetryFactory", [
   t.build = function () {
     return new s();
   };
-})
+});

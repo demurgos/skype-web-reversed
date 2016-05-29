@@ -55,4 +55,4 @@ define("services/telemetry/calling.instrumentation.eventTypes", [
       }
     ]
   };
-})
+});

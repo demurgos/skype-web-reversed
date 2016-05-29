@@ -11,5 +11,7 @@ define("ui/components/experience/searchResults", [
     return r.init(t.element), r;
   }
   var n = e("ui/viewModels/search/results");
-  t.name = e("constants/components").experience.SEARCH_RESULTS, t.template = e("text!views/search/results.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").experience.SEARCH_RESULTS;
+  t.template = e("text!views/search/results.html");
+  t.viewModel = { createViewModel: r };
+});

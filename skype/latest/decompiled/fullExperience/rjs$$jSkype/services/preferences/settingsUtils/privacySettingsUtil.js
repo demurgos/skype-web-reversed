@@ -42,7 +42,8 @@ define("jSkype/services/preferences/settingsUtils/privacySettingsUtil", [
   var n = e("jSkype/client"), r = e("constants/common"), i = e("swx-enums"), s = e("jSkype/settings"), o = e("utils/common/logTracer/api"), u = e("jSkype/modelHelpers/participantHelper"), a = e("constants/people"), f = e("browser/detect"), l = o.getLogger("Settings");
   t.checkCallPolicySettings = function (e) {
     return s.isFeatureOn(r.featureFlags.SKYPE_CALL_POLICY_SUPPORT) ? e.isGroupConversation() ? Promise.resolve(!0) : p(e.participants(0), r.userSettings.preferences.SKYPE_CALL_POLICY_SUPPORT) : Promise.resolve(!0);
-  }, t.checkVideoPolicySettings = function (e) {
+  };
+  t.checkVideoPolicySettings = function (e) {
     return s.isFeatureOn(r.featureFlags.SKYPE_VIDEO_CALLING_POLICY_SUPPORT) ? p(e, r.userSettings.preferences.SKYPE_VIDEO_CALLING_POLICY_SUPPORT) : Promise.resolve(!0);
   };
-})
+});

@@ -16,13 +16,15 @@ define("services/pes.v2/configProcessor", [
     var e = this;
     e.process = function (n) {
       n.tabs.forEach(function (t, i) {
-        r.process(t, i), t.packs.forEach(function (t) {
+        r.process(t, i);
+        t.packs.forEach(function (t) {
           t.items.forEach(function (t) {
             e._processItem(t, n, "process");
           });
         });
       });
-    }, e._processItem = function (e, t, n) {
+    };
+    e._processItem = function (e, t, n) {
       n = n || "process";
       if (!e)
         throw new Error("Ad hoc fetching is not implemented, yet!");
@@ -36,18 +38,23 @@ define("services/pes.v2/configProcessor", [
       default:
         throw new Error(e.type + " is not supported, yet!");
       }
-    }, e.prefetch = function (i) {
+    };
+    e.prefetch = function (i) {
       var s = [], o = [], u = [], a = n.cloneDeep(i, function (e) {
           return e && n.isFunction(e.then) ? {} : undefined;
         });
       return a.tabs.forEach(function (t) {
         var n = r.getResources(t);
-        s.push(n.styleDef), o.splice(0, 0, n.prefetchUrls[0]), t.packs.forEach(function (t) {
+        s.push(n.styleDef);
+        o.splice(0, 0, n.prefetchUrls[0]);
+        t.packs.forEach(function (t) {
           t.items.forEach(function (t) {
             var n = e._processItem(t, i, "getResources");
-            s.push(n.styleDef), n.encoderMaps.forEach(function (e) {
+            s.push(n.styleDef);
+            n.encoderMaps.forEach(function (e) {
               u.push(e);
-            }), n.prefetchUrls.forEach(function (e) {
+            });
+            n.prefetchUrls.forEach(function (e) {
               o.push(e);
             });
           });
@@ -57,9 +64,11 @@ define("services/pes.v2/configProcessor", [
         prefetchUrls: o,
         encodingMaps: u
       };
-    }, e.register = function (n) {
+    };
+    e.register = function (n) {
       var r = "";
-      t.map = {}, n.encodingMaps.forEach(function (e) {
+      t.map = {};
+      n.encodingMaps.forEach(function (e) {
         switch (e.type) {
         case o.itemTypes.emoticon.id:
           t.map[e.shortcut] = e.id;
@@ -71,13 +80,16 @@ define("services/pes.v2/configProcessor", [
         default:
           throw new Error("mapping.type not supported yet:" + e.type);
         }
-      }), n.pesStyles.forEach(function (e) {
+      });
+      n.pesStyles.forEach(function (e) {
         r += e;
-      }), a(r);
-    }, e.prefetchImages = function (t) {
+      });
+      a(r);
+    };
+    e.prefetchImages = function (t) {
       u.prefetchImages(t.prefetchUrls || []);
     };
   }
   var t = e("services/pes/emoticons/encoder"), n = e("lodash-compat"), r = e("services/pes.v2/tabs/fetcher"), i = e("services/pes.v2/emoticons/fetcher"), s = e("services/pes.v2/mojis/fetcher"), o = e("services/pes/constants"), u = e("utils/common/prefetcher");
   return new a();
-})
+});

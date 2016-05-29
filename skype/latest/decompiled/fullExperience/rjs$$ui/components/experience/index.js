@@ -17,4 +17,4 @@ define("ui/components/experience/index", [
     e("ui/components/experience/selectBox"),
     e("ui/components/experience/toggleButton")
   ];
-})
+});

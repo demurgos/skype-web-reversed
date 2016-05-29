@@ -8,4 +8,4 @@ define("jSkype/telemetry/logging/callingLogTracer", [
   t.get = function () {
     return n.getLogger("Calling");
   };
-})
+});

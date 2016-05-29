@@ -13,5 +13,7 @@ define("ui/components/chat/pes.v2/itemsPicker", [
     return u.init(), u;
   }
   var n = e("ui/viewModels/chat/pes.v2/itemsPicker"), r = e("utils/common/scroll"), i = e("browser/dom");
-  t.name = e("constants/components").chat.EXPRESSION_ITEMS_PICKER, t.template = e("text!views/chat/pes.v2/itemsPicker.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").chat.EXPRESSION_ITEMS_PICKER;
+  t.template = e("text!views/chat/pes.v2/itemsPicker.html");
+  t.viewModel = { createViewModel: s };
+});

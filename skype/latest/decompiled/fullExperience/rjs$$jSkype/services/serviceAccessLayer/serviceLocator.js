@@ -4,11 +4,14 @@ define("jSkype/services/serviceAccessLayer/serviceLocator", [
   "jSkype/services/serviceAccessLayer/builders/factory"
 ], function (e) {
   function r(e) {
-    typeof e != "string" && s("serviceUri", "string"), this.uriBuilder = n.get("uriBuilder"), this.uriBuilder.setDomain(e);
+    typeof e != "string" && s("serviceUri", "string");
+    this.uriBuilder = n.get("uriBuilder");
+    this.uriBuilder.setDomain(e);
   }
   function i(e, t) {
     var n = {}.toString.call(t) === "[object Object]";
-    typeof e != "string" && s("resource", "string"), n || s("options", "object");
+    typeof e != "string" && s("resource", "string");
+    n || s("options", "object");
   }
   function s(e, t) {
     throw new TypeError("expected typeof \"" + e + "\" to be: " + t);
@@ -29,4 +32,4 @@ define("jSkype/services/serviceAccessLayer/serviceLocator", [
       return new r(e);
     }
   };
-})
+});

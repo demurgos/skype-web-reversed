@@ -11,5 +11,7 @@ define("ui/components/experience/radioButton", [
     return t;
   }
   var n = e("ui/viewModels/experience/radioButton");
-  t.name = e("constants/components").experience.RADIO_BUTTON, t.template = e("text!views/common/buttons/radioButton.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").experience.RADIO_BUTTON;
+  t.template = e("text!views/common/buttons/radioButton.html");
+  t.viewModel = { createViewModel: r };
+});

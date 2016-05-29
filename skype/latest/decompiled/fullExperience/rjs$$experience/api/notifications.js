@@ -8,4 +8,4 @@ define("experience/api/notifications", [
   t.setNotificationHandler = function (e) {
     n.addNotificationListener(e);
   };
-})
+});

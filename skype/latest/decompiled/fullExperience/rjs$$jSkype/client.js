@@ -12,4 +12,4 @@ define("jSkype/client", [], function () {
     set: t,
     get: n
   };
-})
+});

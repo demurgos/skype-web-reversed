@@ -10,5 +10,7 @@ define("ui/components/chat/notificationsToggleButton", [
     return n.build(e);
   }
   var n = e("ui/viewModels/chat/notificationsToggleButton");
-  t.name = e("constants/components").chat.NOTIFICATIONS_TOGGLE_BUTTON, t.template = e("text!views/chat/notificationsToggleButton.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.NOTIFICATIONS_TOGGLE_BUTTON;
+  t.template = e("text!views/chat/notificationsToggleButton.html");
+  t.viewModel = { createViewModel: r };
+});

@@ -23,4 +23,4 @@ define("jSkype/services/plugin/videoComponent", [
       });
     });
   }, r;
-})
+});

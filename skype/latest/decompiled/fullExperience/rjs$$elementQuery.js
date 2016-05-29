@@ -1,2 +1,2 @@
 define("elementQuery", ["sizzle"], function () {
-})
+});

@@ -38,10 +38,16 @@ define("ui/viewModels/calling/helpers/browserInstallContent", [
     }, i.unblock && l(n, i.unblock), i.extensionStart && c(n, i), n;
   }
   function l(e, t) {
-    e.images.unblock = h(t.image), e.text.unblock = r.fetch({ key: t.text });
+    e.images.unblock = h(t.image);
+    e.text.unblock = r.fetch({ key: t.text });
   }
   function c(e, t) {
-    e.images.extensionStart = h(t.extensionStart.image), e.text.extensionStart = r.fetch({ key: t.extensionStart.text }), e.images.extensionInstallPlugin = h(t.extensionInstallPlugin.image), e.text.extensionInstallPlugin = r.fetch({ key: t.extensionInstallPlugin.text }), e.images.extensionInstallFailed = h(t.extensionInstallFailed.image), e.text.extensionInstallFailed = r.fetch({ key: t.extensionInstallFailed.text });
+    e.images.extensionStart = h(t.extensionStart.image);
+    e.text.extensionStart = r.fetch({ key: t.extensionStart.text });
+    e.images.extensionInstallPlugin = h(t.extensionInstallPlugin.image);
+    e.text.extensionInstallPlugin = r.fetch({ key: t.extensionInstallPlugin.text });
+    e.images.extensionInstallFailed = h(t.extensionInstallFailed.image);
+    e.text.extensionInstallFailed = r.fetch({ key: t.extensionInstallFailed.text });
   }
   function h(e) {
     return [
@@ -242,4 +248,4 @@ define("ui/viewModels/calling/helpers/browserInstallContent", [
       }
     };
   return { getInstallResources: u };
-})
+});

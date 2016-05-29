@@ -29,7 +29,8 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactList", [
         authorizedCount: n.authorized,
         pendingOutgoingCount: n.pendingOutgoing,
         suggestedCount: n.suggested
-      }), o.get()._telemetry.eventBus.publish(r.events.contacts.CONTACTS_LOADED, { contactsCount: e.length });
+      });
+      o.get()._telemetry.eventBus.publish(r.events.contacts.CONTACTS_LOADED, { contactsCount: e.length });
     }
     function v(e) {
       var t = r.telemetry.contacts.name;
@@ -37,7 +38,8 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactList", [
     }
     function m() {
       var e = o.get().personsAndGroupsManager.mePerson.id();
-      h.getContactsService().getMyContacts(e).then(t.onSuccess, t.onError), a = undefined;
+      h.getContactsService().getMyContacts(e).then(t.onSuccess, t.onError);
+      a = undefined;
     }
     function g(e) {
       return n.isString(e) ? e.toLowerCase() : "";
@@ -51,7 +53,8 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactList", [
           t && l.get().setItem(s.ETAG, t);
         }
       }.bind(null, t.request));
-    }, t.onError = function (e) {
+    };
+    t.onError = function (e) {
       return e.status === 404 && !a && (o.get().personsAndGroupsManager._initialized(!0), a = c.setTimeout(m, u)), Promise.reject(e);
     };
   }
@@ -60,4 +63,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/contactList", [
     var e = a.build();
     return new p(e);
   };
-})
+});

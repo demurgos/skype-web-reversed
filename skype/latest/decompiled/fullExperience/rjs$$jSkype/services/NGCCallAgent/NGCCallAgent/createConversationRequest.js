@@ -80,4 +80,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/createConversationRequest", [
     };
     return h;
   }, i;
-})
+});

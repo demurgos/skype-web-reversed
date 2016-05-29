@@ -6,7 +6,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/removeParticipantRequest", [
 ], function (e) {
   var t = e("jSkype/services/NGCCallAgent/NGCCallAgent/utils"), n = e("jSkype/services/NGCCallAgent/NGCCallAgent/urlBuilder"), r = e("jSkype/services/NGCCallAgent/NGCCallAgent/constants"), i = {};
   return i.getPayload = function (e, i) {
-    t.assertNotNull(e, "signalingSession cannot be null"), t.assertNotNull(i, "remoteParticipant cannot be null");
+    t.assertNotNull(e, "signalingSession cannot be null");
+    t.assertNotNull(i, "remoteParticipant cannot be null");
     var s = {
       payload: {
         participants: {
@@ -34,4 +35,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/removeParticipantRequest", [
     };
     return s;
   }, i;
-})
+});

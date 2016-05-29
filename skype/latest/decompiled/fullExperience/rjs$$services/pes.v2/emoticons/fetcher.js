@@ -27,7 +27,8 @@ define("services/pes.v2/emoticons/fetcher", [
     var e = this;
     e.process = function () {
       return null;
-    }, e.getResources = function (e, i) {
+    };
+    e.getResources = function (e, i) {
       var o, a, f = [], c = s.resolve(u.serviceLocator.FEATURE_FLAGS), h;
       return e.type !== r.itemTypes.emoticon.id ? null : (a = [], h = i.emoticonsRoot + "/" + e.id + "/views/", e.shortcuts.forEach(function (t) {
         a.push({
@@ -44,4 +45,4 @@ define("services/pes.v2/emoticons/fetcher", [
   }
   var t = e("lodash-compat"), n = e("services/pes.v2/emoticons/stylesFactory"), r = e("services/pes/constants"), i = e("utils/chat/pesUtils"), s = e("services/serviceLocator"), o = e("utils/common/url"), u = e("constants/common"), a = e("experience/settings");
   return new f();
-})
+});

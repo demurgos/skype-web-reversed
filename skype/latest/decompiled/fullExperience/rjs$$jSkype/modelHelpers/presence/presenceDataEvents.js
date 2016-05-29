@@ -27,8 +27,11 @@ define("jSkype/modelHelpers/presence/presenceDataEvents", [
             return s.onSelfProperties(e);
         }
         var e = i.get(), s = r.build();
-        e.subscribe("webapi:data", u), e.subscribe("webapi:error", s.onServiceError), e.subscribe("contacts:loaded", s.onInitialContacts), e.subscribe(t.events.system.ONLINE_STATE_CHANGED, s.onOnlineStateChanged);
+        e.subscribe("webapi:data", u);
+        e.subscribe("webapi:error", s.onServiceError);
+        e.subscribe("contacts:loaded", s.onInitialContacts);
+        e.subscribe(t.events.system.ONLINE_STATE_CHANGED, s.onOnlineStateChanged);
       }
     };
   return s;
-})
+});

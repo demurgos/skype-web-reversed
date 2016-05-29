@@ -41,17 +41,22 @@ define("services/store/pes/catalogItemProcessor", [
     var t = e.tabs, r, i, s, l;
     e.itemsRoot = o.rewriteUrls(e.itemsRoot, a.pesCDNAuthentication.rewriteRules);
     for (r = 0; r < t.length; r++) {
-      s = t[r], s.packs = [], s.type || (s.type = n.itemTypes.tab.id), s.thumbnailUrl || (s.thumbnailUrl = e.tabsRoot + "/" + s.id + "/views/thumbnail");
+      s = t[r];
+      s.packs = [];
+      s.type || (s.type = n.itemTypes.tab.id);
+      s.thumbnailUrl || (s.thumbnailUrl = e.tabsRoot + "/" + s.id + "/views/thumbnail");
       for (i = 0; s.sections && i < s.sections.length; i++)
         l = f(s.sections[i].pack, e), l.parentTab = s, s.packs.push(l);
     }
     u.process(e);
-  }, t.processSKUs = function (e) {
+  };
+  t.processSKUs = function (e) {
     e.forEach(function (e) {
       var t = e.attributes;
       t && (e.bgColor = "#" + t.glyphBgColor.substring(0, 6), e.opacity = parseInt(t.glyphBgColor.substring(6, 8), 16) / 255, e.items = t.items.__metadata.links.self, e.copyright = t.copyright, e.expiry = t.expiry);
     });
-  }, t.loadStyles = function (e, t, n) {
+  };
+  t.loadStyles = function (e, t, n) {
     c(e, t, n);
   };
-})
+});

@@ -9,4 +9,4 @@ define("ui/components/me/index", [
     e("ui/components/me/avatarFilePicker"),
     e("ui/components/me/presencePopup")
   ];
-})
+});

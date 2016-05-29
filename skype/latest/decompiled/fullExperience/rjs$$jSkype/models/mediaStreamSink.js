@@ -7,4 +7,4 @@ define("jSkype/models/mediaStreamSink", [
   }
   var t = e("jcafe-property-model");
   return n;
-})
+});

@@ -9,15 +9,20 @@ module.exports = function () {
       var r = "qsp=true";
       for (var i in t.headers)
         r += "&", r += encodeURIComponent(i), r += "=", r += encodeURIComponent(t.headers[i]);
-      t.url.indexOf("?") < 0 ? t.url += "?" : t.url += "&", t.url += r;
+      t.url.indexOf("?") < 0 ? t.url += "?" : t.url += "&";
+      t.url += r;
     }
-    n.open(t.type, t.url), t.complete && (n.onload = function () {
-      typeof n.status == "undefined" && (n.status = 200), t.complete(n);
+    n.open(t.type, t.url);
+    t.complete && (n.onload = function () {
+      typeof n.status == "undefined" && (n.status = 200);
+      t.complete(n);
     }, n.ontimeout = function () {
-      typeof n.status == "undefined" && (n.status = 500), t.complete(n);
+      typeof n.status == "undefined" && (n.status = 500);
+      t.complete(n);
     }, n.onerror = function () {
       t.complete(n);
-    }), n.send(t.data);
+    });
+    n.send(t.data);
   }, e.keys = function (e) {
     if (Object.keys)
       return Object.keys(e);

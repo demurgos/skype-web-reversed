@@ -26,7 +26,8 @@ define("experience/api/helpers/contentNavigator", [
       });
     }
     var t = !1, i = null, s = null, o = n.apiUIEvents.SWX_CONTENT_LOADED;
-    u().subscribe(o, a), this.navigateToConversation = function (e) {
+    u().subscribe(o, a);
+    this.navigateToConversation = function (e) {
       t ? c(e) : i = c.bind(undefined, e);
     };
   }
@@ -34,4 +35,4 @@ define("experience/api/helpers/contentNavigator", [
   t.build = function (e) {
     return new i(e);
   };
-})
+});

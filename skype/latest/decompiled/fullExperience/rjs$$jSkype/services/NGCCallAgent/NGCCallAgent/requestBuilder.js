@@ -24,4 +24,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/requestBuilder", [
       return s && s.payload && (u.payload = JSON.stringify(s.payload)), e.telemetryHelper.addNetworkOperationStarted(t), u;
     });
   };
-})
+});

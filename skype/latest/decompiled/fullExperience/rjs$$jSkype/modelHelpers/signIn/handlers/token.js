@@ -13,4 +13,4 @@ define("jSkype/modelHelpers/signIn/handlers/token", [
   t.handler = function (e) {
     return n.createResolvedPromise(r(e));
   };
-})
+});

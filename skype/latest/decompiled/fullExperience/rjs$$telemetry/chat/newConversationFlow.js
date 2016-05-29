@@ -17,22 +17,28 @@ define("telemetry/chat/newConversationFlow", [
       try {
         var e = a.getEntriesByName(n.NEW_CONVERSATION.CREATION_END_OK).length > 0;
         if (e) {
-          l = !0, a.measure(i.NEW_CONVERSATION.TTS, n.NEW_CONVERSATION.CREATION_START, n.NEW_CONVERSATION.CREATION_END_OK);
+          l = !0;
+          a.measure(i.NEW_CONVERSATION.TTS, n.NEW_CONVERSATION.CREATION_START, n.NEW_CONVERSATION.CREATION_END_OK);
           return;
         }
-        l = !1, a.measure(i.NEW_CONVERSATION.TTS, n.NEW_CONVERSATION.CREATION_START, n.NEW_CONVERSATION.CREATION_END_ERROR);
+        l = !1;
+        a.measure(i.NEW_CONVERSATION.TTS, n.NEW_CONVERSATION.CREATION_START, n.NEW_CONVERSATION.CREATION_END_ERROR);
       } catch (t) {
       }
     }
     var e = r.STARTED, f = 0, l = t.telemetry.NOT_AVAILABLE;
     this.participantsCountUpdated = function (e) {
       f = e;
-    }, this.publish = function () {
+    };
+    this.publish = function () {
       function S() {
         try {
-          a.mark(n.NEW_CONVERSATION.RENDER_END), a.measure(i.NEW_CONVERSATION.TTC, n.NEW_CONVERSATION.FLOW_START, n.NEW_CONVERSATION.RENDER_END), a.measure(i.NEW_CONVERSATION.TTR, n.NEW_CONVERSATION.CREATION_START, n.NEW_CONVERSATION.RENDER_END);
+          a.mark(n.NEW_CONVERSATION.RENDER_END);
+          a.measure(i.NEW_CONVERSATION.TTC, n.NEW_CONVERSATION.FLOW_START, n.NEW_CONVERSATION.RENDER_END);
+          a.measure(i.NEW_CONVERSATION.TTR, n.NEW_CONVERSATION.CREATION_START, n.NEW_CONVERSATION.RENDER_END);
           var e = a.getEntriesByName(i.NEW_CONVERSATION.TTC), t = a.getEntriesByName(i.NEW_CONVERSATION.TTR);
-          e && e.length > 0 && (m = e[0].duration), t && t.length > 0 && (y = t[0].duration);
+          e && e.length > 0 && (m = e[0].duration);
+          t && t.length > 0 && (y = t[0].duration);
         } catch (r) {
         }
       }
@@ -43,7 +49,10 @@ define("telemetry/chat/newConversationFlow", [
       if (w)
         e = r.REDIRECTED, S();
       else if (E) {
-        e = r.CREATED, S(), h(), g = t.telemetry.NOT_AVAILABLE;
+        e = r.CREATED;
+        S();
+        h();
+        g = t.telemetry.NOT_AVAILABLE;
         var x = a.getEntriesByName(i.NEW_CONVERSATION.TTS);
         x && x.length && (g = x[0].duration);
       } else
@@ -61,9 +70,10 @@ define("telemetry/chat/newConversationFlow", [
           success: l
         }
       };
-      c(), s.push(T);
+      c();
+      s.push(T);
     };
   }
   var t = e("constants/common"), n = t.telemetry.performanceMarks, r = t.telemetry.stages.NEW_CONVERSATION, i = t.telemetry.measurements, s = e("services/telemetry/skypeData"), o = e("services/telemetry/common/telemetryContext"), u = e("services/telemetry/common/analyticsInfo"), a = e("usertiming");
   return f;
-})
+});

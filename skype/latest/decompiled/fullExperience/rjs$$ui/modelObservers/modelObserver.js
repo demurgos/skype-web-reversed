@@ -13,7 +13,8 @@ define("ui/modelObservers/modelObserver", [
       }), t.push(e.conversationsCallStateObserver), t;
     }
     var e = this;
-    e.conversationsCallStateObserver = r.build(), e.observe = function (e) {
+    e.conversationsCallStateObserver = r.build();
+    e.observe = function (e) {
       t().forEach(function (t) {
         t.observe(e);
       });
@@ -23,4 +24,4 @@ define("ui/modelObservers/modelObserver", [
   t.build = function () {
     return new i();
   };
-})
+});

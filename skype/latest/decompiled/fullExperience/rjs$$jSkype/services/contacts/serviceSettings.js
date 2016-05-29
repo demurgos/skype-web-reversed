@@ -21,30 +21,41 @@ define("jSkype/services/contacts/serviceSettings", [
   var n = e("jSkype/settings");
   t.getHost = function () {
     return n.settings.contactsProxyService.host;
-  }, t.getMyContactsEndpoint = function (e, t, i) {
+  };
+  t.getMyContactsEndpoint = function (e, t, i) {
     return r(n.settings.contactsProxyService.myContactsEndpoint, e, t, i);
-  }, t.getMyDeltaContactsEndpoint = function (e, t, i) {
+  };
+  t.getMyDeltaContactsEndpoint = function (e, t, i) {
     return r(n.settings.contactsProxyService.myDeltaContactsEndpoint, e, t, i);
-  }, t.getBlockContactEndpoint = function (e, r, i, s) {
+  };
+  t.getBlockContactEndpoint = function (e, r, i, s) {
     return n.settings.contactsProxyService.blockContactEndpoint.replace(t.tokens.version, s).replace(t.tokens.id, encodeURIComponent(e)).replace(t.tokens.contactType, i).replace(t.tokens.contactId, r);
-  }, t.getUnblockContactEndpoint = function (e, r, i, s) {
+  };
+  t.getUnblockContactEndpoint = function (e, r, i, s) {
     return n.settings.contactsProxyService.unblockContactEndpoint.replace(t.tokens.version, s).replace(t.tokens.id, encodeURIComponent(e)).replace(t.tokens.contactType, i).replace(t.tokens.contactId, r);
-  }, t.getDeleteContactEndpoint = function (e, r, i, s) {
+  };
+  t.getDeleteContactEndpoint = function (e, r, i, s) {
     return n.settings.contactsProxyService.deleteContactEndpoint.replace(t.tokens.version, s).replace(t.tokens.id, encodeURIComponent(e)).replace(t.tokens.contactType, i).replace(t.tokens.contactId, r);
-  }, t.getRetryPolicy = function () {
+  };
+  t.getRetryPolicy = function () {
     return n.settings.contactsProxyService.retry;
-  }, t.name = "CBLProxy", t.version = "v1", t.actions = i([
+  };
+  t.name = "CBLProxy";
+  t.version = "v1";
+  t.actions = i([
     "getMyContacts",
     "blockContact",
     "deleteContact"
-  ], s), t.reasons = {
+  ], s);
+  t.reasons = {
     "default": "default",
     notification: "notification"
-  }, t.tokens = i([
+  };
+  t.tokens = i([
     "id",
     "contactId",
     "contactType",
     "version",
     "reason"
   ], o);
-})
+});

@@ -33,8 +33,9 @@ define("telemetry/errors/runtimeErrorsHandler", [
     u.get().sendEvent(s.telemetry.uiTenantToken, t, n);
   }
   var n = e("browser/window"), r = e("vendor/knockout"), i = e("constants/common"), s = e("experience/settings"), o = e("services/serviceLocator"), u = e("ui/telemetry/telemetryClient");
-  t.DEFAULT_SCRIPT_ERROR_MESSAGE = "Script error", t.init = function () {
+  t.DEFAULT_SCRIPT_ERROR_MESSAGE = "Script error";
+  t.init = function () {
     var e = o.resolve(i.serviceLocator.FEATURE_FLAGS);
     e.isFeatureOn(i.featureFlags.TELEMETRY_RUNTIME_ERRORS_ENABLED) && (n.addEventListener("error", a), r.onError = a);
   };
-})
+});

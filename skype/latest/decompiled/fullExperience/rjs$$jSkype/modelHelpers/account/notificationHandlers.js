@@ -27,4 +27,4 @@ define("jSkype/modelHelpers/account/notificationHandlers", [
     var e = new f();
     return o.registerMessageHandler(u.build(e)), e;
   };
-})
+});

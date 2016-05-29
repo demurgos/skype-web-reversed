@@ -32,23 +32,28 @@ define("jSkype/utils/chat/message", [
     var t = /<initiator>(\d+:.+)<\/initiator>/, n = e.match(t);
     if (n)
       return n[1];
-  }, t.getTargets = function (e) {
+  };
+  t.getTargets = function (e) {
     var t = /<target>(.+)<\/target>/, n = e.match(t);
     if (n)
       return n[1].split("</target><target>");
-  }, t.isMessageReadOnServer = function (e, t, n) {
+  };
+  t.isMessageReadOnServer = function (e, t, n) {
     if (!e)
       return !0;
     var r = Math.floor(n / 1000) * 1000, i = e.lastReadMessageId === t, s = e.lastReadMessageTimestamp >= r;
     return i || s;
-  }, t.isMessageOutgoing = function (e) {
+  };
+  t.isMessageOutgoing = function (e) {
     if (typeof e.isOutgoing != "undefined")
       return e.isOutgoing;
     var t = i.parseName(e.from), s = r.get().personsAndGroupsManager.mePerson;
     return o = o || n.getKey(s.id(), s._type()), t === o;
-  }, t.doesMessageTypeSupportUnreadState = function (e) {
+  };
+  t.doesMessageTypeSupportUnreadState = function (e) {
     return e.messagetype && u.indexOf(e.messagetype) > -1 ? l(e) || c(e) : !(e.messagetype && e.messagetype.indexOf("ThreadActivity/") > -1 || e.contactRequestType && e.contactRequestType === s.activityType.ContactRequestIsNowContact);
-  }, t.canMessageBeMarkedAsUnreadInUI = function (e) {
+  };
+  t.canMessageBeMarkedAsUnreadInUI = function (e) {
     return !t.isMessageOutgoing(e) && t.doesMessageTypeSupportUnreadState(e);
   };
-})
+});

@@ -13,11 +13,12 @@ define("jSkype/services/mediaAgent/capabilities", ["./userAgentAdapter"], functi
       return t.settings.capabilities && typeof t.settings.capabilities[e] != "undefined" ? t.settings.capabilities[e] : n;
     }
     var n = e.window;
-    this.audio = !!o("audio", s() && (i() || r())), this.video = !!o("video", s() && i());
+    this.audio = !!o("audio", s() && (i() || r()));
+    this.video = !!o("video", s() && i());
   }
   return {
     build: function (e) {
       return new t(e);
     }
   };
-})
+});

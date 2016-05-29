@@ -24,7 +24,14 @@ define("ui/viewModels/people/baseContactList", [
       return e.isSelectable() ? E("selectable") : E("default");
     }
     var e = this;
-    e.contactGroups = n.observableArray(), e.contactsCount = n.observable(0), e.batchTimers = [], e.exclusionList = [], e.subscriptions = {}, e.isSelectable = n.observable(!1), e.templateName = n.computed(t), e.isShortCircuitEnabled = n.observable(!1);
+    e.contactGroups = n.observableArray();
+    e.contactsCount = n.observable(0);
+    e.batchTimers = [];
+    e.exclusionList = [];
+    e.subscriptions = {};
+    e.isSelectable = n.observable(!1);
+    e.templateName = n.computed(t);
+    e.isShortCircuitEnabled = n.observable(!1);
   }
   function E(e) {
     return "contactList-" + e;
@@ -41,7 +48,8 @@ define("ui/viewModels/people/baseContactList", [
       function o() {
         i().forEach(function (e) {
           e.displayName() === undefined && u(e);
-        }), n.populateGroups(i(), e);
+        });
+        n.populateGroups(i(), e);
       }
       function u(r) {
         function o() {
@@ -58,12 +66,20 @@ define("ui/viewModels/people/baseContactList", [
         }), i = t.contactGroupConstructor || g, s = c.organizeByAlphabet(r).map(function (e) {
           return i.build(e);
         });
-      n.contactsCount(r.length), n.setContactGroups(s), n.contactsCount() === 0 && !!t.isShortCircuitEnabledOnce && t.isShortCircuitEnabledOnce().then(function (e) {
+      n.contactsCount(r.length);
+      n.setContactGroups(s);
+      n.contactsCount() === 0 && !!t.isShortCircuitEnabledOnce && t.isShortCircuitEnabledOnce().then(function (e) {
         n.isShortCircuitEnabled(e);
       });
     },
     dispose: function () {
-      this.contactsCount(0), this.exclusionList = [], u.disposeAndClearArray(this.contactGroups), this.scrollbar.dispose(), this.templateName.dispose(), this.subscriptions && this.subscriptions.persons && this.subscriptions.persons.dispose(), this.batchTimers = this.batchTimers.reduce(function (e, t) {
+      this.contactsCount(0);
+      this.exclusionList = [];
+      u.disposeAndClearArray(this.contactGroups);
+      this.scrollbar.dispose();
+      this.templateName.dispose();
+      this.subscriptions && this.subscriptions.persons && this.subscriptions.persons.dispose();
+      this.batchTimers = this.batchTimers.reduce(function (e, t) {
         return o.clearTimeout(t), e;
       }, []);
     },
@@ -75,7 +91,8 @@ define("ui/viewModels/people/baseContactList", [
           model: r.get().conversationsManager.getConversation(e.getPerson()),
           origin: b
         };
-      t.assign(u, s), o.publish(i.events.navigation.OPEN_CONVERSATION, u);
+      t.assign(u, s);
+      o.publish(i.events.navigation.OPEN_CONVERSATION, u);
     },
     setContactGroups: function (e) {
       e.length === 0 ? this.contactGroups(e) : this.addNextGroup(e, []);
@@ -86,9 +103,14 @@ define("ui/viewModels/people/baseContactList", [
     },
     showContextMenu: function (e, t, n) {
       var r = [];
-      r.push(y.getConversationContextMenuItemGroup(e, b, n)), r.push(new p.BlockContactMenuItem(e, y.getMenuItemTelemetryContext(d.contextMenuItem.block, n))), r.push(new p.UnblockContactMenuItem(e, y.getMenuItemTelemetryContext(d.contextMenuItem.unblock, n))), r.push(new p.DeleteContactMenuItem(e, b, y.getMenuItemTelemetryContext(d.contextMenuItem.deleteItem, n))), y.sortMenuItems(r), h.show(r, t, n);
+      r.push(y.getConversationContextMenuItemGroup(e, b, n));
+      r.push(new p.BlockContactMenuItem(e, y.getMenuItemTelemetryContext(d.contextMenuItem.block, n)));
+      r.push(new p.UnblockContactMenuItem(e, y.getMenuItemTelemetryContext(d.contextMenuItem.unblock, n)));
+      r.push(new p.DeleteContactMenuItem(e, b, y.getMenuItemTelemetryContext(d.contextMenuItem.deleteItem, n)));
+      y.sortMenuItems(r);
+      h.show(r, t, n);
     },
     shouldPersonBeIncluded: c.shouldPersonBeIncluded,
     applyPropertyChangeToContacts: t.noop
   }), w;
-})
+});

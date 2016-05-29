@@ -11,7 +11,9 @@ define("services/pes.v2/bingSearch/urlPreviewService", [
   "services/serviceLocator"
 ], function (e) {
   function l(e, t, n) {
-    this.defaultServiceHost = e, this.defaultServceEndpoint = t, this.defaultTokenProvider = n;
+    this.defaultServiceHost = e;
+    this.defaultServceEndpoint = t;
+    this.defaultTokenProvider = n;
   }
   function c(e, t, n) {
     var i;
@@ -42,4 +44,4 @@ define("services/pes.v2/bingSearch/urlPreviewService", [
       serviceEndpoint: "/v1/url/info"
     }), r.skypeToken ? c(n, r, r.skypeToken) : Promise.resolve(r.tokenProvider()).then(c.bind(null, n, r));
   }, t.extend(l, n), l;
-})
+});

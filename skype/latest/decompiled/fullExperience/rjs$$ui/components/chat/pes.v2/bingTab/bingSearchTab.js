@@ -50,9 +50,12 @@ define("ui/components/chat/pes.v2/bingTab/bingSearchTab", [
       }), d = t.throttle(function () {
         i.isCanceled || r(e);
       }, 400), v;
-    i.throwIfCanceled(), t.remove(e._configuredItems, function (e) {
+    i.throwIfCanceled();
+    t.remove(e._configuredItems, function (e) {
       return e.type === s.itemTypes.image.id && t.find(p.items, { id: e.id });
-    }), e._configuredItems = e._configuredItems.concat(p.items), v = t.find(e.tabs, { id: s.bingSearch.TAB_ID });
+    });
+    e._configuredItems = e._configuredItems.concat(p.items);
+    v = t.find(e.tabs, { id: s.bingSearch.TAB_ID });
     var m = t.every(p.packs, function (e) {
       return e.items.length === 0;
     });
@@ -60,13 +63,22 @@ define("ui/components/chat/pes.v2/bingTab/bingSearchTab", [
   }
   function p(e, n, i) {
     var o, u;
-    u = t.find(n.tabs, { id: s.bingSearch.TAB_ID }), u && (u.emptyTabMessageKey = "expressionPicker_bingTab_loadingText"), v(n), o = r.cancelableOperation(), n._currentOperation = o, u._currentQuery = e, u.packs = [], i(n), l(e, o.getToken()).then(function (e) {
+    u = t.find(n.tabs, { id: s.bingSearch.TAB_ID });
+    u && (u.emptyTabMessageKey = "expressionPicker_bingTab_loadingText");
+    v(n);
+    o = r.cancelableOperation();
+    n._currentOperation = o;
+    u._currentQuery = e;
+    u.packs = [];
+    i(n);
+    l(e, o.getToken()).then(function (e) {
       h(n, e, i, o.getToken());
     }).catch(function (e) {
       if (e instanceof r.OperationCanceledError)
         return;
       var o = t.find(n.tabs, { id: s.bingSearch.TAB_ID });
-      o.emptyTabMessageKey = "expressionPicker_bingTab_errorText", i(n);
+      o.emptyTabMessageKey = "expressionPicker_bingTab_errorText";
+      i(n);
     });
   }
   function d(e, n, r) {
@@ -88,4 +100,4 @@ define("ui/components/chat/pes.v2/bingTab/bingSearchTab", [
     getImagesFromURLPService: c,
     processResultsFromBing: h
   };
-})
+});

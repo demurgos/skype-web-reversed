@@ -1,2 +1,2 @@
 define("sizzle", function () {
-})
+});

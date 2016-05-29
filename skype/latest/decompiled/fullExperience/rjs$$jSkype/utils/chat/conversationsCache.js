@@ -38,7 +38,9 @@ define("jSkype/utils/chat/conversationsCache", [
     }
     function I(e, n, r) {
       var s = i.get().conversationsManager.conversations(e.id), o;
-      s || (t([e], !0), s = i.get().conversationsManager._getConversation(e.id)), o = r ? s.historyService._unreadActivityItemsWithKeywordsCount : s.historyService.unreadActivityItemsCount, n(o() > 0);
+      s || (t([e], !0), s = i.get().conversationsManager._getConversation(e.id));
+      o = r ? s.historyService._unreadActivityItemsWithKeywordsCount : s.historyService.unreadActivityItemsCount;
+      n(o() > 0);
     }
     function q(e, t) {
       var r = /false/i.test(e.properties.alerts), i = !n.isEmpty(e.properties.alertmatches);
@@ -65,7 +67,8 @@ define("jSkype/utils/chat/conversationsCache", [
       function t(t) {
         if (e < P)
           return;
-        P = e, E.unreadConversationsCount._set(t.length);
+        P = e;
+        E.unreadConversationsCount._set(t.length);
       }
       D++;
       var e = D;
@@ -78,15 +81,23 @@ define("jSkype/utils/chat/conversationsCache", [
           s = E.getItem(e.id);
           if (s && s === e)
             return;
-          s && (it(e), t = E.replaceItem, r.push(e)), e.timestamp = +new Date(e.lastMessage.originalarrivaltime), t(e, e.id), n || i.push(X(e));
+          s && (it(e), t = E.replaceItem, r.push(e));
+          e.timestamp = +new Date(e.lastMessage.originalarrivaltime);
+          t(e, e.id);
+          n || i.push(X(e));
         }
       }
       var r = [], i = [];
       if (!e.length)
         return;
-      a.conversations(e), e.forEach(o), R(), i.length ? s.task.waitAll(i).then(W) : n || W(), r.forEach(function (e) {
+      a.conversations(e);
+      e.forEach(o);
+      R();
+      i.length ? s.task.waitAll(i).then(W) : n || W();
+      r.forEach(function (e) {
         S[e.id] && tt(e.id);
-      }), t(E._getNewUnconsumedItems().concat(r));
+      });
+      t(E._getNewUnconsumedItems().concat(r));
     }
     function z(e) {
       function t(e) {
@@ -109,7 +120,8 @@ define("jSkype/utils/chat/conversationsCache", [
     }
     function J(t) {
       function i(e) {
-        U([e.response]), n.resolve(E.getItem(t));
+        U([e.response]);
+        n.resolve(E.getItem(t));
       }
       var n = s.task(), r = E.getItem(t);
       return r ? n.resolve(r) : e.syncConversation(t, i, n.reject.bind(n)), n.promise;
@@ -126,28 +138,35 @@ define("jSkype/utils/chat/conversationsCache", [
     }
     function G(t, n) {
       function r(e) {
-        L = e, s();
+        L = e;
+        s();
       }
       function i(e) {
-        L = e.syncState, t(e);
+        L = e.syncState;
+        t(e);
       }
       function s() {
         e.syncRecents(w(), g, L).then(i, n);
       }
       n = n || function () {
-      }, L ? s() : v.get().getItem("recentsSyncState").then(r, s);
+      };
+      L ? s() : v.get().getItem("recentsSyncState").then(r, s);
     }
     function Y() {
       function e(n) {
-        U(n.conversations), t(n.conversations), n.hasMoreConversations ? G(e) : N = !1;
+        U(n.conversations);
+        t(n.conversations);
+        n.hasMoreConversations ? G(e) : N = !1;
       }
       if (N)
         return;
-      N = !0, G(e);
+      N = !0;
+      G(e);
     }
     function Z() {
       function n() {
-        t--, t === 0 && e.resolve();
+        t--;
+        t === 0 && e.resolve();
       }
       var e = s.task(), t = 0;
       for (var r in S)
@@ -162,9 +181,13 @@ define("jSkype/utils/chat/conversationsCache", [
         x[t].forEach(function (t) {
           var r = e ? t.onError : t.onSuccess;
           r && r(n);
-        }), delete x[t];
+        });
+        delete x[t];
       }
-      delete S[t], et(), x[t] || (x[t] = [], e.syncThread(t, i.bind(null, !1), i.bind(null, !0))), x[t].push({
+      delete S[t];
+      et();
+      x[t] || (x[t] = [], e.syncThread(t, i.bind(null, !1), i.bind(null, !0)));
+      x[t].push({
         onSuccess: n,
         onError: r
       });
@@ -183,63 +206,97 @@ define("jSkype/utils/chat/conversationsCache", [
       n.id === r.id && n.originalarrivaltime === r.originalarrivaltime && (n.properties = r.properties);
     }
     var E = this, S = {}, x = {}, T, N, C = !0, k = !1, L, A = {}, O = s.boolProperty(!1), M = !1, D = 0, P = 0;
-    l.call(E, y, m.byTimestamp), this._init = function () {
+    l.call(E, y, m.byTimestamp);
+    this._init = function () {
       u.get().subscribe(b.FORCE_RESYNC, Y);
-    }, this._getItemsFromService = function (e, t) {
+    };
+    this._getItemsFromService = function (e, t) {
       function r(e) {
-        E.onNewItemsLoaded(), n.reject(e);
+        E.onNewItemsLoaded();
+        n.reject(e);
       }
       function o(t, r) {
-        E.onNewItemsLoaded(), U(t, r), $().then(function () {
+        E.onNewItemsLoaded();
+        U(t, r);
+        $().then(function () {
           n.promise.state() === "pending" && n.resolve(e ? E._getCachedItems(e) : []);
         });
       }
       function u(n) {
-        n.hasMoreConversations && t && E._getItemsFromService(e, t), i.get()._telemetry.context.timelineLoadStatusCode = n.statusCode, o(n.conversations), E._serverHasMoreItems = n.hasMoreConversations, rt();
+        n.hasMoreConversations && t && E._getItemsFromService(e, t);
+        i.get()._telemetry.context.timelineLoadStatusCode = n.statusCode;
+        o(n.conversations);
+        E._serverHasMoreItems = n.hasMoreConversations;
+        rt();
       }
       var n = s.task();
       return t = t || C, C = !1, G(u, r), k || (k = !0, $().then(function (e) {
-        e && o(e, !0), M = !0, rt();
+        e && o(e, !0);
+        M = !0;
+        rt();
       })), n.promise;
-    }, this._syncAllConversations = s.command(Z, O), this._onItemAddedOrUpdated = function (e) {
-      U([e]), S[e.id] && tt(e.id);
-    }, this._onItemRemoved = function (e) {
+    };
+    this._syncAllConversations = s.command(Z, O);
+    this._onItemAddedOrUpdated = function (e) {
+      U([e]);
+      S[e.id] && tt(e.id);
+    };
+    this._onItemRemoved = function (e) {
       V(e);
-    }, this._cacheItem = function (e, t) {
-      typeof A[t] != "undefined" && (e.isBlocked = A[t], delete A[t]), nt(e);
-    }, this._serverHasMoreItems = !0, this.unreadConversationsCount = s.property({
+    };
+    this._cacheItem = function (e, t) {
+      typeof A[t] != "undefined" && (e.isBlocked = A[t], delete A[t]);
+      nt(e);
+    };
+    this._serverHasMoreItems = !0;
+    this.unreadConversationsCount = s.property({
       readOnly: !0,
       value: 0,
       get: Q
-    }), this.getConversation = function (e) {
+    });
+    this.getConversation = function (e) {
       var t = E.getItem(e);
       return !t && o.isGroupConversation(e) && (S[e] = e), S[e] && tt(e), t;
-    }, this.conversationUpdated = function (e) {
+    };
+    this.conversationUpdated = function (e) {
       if (!!e.version && !F(e))
         return;
       J(e.id).then(function (t) {
-        K(t, "properties", e.properties), K(t, "threadProperties", e.threadProperties), e.members && (t.members = e.members), R(), X(t);
+        K(t, "properties", e.properties);
+        K(t, "threadProperties", e.threadProperties);
+        e.members && (t.members = e.members);
+        R();
+        X(t);
       });
-    }, this.handleUpdatedMessage = function (e, t) {
+    };
+    this.handleUpdatedMessage = function (e, t) {
       var n = E.getItem(e);
       if (!n)
         return;
       n.lastMessage.id === t.id && (n.lastMessage = t, X(n));
-    }, this.handleNewMessage = function (e, t) {
+    };
+    this.handleNewMessage = function (e, t) {
       var n = E.getItem(e);
       if (!n)
         return;
-      n.lastMessage = t, n.timestamp = +new Date(t.originalarrivaltime), R(), X(n);
-    }, this.conversationBlockedUpdate = function (e, t) {
+      n.lastMessage = t;
+      n.timestamp = +new Date(t.originalarrivaltime);
+      R();
+      X(n);
+    };
+    this.conversationBlockedUpdate = function (e, t) {
       var n = E.getItem(e);
       n ? (n.isBlocked = t, R(), X(n)) : A[e] = t;
-    }, this.syncFinished = s.property({
+    };
+    this.syncFinished = s.property({
       readOnly: !0,
       value: !1
     });
   }
   var n = e("lodash-compat"), r = e("constants/common"), i = e("jSkype/client"), s = e("jcafe-property-model"), o = e("jSkype/modelHelpers/propertyValidator"), u = e("jSkype/services/internalPubSub"), a = e("jSkype/services/webapi/utils/sanitizer"), f = e("jSkype/settings"), l = e("jSkype/utils/chat/cacheBase"), c = e("jSkype/utils/chat/conversation"), h = e("jSkype/utils/chat/message"), p = e("jSkype/utils/chat/messageTypes"), d = e("jSkype/constants/data").storageKeyRegExp, v = e("utils/common/cache/instance"), m = e("utils/chat/sort"), g = 100, y = -1, b = r.events.system;
-  E.prototype = Object.create(l.prototype), E.prototype.constructor = E, t.build = function (e, t) {
+  E.prototype = Object.create(l.prototype);
+  E.prototype.constructor = E;
+  t.build = function (e, t) {
     return new E(e, t);
   };
-})
+});

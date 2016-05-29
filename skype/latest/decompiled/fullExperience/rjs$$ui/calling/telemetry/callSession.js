@@ -23,7 +23,8 @@ define("ui/calling/telemetry/callSession", [
       return t.pause(), h.push(e.state.when(n, t.resume.bind(t))), h.push(e.state.when(r, t.pause.bind(t))), t;
     }
     function E() {
-      e.selfParticipant.video.channels(0) && (n.outboundVideo = w(e.selfParticipant.video.channels(0).stream)), n.outboundScreenshare = w(e.selfParticipant.screenSharing.stream);
+      e.selfParticipant.video.channels(0) && (n.outboundVideo = w(e.selfParticipant.video.channels(0).stream));
+      n.outboundScreenshare = w(e.selfParticipant.screenSharing.stream);
     }
     function S() {
       var t = e.participants.added(function (e) {
@@ -104,29 +105,43 @@ define("ui/calling/telemetry/callSession", [
       }, c = !1, h = [], p = f.get(), d = o.create(), v, m, g, y = l.NotStarted, b = s.mediaConnectionType.Unknown;
     this.isChildOf = function (t) {
       return e === t;
-    }, this.start = function () {
+    };
+    this.start = function () {
       if (y >= l.Started)
         return;
-      g = new Date().getTime(), y = l.Started, _(), e.selfParticipant.audio.state.reason === s.callDisconnectionReason.CallEscalated && (c = !0);
+      g = new Date().getTime();
+      y = l.Started;
+      _();
+      e.selfParticipant.audio.state.reason === s.callDisconnectionReason.CallEscalated && (c = !0);
       var t = N(r.telemetry.calling.START_CALL);
-      t.audioAvailability = e.audioService.start.enabled.reason || r.telemetry.calling.AVAILABLE, C(t);
-    }, this.setRinging = function () {
+      t.audioAvailability = e.audioService.start.enabled.reason || r.telemetry.calling.AVAILABLE;
+      C(t);
+    };
+    this.setRinging = function () {
       if (y === l.Ringing)
         return;
       if (y === l.Connected)
         return;
       y = l.Ringing;
       var e = N(r.telemetry.calling.RINGING_CALL);
-      m = T(n.callStarted), C(e);
-    }, this.setConnected = function () {
+      m = T(n.callStarted);
+      C(e);
+    };
+    this.setConnected = function () {
       if (y === l.Connected)
         return;
       if (y === l.NotStarted)
         return;
       if (y === l.Ended)
         return;
-      E(), S(), y = l.Connected, n.callDuration = u.build(), v = T(n.callStarted), C(N(r.telemetry.calling.CONNECTED_CALL));
-    }, this.end = function () {
+      E();
+      S();
+      y = l.Connected;
+      n.callDuration = u.build();
+      v = T(n.callStarted);
+      C(N(r.telemetry.calling.CONNECTED_CALL));
+    };
+    this.end = function () {
       var t, s, o, u = r.telemetry.calling.UNAVAILABLE;
       if (y === l.NotStarted) {
         D();
@@ -136,13 +151,38 @@ define("ui/calling/telemetry/callSession", [
         D();
         return;
       }
-      e.audioService.callId && e.audioService.callId() && (u = e.audioService.callId()), t = y === l.Connected, s = t || y === l.Ringing, y = l.Ended, o = N(r.telemetry.calling.END_CALL), o.wasConnected = t, o.timeToCancelCall = t ? "0" : T(n.callStarted), o.timeToConnect = t ? v : "0", o.wasAtLeastOnceParticipantOnline = i.isAtLeastOnceParticipantOnline(e), o.timeToRing = m || "0", o.call_id = u, o.call_end_reason = k(t), o.start_timestamp = g || "undefined", o.end_timestamp = new Date().getTime(), o.call_leg_duration_sec = T(n.callDuration), o.call_leg_successful = s, o.inbound_video_duration_sec = x(n.inboundVideoCollection), o.outbound_video_duration_sec = T(n.outboundVideo), o.screenshare_duration_sec = T(n.outboundScreenshare), o.screenshare_inbound_duration_sec = x(n.inboundScreenshareCollection), C(o), D();
+      e.audioService.callId && e.audioService.callId() && (u = e.audioService.callId());
+      t = y === l.Connected;
+      s = t || y === l.Ringing;
+      y = l.Ended;
+      o = N(r.telemetry.calling.END_CALL);
+      o.wasConnected = t;
+      o.timeToCancelCall = t ? "0" : T(n.callStarted);
+      o.timeToConnect = t ? v : "0";
+      o.wasAtLeastOnceParticipantOnline = i.isAtLeastOnceParticipantOnline(e);
+      o.timeToRing = m || "0";
+      o.call_id = u;
+      o.call_end_reason = k(t);
+      o.start_timestamp = g || "undefined";
+      o.end_timestamp = new Date().getTime();
+      o.call_leg_duration_sec = T(n.callDuration);
+      o.call_leg_successful = s;
+      o.inbound_video_duration_sec = x(n.inboundVideoCollection);
+      o.outbound_video_duration_sec = T(n.outboundVideo);
+      o.screenshare_duration_sec = T(n.outboundScreenshare);
+      o.screenshare_inbound_duration_sec = x(n.inboundScreenshareCollection);
+      C(o);
+      D();
     };
   }
   function c() {
     var e = function () {
     };
-    this.start = e, this.setRinging = e, this.setConnected = e, this.end = e, this.escalate = e;
+    this.start = e;
+    this.setRinging = e;
+    this.setConnected = e;
+    this.end = e;
+    this.escalate = e;
   }
   function h(e) {
     return e.selfParticipant.audio.state.reason === s.callDisconnectionReason.OutOfBrowserCall;
@@ -153,7 +193,8 @@ define("ui/calling/telemetry/callSession", [
   var n = e("utils/calling/callingStack"), r = e("constants/common"), i = e("ui/modelHelpers/conversationHelper"), s = e("swx-enums"), o = e("swx-utils-common").guid, u = e("swx-utils-common").stopwatch, a = e("experience/settings"), f = e("ui/telemetry/telemetryClient");
   t.buildOutgoingCallSession = function (e) {
     return p(e, !1);
-  }, t.buildIncomingCallSession = function (e) {
+  };
+  t.buildIncomingCallSession = function (e) {
     return p(e, !0);
   };
-})
+});

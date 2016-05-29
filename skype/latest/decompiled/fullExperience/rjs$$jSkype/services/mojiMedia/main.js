@@ -18,16 +18,20 @@ define("jSkype/services/mojiMedia/main", [
         a();
         return;
       }
-      n = e, n.fallbackUsed = c, t(n);
+      n = e;
+      n.fallbackUsed = c;
+      t(n);
     }
     function p() {
       if (l) {
         var t;
         o.latestToken !== "" ? t = Promise.resolve(o.latestToken) : t = new Promise(function (e) {
           s.subscribe(i.events.personalExpression.CDN_TOKEN_UPDATED, function t() {
-            s.unsubscribe(i.events.personalExpression.CDN_TOKEN_UPDATED, t), e(o.latestToken);
+            s.unsubscribe(i.events.personalExpression.CDN_TOKEN_UPDATED, t);
+            e(o.latestToken);
           });
-        }), t.then(function (t) {
+        });
+        t.then(function (t) {
           return c = !0, f = {
             url: e + "?" + t,
             dataType: "json",
@@ -42,6 +46,9 @@ define("jSkype/services/mojiMedia/main", [
         dataType: "json",
         crossOrigin: !0
       }, l, c = !1;
-    l = r.isFeatureOn(i.featureFlags.PES_CDN_AUTH_ENABLED), l && (f.withCredentials = !0), a = a || u, n.compat(f).then(h, p);
+    l = r.isFeatureOn(i.featureFlags.PES_CDN_AUTH_ENABLED);
+    l && (f.withCredentials = !0);
+    a = a || u;
+    n.compat(f).then(h, p);
   };
-})
+});

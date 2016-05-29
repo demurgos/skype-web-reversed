@@ -15,7 +15,8 @@ define("jSkype/services/keyEncryption", [
       return o(e).then(function (e) {
         return s.post("/key", e);
       });
-    }, this.encrypt = function (e) {
+    };
+    this.encrypt = function (e) {
       return o(e).then(function (e) {
         return s.post("/newkey", e);
       });
@@ -23,4 +24,4 @@ define("jSkype/services/keyEncryption", [
   }
   var t = e("jSkype/services/serviceAccessLayer/serviceLocator"), n = e("jSkype/services/stratus/optionsBuilder"), r = e("jSkype/settings"), i = e("constants/common");
   return s;
-})
+});

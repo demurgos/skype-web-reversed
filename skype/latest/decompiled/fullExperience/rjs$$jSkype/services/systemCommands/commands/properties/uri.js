@@ -16,4 +16,4 @@ define("jSkype/services/systemCommands/commands/properties/uri", [
   t.build = function () {
     return new r();
   };
-})
+});

@@ -13,6 +13,7 @@ define("experience/components/commerce", [
   }
   var n = e("constants/common"), r = e("services/serviceLocator"), i = e("ui/components/commerce/index"), s = e("ui/components/registrar");
   t.init = function (e) {
-    o(), e();
+    o();
+    e();
   };
-})
+});

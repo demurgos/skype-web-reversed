@@ -10,4 +10,4 @@ define("services/pes/tabs/stylesFactory", [], function () {
     };
   }
   return new e();
-})
+});

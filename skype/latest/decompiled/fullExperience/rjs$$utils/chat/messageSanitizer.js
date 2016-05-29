@@ -160,7 +160,8 @@ define("utils/chat/messageSanitizer", [
     function v(e, t, n) {
       var r = t, i, s;
       do {
-        r += 1, i = d(e, r, p.bind(null, n));
+        r += 1;
+        i = d(e, r, p.bind(null, n));
         if (i === -1)
           return -1;
         s = e.substring(t + 1, i);
@@ -176,7 +177,10 @@ define("utils/chat/messageSanitizer", [
       r = d(e, n, h);
       if (r === -1)
         return [];
-      s = e.charAt(r), i = v(e, r, s), t = u.omit(t, s), n += 1;
+      s = e.charAt(r);
+      i = v(e, r, s);
+      t = u.omit(t, s);
+      n += 1;
     } while (i === -1);
     return [
       r,
@@ -217,7 +221,11 @@ define("utils/chat/messageSanitizer", [
     var r = U(e.replace(/&/g, "&amp;")), i = r.match(t), s;
     return i ? i.forEach(function (e, t) {
       var o = r.indexOf(e), u = o + e.length, a = i[t + 1], f;
-      t === 0 && (s = n(r.substring(0, o))), s += r.substring(o, u), r = r.substring(u), f = a ? r.indexOf(a) : undefined, s += n(r.substring(0, f));
+      t === 0 && (s = n(r.substring(0, o)));
+      s += r.substring(o, u);
+      r = r.substring(u);
+      f = a ? r.indexOf(a) : undefined;
+      s += n(r.substring(0, f));
     }) : s = n(r), z(s.replace(/&amp;/g, "&"));
   }
   function at(e) {
@@ -236,7 +244,8 @@ define("utils/chat/messageSanitizer", [
       return e;
     u.each(r, function (e) {
       i.push(n(e));
-    }), o = s[0];
+    });
+    o = s[0];
     for (var a = 0; a < i.length; a++)
       o += i[a], o += s[a + 1];
     return o;
@@ -481,4 +490,4 @@ define("utils/chat/messageSanitizer", [
     isMessageWithEmoticonsOnly: Ct,
     processIncomingSanitizedTextMessageForTranslation: xt
   };
-})
+});

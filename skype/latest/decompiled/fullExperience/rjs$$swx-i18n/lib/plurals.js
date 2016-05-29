@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -285,5 +285,6 @@ function (e) {
     };
   t.pluralizationLocale = s;
   var u = s.en;
-  t.getPluralSuffix = a, t.setLocale = f;
-})
+  t.getPluralSuffix = a;
+  t.setLocale = f;
+}));

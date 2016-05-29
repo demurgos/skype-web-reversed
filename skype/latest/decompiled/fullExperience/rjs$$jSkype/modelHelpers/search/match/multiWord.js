@@ -17,4 +17,4 @@ define("jSkype/modelHelpers/search/match/multiWord", [
     var o = null, u = n.clean(t), a = n.clean(e), f;
     return s(a, u) && (f = u.split(i)[0], a.split(i).some(l)), o;
   };
-})
+});

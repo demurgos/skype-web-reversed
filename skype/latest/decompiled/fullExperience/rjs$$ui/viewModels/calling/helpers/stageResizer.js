@@ -19,7 +19,8 @@ define("ui/viewModels/calling/helpers/stageResizer", [
       return t.state() === n.mediaStreamState.Stopped ? u : parseFloat((t.width() / t.height()).toFixed(10));
     }
     function p(e, t, n) {
-      e.style.height = n + "px", e.style.width = t + "px";
+      e.style.height = n + "px";
+      e.style.width = t + "px";
     }
     function d(e, t, n, r) {
       var i = t.width(), s = t.height(), o = n / i, u = r / s;
@@ -58,24 +59,35 @@ define("ui/viewModels/calling/helpers/stageResizer", [
       w();
       var t, n, r = l.querySelectorAll(s), i = l.offsetWidth, o = l.offsetHeight;
       if (r.length === 1) {
-        b(r[0], i, o), a = null;
+        b(r[0], i, o);
+        a = null;
         return;
       }
       var u = 0, f = [];
       Array.prototype.forEach.call(r, function (r, i) {
-        m(r), n = e()[i].participant, t = h(n), u += t, f.push(t);
-      }), Array.prototype.forEach.call(r, function (e, t) {
+        m(r);
+        n = e()[i].participant;
+        t = h(n);
+        u += t;
+        f.push(t);
+      });
+      Array.prototype.forEach.call(r, function (e, t) {
         var n = Math.min(o, i / u) * f[t], r = n / f[t];
         p(e, n, r);
-      }), a = null;
+      });
+      a = null;
     }
     var f = this, l;
     f.setStageContainer = function (e) {
       l = e;
-    }, f.isZoomedIn = t.observable(), f.isVideoFullScreenRequested = !1, f.recalculateLayout = function () {
+    };
+    f.isZoomedIn = t.observable();
+    f.isVideoFullScreenRequested = !1;
+    f.recalculateLayout = function () {
       if (!l)
         return;
-      a && i.cancelAnimationFrame(a), a = i.requestAnimationFrame(E);
+      a && i.cancelAnimationFrame(a);
+      a = i.requestAnimationFrame(E);
     };
   }
   var t = e("vendor/knockout"), n = e("swx-enums"), r = e("browser/detect"), i = e("browser/window"), s = ".participant-wrapper", o = "video", u = 1, a;
@@ -84,4 +96,4 @@ define("ui/viewModels/calling/helpers/stageResizer", [
       return new f(e);
     }
   };
-})
+});

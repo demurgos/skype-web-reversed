@@ -15,7 +15,8 @@ define("ui/viewModels/chat/groupSearch", [
     function y(e) {
       if (g !== e)
         return;
-      g = null, p(d.results().map(function (e) {
+      g = null;
+      p(d.results().map(function (e) {
         return e.result;
       }));
     }
@@ -34,7 +35,13 @@ define("ui/viewModels/chat/groupSearch", [
             exception: JSON.stringify(r)
           });
         }
-      t = e.replace(/[^\w\s]/g, "").trim().toLowerCase(), d = i.get().conversationsManager.createSearchQuery(), w("group", !0), w("topic", t), n = d.getMore(), g = n, n.then(y.bind(null, n));
+      t = e.replace(/[^\w\s]/g, "").trim().toLowerCase();
+      d = i.get().conversationsManager.createSearchQuery();
+      w("group", !0);
+      w("topic", t);
+      n = d.getMore();
+      g = n;
+      n.then(y.bind(null, n));
     }
     function w(e, t) {
       if (d.supportedKeywords().indexOf(e) < 0)
@@ -44,18 +51,27 @@ define("ui/viewModels/chat/groupSearch", [
     function E(e) {
       function i(e, n) {
         var i = new l(c);
-        i.init(n), i.groupSearchResults = m, r.insertAt(t, e, i);
+        i.init(n);
+        i.groupSearchResults = m;
+        r.insertAt(t, e, i);
       }
       var t = h.searchResults();
-      n.handleArrayChanges(t, e, i), h.searchResults.valueHasMutated();
+      n.handleArrayChanges(t, e, i);
+      h.searchResults.valueHasMutated();
     }
     var h = this, p = t.observableArray(), d, v, m, g;
     p.subscribe(function (e) {
-      m = e.length, s.publish(f.GROUPS_SEARCH_RESULTS, m);
-    }), this.searchResults = t.observableArray(), this.init = function () {
-      s.subscribe(f.QUERY_CHANGED, b), v = p.subscribe(E, null, "arrayChange");
-    }, this.dispose = function () {
-      s.unsubscribe(f.QUERY_CHANGED, b), v && v.dispose();
+      m = e.length;
+      s.publish(f.GROUPS_SEARCH_RESULTS, m);
+    });
+    this.searchResults = t.observableArray();
+    this.init = function () {
+      s.subscribe(f.QUERY_CHANGED, b);
+      v = p.subscribe(E, null, "arrayChange");
+    };
+    this.dispose = function () {
+      s.unsubscribe(f.QUERY_CHANGED, b);
+      v && v.dispose();
     };
   };
-})
+});

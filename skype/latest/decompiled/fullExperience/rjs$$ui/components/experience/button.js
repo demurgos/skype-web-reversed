@@ -6,5 +6,7 @@ define("ui/components/experience/button", [
   "ui/viewModels/buttons/button",
   "text!views/common/buttons/regular.html"
 ], function (e, t) {
-  t.name = e("constants/components").experience.BUTTON, t.viewModel = e("ui/viewModels/buttons/button"), t.template = e("text!views/common/buttons/regular.html");
-})
+  t.name = e("constants/components").experience.BUTTON;
+  t.viewModel = e("ui/viewModels/buttons/button");
+  t.template = e("text!views/common/buttons/regular.html");
+});

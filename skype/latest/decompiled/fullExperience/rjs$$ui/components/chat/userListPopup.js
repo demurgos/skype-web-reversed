@@ -11,5 +11,7 @@ define("ui/components/chat/userListPopup", [
     return r.setContext(e.eventContext), r.init(), r;
   }
   var n = e("ui/viewModels/chat/userListPopup");
-  t.name = e("constants/components").chat.USER_LIST_POPUP, t.template = e("text!views/chat/userListPopup.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.USER_LIST_POPUP;
+  t.template = e("text!views/chat/userListPopup.html");
+  t.viewModel = { createViewModel: r };
+});

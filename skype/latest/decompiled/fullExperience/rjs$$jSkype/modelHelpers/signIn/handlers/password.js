@@ -15,4 +15,4 @@ define("jSkype/modelHelpers/signIn/handlers/password", [
   t.handler = function () {
     return n.createResolvedPromise(r());
   };
-})
+});

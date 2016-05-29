@@ -17,19 +17,24 @@ define("ui/viewModels/calling/skypeOut/skypeOutDialpadViewModel", [
     var e = this, t = 600, r, o;
     e.onMouseDown = function (e, t) {
       return r = t.currentTarget, o = t.timeStamp, !0;
-    }, e.onTouchStart = function (e, t) {
+    };
+    e.onTouchStart = function (e, t) {
       return r = t.currentTarget, o = t.timeStamp, !1;
-    }, e.onKeyDown = function (e, t) {
+    };
+    e.onKeyDown = function (e, t) {
       var n = i.getKeyCode(t);
       return n !== s.SPACE ? !0 : r ? !1 : (r = t.currentTarget, o = t.timeStamp, !1);
-    }, e.onKeyUp = function (e, t) {
+    };
+    e.onKeyUp = function (e, t) {
       return u(n.events.skypeOut.INPUT_TYPE_KEYBOARD, t.timeStamp), !0;
-    }, e.onTouchEnd = function (e, t) {
+    };
+    e.onTouchEnd = function (e, t) {
       u(n.events.skypeOut.INPUT_TYPE_TOUCH, t.timeStamp);
-    }, e.onMouseUp = function (e, t) {
+    };
+    e.onMouseUp = function (e, t) {
       u(n.events.skypeOut.INPUT_TYPE_MOUSE, t.timeStamp);
     };
   }
   var t = e("lodash-compat"), n = e("constants/common"), r = e("utils/common/eventMixin"), i = e("utils/common/eventHelper"), s = e("constants/keys");
   return t.assign(o.prototype, r), o;
-})
+});

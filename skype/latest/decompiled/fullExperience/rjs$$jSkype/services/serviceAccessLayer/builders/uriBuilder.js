@@ -8,14 +8,17 @@ define("jSkype/services/serviceAccessLayer/builders/uriBuilder", [], function ()
     this.build = function () {
       var t = e.fqdn;
       return t += e.resource !== null ? e.resource : "", t += e.queryParams !== null ? r(e.queryParams) : "", t;
-    }, this.setDomain = function (t) {
+    };
+    this.setDomain = function (t) {
       var n = typeof t == "string";
       if (!n || t === "")
         throw new TypeError("domain must be a string");
       e.fqdn = t;
-    }, this.setResource = function (t) {
+    };
+    this.setResource = function (t) {
       e.fqdn.substring(0, 6) === "skype:" ? e.resource = t : e.resource = n(e.fqdn, t);
-    }, this.setQueryParams = function (t) {
+    };
+    this.setQueryParams = function (t) {
       var n = {}.toString.call(t) === "[object Object]";
       if (!n && t !== undefined)
         throw new Error("queryParams must be an object");
@@ -42,4 +45,4 @@ define("jSkype/services/serviceAccessLayer/builders/uriBuilder", [], function ()
     return n.length > 0 && (r = "?" + n.join("&")), r;
   }
   return e;
-})
+});

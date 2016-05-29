@@ -23,16 +23,20 @@ define("ui/viewModels/people/contactListHelper", [
   var n = e("lodash-compat"), r = e("utils/people/organizePersons"), i = e("ui/viewModels/people/contactBuilder"), s = e("ui/modelHelpers/personHelper");
   t.deselectContactFromDefaultList = function (e, t) {
     u(!1, e, t);
-  }, t.selectContactFromDefaultList = function (e, t) {
+  };
+  t.selectContactFromDefaultList = function (e, t) {
     u(!0, e, t);
-  }, t.filterSearchResults = function (e, n) {
+  };
+  t.filterSearchResults = function (e, n) {
     return e.reduce(function (e, r) {
       var s = r.result;
       return t.shouldPersonBeIncluded(s, n) ? e.concat([i.build(s)]) : e;
     }, []);
-  }, t.organizeByAlphabet = function (e) {
+  };
+  t.organizeByAlphabet = function (e) {
     return r.byAlphabet(e);
-  }, t.setObservablePropertyOnContacts = function (e, r, i) {
+  };
+  t.setObservablePropertyOnContacts = function (e, r, i) {
     function s(n) {
       t.setObservablePropertyOnContact(e, r, n);
     }
@@ -41,17 +45,21 @@ define("ui/viewModels/people/contactListHelper", [
     n.isFunction(i[0].contacts) ? i.forEach(function (e) {
       e.contacts().forEach(s);
     }) : i.forEach(s);
-  }, t.setObservablePropertyOnContact = function (e, t, r) {
+  };
+  t.setObservablePropertyOnContact = function (e, t, r) {
     if (!r.hasOwnProperty(e))
       return;
-    n.isFunction(t) && t.bind(r), r[e](t);
-  }, t.personExistsInCollection = function (e, t) {
+    n.isFunction(t) && t.bind(r);
+    r[e](t);
+  };
+  t.personExistsInCollection = function (e, t) {
     function n(t) {
       return e.id() === t.id();
     }
     return t ? Boolean(t.filter(n).length) : !1;
-  }, t.shouldPersonBeIncluded = function (e, n) {
+  };
+  t.shouldPersonBeIncluded = function (e, n) {
     var r = t.personExistsInCollection(e, n), i = s.isEchoContact(e);
     return !r && !o(e) && !i;
   };
-})
+});

@@ -12,5 +12,7 @@ define("ui/components/calling/participantMenu", [
     return i.setContext(s), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/people/contactName");
-  t.name = e("constants/components").calling.PARTICIPANT_MENU, t.template = e("text!views/calling/participantMenu.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").calling.PARTICIPANT_MENU;
+  t.template = e("text!views/calling/participantMenu.html");
+  t.viewModel = { createViewModel: i };
+});

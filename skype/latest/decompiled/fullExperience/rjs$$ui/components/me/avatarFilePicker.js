@@ -11,5 +11,7 @@ define("ui/components/me/avatarFilePicker", [
     return r;
   }
   var n = e("ui/viewModels/me/avatarFilePicker");
-  t.name = e("constants/components").me.AVATAR_FILE_PICKER, t.template = e("text!views/me/avatarFilePicker.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").me.AVATAR_FILE_PICKER;
+  t.template = e("text!views/me/avatarFilePicker.html");
+  t.viewModel = { createViewModel: r };
+});

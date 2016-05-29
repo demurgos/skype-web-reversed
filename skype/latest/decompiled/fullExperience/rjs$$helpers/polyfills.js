@@ -5,7 +5,9 @@ define("helpers/polyfills", [
   "blueimp-canvas-to-blob"
 ], function (e) {
   var t = e("utils/common/stringPolyfills");
-  e("es6-promise").polyfill(), e("blueimp-canvas-to-blob"), Function.prototype.name === undefined && Object.defineProperty(Function.prototype, "name", {
+  e("es6-promise").polyfill();
+  e("blueimp-canvas-to-blob");
+  Function.prototype.name === undefined && Object.defineProperty(Function.prototype, "name", {
     get: function () {
       try {
         return this.toString().match(/\s*function\s+([_\$\w\d]*)\.*/)[1];
@@ -13,5 +15,6 @@ define("helpers/polyfills", [
         return "";
       }
     }
-  }), String.prototype.localeCompare === undefined && (String.prototype.localeCompare = t.localeCompare);
-})
+  });
+  String.prototype.localeCompare === undefined && (String.prototype.localeCompare = t.localeCompare);
+});

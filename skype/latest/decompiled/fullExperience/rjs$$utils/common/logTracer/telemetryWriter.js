@@ -14,7 +14,8 @@ define("utils/common/logTracer/telemetryWriter", [
       "debug"
     ].forEach(function (t) {
       i[t] = e ? e[t] : n.noop;
-    }), this.error = function () {
+    });
+    this.error = function () {
       e && e.error.apply(this, arguments);
       var n = r.getFormattedMessage(arguments), i = arguments[0], s = typeof arguments[1] != "undefined" ? arguments[1] : "", o = {
           namespace: i,
@@ -29,4 +30,4 @@ define("utils/common/logTracer/telemetryWriter", [
   t.build = function (e, t) {
     return new i(e, t);
   };
-})
+});

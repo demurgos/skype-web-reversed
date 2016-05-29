@@ -15,7 +15,10 @@ define("jSkype/modelHelpers/signIn/handlers/implicitOAuth", [
     return f(e), t;
   }
   function f(e) {
-    delete e.skypetoken, delete e.expires_in, delete e.rps_token, delete e.site_name;
+    delete e.skypetoken;
+    delete e.expires_in;
+    delete e.rps_token;
+    delete e.site_name;
   }
   function l(e) {
     var t = new Promise(function (t, n) {
@@ -27,7 +30,9 @@ define("jSkype/modelHelpers/signIn/handlers/implicitOAuth", [
         client_id: e.client_id,
         microsoft: !0,
         use_azure: i.isFeatureOn(s.featureFlags.USE_AZURE_BASED_SILENT_LOGIN)
-      }), r.setCallback(o), r.load();
+      });
+      r.setCallback(o);
+      r.load();
     });
     return t;
   }
@@ -61,4 +66,4 @@ define("jSkype/modelHelpers/signIn/handlers/implicitOAuth", [
     var t;
     return u(e) ? t = a(e) : t = l(e), t;
   };
-})
+});

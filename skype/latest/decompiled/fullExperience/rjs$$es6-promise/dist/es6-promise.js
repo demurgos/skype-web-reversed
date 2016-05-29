@@ -1,4 +1,4 @@
-function () {
+(function () {
   function e(e) {
     return typeof e == "function" || typeof e == "object" && e !== null;
   }
@@ -45,7 +45,9 @@ function () {
   function x() {
     for (var e = 0; e < s; e += 2) {
       var t = S[e], n = S[e + 1];
-      t(n), S[e] = undefined, S[e + 1] = undefined;
+      t(n);
+      S[e] = undefined;
+      S[e + 1] = undefined;
     }
     s = 0;
   }
@@ -84,11 +86,13 @@ function () {
       var r = !1, i = P(n, t, function (n) {
           if (r)
             return;
-          r = !0, t !== n ? F(e, n) : q(e, n);
+          r = !0;
+          t !== n ? F(e, n) : q(e, n);
         }, function (t) {
           if (r)
             return;
-          r = !0, R(e, t);
+          r = !0;
+          R(e, t);
         }, "Settle: " + (e._label || " unknown promise"));
       !r && i && (r = !0, R(e, i));
     }, e);
@@ -112,21 +116,30 @@ function () {
     t === n ? R(t, M()) : e(n) ? j(t, n) : q(t, n);
   }
   function I(e) {
-    e._onerror && e._onerror(e._result), z(e);
+    e._onerror && e._onerror(e._result);
+    z(e);
   }
   function q(e, t) {
     if (e._state !== k)
       return;
-    e._result = t, e._state = L, e._subscribers.length !== 0 && f(z, e);
+    e._result = t;
+    e._state = L;
+    e._subscribers.length !== 0 && f(z, e);
   }
   function R(e, t) {
     if (e._state !== k)
       return;
-    e._state = A, e._result = t, f(I, e);
+    e._state = A;
+    e._result = t;
+    f(I, e);
   }
   function U(e, t, n, r) {
     var i = e._subscribers, s = i.length;
-    e._onerror = null, i[s] = t, i[s + L] = n, i[s + A] = r, s === 0 && e._state && f(z, e);
+    e._onerror = null;
+    i[s] = t;
+    i[s + L] = n;
+    i[s + A] = r;
+    s === 0 && e._state && f(z, e);
   }
   function z(e) {
     var t = e._subscribers, n = e._state;
@@ -150,7 +163,8 @@ function () {
   function $(e, n, r, i) {
     var s = t(r), o, u, a, f;
     if (s) {
-      o = V(r, i), o === X ? (f = !0, u = o.error, o = null) : a = !0;
+      o = V(r, i);
+      o === X ? (f = !0, u = o.error, o = null) : a = !0;
       if (n === o) {
         R(n, _());
         return;
@@ -172,7 +186,9 @@ function () {
   }
   function K(e, t) {
     var n = this;
-    n._instanceConstructor = e, n.promise = new e(C), n._validateInput(t) ? (n._input = t, n.length = t.length, n._remaining = t.length, n._init(), n.length === 0 ? q(n.promise, n._result) : (n.length = n.length || 0, n._enumerate(), n._remaining === 0 && q(n.promise, n._result))) : R(n.promise, n._validationError());
+    n._instanceConstructor = e;
+    n.promise = new e(C);
+    n._validateInput(t) ? (n._input = t, n.length = t.length, n._remaining = t.length, n._init(), n.length === 0 ? q(n.promise, n._result) : (n.length = n.length || 0, n._enumerate(), n._remaining === 0 && q(n.promise, n._result))) : R(n.promise, n._validationError());
   }
   function G(e) {
     return new Q(this, e).promise;
@@ -210,7 +226,11 @@ function () {
     throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");
   }
   function ft(e) {
-    this._id = st++, this._state = undefined, this._result = undefined, this._subscribers = [], C !== e && (t(e) || ot(), this instanceof ft || ut(), J(this, e));
+    this._id = st++;
+    this._state = undefined;
+    this._result = undefined;
+    this._subscribers = [];
+    C !== e && (t(e) || ot(), this instanceof ft || ut(), J(this, e));
   }
   function lt() {
     var e;
@@ -234,15 +254,20 @@ function () {
     return Object.prototype.toString.call(e) === "[object Array]";
   };
   var i = r, s = 0, o = {}.toString, u, a, f = function (t, n) {
-      S[s] = t, S[s + 1] = n, s += 2, s === 2 && (a ? a(x) : N());
+      S[s] = t;
+      S[s + 1] = n;
+      s += 2;
+      s === 2 && (a ? a(x) : N());
     }, h = typeof window != "undefined" ? window : undefined, p = h || {}, d = p.MutationObserver || p.WebKitMutationObserver, v = typeof process != "undefined" && {}.toString.call(process) === "[object process]", m = typeof Uint8ClampedArray != "undefined" && typeof importScripts != "undefined" && typeof MessageChannel != "undefined", S = new Array(1000), N;
   v ? N = g() : d ? N = b() : m ? N = w() : h === undefined && typeof require == "function" ? N = T() : N = E();
   var k = void 0, L = 1, A = 2, O = new W(), X = new W();
   K.prototype._validateInput = function (e) {
     return i(e);
-  }, K.prototype._validationError = function () {
+  };
+  K.prototype._validationError = function () {
     return new Error("Array Methods must be provided an Array");
-  }, K.prototype._init = function () {
+  };
+  K.prototype._init = function () {
     this._result = new Array(this.length);
   };
   var Q = K;
@@ -250,13 +275,17 @@ function () {
     var e = this, t = e.length, n = e.promise, r = e._input;
     for (var i = 0; n._state === k && i < t; i++)
       e._eachEntry(r[i], i);
-  }, K.prototype._eachEntry = function (e, t) {
+  };
+  K.prototype._eachEntry = function (e, t) {
     var r = this, i = r._instanceConstructor;
     n(e) ? e.constructor === i && e._state !== k ? (e._onerror = null, r._settledAt(e._state, t, e._result)) : r._willSettleAt(i.resolve(e), t) : (r._remaining--, r._result[t] = e);
-  }, K.prototype._settledAt = function (e, t, n) {
+  };
+  K.prototype._settledAt = function (e, t, n) {
     var r = this, i = r.promise;
-    i._state === k && (r._remaining--, e === A ? R(i, n) : r._result[t] = n), r._remaining === 0 && q(i, r._result);
-  }, K.prototype._willSettleAt = function (e, t) {
+    i._state === k && (r._remaining--, e === A ? R(i, n) : r._result[t] = n);
+    r._remaining === 0 && q(i, r._result);
+  };
+  K.prototype._willSettleAt = function (e, t) {
     var n = this;
     U(e, undefined, function (e) {
       n._settledAt(L, t, e);
@@ -265,7 +294,14 @@ function () {
     });
   };
   var Y = G, et = Z, nt = tt, it = rt, st = 0, at = ft;
-  ft.all = Y, ft.race = et, ft.resolve = nt, ft.reject = it, ft._setScheduler = l, ft._setAsap = c, ft._asap = f, ft.prototype = {
+  ft.all = Y;
+  ft.race = et;
+  ft.resolve = nt;
+  ft.reject = it;
+  ft._setScheduler = l;
+  ft._setAsap = c;
+  ft._asap = f;
+  ft.prototype = {
     constructor: ft,
     then: function (e, t) {
       var n = this, r = n._state;
@@ -291,5 +327,6 @@ function () {
     };
   typeof define == "function" && define.amd ? define("es6-promise/dist/es6-promise", [], function () {
     return ht;
-  }) : typeof module != "undefined" && module.exports ? module.exports = ht : typeof this != "undefined" && (this.ES6Promise = ht), ct();
-}.call(this)
+  }) : typeof module != "undefined" && module.exports ? module.exports = ht : typeof this != "undefined" && (this.ES6Promise = ht);
+  ct();
+}.call(this));

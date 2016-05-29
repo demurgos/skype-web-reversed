@@ -18,4 +18,4 @@ define("jSkype/modelHelpers/search/directoryDataHandler", [
     var t = r.getDirectorySearchMapper();
     return e && e.response ? i.reduce(e.response, s, []) : [];
   };
-})
+});

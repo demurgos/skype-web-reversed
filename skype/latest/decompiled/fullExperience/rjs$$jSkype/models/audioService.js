@@ -40,10 +40,25 @@ define("jSkype/models/audioService", [
     t.callConnected = n.property({
       readOnly: !0,
       value: null
-    }), t.disconnectionReason = n.property({ readOnly: !0 }), t.sendDtmf = n.command(h, t.callConnected), t.callId = n.property({ readOnly: !0 }), t.start = o.start, t.stop = o.stop, t.accept = o.accept, t.reject = o.reject, t._canHandlePluginlessCall = o._canHandlePluginlessCall, t._isCallWithP2PEndpoint = o._isCallWithP2PEndpoint, t._setMediaConnectionType = o._setMediaConnectionType, t._hasPSTNParticipants = o._hasPSTNParticipants, t._setPSTNParticipants = o._setPSTNParticipants, t._membershipChanged = o._membershipChanged, t._checkPluginBasedCapabilitiesSupport = o._checkPluginBasedCapabilitiesSupport;
+    });
+    t.disconnectionReason = n.property({ readOnly: !0 });
+    t.sendDtmf = n.command(h, t.callConnected);
+    t.callId = n.property({ readOnly: !0 });
+    t.start = o.start;
+    t.stop = o.stop;
+    t.accept = o.accept;
+    t.reject = o.reject;
+    t._canHandlePluginlessCall = o._canHandlePluginlessCall;
+    t._isCallWithP2PEndpoint = o._isCallWithP2PEndpoint;
+    t._setMediaConnectionType = o._setMediaConnectionType;
+    t._hasPSTNParticipants = o._hasPSTNParticipants;
+    t._setPSTNParticipants = o._setPSTNParticipants;
+    t._membershipChanged = o._membershipChanged;
+    t._checkPluginBasedCapabilitiesSupport = o._checkPluginBasedCapabilitiesSupport;
     var a = e.selfParticipant.audio.state.when(i.callConnectionState.Connecting, l), f = e.selfParticipant.audio.state.when(i.callConnectionState.Connected, c);
     return t._dispose = function () {
-      f.dispose(), a.dispose();
+      f.dispose();
+      a.dispose();
     }, o._hasTooManyParticipants = function () {
       return e.participantsCount() >= r.settings.maximumParticipantsAudio;
     }, o._activeConversationModality = function () {
@@ -54,4 +69,4 @@ define("jSkype/models/audioService", [
   t.build = function (e, t) {
     return new o(e, t);
   };
-})
+});

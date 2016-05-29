@@ -13,5 +13,7 @@ define("ui/components/chat/pollDesigner", [
     return a.setContext(o), a.init(), a;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/pollDesigner"), i = e("jsviews/chat/pollDesigner");
-  t.name = e("constants/components").chat.POLL_DESIGNER, t.template = e("text!views/chat/pollDesigner.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").chat.POLL_DESIGNER;
+  t.template = e("text!views/chat/pollDesigner.html");
+  t.viewModel = { createViewModel: s };
+});

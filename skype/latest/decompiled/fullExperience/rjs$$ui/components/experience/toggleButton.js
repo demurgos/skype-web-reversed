@@ -6,5 +6,7 @@ define("ui/components/experience/toggleButton", [
   "ui/viewModels/buttons/toggle",
   "text!views/common/buttons/toggleButton.html"
 ], function (e, t) {
-  t.name = e("constants/components").experience.TOGGLE_BUTTON, t.viewModel = e("ui/viewModels/buttons/toggle"), t.template = e("text!views/common/buttons/toggleButton.html");
-})
+  t.name = e("constants/components").experience.TOGGLE_BUTTON;
+  t.viewModel = e("ui/viewModels/buttons/toggle");
+  t.template = e("text!views/common/buttons/toggleButton.html");
+});

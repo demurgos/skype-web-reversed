@@ -20,10 +20,15 @@ define("jSkype/services/outOfBrowser/extensionLifecycleFacade", [
       p && p(e);
     }
     function g() {
-      f = i.build(a), f.registerCommandHandler(o.commands.SHELL_APP_READY_FOR_BOOTSTRAP, b), f.registerCommandHandler(o.commands.SHELL_APP_INITIALISED, y), f.registerEventHandler(o.shellAppEvents.WindowHidden, v), f.registerCommandHandler(o.commands.ESCALATE_CONVERSATION, m);
+      f = i.build(a);
+      f.registerCommandHandler(o.commands.SHELL_APP_READY_FOR_BOOTSTRAP, b);
+      f.registerCommandHandler(o.commands.SHELL_APP_INITIALISED, y);
+      f.registerEventHandler(o.shellAppEvents.WindowHidden, v);
+      f.registerCommandHandler(o.commands.ESCALATE_CONVERSATION, m);
     }
     function y() {
-      s.build(f), l.resolve(f);
+      s.build(f);
+      l.resolve(f);
     }
     function b() {
       f.sendCommand(o.commands.BOOTSTRAP, { url: u.settings.shellApp.bootstrapperUrl });
@@ -36,19 +41,31 @@ define("jSkype/services/outOfBrowser/extensionLifecycleFacade", [
       return l || (l = n.task(), a = r.build(e), a.getAppHost().then(function () {
         return g(), a.openShellApp(d);
       }).catch(w)), l.promise;
-    }, t.disconnect = function () {
+    };
+    t.disconnect = function () {
       return a ? a.disconnect() : Promise.resolve();
-    }, t.getVersion = function () {
+    };
+    t.getVersion = function () {
       return a = r.build(e), a.getAppHost().then(function (e) {
         return e.getVersion();
       });
-    }, t.dispose = function () {
-      f && (f.unregisterCommandHandler(o.commands.SHELL_APP_INITIALISED), f.unregisterCommandHandler(o.commands.SHELL_APP_READY_FOR_BOOTSTRAP), f.unregisterEventHandler(o.shellAppEvents.WindowHidden)), f = null, l = null, c = null, h = null, p = null, a && (a.disconnect(), a.dispose());
-    }, t.onExtensionDisconnected = function (e) {
+    };
+    t.dispose = function () {
+      f && (f.unregisterCommandHandler(o.commands.SHELL_APP_INITIALISED), f.unregisterCommandHandler(o.commands.SHELL_APP_READY_FOR_BOOTSTRAP), f.unregisterEventHandler(o.shellAppEvents.WindowHidden));
+      f = null;
+      l = null;
+      c = null;
+      h = null;
+      p = null;
+      a && (a.disconnect(), a.dispose());
+    };
+    t.onExtensionDisconnected = function (e) {
       h = e;
-    }, t.onShellAppWindowHidden = function (e) {
+    };
+    t.onShellAppWindowHidden = function (e) {
       c = e;
-    }, t.onShellAppCallEscalated = function (e) {
+    };
+    t.onShellAppCallEscalated = function (e) {
       p = e;
     };
   }
@@ -56,4 +73,4 @@ define("jSkype/services/outOfBrowser/extensionLifecycleFacade", [
   t.build = function (e) {
     return new a(e);
   };
-})
+});

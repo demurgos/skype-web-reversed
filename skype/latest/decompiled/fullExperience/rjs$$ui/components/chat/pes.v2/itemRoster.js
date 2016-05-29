@@ -11,5 +11,7 @@ define("ui/components/chat/pes.v2/itemRoster", [
     return i.init(), i;
   }
   var n = e("ui/viewModels/chat/pes.v2/itemRoster");
-  t.name = e("constants/components").chat.EXPRESSION_ITEM_ROSTER, t.template = e("text!views/chat/pes.v2/itemRoster.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.EXPRESSION_ITEM_ROSTER;
+  t.template = e("text!views/chat/pes.v2/itemRoster.html");
+  t.viewModel = { createViewModel: r };
+});

@@ -17,4 +17,4 @@ define("ui/contextMenu/items/openConversation", [
   }
   var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("services/pubSub/pubSub"), i = e("constants/common"), s = i.events.navigation;
   return o.prototype = Object.create(n.prototype), o.TYPE = "OpenConversationMenuItem", o;
-})
+});

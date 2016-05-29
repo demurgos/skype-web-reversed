@@ -9,7 +9,9 @@ define("ui/components/chat/suggestions/emoticonSuggestionEngine", [
 ], function (e) {
   function a() {
     var e = s.resolve(n.serviceLocator.FEATURE_FLAGS);
-    this.isEnabled = e.isFeatureOn(n.featureFlags.EMOTICON_SUGGESTION_ENABLED), this.isImplicitEnabled = !e.isFeatureOn(n.featureFlags.EMOTICON_IMPLICIT_SUGGESTION_DISABLED), this.suggestHidden = e.isFeatureOn(n.featureFlags.SUGGEST_HIDDEN_EMOTICONS);
+    this.isEnabled = e.isFeatureOn(n.featureFlags.EMOTICON_SUGGESTION_ENABLED);
+    this.isImplicitEnabled = !e.isFeatureOn(n.featureFlags.EMOTICON_IMPLICIT_SUGGESTION_DISABLED);
+    this.suggestHidden = e.isFeatureOn(n.featureFlags.SUGGEST_HIDDEN_EMOTICONS);
   }
   function f(e, n) {
     return t.any(n.shortcuts, function (t) {
@@ -59,4 +61,4 @@ define("ui/components/chat/suggestions/emoticonSuggestionEngine", [
       })
     };
   }, a;
-})
+});

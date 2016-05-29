@@ -19,4 +19,4 @@ define("services/telemetry/logging/perf/main", [
       n = undefined;
     }
   };
-})
+});

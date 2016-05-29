@@ -13,4 +13,4 @@ define("jSkype/modelHelpers/contacts/incomingContactRequestsHelper", [
     var e;
     return i.isGuest(s.get().personsAndGroupsManager.mePerson) ? o.createResolvedPromise() : (e = n.getContactRequestsIncomingHandlers(), r.getStratusService().getIncomingContactRequests().then(e.onSuccess, e.onError));
   };
-})
+});

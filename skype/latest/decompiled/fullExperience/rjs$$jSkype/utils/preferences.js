@@ -11,11 +11,13 @@ define("jSkype/utils/preferences", [
     var t = this;
     t.addPreference = function (t) {
       e(t.id) || e.add(s.build(t), t.id);
-    }, t.init = function () {
+    };
+    t.init = function () {
       i.forEach(function (e) {
         if (u(e.featureFlag)) {
           var r = n.clone(e), i = e.provider;
-          r.provider = i.const.build.apply(i.const, i.args), t.addPreference(r);
+          r.provider = i.const.build.apply(i.const, i.args);
+          t.addPreference(r);
         }
       });
     };
@@ -27,5 +29,6 @@ define("jSkype/utils/preferences", [
   t.build = function (e) {
     var t = new o(e);
     t.init();
-  }, t.Preferences = o;
-})
+  };
+  t.Preferences = o;
+});

@@ -8,7 +8,10 @@ define("jSkype/services/systemCommands/commands/giphy", [
   "reqwest"
 ], function (e, t) {
   function o() {
-    this.isAvailableFor = r.isFeatureOn(i.featureFlags.GIPHY) ? n.availableAlways : n.availableNever, this.help = "[expression] - sends random GIF for given expression (optional)", this.showInHelp = !0, this.action = function (e, t) {
+    this.isAvailableFor = r.isFeatureOn(i.featureFlags.GIPHY) ? n.availableAlways : n.availableNever;
+    this.help = "[expression] - sends random GIF for given expression (optional)";
+    this.showInHelp = !0;
+    this.action = function (e, t) {
       s.compat({
         method: "get",
         dataType: "json",
@@ -29,4 +32,4 @@ define("jSkype/services/systemCommands/commands/giphy", [
   t.build = function () {
     return new o();
   };
-})
+});

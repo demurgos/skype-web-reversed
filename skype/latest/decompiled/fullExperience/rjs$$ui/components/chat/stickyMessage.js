@@ -13,5 +13,7 @@ define("ui/components/chat/stickyMessage", [
     return u.setContext(a), u.init(), u;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/stickyMessage"), i = e("jsviews/chat/stickyMessage");
-  t.name = e("constants/components").chat.STICKY_MESSAGE, t.template = e("text!views/chat/stickyMessage.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").chat.STICKY_MESSAGE;
+  t.template = e("text!views/chat/stickyMessage.html");
+  t.viewModel = { createViewModel: s };
+});

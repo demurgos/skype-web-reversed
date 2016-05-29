@@ -16,11 +16,13 @@ define("services/calling/autoCalling", [
       return;
     if (!f.isFeatureOn(i.featureFlags.AUTO_CALLING))
       return;
-    u.set(i.autoCallingThreadId, e), n.get().personsAndGroupsManager.mePerson.id.get().then(function () {
+    u.set(i.autoCallingThreadId, e);
+    n.get().personsAndGroupsManager.mePerson.id.get().then(function () {
       a.sync().then(function () {
         var n = t.getConversationByUri(e);
         n && n.autoCall && n.autoCall.once(!0, function () {
-          r.placeCall(n, !0, "autoCalling"), o.playOnce(o.KEYS.CALL_DIALING);
+          r.placeCall(n, !0, "autoCalling");
+          o.playOnce(o.KEYS.CALL_DIALING);
         });
       });
     });
@@ -39,4 +41,4 @@ define("services/calling/autoCalling", [
       u.remove(i.autoCallingThreadId);
     }
   };
-})
+});

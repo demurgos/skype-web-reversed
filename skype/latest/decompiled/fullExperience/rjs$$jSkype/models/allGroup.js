@@ -18,16 +18,20 @@ define("jSkype/models/allGroup", [
   "jSkype/constants/people"
 ], function (e) {
   function y(e) {
-    a.call(this), this.persons = b(e), g = null;
+    a.call(this);
+    this.persons = b(e);
+    g = null;
   }
   function b(e) {
     var u = t.collection({
       get: function () {
         function u() {
-          g.resolve(), g = null;
+          g.resolve();
+          g = null;
         }
         function a(e) {
-          g.reject(e), g = null;
+          g.reject(e);
+          g = null;
         }
         if (n.get().signInManager.state() !== r.loginState.SignedIn)
           return Promise.reject("signed out");
@@ -62,7 +66,8 @@ define("jSkype/models/allGroup", [
         var h;
         if (t.isAgent() && c === f.ContactRequestOutgoingAgent) {
           var p = n.get().signInManager._skypeToken, d = v.settings.agentProvisioningService, g = o.build(p, d);
-          t._authorization._set(m.PENDING_OUTGOING), h = g.add(t.id()).then(b, w);
+          t._authorization._set(m.PENDING_OUTGOING);
+          h = g.add(t.id()).then(b, w);
         }
         if (c && !l.isGuestId(r) && !t.isAgent()) {
           var y = i.getStratusService();
@@ -109,6 +114,7 @@ define("jSkype/models/allGroup", [
   }
   var t = e("jcafe-property-model"), n = e("jSkype/client"), r = e("swx-enums"), i = e("jSkype/services/serviceFactory"), s = e("jSkype/modelHelpers/contacts/dataHandlers/factory"), o = e("swx-agentProvisioningService"), u = e("swx-i18n").localization, a = e("jSkype/models/group"), f = e("swx-enums").activityType, l = e("jSkype/modelHelpers/personHelper"), c = e("jSkype/modelHelpers/contacts/dataMappers/dataMaps"), h = e("lodash-compat"), p = e("constants/common"), d = e("utils/common/settablePromise"), v = e("jSkype/settings"), m = e("jSkype/constants/people").authorizationStates, g;
   return y.prototype = new a(), y.prototype.constructor = y, y.prototype._reset = function () {
-    this.persons.empty(), g = null;
+    this.persons.empty();
+    g = null;
   }, y;
-})
+});

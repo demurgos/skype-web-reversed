@@ -11,4 +11,4 @@ define("ui/viewModels/calling/helpers/textFormatter", [], function () {
     return e = e.toString(), e.length > 1 ? e : "0" + e;
   }
   return { getFormattedDuration: e };
-})
+});

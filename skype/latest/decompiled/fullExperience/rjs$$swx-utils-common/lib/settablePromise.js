@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -10,9 +10,10 @@ function (e) {
 }(function (e, t) {
   function n() {
     var e, t, n = new Promise(function (n, r) {
-        e = n, t = r;
+        e = n;
+        t = r;
       });
     return n.resolve = e, n.reject = t, n;
   }
   t.build = n;
-})
+}));

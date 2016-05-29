@@ -58,7 +58,8 @@ define("ui/shortCircuit/shortCircuit", [
       }).catch(function () {
         return o.close(), n;
       });
-    }, e.isEnabled = function () {
+    };
+    e.isEnabled = function () {
       var e = u.get().personsAndGroupsManager.mePerson, t = a.resolve(i.serviceLocator.FEATURE_FLAGS), n = t.isFeatureOn(i.featureFlags.SHORT_CIRCUIT);
       return !n || e._settings === undefined || e._registeredAt === undefined ? Promise.resolve(!1) : e._settings.get(s.selfSettings.linkedMSA).then(function (t) {
         return t ? e._settings.get(s.selfSettings.autoBuddy).then(function (e) {
@@ -71,4 +72,4 @@ define("ui/shortCircuit/shortCircuit", [
   t.build = function () {
     return new y();
   };
-})
+});

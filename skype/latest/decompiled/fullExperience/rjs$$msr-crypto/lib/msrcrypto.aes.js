@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -16,19 +16,25 @@ function (e) {
         function u(e) {
           var t;
           for (t = e.length - 1; t >= 0; t -= 1) {
-            e[t] += 1, e[t] >= 256 && (e[t] = 0);
+            e[t] += 1;
+            e[t] >= 256 && (e[t] = 0);
             if (e[t])
               break;
           }
         }
         function a() {
-          t = l.getVector(32), n = l.getVector(16), r = 32, i = 48, s = 1;
+          t = l.getVector(32);
+          n = l.getVector(16);
+          r = 32;
+          i = 48;
+          s = 1;
         }
         function f(e, t) {
           t = t || [0];
           if (t.length > i)
             throw new Error("Incorrect entropy or additionalEntropy length");
-          t = t.concat(l.getVector(i - t.length)), e = e.concat(l.getVector((i - e.length % i) % i));
+          t = t.concat(l.getVector(i - t.length));
+          e = e.concat(l.getVector((i - e.length % i) % i));
           for (var n = 0; n < e.length; n += i) {
             var r = l.xorVectors(e.slice(n, n + i), t);
             c(r);
@@ -42,7 +48,9 @@ function (e) {
             var a = n.slice(0, 16), f = o.encrypt(a);
             s = s.concat(f);
           }
-          s = l.xorVectors(s, e), t = s.slice(0, r), n = s.slice(r);
+          s = l.xorVectors(s, e);
+          t = s.slice(0, r);
+          n = s.slice(r);
         }
         function h(e, r) {
           if (e >= 65536)
@@ -70,7 +78,9 @@ function (e) {
             init: function (t, n) {
               if (t.length < i)
                 throw new Error("Initial entropy length too short");
-              a(), f(t, n), e = !0;
+              a();
+              f(t, n);
+              e = !0;
             },
             getBytes: function (t, n) {
               if (!e)
@@ -100,7 +110,9 @@ function (e) {
           var a = window.crypto || window.msCrypto;
           if (a && typeof a.getRandomValues == "function" && window.Uint8Array) {
             var f = new window.Uint8Array(e);
-            a.getRandomValues(f), r = r.concat(Array.apply(null, f)), o = !0;
+            a.getRandomValues(f);
+            r = r.concat(Array.apply(null, f));
+            o = !0;
           }
           var h = new XMLHttpRequest();
           for (n = 0; n < u.length; n += 1)
@@ -112,7 +124,9 @@ function (e) {
               }
             } catch (v) {
             }
-          o || (r = r.concat(t.splice(0, t.length)), c.startCollectors()), s ? i.reseed(r) : i.init(r), s = !0;
+          o || (r = r.concat(t.splice(0, t.length)), c.startCollectors());
+          s ? i.reseed(r) : i.init(r);
+          s = !0;
         }
         function f(e) {
           for (var r = 0; r < e.length; ++r)
@@ -136,7 +150,8 @@ function (e) {
                   else {
                     if (!document.attachEvent)
                       throw new Error("Can't attach events for entropy collection");
-                    document.attachEvent("onmousemove", this.MouseEventCallBack), document.attachEvent("onload", this.LoadTimeCallBack);
+                    document.attachEvent("onmousemove", this.MouseEventCallBack);
+                    document.attachEvent("onload", this.LoadTimeCallBack);
                   }
                   this.collectorsRegistered = 1;
                 }
@@ -193,7 +208,8 @@ function (e) {
         e[t] || (e[t] = {});
         var i = e[t];
         i[n] || (i[n] = r);
-      }, e.exists = function (t, n) {
+      };
+      e.exists = function (t, n) {
         return e[t] ? e[t][n] ? !0 : !1 : !1;
       };
       var t = function () {
@@ -221,7 +237,9 @@ function (e) {
             return;
           }
           var s = {};
-          r && (s.get = r), i && (s.set = i), Object.defineProperty(e, t, s);
+          r && (s.get = r);
+          i && (s.set = i);
+          Object.defineProperty(e, t, s);
         }, f = {}, l = function () {
           function n(n, r) {
             var i = "";
@@ -265,7 +283,8 @@ function (e) {
             for (var r = 0; r < e.length; r++) {
               t && r % 4 === 0 && r !== 0 && (n += "-");
               var i = e[r].toString(16).toUpperCase();
-              i.length === 1 && (n += "0"), n += i;
+              i.length === 1 && (n += "0");
+              n += i;
             }
             return n;
           }
@@ -427,7 +446,8 @@ function (e) {
           }
           function r(r, i) {
             var s = {};
-            s.kty = n(r), s.extractable = r.extractable;
+            s.kty = n(r);
+            s.extractable = r.extractable;
             if (i.pop)
               s.k = e.toBase64(i, !0);
             else
@@ -475,7 +495,8 @@ function (e) {
             return c = p(e), y();
           }
           function g(e) {
-            c = c.concat(e), c.length >= i && (c = p(c));
+            c = c.concat(e);
+            c.length >= i && (c = p(c));
             return;
           }
           function y() {
@@ -523,7 +544,9 @@ function (e) {
           return;
         }
         return e.operationSubType === "finish" ? v.sha224.finish() : v.sha224.computeHash(e.buffer);
-      }, e.register("digest", "sha-224", v.hash224), e.register("digest", "sha-256", v.hash256)), f["sha-224"] = v.sha224, f["sha-256"] = v.sha256;
+      }, e.register("digest", "sha-224", v.hash224), e.register("digest", "sha-256", v.hash256));
+      f["sha-224"] = v.sha224;
+      f["sha-256"] = v.sha256;
       var m = function () {
           var e, t, n, r, i, s, o, u, a, f;
           return {
@@ -545,16 +568,74 @@ function (e) {
               }
               var y = function (e) {
                   var t = e[1];
-                  e[1] = e[5], e[5] = e[9], e[9] = e[13], e[13] = t, t = e[2], e[2] = e[10], e[10] = t, t = e[6], e[6] = e[14], e[14] = t, t = e[15], e[15] = e[11], e[11] = e[7], e[7] = e[3], e[3] = t;
+                  e[1] = e[5];
+                  e[5] = e[9];
+                  e[9] = e[13];
+                  e[13] = t;
+                  t = e[2];
+                  e[2] = e[10];
+                  e[10] = t;
+                  t = e[6];
+                  e[6] = e[14];
+                  e[14] = t;
+                  t = e[15];
+                  e[15] = e[11];
+                  e[11] = e[7];
+                  e[7] = e[3];
+                  e[3] = t;
                 }, b = function (e) {
                   var t = e[13];
-                  e[13] = e[9], e[9] = e[5], e[5] = e[1], e[1] = t, t = e[10], e[10] = e[2], e[2] = t, t = e[14], e[14] = e[6], e[6] = t, t = e[3], e[3] = e[7], e[7] = e[11], e[11] = e[15], e[15] = t;
+                  e[13] = e[9];
+                  e[9] = e[5];
+                  e[5] = e[1];
+                  e[1] = t;
+                  t = e[10];
+                  e[10] = e[2];
+                  e[2] = t;
+                  t = e[14];
+                  e[14] = e[6];
+                  e[6] = t;
+                  t = e[3];
+                  e[3] = e[7];
+                  e[7] = e[11];
+                  e[11] = e[15];
+                  e[15] = t;
                 }, w = function (e) {
                   var r = e[0], i = e[1], s = e[2], o = e[3], u = e[4], a = e[5], f = e[6], l = e[7], c = e[8], h = e[9], p = e[10], d = e[11], v = e[12], m = e[13], g = e[14], y = e[15];
-                  e[0] = t[r] ^ n[i] ^ s ^ o, e[1] = r ^ t[i] ^ n[s] ^ o, e[2] = r ^ i ^ t[s] ^ n[o], e[3] = n[r] ^ i ^ s ^ t[o], e[4] = t[u] ^ n[a] ^ f ^ l, e[5] = u ^ t[a] ^ n[f] ^ l, e[6] = u ^ a ^ t[f] ^ n[l], e[7] = n[u] ^ a ^ f ^ t[l], e[8] = t[c] ^ n[h] ^ p ^ d, e[9] = c ^ t[h] ^ n[p] ^ d, e[10] = c ^ h ^ t[p] ^ n[d], e[11] = n[c] ^ h ^ p ^ t[d], e[12] = t[v] ^ n[m] ^ g ^ y, e[13] = v ^ t[m] ^ n[g] ^ y, e[14] = v ^ m ^ t[g] ^ n[y], e[15] = n[v] ^ m ^ g ^ t[y];
+                  e[0] = t[r] ^ n[i] ^ s ^ o;
+                  e[1] = r ^ t[i] ^ n[s] ^ o;
+                  e[2] = r ^ i ^ t[s] ^ n[o];
+                  e[3] = n[r] ^ i ^ s ^ t[o];
+                  e[4] = t[u] ^ n[a] ^ f ^ l;
+                  e[5] = u ^ t[a] ^ n[f] ^ l;
+                  e[6] = u ^ a ^ t[f] ^ n[l];
+                  e[7] = n[u] ^ a ^ f ^ t[l];
+                  e[8] = t[c] ^ n[h] ^ p ^ d;
+                  e[9] = c ^ t[h] ^ n[p] ^ d;
+                  e[10] = c ^ h ^ t[p] ^ n[d];
+                  e[11] = n[c] ^ h ^ p ^ t[d];
+                  e[12] = t[v] ^ n[m] ^ g ^ y;
+                  e[13] = v ^ t[m] ^ n[g] ^ y;
+                  e[14] = v ^ m ^ t[g] ^ n[y];
+                  e[15] = n[v] ^ m ^ g ^ t[y];
                 }, E = function (e) {
                   var t = e[0], n = e[1], u = e[2], a = e[3], f = e[4], l = e[5], c = e[6], h = e[7], p = e[8], d = e[9], v = e[10], m = e[11], g = e[12], y = e[13], b = e[14], w = e[15];
-                  e[0] = r[t] ^ s[n] ^ i[u] ^ o[a], e[1] = o[t] ^ r[n] ^ s[u] ^ i[a], e[2] = i[t] ^ o[n] ^ r[u] ^ s[a], e[3] = s[t] ^ i[n] ^ o[u] ^ r[a], e[4] = r[f] ^ s[l] ^ i[c] ^ o[h], e[5] = o[f] ^ r[l] ^ s[c] ^ i[h], e[6] = i[f] ^ o[l] ^ r[c] ^ s[h], e[7] = s[f] ^ i[l] ^ o[c] ^ r[h], e[8] = r[p] ^ s[d] ^ i[v] ^ o[m], e[9] = o[p] ^ r[d] ^ s[v] ^ i[m], e[10] = i[p] ^ o[d] ^ r[v] ^ s[m], e[11] = s[p] ^ i[d] ^ o[v] ^ r[m], e[12] = r[g] ^ s[y] ^ i[b] ^ o[w], e[13] = o[g] ^ r[y] ^ s[b] ^ i[w], e[14] = i[g] ^ o[y] ^ r[b] ^ s[w], e[15] = s[g] ^ i[y] ^ o[b] ^ r[w];
+                  e[0] = r[t] ^ s[n] ^ i[u] ^ o[a];
+                  e[1] = o[t] ^ r[n] ^ s[u] ^ i[a];
+                  e[2] = i[t] ^ o[n] ^ r[u] ^ s[a];
+                  e[3] = s[t] ^ i[n] ^ o[u] ^ r[a];
+                  e[4] = r[f] ^ s[l] ^ i[c] ^ o[h];
+                  e[5] = o[f] ^ r[l] ^ s[c] ^ i[h];
+                  e[6] = i[f] ^ o[l] ^ r[c] ^ s[h];
+                  e[7] = s[f] ^ i[l] ^ o[c] ^ r[h];
+                  e[8] = r[p] ^ s[d] ^ i[v] ^ o[m];
+                  e[9] = o[p] ^ r[d] ^ s[v] ^ i[m];
+                  e[10] = i[p] ^ o[d] ^ r[v] ^ s[m];
+                  e[11] = s[p] ^ i[d] ^ o[v] ^ r[m];
+                  e[12] = r[g] ^ s[y] ^ i[b] ^ o[w];
+                  e[13] = o[g] ^ r[y] ^ s[b] ^ i[w];
+                  e[14] = i[g] ^ o[y] ^ r[b] ^ s[w];
+                  e[15] = s[g] ^ i[y] ^ o[b] ^ r[w];
                 }, S = function (e, t) {
                   return [
                     e[0] ^ t[0],
@@ -567,7 +648,10 @@ function (e) {
                     e[r] ^= t[r + n];
                 }, T = function (e) {
                   var t = e[0];
-                  e[0] = e[1], e[1] = e[2], e[2] = e[3], e[3] = t;
+                  e[0] = e[1];
+                  e[1] = e[2];
+                  e[2] = e[3];
+                  e[3] = t;
                 }, N = function (e) {
                   for (var t = 0; t < e.length; t += 1)
                     e[t] = u[e[t]];
@@ -582,7 +666,10 @@ function (e) {
                     e[4 * t + 3]
                   ];
                 }, L = function (e, t, n, r) {
-                  e[4 * n] = t[4 * r], e[4 * n + 1] = t[4 * r + 1], e[4 * n + 2] = t[4 * r + 2], e[4 * n + 3] = t[4 * r + 3];
+                  e[4 * n] = t[4 * r];
+                  e[4 * n + 1] = t[4 * r + 1];
+                  e[4 * n + 2] = t[4 * r + 2];
+                  e[4 * n + 3] = t[4 * r + 3];
                 }, A = function (e) {
                   var t, n = [], r = 0;
                   while (r < 4 * d)
@@ -597,11 +684,14 @@ function (e) {
                           0,
                           0
                         ];
-                      T(t), N(t), t = S(t, s);
+                      T(t);
+                      N(t);
+                      t = S(t, s);
                     } else
                       d > 6 && r % d === 4 && N(t);
                     var o = S(k(n, r - d), t);
-                    L(n, o, r, 0), r += 1;
+                    L(n, o, r, 0);
+                    r += 1;
                   }
                   return n;
                 };
@@ -680,7 +770,9 @@ function (e) {
             return n;
           }
           function u() {
-            a = [], f = [], c = null;
+            a = [];
+            f = [];
+            c = null;
           }
           var t = e.blockSize / 8, n = g.pkcsv7(t), r = function (e) {
               var t = [], n, r;
@@ -778,7 +870,8 @@ function (e) {
         function n() {
           function t(t) {
             try {
-              e = c.jsCryptoRunner({ data: t }), (!t.operationSubType || t.operationSubType !== "process") && this.onmessage({ data: e });
+              e = c.jsCryptoRunner({ data: t });
+              (!t.operationSubType || t.operationSubType !== "process") && this.onmessage({ data: e });
             } catch (n) {
               this.onerror({
                 data: n.description,
@@ -801,7 +894,8 @@ function (e) {
           function o(e, t) {
           }
           function u(e) {
-            n = e, this.result && n({ target: this });
+            n = e;
+            this.result && n({ target: this });
           }
           function f(e) {
             r = e;
@@ -819,7 +913,8 @@ function (e) {
             }
             if (t.type === "process")
               return;
-            this.result = e(t.data), this.oncomplete && this.oncomplete({ target: this });
+            this.result = e(t.data);
+            this.oncomplete && this.oncomplete({ target: this });
             return;
           }
           var t = null, n = null, r = null, i;
@@ -857,9 +952,13 @@ function (e) {
           }
           var n = o(t);
           return n.process = function (t) {
-            e.operationSubType = "process", e.buffer = g.toArray(t), m.continueJob(this, g.clone(e));
+            e.operationSubType = "process";
+            e.buffer = g.toArray(t);
+            m.continueJob(this, g.clone(e));
           }, n.finish = function () {
-            e.operationSubType = "finish", e.buffer = [], m.continueJob(this, g.clone(e));
+            e.operationSubType = "finish";
+            e.buffer = [];
+            m.continueJob(this, g.clone(e));
           }, n.abort = function () {
             m.abortJob(this);
           }, n.onabort = null, n.onprogress = null, n.algorithm = e.algorithm || null, n.key = e.keyHandle || null, n;
@@ -894,13 +993,17 @@ function (e) {
             o.subarray && (o = g.toArray(o));
             if (l.getObjectType(o) !== s.type)
               throw new Error(s.name);
-            s.name === "algorithm" && (o.name = o.name.toLowerCase(), o.iv && (o.iv = g.toArray(o.iv)), o.salt && (o.salt = g.toArray(o.salt)), o.additionalData && (o.additionalData = g.toArray(o.additionalData)), o.hash && !o.hash.name && l.getObjectType(o.hash) === "String" && (o.hash = { name: o.hash })), n.hasOwnProperty(s.name) ? n[s.name + "1"] = o : n[s.name] = o;
+            s.name === "algorithm" && (o.name = o.name.toLowerCase(), o.iv && (o.iv = g.toArray(o.iv)), o.salt && (o.salt = g.toArray(o.salt)), o.additionalData && (o.additionalData = g.toArray(o.additionalData)), o.hash && !o.hash.name && l.getObjectType(o.hash) === "String" && (o.hash = { name: o.hash }));
+            n.hasOwnProperty(s.name) ? n[s.name + "1"] = o : n[s.name] = o;
           }
           return n;
         }
         function T(e, t, n) {
           var r = x(e, t);
-          y(e, r.algorithm.name), r.keyHandle && (r.keyData = S(r.keyHandle)), r.keyHandle1 && (r.keyData1 = S(r.keyHandle1)), r.algorithm && r.algorithm.publicKey && (r.additionalKeyData = S(r.algorithm.publicKey));
+          y(e, r.algorithm.name);
+          r.keyHandle && (r.keyData = S(r.keyHandle));
+          r.keyHandle1 && (r.keyData1 = S(r.keyHandle1));
+          r.algorithm && r.algorithm.publicKey && (r.additionalKeyData = S(r.algorithm.publicKey));
           var i = n ? f(r) : h(r);
           return (n || r.buffer || e === "deriveBits" || e === "wrapKey") && m.runJob(i, r), i;
         }
@@ -910,13 +1013,15 @@ function (e) {
             keyHandle: e,
             keyData: t
           });
-        }, v.remove = function (e) {
+        };
+        v.remove = function (e) {
           for (var t = 0; t < v.length; t++)
             if (v[t].keyHandle === e) {
               v = v.splice(t, 1);
               return;
             }
-        }, v.lookup = function (e) {
+        };
+        v.lookup = function (e) {
           for (var t = 0; t < v.length; t++)
             if (v[t].keyHandle === e)
               return v[t].keyData;
@@ -946,7 +1051,8 @@ function (e) {
             function p(e) {
               for (var t = 0; t < s.length; t++)
                 if (s[t] === e) {
-                  e.terminate(), s.splice(t, 1);
+                  e.terminate();
+                  s.splice(t, 1);
                   return;
                 }
             }
@@ -964,7 +1070,8 @@ function (e) {
               });
             }
             function m(e) {
-              e.busy = !1, e.operation = null;
+              e.busy = !1;
+              e.operation = null;
               if (u)
                 if (o.length > 0) {
                   var t = o.shift();
@@ -976,9 +1083,14 @@ function (e) {
               var r;
               if (u)
                 try {
-                  r = new Worker(t), r.postMessage({ prngSeed: E.getBytes(48) }), r.isWebWorker = !0;
+                  r = new Worker(t);
+                  r.postMessage({ prngSeed: E.getBytes(48) });
+                  r.isWebWorker = !0;
                 } catch (i) {
-                  u = !1, N.forceSync = !0, r = n(), r.isWebWorker = !1;
+                  u = !1;
+                  N.forceSync = !0;
+                  r = n();
+                  r.isWebWorker = !1;
                 }
               else
                 r = n(), r.isWebWorker = !1;
@@ -987,13 +1099,15 @@ function (e) {
                 for (var n = 0; n < o.length; n++)
                   if (o[n].operation === r.operation) {
                     var i = o[n];
-                    o.splice(n, 1), S(r, i.data);
+                    o.splice(n, 1);
+                    S(r, i.data);
                     return;
                   }
                 t && e.data.type !== "process" && (m(r), t.dispatchEvent(e));
               }, r.onerror = function (e) {
                 var t = r.operation;
-                m(r), t.dispatchEvent(e);
+                m(r);
+                t.dispatchEvent(e);
               }, h(r), r;
             }
             function y(e) {
@@ -1002,7 +1116,8 @@ function (e) {
             }
             function b(t, n) {
               var i = null;
-              u = r && !N.forceSync, i = f();
+              u = r && !N.forceSync;
+              i = f();
               if (u && i === null && s.length >= e) {
                 v(t, n);
                 return;
@@ -1010,7 +1125,9 @@ function (e) {
               i === null && (i = g(t));
               if (i === null)
                 throw v(t, n), new Error("could not create new worker");
-              i.operation = t, i.busy = !0, S(i, n);
+              i.operation = t;
+              i.busy = !0;
+              S(i, n);
             }
             function w(e, t) {
               var n = d(e);
@@ -1207,7 +1324,9 @@ function (e) {
           var t = Object.prototype.toString.call(e);
           if (t !== "[object Array]" && t !== "[object Uint8Array]")
             throw new Error("entropyData must be a Array or Uint8Array");
-          N && N.reseed(e), E.reseed(N.read(48)), n = !0;
+          N && N.reseed(e);
+          E.reseed(N.read(48));
+          n = !0;
         },
         toBase64: function (e, t) {
           return l.toBase64(e, !1);
@@ -1219,14 +1338,16 @@ function (e) {
         sha256: v.sha256,
         url: t
       };
-      typeof cryptoMath != "undefined" && (T.cryptoMath = cryptoMath), typeof testInterface != "undefined" && (T.testInterface = testInterface);
+      typeof cryptoMath != "undefined" && (T.cryptoMath = cryptoMath);
+      typeof testInterface != "undefined" && (T.testInterface = testInterface);
       var N;
       if (!i) {
-        N = N || new S(), N.init();
+        N = N || new S();
+        N.init();
         var C = N.read(48);
         E.init(C);
       }
       return T;
     }();
   return t;
-})
+}));

@@ -12,26 +12,38 @@ define("jSkype/services/trouter/trouter", [
 ], function (e) {
   function T(e) {
     var t = {}, n = e ? u.telemetry.trouter.RENEWAL : u.telemetry.trouter.NEW_CONNECTION;
-    v && (t.initToRegisteredTime = z(w), v = !1), q(n, t);
+    v && (t.initToRegisteredTime = z(w), v = !1);
+    q(n, t);
   }
   function N() {
-    d = !1, q(u.telemetry.trouter.AUTHENTICATION_FAILED);
+    d = !1;
+    q(u.telemetry.trouter.AUTHENTICATION_FAILED);
   }
   function C() {
-    d = !1, q(u.telemetry.trouter.ENDPOINT_REGISTRATION_FAILED);
+    d = !1;
+    q(u.telemetry.trouter.ENDPOINT_REGISTRATION_FAILED);
   }
   function k(e, t) {
     var n = {};
     I();
     if (t) {
       var r = g.getServerState().surl;
-      p = o.build(y, T, C), p.registerPresence(r), x(r);
+      p = o.build(y, T, C);
+      p.registerPresence(r);
+      x(r);
     }
-    n.isNewUrl = t, t ? n.authenticatedToReadyTime = z(S) : n.reconnectingToReadyTime = z(E), m && (n.initToReadyTime = z(w), m = !1), q(u.telemetry.trouter.TROUTER_READY_EVENT, n);
+    n.isNewUrl = t;
+    t ? n.authenticatedToReadyTime = z(S) : n.reconnectingToReadyTime = z(E);
+    m && (n.initToReadyTime = z(w), m = !1);
+    q(u.telemetry.trouter.TROUTER_READY_EVENT, n);
   }
   function L(e, t) {
-    q(u.telemetry.trouter.TROUTER_AUTH_EVENT), a.authenticateUrl(e).then(function (e) {
-      q(u.telemetry.trouter.AUTHENTICATION_SUCCEEDED), S = U(), F(), t(e.response);
+    q(u.telemetry.trouter.TROUTER_AUTH_EVENT);
+    a.authenticateUrl(e).then(function (e) {
+      q(u.telemetry.trouter.AUTHENTICATION_SUCCEEDED);
+      S = U();
+      F();
+      t(e.response);
     }, N);
   }
   function A(e, t) {
@@ -39,7 +51,8 @@ define("jSkype/services/trouter/trouter", [
     _(t, r.resultCode);
   }
   function O() {
-    E = U(), q(u.telemetry.trouter.TROUTER_RECONNECTING);
+    E = U();
+    q(u.telemetry.trouter.TROUTER_RECONNECTING);
   }
   function M(e) {
     var t;
@@ -54,7 +67,8 @@ define("jSkype/services/trouter/trouter", [
     };
   }
   function _(e, t) {
-    e.writeHead(t), e.end();
+    e.writeHead(t);
+    e.end();
   }
   function D(e) {
     var t = JSON.parse(e.body);
@@ -77,7 +91,12 @@ define("jSkype/services/trouter/trouter", [
   function H() {
     if (d === !0)
       throw new Error("Trouter session already started. You are calling start twice");
-    d = !0, v = !0, m = !0, w = U(), y = r.create(), g = i.createServer(null, {
+    d = !0;
+    v = !0;
+    m = !0;
+    w = U();
+    y = r.create();
+    g = i.createServer(null, {
       clientInfo: {
         ua: s.settings.productName,
         v: s.settings.version
@@ -86,10 +105,16 @@ define("jSkype/services/trouter/trouter", [
         requireMtls: !0,
         "connect timeout": s.settings.incomingCalls.trouterConnectTimeoutInMs
       }
-    }), g.on("ready", k), g.on("auth", L), g.on("request", A), g.on("reconnecting", O), g.open(s.settings.incomingCalls.trouterServiceUrl);
+    });
+    g.on("ready", k);
+    g.on("auth", L);
+    g.on("request", A);
+    g.on("reconnecting", O);
+    g.open(s.settings.incomingCalls.trouterServiceUrl);
   }
   function B() {
-    d = !1, g && g.close();
+    d = !1;
+    g && g.close();
   }
   function j(e) {
     if (e === null)
@@ -99,7 +124,8 @@ define("jSkype/services/trouter/trouter", [
     h.forEach(function (t) {
       if (t === e)
         throw new Error("Registering the same handler twice is not allowed");
-    }), h.push(e);
+    });
+    h.push(e);
   }
   function F() {
     b = f.delay(q.bind(null, u.telemetry.trouter.TROUTER_READY_TIMEOUT), s.settings.incomingCalls.trouterReadyTimeoutInMs);
@@ -112,7 +138,9 @@ define("jSkype/services/trouter/trouter", [
       type: e,
       registrationId: y
     };
-    g && g.getServerState() && (r.connectionId = g.getServerState().connectionId, r.connectedClientId = g.getServerState().connectedClientId), f.extend(r, t), n.get()._telemetryManager.sendEvent(s.settings.telemetry.jSkypeTenantToken, u.telemetry.trouter.TROUTER_INIT, r);
+    g && g.getServerState() && (r.connectionId = g.getServerState().connectionId, r.connectedClientId = g.getServerState().connectedClientId);
+    f.extend(r, t);
+    n.get()._telemetryManager.sendEvent(s.settings.telemetry.jSkypeTenantToken, u.telemetry.trouter.TROUTER_INIT, r);
   }
   function R() {
     h = [];
@@ -131,4 +159,4 @@ define("jSkype/services/trouter/trouter", [
     clearMessageHandlers: R,
     trouterUrl: x
   };
-})
+});

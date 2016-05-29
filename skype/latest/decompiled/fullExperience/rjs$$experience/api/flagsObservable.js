@@ -17,4 +17,4 @@ define("experience/api/flagsObservable", [
       e(o.version + "/" + t);
     }), { setFlag: e };
   };
-})
+});

@@ -144,7 +144,8 @@ define("telemetry/chat/telemetryEnumerator", [
         PDF: "pdf",
         OTHER: "other"
       }
-    }, e.getFileTypeGroup = function (t) {
+    };
+    e.getFileTypeGroup = function (t) {
       switch (t) {
       case "png":
       case "jpg":
@@ -186,7 +187,8 @@ define("telemetry/chat/telemetryEnumerator", [
       default:
         return e.enums.FILE_TYPE_GROUP.OTHER;
       }
-    }, e.getDurationGroup = function (t) {
+    };
+    e.getDurationGroup = function (t) {
       if (t <= r)
         return e.enums.TIMEDELTA.MIN_1;
       if (t > r && t <= 5 * r)
@@ -211,7 +213,8 @@ define("telemetry/chat/telemetryEnumerator", [
         return e.enums.TIMEDELTA.HOUR_24;
       if (t > s)
         return Math.round(t / s) + e.enums.TIMEDELTA.DAYS;
-    }, e.getParticipantCountGroup = function (t) {
+    };
+    e.getParticipantCountGroup = function (t) {
       if (t === 0)
         return e.enums.GROUP_TYPE.ZERO;
       if (t === 1)
@@ -230,7 +233,8 @@ define("telemetry/chat/telemetryEnumerator", [
         return e.enums.GROUP_TYPE.LESS_100;
       if (t > 100)
         return Math.round(t / 100) + e.enums.GROUP_TYPE.MORE_100;
-    }, e.getMessageType = function (e) {
+    };
+    e.getMessageType = function (e) {
       switch (e.model.type()) {
       case n.activityType.TextMessage:
         if (e.previews) {
@@ -247,7 +251,8 @@ define("telemetry/chat/telemetryEnumerator", [
       default:
         return o;
       }
-    }, e.getContactsGroup = function (t) {
+    };
+    e.getContactsGroup = function (t) {
       if (t === 0)
         return e.enums.CONTACTS.ZERO;
       if (t >= 1 && t <= 5)
@@ -266,22 +271,29 @@ define("telemetry/chat/telemetryEnumerator", [
         return e.enums.CONTACTS.LESS_200;
       if (t > 200)
         return Math.round(t / 200) + e.enums.CONTACTS.MORE_200;
-    }, e.getConversationCountGroup = function (e) {
+    };
+    e.getConversationCountGroup = function (e) {
       return u(e);
-    }, e.getMessageCountGroup = function (e) {
+    };
+    e.getMessageCountGroup = function (e) {
       return u(e, !0);
-    }, e.getSecondsDurationGroup = function (t) {
+    };
+    e.getSecondsDurationGroup = function (t) {
       return t === 0 ? e.enums.DURATION.ZERO : t === 1 ? e.enums.DURATION.ONE : t === 2 ? e.enums.DURATION.TWO : t === 3 ? e.enums.DURATION.THREE : t === 4 ? e.enums.DURATION.FOUR : t === 5 ? e.enums.DURATION.FIVE : t > 5 && t <= 10 ? e.enums.DURATION.LESS_10 : t > 10 ? Math.round(t / 10) + e.enums.DURATION.MORE_10 : e.enums.DURATION.NA;
-    }, e.getSecondsDurationGroupFromMs = function (t) {
+    };
+    e.getSecondsDurationGroupFromMs = function (t) {
       return e.getSecondsDurationGroup(a(t));
-    }, e.isError = function (t) {
+    };
+    e.isError = function (t) {
       return e.enums.NET_CODE.OK.START <= t && t < e.enums.NET_CODE.OK.END ? !1 : e.enums.NET_CODE.ERROR.START <= t && t < e.enums.NET_CODE.ERROR.END ? !0 : o;
-    }, e.getUrlContentType = function (t) {
+    };
+    e.getUrlContentType = function (t) {
       return t.indexOf("www.youtube.com") > -1 ? e.enums.URL_CONTENT_TYPE.YOUTUBE : /^http.*\.gif$/.exec(t) ? e.enums.URL_CONTENT_TYPE.GIF : t.indexOf("twitter.com") > -1 ? e.enums.URL_CONTENT_TYPE.TWITTER : e.enums.URL_CONTENT_TYPE.OTHER;
-    }, e.getMessageLifeDurationGroup = function (t) {
+    };
+    e.getMessageLifeDurationGroup = function (t) {
       return t < r ? e.enums.LIFETIME.MIN : t < 5 * r ? e.enums.LIFETIME.LESS_5MIN : t < 10 * r ? e.enums.LIFETIME.LESS_10MIN : t < 20 * r ? e.enums.LIFETIME.LESS_20MIN : t < i ? e.enums.LIFETIME.LESS_1HOUR : t < s ? e.enums.LIFETIME.LESS_1DAY : t < 2 * s ? e.enums.LIFETIME.LESS_2DAYS : t < 4 * s ? e.enums.LIFETIME.LESS_4DAYS : t < 6 * s ? e.enums.LIFETIME.LESS_6DAYS : t < 14 * s ? e.enums.LIFETIME.LESS_14DAYS : t < 21 * s ? e.enums.LIFETIME.LESS_21DAYS : t < 29 * s ? e.enums.LIFETIME.LESS_29DAYS : o;
     };
   }
   var t = e("constants/common"), n = e("swx-enums");
   return new r();
-})
+});

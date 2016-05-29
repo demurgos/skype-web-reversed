@@ -16,7 +16,8 @@ define("jSkype/services/outOfBrowser/messagingChannel", [
     function u(n) {
       e.postMessage(n).catch(function () {
         var e = t[n.name];
-        t[n.name] = undefined, e.reject("Failed to post command " + n.name);
+        t[n.name] = undefined;
+        e.reject("Failed to post command " + n.name);
       });
     }
     function a() {
@@ -36,16 +37,22 @@ define("jSkype/services/outOfBrowser/messagingChannel", [
       n && (e.error ? n.reject(e.error) : n.resolve(e.data), t[e.name] = undefined);
     }
     var t = {}, i = {}, s = {};
-    e.addMessageHandler(f), e.addEventHandler(r.shellAppEvents.WindowHidden, a), this.sendCommand = function (e, r) {
+    e.addMessageHandler(f);
+    e.addEventHandler(r.shellAppEvents.WindowHidden, a);
+    this.sendCommand = function (e, r) {
       var i, s = n.task();
       return t[e] ? s.reject("Command ", e, " is already awaiting response.") : (i = o(e, r), t[e] = s, u(i)), s.promise;
-    }, this.registerCommandHandler = function (e, t) {
+    };
+    this.registerCommandHandler = function (e, t) {
       i[e] = t;
-    }, this.registerEventHandler = function (e, t) {
+    };
+    this.registerEventHandler = function (e, t) {
       s[e] = t;
-    }, this.unregisterEventHandler = function (e) {
+    };
+    this.unregisterEventHandler = function (e) {
       delete s[e];
-    }, this.unregisterCommandHandler = function (e) {
+    };
+    this.unregisterCommandHandler = function (e) {
       delete i[e];
     };
   }
@@ -53,4 +60,4 @@ define("jSkype/services/outOfBrowser/messagingChannel", [
   t.build = function (e) {
     return new i(e);
   };
-})
+});

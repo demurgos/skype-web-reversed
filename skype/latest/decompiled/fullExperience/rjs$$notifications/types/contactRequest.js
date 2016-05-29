@@ -15,7 +15,8 @@ define("notifications/types/contactRequest", [
     }
     function p() {
       var e = u.sender;
-      t.get().personsAndGroupsManager.all.persons.add(e, e.id(), undefined, s.activityType.ContactRequestIncoming), h();
+      t.get().personsAndGroupsManager.all.persons.add(e, e.id(), undefined, s.activityType.ContactRequestIncoming);
+      h();
     }
     function d() {
       t.get().conversationsManager.conversations.remove(o, s.activityType.ContactRequestIncoming);
@@ -35,4 +36,4 @@ define("notifications/types/contactRequest", [
   }
   var t = e("cafe/applicationInstance"), n = e("notifications/common/notification"), r = e("services/pubSub/pubSub"), i = e("constants/common"), s = e("swx-enums");
   return { build: o };
-})
+});

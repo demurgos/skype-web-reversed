@@ -12,5 +12,7 @@ define("ui/components/chat/pes/itemRoster", [
     return o.setContext(s), o.init(), o;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/pes/itemRoster");
-  t.name = e("constants/components").chat.EXPRESSION_ITEM_ROSTER, t.template = e("text!views/chat/pes/itemRoster.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.EXPRESSION_ITEM_ROSTER;
+  t.template = e("text!views/chat/pes/itemRoster.html");
+  t.viewModel = { createViewModel: i };
+});

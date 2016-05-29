@@ -11,15 +11,18 @@ define("jSkype/services/systemCommands/commands/properties/options", [
     var e = {};
     r.forOwn(n, function (t, n) {
       e[n.toUpperCase()] = t.build();
-    }), this.get = {
+    });
+    this.get = {
       isAvailableFor: i.availableForAllGroupMembers,
       action: function (t) {
         var n = "options=";
         r.forOwn(e, function (e, r) {
           e.isEnabled(t) && (n += r + " ");
-        }), i.sendSystemMessage(t, n);
+        });
+        i.sendSystemMessage(t, n);
       }
-    }, this.set = {
+    };
+    this.set = {
       isAvailableFor: i.availableForAllGroupMembers,
       help: function () {
         return "[[+|-]flag]";
@@ -40,7 +43,8 @@ define("jSkype/services/systemCommands/commands/properties/options", [
     }, r = e("lodash-compat"), i = e("jSkype/services/systemCommands/commandsHelper");
   t.build = function () {
     return new s();
-  }, t._setCommandBuilders = function (t) {
+  };
+  t._setCommandBuilders = function (t) {
     n = t;
   };
-})
+});

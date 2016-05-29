@@ -8,4 +8,4 @@ define("experience/api/focus", [
   t.restoreFocus = function () {
     n.tryRestoreFocus();
   };
-})
+});

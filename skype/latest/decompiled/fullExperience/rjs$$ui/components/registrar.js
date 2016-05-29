@@ -10,4 +10,4 @@ define("ui/components/registrar", [
       n.components.isRegistered(e.name) || n.components.register(e.name, e);
     });
   };
-})
+});

@@ -15,12 +15,16 @@ define("jSkype/services/systemCommands/commands/reportIssue", [
     n.sendSystemMessage(e, "Failed to report the issue.");
   }
   function f() {
-    this.isAvailableFor = r.isFeatureOn(i.featureFlags.ISSUE_REPORTING) ? n.availableAlways : n.availableNever, this.help = "[text]", this.showInHelp = !0, this.action = function (e, t) {
-      o.isEmpty(o.trim(t)) && (t = "No Message"), s.report({ message: t }).then(u.bind(this, e), a.bind(this, e));
+    this.isAvailableFor = r.isFeatureOn(i.featureFlags.ISSUE_REPORTING) ? n.availableAlways : n.availableNever;
+    this.help = "[text]";
+    this.showInHelp = !0;
+    this.action = function (e, t) {
+      o.isEmpty(o.trim(t)) && (t = "No Message");
+      s.report({ message: t }).then(u.bind(this, e), a.bind(this, e));
     };
   }
   var n = e("jSkype/services/systemCommands/commandsHelper"), r = e("jSkype/settings"), i = e("constants/common"), s = e("jSkype/telemetry/logging/issueReporter"), o = e("lodash-compat");
   t.build = function () {
     return new f();
   };
-})
+});

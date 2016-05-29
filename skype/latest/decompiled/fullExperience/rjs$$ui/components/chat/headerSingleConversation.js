@@ -14,5 +14,7 @@ define("ui/components/chat/headerSingleConversation", [
     return a.setContext(n.dataFor(t.element)), a.init(), a;
   }
   var n = e("vendor/knockout"), r = e("browser/dom"), i = e("utils/common/scroll"), s = e("ui/viewModels/chat/headerSingleConversation");
-  t.name = e("constants/components").chat.HEADER_SINGLE_CONVERSATION, t.template = e("text!views/chat/headerSingleConversation.html"), t.viewModel = { createViewModel: o };
-})
+  t.name = e("constants/components").chat.HEADER_SINGLE_CONVERSATION;
+  t.template = e("text!views/chat/headerSingleConversation.html");
+  t.viewModel = { createViewModel: o };
+});

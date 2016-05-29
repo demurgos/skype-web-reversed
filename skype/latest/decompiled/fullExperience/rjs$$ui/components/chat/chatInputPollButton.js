@@ -12,5 +12,7 @@ define("ui/components/chat/chatInputPollButton", [
     return i.setContext(s), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/chatInputPollButton");
-  t.name = e("constants/components").chat.CHAT_INPUT_POLL_BUTTON, t.template = e("text!views/chat/chatInputPollButton.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.CHAT_INPUT_POLL_BUTTON;
+  t.template = e("text!views/chat/chatInputPollButton.html");
+  t.viewModel = { createViewModel: i };
+});

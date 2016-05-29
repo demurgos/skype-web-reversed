@@ -15,8 +15,9 @@ define("jSkype/telemetry/preferences", [
   t.fetchPreference = function (t, n, u, a) {
     var f = o(t, n, u, a);
     r.get()._telemetryManager.sendEvent(s.settings.telemetry.jSkypeTenantToken, i.telemetry.userSettings.eventName.PREFERENCE_FETCHED, f);
-  }, t.changePreference = function (t, n, u, a) {
+  };
+  t.changePreference = function (t, n, u, a) {
     var f = o(t, n, u, a);
     r.get()._telemetryManager.sendEvent(s.settings.telemetry.jSkypeTenantToken, i.telemetry.userSettings.eventName.PREFERENCE_CHANGED, f);
   };
-})
+});

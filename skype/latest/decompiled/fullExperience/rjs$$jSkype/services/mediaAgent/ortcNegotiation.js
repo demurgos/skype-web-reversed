@@ -6,7 +6,8 @@ define("jSkype/services/mediaAgent/ortcNegotiation", [
 ], function (e, t, n) {
   function r(r, i, s) {
     function f(e) {
-      o = e, r.debug("PROCESS OFFER", "params:", JSON.stringify(o));
+      o = e;
+      r.debug("PROCESS OFFER", "params:", JSON.stringify(o));
     }
     function l(e, t) {
       t || (t = {
@@ -50,7 +51,8 @@ define("jSkype/services/mediaAgent/ortcNegotiation", [
           var s = !1;
           for (var o = 0; !i.disableSdes && o < t.media.length; o++)
             t.media[o].sdesParamsList && t.media[o].sdesParamsList.length && (s = !0);
-          n[r].doRtcpMux && (e[r].rtcpIceParams = null, e[r].rtcpIceCandidates = null), e[r].dtlsParams && n[r].dtlsParams && (e[r].dtlsParams.role = n[r].dtlsParams.role === "client" ? "server" : "client");
+          n[r].doRtcpMux && (e[r].rtcpIceParams = null, e[r].rtcpIceCandidates = null);
+          e[r].dtlsParams && n[r].dtlsParams && (e[r].dtlsParams.role = n[r].dtlsParams.role === "client" ? "server" : "client");
           if (s || !n[r].dtlsParams)
             e[r].dtlsParams = null;
         } else
@@ -90,7 +92,8 @@ define("jSkype/services/mediaAgent/ortcNegotiation", [
         if (g.enabled) {
           m = p(s[c], o.media[c], !1);
           var y = g.label === t.MEDIA_LABEL.audio ? 0 : 1, w = f.transportParams[y];
-          b(g, w, m) || (g.enabled = !1, r.warn("Rejecting media since unable to match parameters")), m.sdesParamsList.length && m.remoteSdesParams && (m.sdesParamsList[0].tag = m.remoteSdesParams.tag);
+          b(g, w, m) || (g.enabled = !1, r.warn("Rejecting media since unable to match parameters"));
+          m.sdesParamsList.length && m.remoteSdesParams && (m.sdesParamsList[0].tag = m.remoteSdesParams.tag);
         }
         f.media.push(d(g, m, !1, v, o.media[c].rtcpReducedSize));
       }
@@ -121,12 +124,14 @@ define("jSkype/services/mediaAgent/ortcNegotiation", [
         var l = (!a || !a.media[f] || !a.media[f].descr.enabled) && e[f].enabled, c;
         l ? c = i[f] : c = a.media[f];
         var p = u && e[f].label === t.MEDIA_LABEL.video;
-        e[f].label === t.MEDIA_LABEL.video && (u = !0), s.media.push(d(e[f], c, l, p, !0));
+        e[f].label === t.MEDIA_LABEL.video && (u = !0);
+        s.media.push(d(e[f], c, l, p, !0));
       }
       return o = s, r.debug("CREATE OFFER", "params:", JSON.stringify(o)), o;
     }
     function y(e) {
-      r.debug("PROCESS ANSWER", "params:", JSON.stringify(e)), u = S(o, e, !0);
+      r.debug("PROCESS ANSWER", "params:", JSON.stringify(e));
+      u = S(o, e, !0);
     }
     function b(e, t, n) {
       if (e.enabled) {
@@ -142,7 +147,8 @@ define("jSkype/services/mediaAgent/ortcNegotiation", [
       var r = [];
       for (var i = 0; i < Math.max(e.length, t.length); i++) {
         var s = null;
-        e[i] && t[i] && (s = n.shallowClone(t[i]), s.doRtcpMux = e[i].doRtcpMux && t[i].doRtcpMux, s.enableDtls = e[i].dtlsParams && t[i].dtlsParams), r.push(s);
+        e[i] && t[i] && (s = n.shallowClone(t[i]), s.doRtcpMux = e[i].doRtcpMux && t[i].doRtcpMux, s.enableDtls = e[i].dtlsParams && t[i].dtlsParams);
+        r.push(s);
       }
       return r;
     }
@@ -153,7 +159,10 @@ define("jSkype/services/mediaAgent/ortcNegotiation", [
         o = p(e, n, i);
         if (!b(s, a, o))
           throw new Error("Failed to verify negotiated parameters!");
-        o.descr = s, o.rtcpMux = a.doRtcpMux, o.rtcpReducedSize = e.rtcpReducedSize && n.rtcpReducedSize, o.enableDtls = a.enableDtls;
+        o.descr = s;
+        o.rtcpMux = a.doRtcpMux;
+        o.rtcpReducedSize = e.rtcpReducedSize && n.rtcpReducedSize;
+        o.enableDtls = a.enableDtls;
       }
       return o;
     }
@@ -172,8 +181,14 @@ define("jSkype/services/mediaAgent/ortcNegotiation", [
     function x() {
       return u.sessionVersion++, a = u, r.debug("NEGOTIATED", "params:", JSON.stringify(a)), a;
     }
-    this.processOffer = f, this.createMediaDescriptorsForAnswer = c, this.createAnswer = v, this.createMediaDescriptorsForOffer = m, this.createOffer = g, this.processAnswer = y, this.completeNegotiation = x;
+    this.processOffer = f;
+    this.createMediaDescriptorsForAnswer = c;
+    this.createAnswer = v;
+    this.createMediaDescriptorsForOffer = m;
+    this.createOffer = g;
+    this.processAnswer = y;
+    this.completeNegotiation = x;
     var o = null, u = null, a = null;
   }
   return r;
-})
+});

@@ -16,33 +16,55 @@ define("ui/viewModels/chat/stickyMessage", [
           isVisible: t
         }) : a.showStickyMessageData(null));
       };
-    a.latestPoll = n.observable(null), a.pollQuestion = n.observable(), a.pollAuthor = n.observable(), a.statsMessageText = n.observable(), a.ongoingPoll = n.pureComputed(function () {
+    a.latestPoll = n.observable(null);
+    a.pollQuestion = n.observable();
+    a.pollAuthor = n.observable();
+    a.statsMessageText = n.observable();
+    a.ongoingPoll = n.pureComputed(function () {
       return u.fetch({
         key: "poll_sticky_message_new_poll",
         params: { author: a.pollAuthor() }
       });
-    }), a.showStickyMessageData = n.observable({
+    });
+    a.showStickyMessageData = n.observable({
       isVisible: !1,
       isActive: !1
-    }), a.showStickyMessage = n.observable(!1), a.showStickyMessageData.subscribe(function (e) {
+    });
+    a.showStickyMessage = n.observable(!1);
+    a.showStickyMessageData.subscribe(function (e) {
       a.showStickyMessage(e !== null && e.isActive && !e.isVisible);
-    }), v = a.latestPoll.subscribe(function (e) {
+    });
+    v = a.latestPoll.subscribe(function (e) {
       if (!e)
         return;
-      m && m.dispose(), a.pollQuestion(e.pollQuestion()), a.pollAuthor(e.sender.firstName()), a.statsMessageText(l(e)), m = e.poll.changed(function () {
+      m && m.dispose();
+      a.pollQuestion(e.pollQuestion());
+      a.pollAuthor(e.sender.firstName());
+      a.statsMessageText(l(e));
+      m = e.poll.changed(function () {
         a.statsMessageText(l(e));
       });
-    }), p = f.historyService.activityItems.added(function (e) {
+    });
+    p = f.historyService.activityItems.added(function (e) {
       e.type() === s.activityType.PollMessage && (g.push(e), y());
-    }), d = f.historyService.activityItems.removed(function (e) {
+    });
+    d = f.historyService.activityItems.removed(function (e) {
       e.type() === s.activityType.PollMessage && (g = t.reject(g, function (t) {
         return t.key() === e.key();
       }), y());
-    }), a.scrollToPoll = function () {
-      o.stickyMessageClicked(a.latestPoll()), e.scrollToLastPollElement();
-    }, a.dispose = function () {
-      v.dispose(), p.dispose(), d.dispose(), a.ongoingPoll.dispose(), m && m.dispose();
-    }, a.init = function () {
+    });
+    a.scrollToPoll = function () {
+      o.stickyMessageClicked(a.latestPoll());
+      e.scrollToLastPollElement();
+    };
+    a.dispose = function () {
+      v.dispose();
+      p.dispose();
+      d.dispose();
+      a.ongoingPoll.dispose();
+      m && m.dispose();
+    };
+    a.init = function () {
       a.registerEvent(i.events.conversation.VIEWPORT_CHANGED, function (t) {
         var n, r;
         a.latestPoll() && (n = c(a.latestPoll()), r = e.checkPollIsVisible(a.latestPoll(), t), a.showStickyMessageData({
@@ -75,4 +97,4 @@ define("ui/viewModels/chat/stickyMessage", [
       })[0];
     };
   return t.assign(p.prototype, r), p;
-})
+});

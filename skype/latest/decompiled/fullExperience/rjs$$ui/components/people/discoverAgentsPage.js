@@ -19,5 +19,7 @@ define("ui/components/people/discoverAgentsPage", [
     };
   }
   var n = e("vendor/knockout"), r = e("constants/cssClasses"), i = e("ui/viewModels/people/discoverAgentsPage");
-  t.name = e("constants/components").people.DISCOVER_AGENTS_PAGE, t.template = e("text!views/people/discoverAgentsPage.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").people.DISCOVER_AGENTS_PAGE;
+  t.template = e("text!views/people/discoverAgentsPage.html");
+  t.viewModel = { createViewModel: s };
+});

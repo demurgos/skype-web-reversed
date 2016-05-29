@@ -10,5 +10,7 @@ define("ui/components/chat/notificationsCenter", [
     return new n(e);
   }
   var n = e("ui/viewModels/chat/notificationsCenter");
-  t.name = e("constants/components").chat.NOTIFICATIONS_CENTER, t.template = e("text!views/chat/notificationsCenter.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.NOTIFICATIONS_CENTER;
+  t.template = e("text!views/chat/notificationsCenter.html");
+  t.viewModel = { createViewModel: r };
+});

@@ -10,21 +10,25 @@ define("utils/common/disposableMixin", [
       return;
     var t = e.dispose;
     e.dispose = function () {
-      e._dmDisposeAll(), t && t.call(e);
-    }, e._dmDisposeExtended = !0;
+      e._dmDisposeAll();
+      t && t.call(e);
+    };
+    e._dmDisposeExtended = !0;
   }
   var t = e("services/pubSub/pubSub"), n = e("browser/window"), r = e("constants/common").disposableGroups, i = e("vendor/knockout");
   return {
     _dmDisposeExtended: !1,
     _disposableItems: null,
     registerPubSubEvent: function (e, n) {
-      t.subscribe(e, n), this._dmRegisterDisposableItem(r.PUB_SUB, {
+      t.subscribe(e, n);
+      this._dmRegisterDisposableItem(r.PUB_SUB, {
         eventName: e,
         callback: n
       });
     },
     unregisterPubSubEvent: function (e, n) {
-      t.unsubscribe(e, n), this._dmUnRegisterDisposableItem(r.PUB_SUB, function (t) {
+      t.unsubscribe(e, n);
+      this._dmUnRegisterDisposableItem(r.PUB_SUB, function (t) {
         return t.eventName === e && t.callback === n;
       });
     },
@@ -44,7 +48,8 @@ define("utils/common/disposableMixin", [
       this._dmRegisterDisposableItem(r.GENERIC_DISPOSABLE, e);
     },
     unregisterDisposable: function (e) {
-      e.dispose(), this._dmUnRegisterDisposableItem(r.GENERIC_DISPOSABLE, function (t) {
+      e.dispose();
+      this._dmUnRegisterDisposableItem(r.GENERIC_DISPOSABLE, function (t) {
         return t === e;
       });
     },
@@ -53,12 +58,14 @@ define("utils/common/disposableMixin", [
       return this._dmRegisterDisposableItem(r.INTERVAL, i), i;
     },
     unregisterInterval: function (e) {
-      n.clearInterval(e), this._dmUnRegisterDisposableItem(r.INTERVAL, function (t) {
+      n.clearInterval(e);
+      this._dmUnRegisterDisposableItem(r.INTERVAL, function (t) {
         return t === e;
       });
     },
     registerDOMEvent: function (e, t, n, i) {
-      e.addEventListener(t, n, i), this._dmRegisterDisposableItem(r.DOM_EVENT, {
+      e.addEventListener(t, n, i);
+      this._dmRegisterDisposableItem(r.DOM_EVENT, {
         object: e,
         event: t,
         handler: n,
@@ -66,7 +73,8 @@ define("utils/common/disposableMixin", [
       });
     },
     unregisterDOMEvent: function (e, t, n, i) {
-      e.removeEventListener(t, n, i), this._dmUnRegisterDisposableItem(r.DOM_EVENT, function (r) {
+      e.removeEventListener(t, n, i);
+      this._dmUnRegisterDisposableItem(r.DOM_EVENT, function (r) {
         return r.object === e && r.event === t && r.handler === n && r.useCapture === i;
       });
     },
@@ -75,7 +83,8 @@ define("utils/common/disposableMixin", [
       return this._dmRegisterDisposableItem(r.TIMEOUT, i), i;
     },
     unregisterTimeout: function (e) {
-      n.clearTimeout(e), this._dmUnRegisterDisposableItem(r.TIMEOUT, function (t) {
+      n.clearTimeout(e);
+      this._dmUnRegisterDisposableItem(r.TIMEOUT, function (t) {
         return t === e;
       });
     },
@@ -111,7 +120,10 @@ define("utils/common/disposableMixin", [
       this._disposableItems = null;
     },
     _dmRegisterDisposableItem: function (e, t) {
-      s(this), this._disposableItems = this._disposableItems || {}, this._disposableItems[e] = this._disposableItems[e] || [], this._disposableItems[e].push(t);
+      s(this);
+      this._disposableItems = this._disposableItems || {};
+      this._disposableItems[e] = this._disposableItems[e] || [];
+      this._disposableItems[e].push(t);
     },
     _dmUnRegisterDisposableItem: function (e, t) {
       this._disposableItems = this._disposableItems || {};
@@ -123,4 +135,4 @@ define("utils/common/disposableMixin", [
         }
     }
   };
-})
+});

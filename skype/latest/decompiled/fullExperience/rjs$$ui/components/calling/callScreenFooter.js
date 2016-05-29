@@ -13,5 +13,7 @@ define("ui/components/calling/callScreenFooter", [
     return s.setContext(u), s.init(o), s;
   }
   var n = e("vendor/knockout"), r = e("jsviews/calling/callScreenFooter"), i = e("ui/viewModels/calling/callScreenViewModel/callScreenFooterViewModel");
-  t.name = e("constants/components").calling.FOOTER, t.template = e("text!views/calling/callScreenFooter.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").calling.FOOTER;
+  t.template = e("text!views/calling/callScreenFooter.html");
+  t.viewModel = { createViewModel: s };
+});

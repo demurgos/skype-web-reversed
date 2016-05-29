@@ -3,7 +3,11 @@ define("constants/cssClasses", [
   "exports",
   "module"
 ], function (e, t) {
-  t.HIDE = "swx-hide", t.LIST_SELECTABLE = "list-selectable", t.SEARCH_ITEM = "searchItem", t.MODAL_DIALOG = "swx-overlayModal", t.contextMenu = {
+  t.HIDE = "swx-hide";
+  t.LIST_SELECTABLE = "list-selectable";
+  t.SEARCH_ITEM = "searchItem";
+  t.MODAL_DIALOG = "swx-overlayModal";
+  t.contextMenu = {
     CONTEXT_MENU: "swxContextMenu",
     FLIPPED: "flipped",
     items: {
@@ -15,7 +19,8 @@ define("constants/cssClasses", [
       VIDEO_CALL: "videoCallMenuItem",
       SCHEDULE_CALL: "scheduleCallMenuItem"
     }
-  }, t.avatar = {
+  };
+  t.avatar = {
     AVATAR: "Avatar",
     AVATAR_PRESENCE: "Avatar--presence",
     AVATAR_GROUP: "Avatar--group",
@@ -23,18 +28,24 @@ define("constants/cssClasses", [
     AVATAR_AGENT: "Avatar--agent",
     AVATAR_PSTN: "Avatar--pstn",
     AVATAR_SIZE: "Avatar--size"
-  }, t.avatarDeprecated = {
+  };
+  t.avatarDeprecated = {
     GROUP_AVATAR: "group",
     SHOW_PRESENCE: "presence"
-  }, t.presence = { BLOCKED: "blocked" }, t.contacts = {
+  };
+  t.presence = { BLOCKED: "blocked" };
+  t.contacts = {
     CONTACT_TILE: "contactTile",
     TILE_NAME: "tileName"
-  }, t.discoverAgents = { PAGE: "DiscoverAgentsPage" }, t.base = {
+  };
+  t.discoverAgents = { PAGE: "DiscoverAgentsPage" };
+  t.base = {
     SWX: "swx",
     DESKTOP: "desktop",
     OVERLAY_CONTAINER: "overlayContainer"
-  }, t.educationBubbles = {
+  };
+  t.educationBubbles = {
     PREFIX: "EducationBubble--",
     LARGE: "EducationBubble--large"
   };
-})
+});

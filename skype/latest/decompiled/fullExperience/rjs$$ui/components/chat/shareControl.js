@@ -12,5 +12,7 @@ define("ui/components/chat/shareControl", [
     return s.setContext(o), s;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/shareControl");
-  t.name = e("constants/components").chat.SHARE_CONTROL, t.template = e("text!views/chat/shareControl.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.SHARE_CONTROL;
+  t.template = e("text!views/chat/shareControl.html");
+  t.viewModel = { createViewModel: i };
+});

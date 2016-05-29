@@ -19,4 +19,4 @@ define("jSkype/services/mediaAgent/adapter/webkitAdapter", [], function () {
       return new e();
     }
   };
-})
+});

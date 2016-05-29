@@ -11,4 +11,4 @@ define("bindings/ko.getElement", [
   }
   var t = e("vendor/knockout");
   return { register: n };
-})
+});

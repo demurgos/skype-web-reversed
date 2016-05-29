@@ -14,5 +14,7 @@ define("ui/components/people/contactProfile", [
     return f.setContext(o), f.init(), f;
   }
   var n = e("ui/viewModels/people/contactProfile"), r = e("browser/dom"), i = e("utils/common/scroll"), s = e("vendor/knockout");
-  t.name = e("constants/components").people.CONTACT_PROFILE, t.template = e("text!views/people/contactProfile.html"), t.viewModel = { createViewModel: o };
-})
+  t.name = e("constants/components").people.CONTACT_PROFILE;
+  t.template = e("text!views/people/contactProfile.html");
+  t.viewModel = { createViewModel: o };
+});

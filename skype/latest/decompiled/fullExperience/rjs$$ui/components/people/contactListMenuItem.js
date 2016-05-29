@@ -9,5 +9,7 @@ define("ui/components/people/contactListMenuItem", [
     return e.viewModel;
   }
   var n = e("text!views/people/contactListMenuItem.html"), r = e("constants/components");
-  t.name = r.people.CONTACT_LIST_MENU_ITEM, t.viewModel = { createViewModel: i }, t.template = n;
-})
+  t.name = r.people.CONTACT_LIST_MENU_ITEM;
+  t.viewModel = { createViewModel: i };
+  t.template = n;
+});

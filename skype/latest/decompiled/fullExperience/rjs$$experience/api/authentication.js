@@ -15,10 +15,12 @@ define("experience/api/authentication", [
   "swx-enums"
 ], function (e) {
   function E() {
-    y = !0, a.init();
+    y = !0;
+    a.init();
   }
   function S() {
-    y = !1, a.destroy();
+    y = !1;
+    a.destroy();
   }
   function x(e) {
     if (c.isFunction(e))
@@ -29,13 +31,17 @@ define("experience/api/authentication", [
   }
   function T(e, t, n) {
     function s() {
-      _(i, e, r), x(t);
+      _(i, e, r);
+      x(t);
     }
     function o(t) {
-      _(i, e, r, t), x(n);
+      _(i, e, r, t);
+      x(n);
     }
     var r = t !== !1, i = u.build();
-    d = !1, v = e, r ? (f.get().implicitSignIn = !0, N(s, o)) : _(i, e, r);
+    d = !1;
+    v = e;
+    r ? (f.get().implicitSignIn = !0, N(s, o)) : _(i, e, r);
   }
   function N(e, t, n) {
     try {
@@ -46,26 +52,40 @@ define("experience/api/authentication", [
   }
   function C(e, r) {
     function u() {
-      y = B(), f.reset(), o.status(p.onlineStatus.Offline), x(e);
+      y = B();
+      f.reset();
+      o.status(p.onlineStatus.Offline);
+      x(e);
     }
     function a(e) {
-      f.reset(), x(r, s(e, "signOut"));
+      f.reset();
+      x(r, s(e, "signOut"));
     }
     var i = t.get().signInManager, o = t.get().personsAndGroupsManager.mePerson;
-    d = !1, i.signOut.enabled() ? i.signOut().then(u, a) : a(n.api.auth.errorMessages.ALREADY_SIGNED_OUT);
+    d = !1;
+    i.signOut.enabled() ? i.signOut().then(u, a) : a(n.api.auth.errorMessages.ALREADY_SIGNED_OUT);
   }
   function k(e, i, u, l) {
     function w() {
-      f.reset(), window.clearTimeout(p), x(i);
+      f.reset();
+      window.clearTimeout(p);
+      x(i);
     }
     function E(e) {
-      f.reset(), F(e) ? D(e, i, u) : (x(u, s(e)), a.deferActionOnSplashscreen(function () {
+      f.reset();
+      F(e) ? D(e, i, u) : (x(u, s(e)), a.deferActionOnSplashscreen(function () {
         h.publish(n.events.auth.SIGNIN_FAILED, e);
-      }, e)), d = !0;
+      }, e));
+      d = !0;
     }
     function S() {
       var t;
-      O(), t = A(b), E(t), i = null, u = null, M(g, e.type, t, l.isExternalSignIn);
+      O();
+      t = A(b);
+      E(t);
+      i = null;
+      u = null;
+      M(g, e.type, t, l.isExternalSignIn);
     }
     function T() {
       var e = n.api.auth.DEFAULT_SIGNIN_TIMEOUT;
@@ -78,10 +98,12 @@ define("experience/api/authentication", [
       p && (window.clearTimeout(p), p = undefined);
     }
     function k() {
-      window.addEventListener(n.events.browser.FOCUS, N), window.addEventListener(n.events.browser.BLUR, C);
+      window.addEventListener(n.events.browser.FOCUS, N);
+      window.addEventListener(n.events.browser.BLUR, C);
     }
     function O() {
-      window.removeEventListener(n.events.browser.FOCUS, N), window.removeEventListener(n.events.browser.BLUR, C);
+      window.removeEventListener(n.events.browser.FOCUS, N);
+      window.removeEventListener(n.events.browser.BLUR, C);
     }
     var p, v = t.get().signInManager, m = c.defaults(e, {
         id: r.application.endpointId,
@@ -96,18 +118,37 @@ define("experience/api/authentication", [
       E(new Error(n.api.auth.errorMessages.ALREADY_SIGNED_IN));
       return;
     }
-    N(), k(), v.signIn(m).then(function () {
-      C(), O(), M(g, e.type, null, l.isExternalSignIn), w();
+    N();
+    k();
+    v.signIn(m).then(function () {
+      C();
+      O();
+      M(g, e.type, null, l.isExternalSignIn);
+      w();
     }, function (n) {
       var r;
-      C(), O(), r = L(n), M(g, e.type, r, l.isExternalSignIn), E(r);
+      C();
+      O();
+      r = L(n);
+      M(g, e.type, r, l.isExternalSignIn);
+      E(r);
     }, function (t) {
       b = t;
     });
   }
   function L(e) {
     var t, r, i, s;
-    e = e || {}, m = e.rps_token, g = e.site_name, t = e.reason, r = e.req || e.request, i = e.rsp || e.response, s = new Error(e.error || e.code || e.message || ""), a.setErrorType(s), s.details = {}, t && (s.details.reason = JSON.stringify(t)), r && (s.details.request = JSON.stringify(r));
+    e = e || {};
+    m = e.rps_token;
+    g = e.site_name;
+    t = e.reason;
+    r = e.req || e.request;
+    i = e.rsp || e.response;
+    s = new Error(e.error || e.code || e.message || "");
+    a.setErrorType(s);
+    s.details = {};
+    t && (s.details.reason = JSON.stringify(t));
+    r && (s.details.request = JSON.stringify(r));
     if (i) {
       s.details.response = JSON.stringify(i);
       if (i.status === b || i.data && i.data.subcode === w)
@@ -145,7 +186,9 @@ define("experience/api/authentication", [
       hasSucceed: !0,
       retry: d,
       isExternalSignIn: Boolean(r)
-    }, n && (i.hasSucceed = !1, i.error = n.message, i.details = n.details, n.jCafeStatus && (i.jCafeStatus = n.jCafeStatus)), e.send(i);
+    };
+    n && (i.hasSucceed = !1, i.error = n.message, i.details = n.details, n.jCafeStatus && (i.jCafeStatus = n.jCafeStatus));
+    e.send(i);
   }
   function _(e, t, n, r) {
     var i = {
@@ -153,7 +196,8 @@ define("experience/api/authentication", [
       hasSucceed: !0,
       implicitSignIn: n
     };
-    r && (i.hasSucceed = !1, i.error = r.message || "Unknown error", r.data && (i.details = r.data)), e.send(i);
+    r && (i.hasSucceed = !1, i.error = r.message || "Unknown error", r.data && (i.details = r.data));
+    e.send(i);
   }
   function D(e, t, r) {
     function u(e) {
@@ -163,11 +207,15 @@ define("experience/api/authentication", [
           onSuccess: t,
           onFailure: r
         };
-        e === n.api.auth.accountLinking.WELCOME_FLOW && (s.welcome = !0), e === n.api.auth.accountLinking.INLINE_NEW_USER_FLOW && (s.createTechnical = !0, s.hidden = !0), P(s), i.start(s);
+        e === n.api.auth.accountLinking.WELCOME_FLOW && (s.welcome = !0);
+        e === n.api.auth.accountLinking.INLINE_NEW_USER_FLOW && (s.createTechnical = !0, s.hidden = !0);
+        P(s);
+        i.start(s);
       };
     }
     var s = u(n.api.auth.accountLinking.WELCOME_FLOW), o = !1;
-    H() && (s = u(n.api.auth.accountLinking.INLINE_NEW_USER_FLOW), o = !0), a.startAuthFailedFlow(e, s, o);
+    H() && (s = u(n.api.auth.accountLinking.INLINE_NEW_USER_FLOW), o = !0);
+    a.startAuthFailedFlow(e, s, o);
   }
   function P(e) {
     !g || (e.site_name = g);
@@ -194,4 +242,4 @@ define("experience/api/authentication", [
     signIn: N,
     signOut: C
   };
-})
+});

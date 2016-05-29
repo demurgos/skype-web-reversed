@@ -16,9 +16,11 @@ define("jSkype/services/plugin/componentFactory", [
   var n = e("jSkype/services/plugin/managerComponent"), r = e("jSkype/services/plugin/skypeCoreComponent"), i = e("jSkype/services/plugin/videoComponent"), s = e("jSkype/services/plugin/electron/electronManager"), o = e("jSkype/services/plugin/electron/electronSkypeCore"), u = e("jSkype/services/plugin/electron/electronVideoRenderer"), a = e("browser/detect");
   t.createManagerComponent = function () {
     return f() ? s.build() : new n();
-  }, t.createSkypeCoreComponent = function (e) {
+  };
+  t.createSkypeCoreComponent = function (e) {
     return f() ? o.build() : new r(e);
-  }, t.createVideoComponent = function (e, t) {
+  };
+  t.createVideoComponent = function (e, t) {
     return f() ? u.build(t) : new i(e, t);
   };
-})
+});

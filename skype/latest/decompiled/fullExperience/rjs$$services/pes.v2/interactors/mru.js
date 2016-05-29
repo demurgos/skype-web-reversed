@@ -46,12 +46,16 @@ define("services/pes.v2/interactors/mru", [
       n.forEach(o, function (t) {
         var r = n.find(f, { id: s(t.type) }), i = n.find(e._configuredItems, { id: t.id });
         i && r.items.push(i);
-      }), a.packs = n.reject(f, function (e) {
+      });
+      a.packs = n.reject(f, function (e) {
         return e.items.length === 0;
-      }), e.mruTab = a;
+      });
+      e.mruTab = a;
     });
-  }), t.putMRUTab = s.defineSimpleInteractor(function (e) {
-    var r = t.createMRUTab.run(n.pick(e, "_configuredItems"));
-    n.remove(e.tabs, { id: o.mru.TAB_ID }), e.tabs.unshift(r.mruTab);
   });
-})
+  t.putMRUTab = s.defineSimpleInteractor(function (e) {
+    var r = t.createMRUTab.run(n.pick(e, "_configuredItems"));
+    n.remove(e.tabs, { id: o.mru.TAB_ID });
+    e.tabs.unshift(r.mruTab);
+  });
+});

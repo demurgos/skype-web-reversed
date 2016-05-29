@@ -26,4 +26,4 @@ define("services/cqf/trigger", [
       });
     }), i;
   };
-})
+});

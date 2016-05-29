@@ -6,10 +6,12 @@ define("jSkype/services/systemCommands/commands/properties/options/joiningEnable
   function n() {
     this.isEnabled = function (t) {
       return t.isJoiningEnabled();
-    }, this.enable = function (t) {
+    };
+    this.enable = function (t) {
       t.isJoiningEnabled.set(!0).catch(function () {
       });
-    }, this.disable = function (t) {
+    };
+    this.disable = function (t) {
       t.isJoiningEnabled.set(!1).catch(function () {
       });
     };
@@ -17,4 +19,4 @@ define("jSkype/services/systemCommands/commands/properties/options/joiningEnable
   t.build = function () {
     return new n();
   };
-})
+});

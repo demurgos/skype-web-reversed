@@ -13,13 +13,15 @@ define("services/flagsApi/flagsApiServiceBusiness", [
         e = [-1];
       else if (i.initParams && i.initParams.flags)
         try {
-          t = JSON.parse(i.initParams.flags), t.forEach(function (t) {
+          t = JSON.parse(i.initParams.flags);
+          t.forEach(function (t) {
             e.push(parseInt(t.split("-")[1]));
           });
         } catch (n) {
         }
       return Promise.resolve(e);
-    }, this.set = function (e) {
+    };
+    this.set = function (e) {
       parseInt(e) && r.publish(n.events.flags.SET_FLAG, "EducationBubble-" + e);
     };
   }
@@ -27,4 +29,4 @@ define("services/flagsApi/flagsApiServiceBusiness", [
   t.build = function () {
     return new s();
   };
-})
+});

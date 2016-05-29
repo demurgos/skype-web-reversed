@@ -12,5 +12,7 @@ define("ui/components/chat/startConversationOverlay", [
     return i.setContext(n.dataFor(t.element)), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/startConversationOverlay");
-  t.name = e("constants/components").chat.START_CONVERSATION_OVERLAY, t.template = e("text!views/chat/startConversationOverlay.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.START_CONVERSATION_OVERLAY;
+  t.template = e("text!views/chat/startConversationOverlay.html");
+  t.viewModel = { createViewModel: i };
+});

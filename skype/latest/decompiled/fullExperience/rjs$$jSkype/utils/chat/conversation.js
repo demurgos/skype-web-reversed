@@ -12,7 +12,8 @@ define("jSkype/utils/chat/conversation", [
   t.isConversationReadOnServer = function (e) {
     var t = this.parseConsumptionHorizon(e.properties.consumptionhorizon), n = this.getMessageKey(e.lastMessage);
     return s.isMessageReadOnServer(t, n, e.lastMessage.id);
-  }, t.parseConsumptionHorizon = function (e) {
+  };
+  t.parseConsumptionHorizon = function (e) {
     if (!n.isString(e))
       return {};
     var t = e.split(";");
@@ -21,21 +22,28 @@ define("jSkype/utils/chat/conversation", [
       modificationTime: t[1],
       lastReadMessageId: t[2]
     };
-  }, t.getMessageKey = function (e) {
+  };
+  t.getMessageKey = function (e) {
     return e.clientmessageid || e.skypeeditedid || e.messageid || e.id || 0;
-  }, t.isPartiallyMigrated = function (e, t) {
+  };
+  t.isPartiallyMigrated = function (e, t) {
     var n = e.indexOf(u) !== -1, r = t && t.migrationcompleted && t.migrationcompleted === "true";
     return n && !r;
-  }, t.isAgentConversation = function (e) {
+  };
+  t.isAgentConversation = function (e) {
     return r.getTypeFromKey(e) === o.contactTypes.AGENT;
-  }, t.isMeConversation = function (e) {
+  };
+  t.isMeConversation = function (e) {
     var t = i.get().personsAndGroupsManager.mePerson;
     return e === r.getKey(t.id(), t._type());
-  }, t.isPstnConversation = function (e) {
+  };
+  t.isPstnConversation = function (e) {
     return /^\d:\+/.test(e);
-  }, t.isPstnEndpoint = function (e) {
+  };
+  t.isPstnEndpoint = function (e) {
     return /^(\+)?\d+$/.test(e);
-  }, t.isPstnOnlyConversation = function (e) {
+  };
+  t.isPstnOnlyConversation = function (e) {
     var n = e.participants.subscribe();
     if (!e.participants.size())
       return n.dispose(), !1;
@@ -45,8 +53,9 @@ define("jSkype/utils/chat/conversation", [
         return n.dispose(), !1;
     }
     return n.dispose(), !0;
-  }, t.getSyncStateFromResponse = function (e) {
+  };
+  t.getSyncStateFromResponse = function (e) {
     var t = e._metadata && e._metadata.syncState, n = null;
     return t && a.test(t) && (n = t.match(a)[1]), n;
   };
-})
+});

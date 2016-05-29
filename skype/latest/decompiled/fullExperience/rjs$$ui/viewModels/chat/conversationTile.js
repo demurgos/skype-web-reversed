@@ -36,31 +36,55 @@ define("ui/viewModels/chat/conversationTile", [
       return e.isFeatureOn(s.featureFlags.INCLUDE_SELF_IN_PARTICIPANTS_COUNT);
     }
     var l = this, c;
-    l.isGroup = i.newObservableProperty(e.isGroupConversation), l.participantCount = i.newObservableProperty(e.participantsCount), l.selfParticipantState = i.newObservableProperty(e.selfParticipant.state), l.amInConversation = t.computed(function () {
+    l.isGroup = i.newObservableProperty(e.isGroupConversation);
+    l.participantCount = i.newObservableProperty(e.participantsCount);
+    l.selfParticipantState = i.newObservableProperty(e.selfParticipant.state);
+    l.amInConversation = t.computed(function () {
       return l.selfParticipantState() === o.participantState.Connected;
-    }), l.contact = t.observable(), l.isAgent = t.computed(function () {
+    });
+    l.contact = t.observable();
+    l.isAgent = t.computed(function () {
       var e = l.contact();
       return !!e && e.isAgent();
-    }), l.isCertifiedAgent = t.computed(function () {
+    });
+    l.isCertifiedAgent = t.computed(function () {
       var e = l.contact();
       return !!(l.isAgent() && e.agentDetails() && e.agentDetails().certification());
-    }), l.isPstn = t.computed(function () {
+    });
+    l.isPstn = t.computed(function () {
       var e = l.contact();
       return !!e && e.isPstn();
-    }), l.id = t.computed(function () {
+    });
+    l.id = t.computed(function () {
       var e = l.contact();
       return e ? e.id() : undefined;
-    }), l.statusClassName = t.computed(function () {
+    });
+    l.statusClassName = t.computed(function () {
       var e = l.contact();
       return e ? e.statusClassName() : "";
-    }), l.isBlocked = t.computed(function () {
+    });
+    l.isBlocked = t.computed(function () {
       var e = l.contact();
       return e ? e.isBlocked() : !1;
-    }), l.displayMessage = t.computed(h), l.displayMessageTitle = t.computed(function () {
+    });
+    l.displayMessage = t.computed(h);
+    l.displayMessageTitle = t.computed(function () {
       return r.stripHTML(h());
-    }), l.dispose = function () {
-      l.isAgent.dispose(), l.isCertifiedAgent.dispose(), l.isPstn.dispose(), l.id.dispose(), l.statusClassName.dispose(), l.isBlocked.dispose(), l.displayMessage.dispose(), l.displayMessageTitle.dispose(), l.amInConversation.dispose(), l.contact() && l.contact().dispose(), d();
-    }, l.isGroup() || v();
+    });
+    l.dispose = function () {
+      l.isAgent.dispose();
+      l.isCertifiedAgent.dispose();
+      l.isPstn.dispose();
+      l.id.dispose();
+      l.statusClassName.dispose();
+      l.isBlocked.dispose();
+      l.displayMessage.dispose();
+      l.displayMessageTitle.dispose();
+      l.amInConversation.dispose();
+      l.contact() && l.contact().dispose();
+      d();
+    };
+    l.isGroup() || v();
   }
   var t = e("vendor/knockout"), n = e("ui/viewModels/people/contactBuilder"), r = e("utils/chat/messageSanitizer"), i = e("utils/common/cafeObservable"), s = e("constants/common"), o = e("swx-enums"), u = e("swx-i18n").localization, a = e("services/serviceLocator");
   return {
@@ -68,4 +92,4 @@ define("ui/viewModels/chat/conversationTile", [
       return t = t || {}, new f(e, t);
     }
   };
-})
+});

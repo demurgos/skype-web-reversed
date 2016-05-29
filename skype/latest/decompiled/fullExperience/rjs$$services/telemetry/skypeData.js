@@ -43,4 +43,4 @@ define("services/telemetry/skypeData", [
     var t = f(e);
     r.get().sendEvent(n.telemetry.uiTenantToken, e.type, t);
   };
-})
+});

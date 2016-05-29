@@ -16,7 +16,8 @@ define("ui/viewModels/me/presencePopup", [
     function p() {
       n.execute(function () {
         f.isOpened(!1);
-      }), c.remove("PresencePopup");
+      });
+      c.remove("PresencePopup");
     }
     function d(t) {
       !f.isOpened() && e.key === t && (c.add("PresencePopup", p), f.isOpened(!0));
@@ -25,7 +26,9 @@ define("ui/viewModels/me/presencePopup", [
       f.currentStatus(l.status());
     }
     var f = this, l = i.get().personsAndGroupsManager.mePerson, h = a.resolve(r.serviceLocator.ACTION_TELEMETRY);
-    f.isOpened = t.observable(!1), f.currentStatus = t.observable(l.status()), f.presenceStatuses = [
+    f.isOpened = t.observable(!1);
+    f.currentStatus = t.observable(l.status());
+    f.presenceStatuses = [
       {
         status: s.onlineStatus.Online,
         l10nKey: "message_text_presenceAvailable",
@@ -41,7 +44,8 @@ define("ui/viewModels/me/presencePopup", [
         l10nKey: "message_text_presenceNotAvailable",
         cssClass: "PresencePopup-status--hidden"
       }
-    ], f.updateStatus = function (t) {
+    ];
+    f.updateStatus = function (t) {
       var n = f.presenceStatuses[t].status, r = l.status();
       return n !== r && (l.status(n), h.recordAction(o.me.presenceChanged, {
         source: u.me.area,
@@ -50,12 +54,16 @@ define("ui/viewModels/me/presencePopup", [
         newStatus: n,
         meExpanded: e.key === "Me-expanded"
       }), p()), !0;
-    }, f.getPresenceStatusCssClasses = function (e) {
+    };
+    f.getPresenceStatusCssClasses = function (e) {
       var t = "PresencePopup-status " + f.presenceStatuses[e].cssClass;
       return f.currentStatus() === f.presenceStatuses[e].status && (t += " PresencePopup-status--selected"), t;
-    }, f.init = function () {
-      l.status.changed(v), f.registerEvent(r.events.me.PRESENCE_POPUP_SHOW, d);
-    }, f.dispose = function () {
+    };
+    f.init = function () {
+      l.status.changed(v);
+      f.registerEvent(r.events.me.PRESENCE_POPUP_SHOW, d);
+    };
+    f.dispose = function () {
       l.status.changed.off(v);
     };
   }
@@ -63,4 +71,4 @@ define("ui/viewModels/me/presencePopup", [
   return h.build = function (e, t) {
     return new h(e, t);
   }, l.assign(h.prototype, f), h;
-})
+});

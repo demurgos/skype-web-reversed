@@ -17,7 +17,8 @@ define("services/flagsApi/flagsApiService", [
         return Promise.reject();
       }
       return u().then(e, t);
-    }, this.set = function (e) {
+    };
+    this.set = function (e) {
       function t(t) {
         var i = a(t, "PUT", e);
         return r.compat(i).then(function (e) {
@@ -46,4 +47,4 @@ define("services/flagsApi/flagsApiService", [
   t.build = function () {
     return new o();
   };
-})
+});

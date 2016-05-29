@@ -32,4 +32,4 @@ define("jSkype/modelHelpers/calling/pstnActivityItemAdder", [
   }
   var t = e("swx-enums"), n = e("jSkype/modelHelpers/calling/pstnMessageFactory");
   return r;
-})
+});

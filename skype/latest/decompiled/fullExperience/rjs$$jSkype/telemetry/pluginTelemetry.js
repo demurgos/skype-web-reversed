@@ -19,11 +19,14 @@ define("jSkype/telemetry/pluginTelemetry", [
         plugin_version: e
       };
     }
-    e ? t("PluginStarted") : e = "Unknown", this.logPluginCrashed = function () {
+    e ? t("PluginStarted") : e = "Unknown";
+    this.logPluginCrashed = function () {
       t("PluginCrashed");
-    }, this.logPluginAlreadyRunning = function () {
+    };
+    this.logPluginAlreadyRunning = function () {
       t("PluginAlreadyRunning");
-    }, this.logPluginInitializationTimeout = function () {
+    };
+    this.logPluginInitializationTimeout = function () {
       t("PluginInitializationTimeout");
     };
   }
@@ -31,4 +34,4 @@ define("jSkype/telemetry/pluginTelemetry", [
   t.getLogger = function (e) {
     return new i(e);
   };
-})
+});

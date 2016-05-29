@@ -11,7 +11,9 @@ define("jSkype/services/systemCommands/commands/callInfo", [
   function u() {
     this.isAvailableFor = function (e) {
       return s.isFeatureOn(o.featureFlags.CALL_INFO_COMMAND) && e === i.get().activeCalls()[0];
-    }, this.showInHelp = !0, this.action = function (e) {
+    };
+    this.showInHelp = !0;
+    this.action = function (e) {
       function t(t) {
         n.sendSystemMessage(e, t);
       }
@@ -25,4 +27,4 @@ define("jSkype/services/systemCommands/commands/callInfo", [
   t.build = function () {
     return new u();
   };
-})
+});

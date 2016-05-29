@@ -12,5 +12,7 @@ define("ui/components/chat/messagesSearch", [
     return e.init(), e;
   }
   var n = e("ui/viewModels/chat/messagesSearch"), r = e("ui/viewModels/chat/messageSearchItem");
-  t.name = e("constants/components").chat.MESSAGES_SEARCH, t.template = e("text!views/chat/messagesList.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.MESSAGES_SEARCH;
+  t.template = e("text!views/chat/messagesList.html");
+  t.viewModel = { createViewModel: i };
+});

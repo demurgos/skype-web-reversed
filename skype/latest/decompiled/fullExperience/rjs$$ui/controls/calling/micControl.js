@@ -10,7 +10,10 @@ define("ui/controls/calling/micControl", [
     name: r.CONTROLS.MUTE_CONTROL,
     render: function (e, r) {
       var s, o = document.createElement("div"), u = e.conversation;
-      s = i.build(u), o.innerHTML = t, n.applyBindings(s, o), r(o.firstElementChild);
+      s = i.build(u);
+      o.innerHTML = t;
+      n.applyBindings(s, o);
+      r(o.firstElementChild);
     }
   };
-})
+});

@@ -6,7 +6,10 @@ define("jSkype/services/systemCommands/commands/moji", [
   "lodash-compat"
 ], function (e, t) {
   function i() {
-    this.isAvailableFor = n.availableAlways, this.help = "[mojiId]", this.showInHelp = !1, this.action = function (e, t) {
+    this.isAvailableFor = n.availableAlways;
+    this.help = "[mojiId]";
+    this.showInHelp = !1;
+    this.action = function (e, t) {
       if (r.isEmpty(r.trim(t)))
         return;
       e.chatService._sendMoji.enabled() && e.chatService._sendMoji(t).catch(function (e) {
@@ -17,4 +20,4 @@ define("jSkype/services/systemCommands/commands/moji", [
   t.build = function () {
     return new i();
   };
-})
+});

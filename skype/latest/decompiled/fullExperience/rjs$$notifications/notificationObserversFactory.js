@@ -13,4 +13,4 @@ define("notifications/notificationObserversFactory", [
   }
   var n = e("notifications/modelObservers/incomingCallObserver"), r = e("notifications/modelObservers/unreadMessageObserver"), i = e("notifications/modelObservers/contactRequestObserver"), s = e("notifications/modelObservers/chatRequestObserver");
   t.getObservers = o;
-})
+});

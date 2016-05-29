@@ -35,13 +35,16 @@ define("jSkype/services/plugin/deviceHandlers", [
         t._add(i, n.deviceId);
       }
     };
-  }, t.createOnDeviceRemovedHandler = function (e) {
+  };
+  t.createOnDeviceRemovedHandler = function (e) {
     var t = s(e), n = o(e);
     return function (e) {
       var r = t(e.deviceId);
-      t._remove(e.deviceId), n() === r && n(null);
+      t._remove(e.deviceId);
+      n() === r && n(null);
     };
-  }, t.createOnDeviceSelectedHandler = function (e) {
+  };
+  t.createOnDeviceSelectedHandler = function (e) {
     var t = s(e), n = o(e);
     return function (e) {
       if (e.deviceId) {
@@ -50,4 +53,4 @@ define("jSkype/services/plugin/deviceHandlers", [
       }
     };
   };
-})
+});

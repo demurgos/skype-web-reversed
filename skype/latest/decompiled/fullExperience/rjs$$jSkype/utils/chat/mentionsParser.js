@@ -11,7 +11,8 @@ define("jSkype/utils/chat/mentionsParser", [
         var r = e.getMentionUserData(t);
         r.displayName ? n.push(t) : n.push(t.replace(/[,.;\-!\?']*$/, ""));
       }), n;
-    }, e.getMentionUserData = function (e) {
+    };
+    e.getMentionUserData = function (e) {
       var r, i = "", s = t.get().personsAndGroupsManager.mePerson, o = {
           defaultUserName: "",
           displayName: "",
@@ -22,4 +23,4 @@ define("jSkype/utils/chat/mentionsParser", [
   }
   var t = e("jSkype/client"), n = e("jSkype/modelHelpers/personsAndGroupsHelper");
   return new r();
-})
+});

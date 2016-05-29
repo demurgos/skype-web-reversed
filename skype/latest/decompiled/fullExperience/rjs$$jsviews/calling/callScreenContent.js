@@ -7,9 +7,12 @@ define("jsviews/calling/callScreenContent", [
     var i;
     this.getContentWidth = function () {
       return e.querySelector(r).offsetWidth;
-    }, this.init = function (e) {
-      i = e, t.addEventListener(n.events.browser.RESIZE, i);
-    }, this.dispose = function () {
+    };
+    this.init = function (e) {
+      i = e;
+      t.addEventListener(n.events.browser.RESIZE, i);
+    };
+    this.dispose = function () {
       t.removeEventListener(n.events.browser.RESIZE, i);
     };
   }
@@ -19,4 +22,4 @@ define("jsviews/calling/callScreenContent", [
       return new i(e);
     }
   };
-})
+});

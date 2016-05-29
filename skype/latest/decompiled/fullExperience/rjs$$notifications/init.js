@@ -11,8 +11,9 @@ define("notifications/init", [
   var n = e("cafe/applicationInstance"), r = e("constants/common"), i = e("swx-enums"), s = e("services/serviceLocator"), o = e("notifications/settings");
   t.init = function () {
     var e = s.resolve(r.serviceLocator.MODEL_UI_OBSERVER);
-    o.init(), n.get().signInManager.state.once(i.loginState.SignedIn, function () {
+    o.init();
+    n.get().signInManager.state.once(i.loginState.SignedIn, function () {
       e.observe(n.get());
     });
   };
-})
+});

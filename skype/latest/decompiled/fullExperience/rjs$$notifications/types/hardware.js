@@ -8,4 +8,4 @@ define("notifications/types/hardware", [
   }
   var t = e("notifications/common/notification");
   return { build: n };
-})
+});

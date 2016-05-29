@@ -8,4 +8,4 @@ define("jSkype/services/entitlement/main", [
   t.getInstance = function (t, i) {
     return r || (r = new n(t, i)), r;
   };
-})
+});

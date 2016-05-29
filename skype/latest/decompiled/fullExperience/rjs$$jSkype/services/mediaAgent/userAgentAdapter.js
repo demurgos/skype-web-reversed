@@ -1,14 +1,19 @@
 define("jSkype/services/mediaAgent/userAgentAdapter", [], function () {
-  window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL, window.MediaStream = window.MediaStream || window.webkitMediaStream || window.mozMediaStream || window.msMediaStream, window.attachMediaStream = function (e, t) {
+  window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+  window.MediaStream = window.MediaStream || window.webkitMediaStream || window.mozMediaStream || window.msMediaStream;
+  window.attachMediaStream = function (e, t) {
     typeof e.srcObject != "undefined" ? e.srcObject = t : typeof e.src != "undefined" && (e.src = window.URL.createObjectURL(t));
-  }, window.detachMediaStream = function (e) {
+  };
+  window.detachMediaStream = function (e) {
     if (typeof e.srcObject != "undefined")
       e.srcObject = null;
     else if (typeof e.src != "undefined" && e.src) {
       var t = e.src;
-      e.src = "", window.URL.revokeObjectURL(t);
+      e.src = "";
+      window.URL.revokeObjectURL(t);
     }
-  }, window.stopMediaStream = function (e) {
+  };
+  window.stopMediaStream = function (e) {
     var t = e.getTracks();
     for (var n = 0; n < t.length; ++n) {
       var r = t[n];
@@ -16,7 +21,8 @@ define("jSkype/services/mediaAgent/userAgentAdapter", [], function () {
     }
   };
   if (typeof navigator.mozGetUserMedia != "undefined" && typeof mozRTCPeerConnection != "undefined") {
-    window.RTCPeerConnection = mozRTCPeerConnection, window.RTCSessionDescription = mozRTCSessionDescription;
+    window.RTCPeerConnection = mozRTCPeerConnection;
+    window.RTCSessionDescription = mozRTCSessionDescription;
     var e = function () {
       var e = window.RTCPeerConnection.prototype.setRemoteDescription;
       window.RTCPeerConnection.prototype.setRemoteDescription = function (t) {
@@ -39,7 +45,8 @@ define("jSkype/services/mediaAgent/userAgentAdapter", [], function () {
         e.apply(this, arguments);
       };
     };
-    e(), navigator.getUserMedia = function (e, t, n) {
+    e();
+    navigator.getUserMedia = function (e, t, n) {
       return navigator.mozGetUserMedia(e, t, n);
     };
   } else
@@ -66,7 +73,8 @@ define("jSkype/services/mediaAgent/userAgentAdapter", [], function () {
           i,
           s
         ];
-        r.length > 0 && o.splice(e.reverseArgs ? o.length : 0, 0, r[0]), n.apply(t, o);
+        r.length > 0 && o.splice(e.reverseArgs ? o.length : 0, 0, r[0]);
+        n.apply(t, o);
       });
     };
   });
@@ -74,10 +82,17 @@ define("jSkype/services/mediaAgent/userAgentAdapter", [], function () {
     var t = function () {
       return Promise.resolve();
     };
-    RTCRtpSender.prototype.getStats || (RTCRtpSender.prototype.getStats = t), RTCRtpSender.prototype.msGetStats || (RTCRtpSender.prototype.msGetStats = t), RTCRtpReceiver.prototype.getStats || (RTCRtpReceiver.prototype.getStats = t), RTCRtpReceiver.prototype.msGetStats || (RTCRtpReceiver.prototype.msGetStats = t), RTCIceTransport.prototype.getStats || (RTCIceTransport.prototype.getStats = t), RTCIceTransport.prototype.msGetStats || (RTCIceTransport.prototype.msGetStats = t), RTCRtpReceiver.prototype.getContributingSources || (RTCRtpReceiver.prototype.getContributingSources = function () {
+    RTCRtpSender.prototype.getStats || (RTCRtpSender.prototype.getStats = t);
+    RTCRtpSender.prototype.msGetStats || (RTCRtpSender.prototype.msGetStats = t);
+    RTCRtpReceiver.prototype.getStats || (RTCRtpReceiver.prototype.getStats = t);
+    RTCRtpReceiver.prototype.msGetStats || (RTCRtpReceiver.prototype.msGetStats = t);
+    RTCIceTransport.prototype.getStats || (RTCIceTransport.prototype.getStats = t);
+    RTCIceTransport.prototype.msGetStats || (RTCIceTransport.prototype.msGetStats = t);
+    RTCRtpReceiver.prototype.getContributingSources || (RTCRtpReceiver.prototype.getContributingSources = function () {
       return [];
-    }), RTCRtpReceiver.prototype.requestSendCSRC || (RTCRtpReceiver.prototype.requestSendCSRC = function () {
+    });
+    RTCRtpReceiver.prototype.requestSendCSRC || (RTCRtpReceiver.prototype.requestSendCSRC = function () {
     });
   }
   return { window: window };
-})
+});

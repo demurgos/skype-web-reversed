@@ -13,10 +13,13 @@ define("experience/api/rendering", [
   }
   var n = e("constants/common"), r = e("experience/settings"), i = e("services/serviceLocator"), s = e("experience/api/helpers/contentNavigatorStore");
   t.renderContent = function (e, t) {
-    s.add(e), o(r.controls.content.toLowerCase(), e, t);
-  }, t.renderSidebar = function (e, t) {
+    s.add(e);
+    o(r.controls.content.toLowerCase(), e, t);
+  };
+  t.renderSidebar = function (e, t) {
     o(r.controls.sidebar.toLowerCase(), e, t);
-  }, t.renderMe = function (e, t) {
+  };
+  t.renderMe = function (e, t) {
     o(r.controls.me.toLowerCase(), e, t);
   };
-})
+});

@@ -17,7 +17,10 @@ define("services/pes.v2/emoticons/stylesFactory", [
         largeOffset: -r * t.frameHeights.emoticons.LARGE,
         extraLargeHeight: t.frameHeights.emoticons.EXTRA_LARGE * n.framesCount,
         extraLargeOffset: -r * t.frameHeights.emoticons.EXTRA_LARGE
-      }, e.styleDef.smallOffset !== 0 && (e.styleDef.smallOffset += "px"), e.styleDef.largeOffset !== 0 && (e.styleDef.largeOffset += "px"), e.styleDef.extraLargeOffset !== 0 && (e.styleDef.extraLargeOffset += "px");
+      };
+      e.styleDef.smallOffset !== 0 && (e.styleDef.smallOffset += "px");
+      e.styleDef.largeOffset !== 0 && (e.styleDef.largeOffset += "px");
+      e.styleDef.extraLargeOffset !== 0 && (e.styleDef.extraLargeOffset += "px");
     }
     var e = this;
     e.create = function (e) {
@@ -28,4 +31,4 @@ define("services/pes.v2/emoticons/stylesFactory", [
   }
   var t = e("services/pes/constants"), n = e("services/pes.v2/emoticons/styleKeyFrameFactory"), r = e("services/pes.v2/emoticons/styleDefinitionFactory"), i = 24;
   return new s();
-})
+});

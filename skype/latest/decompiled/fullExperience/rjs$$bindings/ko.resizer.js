@@ -16,7 +16,8 @@ define("bindings/ko.resizer", [
           onResizeEnd: function (e) {
             a(e);
           }
-        }), n.utils.domNodeDisposal.addDisposeCallback(e, function () {
+        });
+        n.utils.domNodeDisposal.addDisposeCallback(e, function () {
           i.dispose();
         });
       }
@@ -24,4 +25,4 @@ define("bindings/ko.resizer", [
   }
   var t = e("ui/viewModels/calling/helpers/resizer"), n = e("vendor/knockout");
   return { register: r };
-})
+});

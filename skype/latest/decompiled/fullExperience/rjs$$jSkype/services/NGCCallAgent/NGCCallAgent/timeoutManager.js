@@ -32,7 +32,8 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/timeoutManager", [
         }
         var a = setTimeout(r, u);
         i[e] = a;
-      }, r.stopTimer = function (e, r) {
+      };
+      r.stopTimer = function (e, r) {
         switch (e) {
         case t.TIMEOUT_OPERATIONS.ADD_PARTICIPANT:
         case t.TIMEOUT_OPERATIONS.REMOVE_PARTICIPANT:
@@ -40,12 +41,14 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/timeoutManager", [
           break;
         default:
         }
-        s.log("stopTimer called for : " + e), i.hasOwnProperty(e) && (clearTimeout(i[e]), delete i[e]);
-      }, r.dispose = function () {
+        s.log("stopTimer called for : " + e);
+        i.hasOwnProperty(e) && (clearTimeout(i[e]), delete i[e]);
+      };
+      r.dispose = function () {
         s.log("timeoutManager :: dispose");
         for (var e in i)
           i.hasOwnProperty(e) && r.stopTimer(e);
       };
     };
   return r;
-})
+});

@@ -60,7 +60,8 @@ define("services/pes.v2/config", [
         var n = [];
         t.items.forEach(function (t) {
           n.push(d(e.items, t));
-        }), t.items = n;
+        });
+        t.items = n;
       });
     }
     function y(e) {
@@ -69,30 +70,40 @@ define("services/pes.v2/config", [
         t.sections.forEach(function (t) {
           var r = d(e.packs, t.pack);
           r && r.items && r.items.length && n.push(r);
-        }), t.packs = n, t.type = s.itemTypes.tab.id, t.thumbnailUrl = p(t, e.tabsRoot).thumbnailUrl;
+        });
+        t.packs = n;
+        t.type = s.itemTypes.tab.id;
+        t.thumbnailUrl = p(t, e.tabsRoot).thumbnailUrl;
       });
     }
     var e, a = {}, l;
     this.getConfiguration = function () {
       return e;
-    }, this.init = function (n) {
+    };
+    this.init = function (n) {
       return e = c(), t.assign(e, n), g(e), n.tabs ? y(e) : e.tabs = m(e.packs, e.packsRoot), h(e), e;
-    }, this.cdnTokenUpdated = function (t) {
+    };
+    this.cdnTokenUpdated = function (t) {
       if (e._cdnToken === t)
         return;
-      e._cdnToken = t, e._requiresCDNUrlAuthentication && h(e);
-    }, this.on = function (n, r) {
+      e._cdnToken = t;
+      e._requiresCDNUrlAuthentication && h(e);
+    };
+    this.on = function (n, r) {
       if (!n || !r)
         return;
       return a.hasOwnProperty(n) || (a[n] = []), t.any(a[n], function (e) {
         return e === r;
       }) || a[n].push(r), { cancel: this.off.bind(this, n, r) };
-    }, this.off = function (n, r) {
+    };
+    this.off = function (n, r) {
       return a.hasOwnProperty(n) ? t.first(t.remove(a[n], function (e) {
         return e === r;
       })) : null;
-    }, e = c(), u.resolve(n.serviceLocator.FEATURE_FLAGS).isFeatureOn(n.featureFlags.PES_V2_ENABLED) && (l = u.resolve(n.serviceLocator.PES_CONFIG_SERVICE), l.getConfiguration = this.getConfiguration.bind(this));
+    };
+    e = c();
+    u.resolve(n.serviceLocator.FEATURE_FLAGS).isFeatureOn(n.featureFlags.PES_V2_ENABLED) && (l = u.resolve(n.serviceLocator.PES_CONFIG_SERVICE), l.getConfiguration = this.getConfiguration.bind(this));
   }
   var t = e("lodash-compat"), n = e("constants/common"), r = n.events, i = e("swx-i18n").localization, s = e("services/pes/constants"), o = e("utils/chat/pesUtils"), u = e("services/serviceLocator"), a = e("utils/common/builderMixin"), f = e("experience/settings");
   return t.assign(l, a), l;
-})
+});

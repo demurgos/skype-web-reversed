@@ -12,5 +12,7 @@ define("ui/components/calling/skypeOut/countryPicker", [
     return i.setContext(o), i.init(), i;
   }
   var n = e("ui/viewModels/calling/skypeOut/countryPickerViewModel"), r = e("vendor/knockout");
-  t.name = e("constants/components").calling.SKYPEOUT_COUNTRY_PICKER, t.template = e("text!views/calling/skypeOut/countryPicker.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").calling.SKYPEOUT_COUNTRY_PICKER;
+  t.template = e("text!views/calling/skypeOut/countryPicker.html");
+  t.viewModel = { createViewModel: i };
+});

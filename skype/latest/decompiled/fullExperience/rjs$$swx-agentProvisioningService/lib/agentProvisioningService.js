@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -47,4 +47,4 @@ function (e) {
   }
   var n = e("reqwest"), r = e("lodash-compat");
   t.build = i;
-})
+}));

@@ -41,18 +41,21 @@ define("jSkype/utils/preferences/preference", [
         readOnly: !0,
         value: o.Unknown
       });
-    b() || (d = undefined, v = undefined, m._set(o.Unset)), t.description = {
+    b() || (d = undefined, v = undefined, m._set(o.Unset));
+    t.description = {
       id: f,
       type: l
-    }, t.value = s.property({
+    };
+    t.value = s.property({
       readOnly: !b(),
       value: h,
       get: d,
       set: v
-    }), t.value.state = m;
+    });
+    t.value.state = m;
   }
   var n = e("swx-enums"), r = e("jSkype/settings"), i = e("constants/common"), s = e("jcafe-property-model"), o = n.preferenceValueState, u = e("jSkype/telemetry/preferences"), a = e("swx-utils-common").stopwatch;
   t.build = function (e) {
     return new f(e);
   };
-})
+});

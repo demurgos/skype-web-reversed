@@ -10,16 +10,24 @@ module.exports = function () {
     var t = [], n = 0, r = !0, i = 0;
     while (r) {
       var s = e.shift();
-      r = (s & 128) != 0, s &= 127;
+      r = (s & 128) != 0;
+      s &= 127;
       if (!(i < 28)) {
-        n |= s << i, t.push(n), n = s >> 4, i = 3;
+        n |= s << i;
+        t.push(n);
+        n = s >> 4;
+        i = 3;
         break;
       }
-      n |= s << i, i += 7;
+      n |= s << i;
+      i += 7;
     }
     while (r) {
       var s = e.shift();
-      r = (s & 128) != 0, s &= 127, n |= s << i, i += 7;
+      r = (s & 128) != 0;
+      s &= 127;
+      n |= s << i;
+      i += 7;
       if (i >= 32)
         break;
     }

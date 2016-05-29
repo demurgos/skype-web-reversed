@@ -11,5 +11,7 @@ define("ui/components/chat/selectedParticipantsConversation", [
     return t.init(e), t;
   }
   var n = e("ui/viewModels/chat/selectedParticipantsConversation");
-  t.name = e("constants/components").chat.SELECTED_PARTICIPANTS_CONVERSATION, t.template = e("text!views/chat/selectedParticipantsConversation.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.SELECTED_PARTICIPANTS_CONVERSATION;
+  t.template = e("text!views/chat/selectedParticipantsConversation.html");
+  t.viewModel = { createViewModel: r };
+});

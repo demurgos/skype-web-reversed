@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -32,7 +32,8 @@ function (e) {
     return t.makeCancelable = function (e) {
       var t = this, n;
       return e.catch(function (e) {
-        n = e, t.abort();
+        n = e;
+        t.abort();
       }), Promise.resolve(this).catch(function (t) {
         throw e.isCanceled ? (n.innerException = t, n) : t;
       });
@@ -60,10 +61,12 @@ function (e) {
           };
         return this.token = this.token || t(), this.token;
       }, e.prototype.cancel = function (e) {
-        e = e || new i(), this.token || this.getToken();
+        e = e || new i();
+        this.token || this.getToken();
         if (this.isCanceled)
           throw new Error("The token is already canceled");
-        this.isCanceled = !0, this.rejectTokenFn(e);
+        this.isCanceled = !0;
+        this.rejectTokenFn(e);
       }, e;
     }();
   t.CancelationTokenFactory = r;
@@ -73,5 +76,9 @@ function (e) {
     }
     return __extends(t, e), t;
   }(Error);
-  t.OperationCanceledError = i, t.makeCancelablePromise = s, t.makeCancelable = o, t.adaptAbortable = u, t.cancelableOperation = a;
-})
+  t.OperationCanceledError = i;
+  t.makeCancelablePromise = s;
+  t.makeCancelable = o;
+  t.adaptAbortable = u;
+  t.cancelableOperation = a;
+}));

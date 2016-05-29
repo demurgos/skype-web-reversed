@@ -3,7 +3,8 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
     function o(e, t) {
       return l(e), e.media.forEach(function (n) {
         var i;
-        n.protocol = "RTP/SAVP", n.label = p(n.type);
+        n.protocol = "RTP/SAVP";
+        n.label = p(n.type);
         if (n.port === 0) {
           for (var o in n)
             n.hasOwnProperty(o) && [
@@ -17,19 +18,23 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
         n.ssrcs && n.ssrcs[0] && (n.xSsrcRange = {
           ssrcMin: n.ssrcs[0].id,
           ssrcMax: n.ssrcs[0].id
-        }), d(n.direction) || delete n.ssrcs;
+        });
+        d(n.direction) || delete n.ssrcs;
         if (n.ext)
           for (i = n.ext.length - 1; i >= 0; --i)
             n.ext[i].uri === "http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time" && n.ext.splice(i, 1);
         n.crypto && n.crypto.forEach(function (e) {
           e.config += "|2^31";
-        }), n.port !== 0 && e.fingerprint && (n.fingerprint = e.fingerprint), n.fingerprint && h(t) && delete n.setup;
+        });
+        n.port !== 0 && e.fingerprint && (n.fingerprint = e.fingerprint);
+        n.fingerprint && h(t) && delete n.setup;
         if (n.candidates) {
           for (i = n.candidates.length - 1; i >= 0; --i) {
             var u = n.candidates[i], f = !1;
             for (var l = i - 1; l >= 0; --l)
               if (n.candidates[i].foundation === n.candidates[l].foundation && n.candidates[i].component === n.candidates[l].component) {
-                n.candidates.splice(i, 1), f = !0;
+                n.candidates.splice(i, 1);
+                f = !0;
                 break;
               }
             if (f)
@@ -41,7 +46,10 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
             return e.foundation === t.foundation ? e.component - t.component : e.foundation - t.foundation;
           });
         }
-        n.rtcp && n.rtcpMux && (h(t) || delete n.rtcp), n.rtcpFb && (n.rtcpRsize = !0), n.invalid && (r.error("Unknown SDP attributes!", n.invalid), delete n.invalid), s.navigator.webkitGetUserMedia && a(n, !1);
+        n.rtcp && n.rtcpMux && (h(t) || delete n.rtcp);
+        n.rtcpFb && (n.rtcpRsize = !0);
+        n.invalid && (r.error("Unknown SDP attributes!", n.invalid), delete n.invalid);
+        s.navigator.webkitGetUserMedia && a(n, !1);
       }), delete e.fingerprint, delete e.groups, e;
     }
     function u(e, t) {
@@ -62,7 +70,9 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
           attribute: "msid",
           id: i.xSsrcRange.ssrcMin,
           value: i.type === "audio" ? "esGl63EerPyTHNZK4HwO9DwHSgurO6Hjy1kF e031115a-4177-4830-bc2a-1fe17a418c07" : "esGl63EerPyTHNZK4HwO9DwHSgurO6Hjy1kF e031115a-4177-4830-bc2a-1fe17a418c08"
-        })), delete i.cryptoscale, i.fingerprint && h(t) && (i.setup = "actpass");
+        }));
+        delete i.cryptoscale;
+        i.fingerprint && h(t) && (i.setup = "actpass");
         if (i.crypto)
           for (var o = i.crypto.length - 1; o >= 0; --o) {
             var u = i.crypto[o];
@@ -90,7 +100,8 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
             type: "nack",
             subtype: "pli"
           });
-        }), delete i.rtcpFbXMessage), s.navigator.webkitGetUserMedia && a(i, !0);
+        }), delete i.rtcpFbXMessage);
+        s.navigator.webkitGetUserMedia && a(i, !0);
       }
       return e;
     }
@@ -111,12 +122,14 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
         var n = !1;
         e.rtp.forEach(function (e) {
           e.codec.toLowerCase().indexOf("x-h264uc") !== -1 && (n = !0);
-        }), n && (e.port = 0);
+        });
+        n && (e.port = 0);
       }
     }
     function f(e) {
       var t, r;
-      n.remoteMedia = [], e.media = e.media.filter(function (e) {
+      n.remoteMedia = [];
+      e.media = e.media.filter(function (e) {
         return n.remoteMedia.push({ type: e.type }), "audio" === e.type && !t && (t = !0) || "video" === e.type && !r && (r = !0);
       });
     }
@@ -128,7 +141,8 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
             type: n.type,
             port: 0
           });
-        }), e.media = t;
+        });
+        e.media = t;
       }
     }
     function c(e, t) {
@@ -138,9 +152,11 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
       });
       if (n >= 0 && e.rtp.length > 1) {
         var r = e.rtp[n].payload;
-        e.rtp.splice(n, 1), e.payloads = e.payloads.split(" ").filter(function (e) {
+        e.rtp.splice(n, 1);
+        e.payloads = e.payloads.split(" ").filter(function (e) {
           return r !== +e;
-        }).join(" "), e.fmtp = e.fmtp.filter(function (e) {
+        }).join(" ");
+        e.fmtp = e.fmtp.filter(function (e) {
           return r !== e.payload;
         });
       }
@@ -159,7 +175,8 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
         return !!e.fingerprint;
       }) || !!e.fingerprint;
     }
-    this.toMsSdp = o, this.fromMsSdp = u;
+    this.toMsSdp = o;
+    this.fromMsSdp = u;
     var r = n.logger, i = n.settings, s = e.window;
   }
   var t = {
@@ -167,4 +184,4 @@ define("jSkype/services/mediaAgent/msSdpTransform", ["./userAgentAdapter"], func
     video: "main-video"
   };
   return n;
-})
+});

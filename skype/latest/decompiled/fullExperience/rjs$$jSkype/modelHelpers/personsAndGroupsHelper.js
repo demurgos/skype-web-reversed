@@ -31,7 +31,8 @@ define("jSkype/modelHelpers/personsAndGroupsHelper", [
         v(r, t);
       else {
         var n = new a();
-        v(n, t), e.phoneNumbers.add(n, t.telUri);
+        v(n, t);
+        e.phoneNumbers.add(n, t.telUri);
       }
     });
   }
@@ -48,47 +49,61 @@ define("jSkype/modelHelpers/personsAndGroupsHelper", [
     }), t;
   }
   function y(e, t) {
-    e._type._set(t), t === p.contactTypes[p.contactTypeNames.agent] && e.isAgent._set(!0);
+    e._type._set(t);
+    t === p.contactTypes[p.contactTypeNames.agent] && e.isAgent._set(!0);
   }
   function b(e) {
-    (h.isPstn(e) || h.isEchoContact(e)) && e.capabilities.video._set(!1), h.isPstn(e) && e.capabilities.chat._set(!1);
+    (h.isPstn(e) || h.isEchoContact(e)) && e.capabilities.video._set(!1);
+    h.isPstn(e) && e.capabilities.chat._set(!1);
   }
   var n = e("lodash-compat"), r = e("browser/window"), i = e("swx-enums"), s = e("jSkype/client"), o = e("jcafe-property-model"), u = e("jSkype/models/person"), a = e("jSkype/models/phoneNumber"), f = e("jSkype/modelHelpers/personsRegistry/instance"), l = e("jSkype/constants/people").authorizationStates, c = e("jSkype/modelHelpers/contacts/authorizationChange"), h = e("jSkype/modelHelpers/personHelper"), p = e("jSkype/modelHelpers/contacts/dataMappers/dataMaps");
   t.getPersonById = function (e) {
     var t = f.build();
     return t.get(e);
-  }, t.isMePerson = function (e) {
+  };
+  t.isMePerson = function (e) {
     var t = s.get().personsAndGroupsManager.mePerson, n = h.getId(e);
     return t.id() === n || t._msaId && h.getId(t._msaId()) === n;
-  }, t.isKnownPerson = function (e) {
+  };
+  t.isKnownPerson = function (e) {
     return !!e && !!s.get().personsAndGroupsManager.all.persons(e.id());
-  }, t.createDefaultPerson = function (e) {
+  };
+  t.createDefaultPerson = function (e) {
     var t = new u(e);
     return t._authorization._set(l.UNAUTHORIZED), t;
-  }, t.createPersonFromRawData = function (e) {
+  };
+  t.createPersonFromRawData = function (e) {
     var n = v(t.getPerson(e.id, e._type), e);
     return v(n.note, e.note), v(n.location, e.location), v(n.capabilities, e.capabilities), v(n.agentDetails, e.agentDetails), m(n, e.phoneNumbers), c.updateGroups(n), n;
-  }, t.createRawDataFromPerson = function (e) {
+  };
+  t.createRawDataFromPerson = function (e) {
     var t = g(e);
     return t.note = g(e.note), t.location = g(e.location), t.capabilities = g(e.capabilities), t.agentDetails = g(e.agentDetails), t;
-  }, t.getUnknownPerson = function (e) {
+  };
+  t.getUnknownPerson = function (e) {
     var n, r = t.getPersonById(e);
     return !t.isMePerson(e) && !t.isKnownPerson(r) && (n = r || t.createDefaultPerson(e)), n;
-  }, t.getBlockedGroup = function () {
+  };
+  t.getBlockedGroup = function () {
     var e = s.get().personsAndGroupsManager.all;
     return e.groups().filter(function (e) {
       return e.relationshipLevel() === i.groupPrivacyRelationshipLevel.Blocked;
     })[0];
-  }, t.getPerson = function (e, n) {
+  };
+  t.getPerson = function (e, n) {
     return t.isMePerson(e) ? s.get().personsAndGroupsManager.mePerson : d(e, n);
-  }, t.getPersonByConversationId = function (e) {
+  };
+  t.getPersonByConversationId = function (e) {
     var t = h.getId(e), n = h.getTypeFromKey(e);
     return d(t, n);
-  }, t.extractSkypeIdFromToken = function (e) {
+  };
+  t.extractSkypeIdFromToken = function (e) {
     return JSON.parse(r.atob(e.split(".")[1])).skypeid;
-  }, t.extractCIDFromToken = function (e) {
+  };
+  t.extractCIDFromToken = function (e) {
     return JSON.parse(r.atob(e.split(".")[1])).cid;
-  }, t.getDefaultPresence = function (e, t) {
+  };
+  t.getDefaultPresence = function (e, t) {
     if (t === l.AUTHORIZED && (e.isAgent() || h.isEchoContact(e)))
       return i.onlineStatus.Online;
     if (t === l.PENDING_INCOMING)
@@ -96,4 +111,4 @@ define("jSkype/modelHelpers/personsAndGroupsHelper", [
     if (t === l.AUTHORIZED && !h.isPstn(e))
       return i.onlineStatus.Offline;
   };
-})
+});

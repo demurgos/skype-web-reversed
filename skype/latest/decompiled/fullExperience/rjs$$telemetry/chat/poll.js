@@ -7,16 +7,25 @@ define("telemetry/chat/poll", [
   function i() {
     this.pollDesignerOpened = function (i) {
       var s = {};
-      s[n.telemetry.poll.property.CONVERSATION_ID] = i, r.get().sendEvent(t.telemetry.uiTenantToken, n.telemetry.poll.eventName.DESIGNER_OPENED, s);
-    }, this.stickyMessageClicked = function (i) {
+      s[n.telemetry.poll.property.CONVERSATION_ID] = i;
+      r.get().sendEvent(t.telemetry.uiTenantToken, n.telemetry.poll.eventName.DESIGNER_OPENED, s);
+    };
+    this.stickyMessageClicked = function (i) {
       var s = {};
-      s[n.telemetry.poll.property.CONVERSATION_ID] = i.conversationId(), s[n.telemetry.poll.property.MESSAGE_ID] = i.key(), r.get().sendEvent(t.telemetry.uiTenantToken, n.telemetry.poll.eventName.STICKY_MESSAGE_CLICKED, s);
-    }, this.avatarElipsisClicked = function (i) {
+      s[n.telemetry.poll.property.CONVERSATION_ID] = i.conversationId();
+      s[n.telemetry.poll.property.MESSAGE_ID] = i.key();
+      r.get().sendEvent(t.telemetry.uiTenantToken, n.telemetry.poll.eventName.STICKY_MESSAGE_CLICKED, s);
+    };
+    this.avatarElipsisClicked = function (i) {
       var s = {};
-      s[n.telemetry.poll.property.CONVERSATION_ID] = i.conversationId(), s[n.telemetry.poll.property.MESSAGE_ID] = i.key(), r.get().sendEvent(t.telemetry.uiTenantToken, n.telemetry.poll.eventName.AVATAR_ELIPSIS_CLICKED, s);
-    }, this.activityVote = function (s) {
+      s[n.telemetry.poll.property.CONVERSATION_ID] = i.conversationId();
+      s[n.telemetry.poll.property.MESSAGE_ID] = i.key();
+      r.get().sendEvent(t.telemetry.uiTenantToken, n.telemetry.poll.eventName.AVATAR_ELIPSIS_CLICKED, s);
+    };
+    this.activityVote = function (s) {
       var o = e(s, n.telemetry.poll.activityType.VOTE);
-      o[n.telemetry.poll.property.IS_NEW_VOTE] = !0, r.get().sendEvent(t.telemetry.uiTenantToken, n.telemetry.poll.eventName.ACTIVITY, o);
+      o[n.telemetry.poll.property.IS_NEW_VOTE] = !0;
+      r.get().sendEvent(t.telemetry.uiTenantToken, n.telemetry.poll.eventName.ACTIVITY, o);
     };
     var e = function (t, r) {
       var i = {};
@@ -25,4 +34,4 @@ define("telemetry/chat/poll", [
   }
   var t = e("experience/settings"), n = e("constants/common"), r = e("ui/telemetry/telemetryClient");
   return new i();
-})
+});

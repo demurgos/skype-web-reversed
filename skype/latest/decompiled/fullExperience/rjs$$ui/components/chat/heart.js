@@ -10,5 +10,7 @@ define("ui/components/chat/heart", [
     return n.build(e, t);
   }
   var n = e("ui/viewModels/chat/heart");
-  t.name = e("constants/components").chat.HEART, t.template = e("text!views/chat/heart.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.HEART;
+  t.template = e("text!views/chat/heart.html");
+  t.viewModel = { createViewModel: r };
+});

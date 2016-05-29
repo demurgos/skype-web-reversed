@@ -16,7 +16,8 @@ define("ui/viewModels/calling/moreActionsControlViewModel", [
 ], function (e) {
   function d(e) {
     function N() {
-      t.dispatchEvent(o.events.callScreen.ADD_PARTICIPANT, null, t.DIRECTION.PARENT), k(s.audioVideo.addParticipants);
+      t.dispatchEvent(o.events.callScreen.ADD_PARTICIPANT, null, t.DIRECTION.PARENT);
+      k(s.audioVideo.addParticipants);
     }
     function C() {
       var t = e.screenSharingService;
@@ -30,15 +31,22 @@ define("ui/viewModels/calling/moreActionsControlViewModel", [
       f.hide();
     }
     var t = this, n = r.observable(!0), d = c.newObservableProperty(e.selfParticipant.audio.state), v = c.newObservableProperty(e.participants.add.enabled), m = c.newObservableProperty(e.screenSharingService.start.enabled), g = c.newObservableProperty(e.screenSharingService.stop.enabled), y, b, w, E = r.observable(!1), S = p.fetch({ key: "callscreen_text_shareScreen" }), x = p.fetch({ key: "callscreen_text_stopSharingScreen" });
-    i.call(t, e, n), t.addParticipantText = p.fetch({ key: "callscreen_text_addParticipants" }), t.moreActionsText = p.fetch({ key: "callscreen_text_plusButton" }), t.screenShareText = r.pureComputed(function () {
+    i.call(t, e, n);
+    t.addParticipantText = p.fetch({ key: "callscreen_text_addParticipants" });
+    t.moreActionsText = p.fetch({ key: "callscreen_text_plusButton" });
+    t.screenShareText = r.pureComputed(function () {
       return m() || !g() ? S : x;
-    }), t.isAddingParticipantsAllowed = r.pureComputed(function () {
+    });
+    t.isAddingParticipantsAllowed = r.pureComputed(function () {
       return !E() && v() && d() === h.callConnectionState.Connected;
-    }), t.isScreenSharingAllowed = r.pureComputed(function () {
+    });
+    t.isScreenSharingAllowed = r.pureComputed(function () {
       return m() || g();
-    }), t.hasAllowedActions = r.pureComputed(function () {
+    });
+    t.hasAllowedActions = r.pureComputed(function () {
       return t.isAddingParticipantsAllowed() || t.isScreenSharingAllowed();
-    }), t.showMoreActionsMenu = function (t, n) {
+    });
+    t.showMoreActionsMenu = function (t, n) {
       var r = [
           a.AddParticipantsMenuItem.build(function () {
             return !v();
@@ -50,11 +58,26 @@ define("ui/viewModels/calling/moreActionsControlViewModel", [
           source: l.recentItem,
           isGroupConversation: e.isGroupConversation()
         };
-      f.show(r, n, i), k(s.audioVideo.moreActions);
-    }, t.registerEvent(o.events.callScreen.ADD_PARTICIPANT_VISIBLE, E), t.registerEvent(o.events.callScreen.CALL_ESCALATED_TO_GROUP, n.bind(null, !1)), t.addParticipant = N, t.shareScreen = C, y = v.subscribe(L), b = m.subscribe(L), w = g.subscribe(L);
+      f.show(r, n, i);
+      k(s.audioVideo.moreActions);
+    };
+    t.registerEvent(o.events.callScreen.ADD_PARTICIPANT_VISIBLE, E);
+    t.registerEvent(o.events.callScreen.CALL_ESCALATED_TO_GROUP, n.bind(null, !1));
+    t.addParticipant = N;
+    t.shareScreen = C;
+    y = v.subscribe(L);
+    b = m.subscribe(L);
+    w = g.subscribe(L);
     var T = t.dispose;
     t.dispose = function () {
-      y && y.dispose(), b && b.dispose(), w && w.dispose(), d.dispose(), v.dispose(), m.dispose(), g.dispose(), T.call(t);
+      y && y.dispose();
+      b && b.dispose();
+      w && w.dispose();
+      d.dispose();
+      v.dispose();
+      m.dispose();
+      g.dispose();
+      T.call(t);
     };
   }
   var t = e("lodash-compat"), n = e("utils/common/eventMixin"), r = e("vendor/knockout"), i = e("ui/viewModels/calling/baseCallControlViewModel"), s = e("ui/telemetry/actions/actionNames"), o = e("constants/common"), u = e("services/serviceLocator"), a = e("ui/contextMenu/items/all"), f = e("ui/contextMenu/contextMenu"), l = e("ui/telemetry/actions/actionSources"), c = e("utils/common/cafeObservable"), h = e("swx-enums"), p = e("swx-i18n").localization;
@@ -63,4 +86,4 @@ define("ui/viewModels/calling/moreActionsControlViewModel", [
       return new d(e);
     }
   };
-})
+});

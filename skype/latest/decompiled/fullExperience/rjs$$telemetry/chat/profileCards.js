@@ -15,4 +15,4 @@ define("telemetry/chat/profileCards", [
   }
   var t = e("experience/settings"), n = e("ui/telemetry/telemetryClient"), r = e("constants/common").telemetry;
   return new i();
-})
+});

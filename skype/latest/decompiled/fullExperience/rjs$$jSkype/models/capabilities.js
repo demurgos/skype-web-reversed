@@ -6,26 +6,32 @@ define("jSkype/models/capabilities", [
     this.chat = t.property({
       value: !1,
       readOnly: !0
-    }), this.audio = t.property({
+    });
+    this.audio = t.property({
       value: !1,
       readOnly: !0
-    }), this.video = t.property({
+    });
+    this.video = t.property({
       value: !1,
       readOnly: !0
-    }), this.groupAdd = t.property({
+    });
+    this.groupAdd = t.property({
       value: !1,
       readOnly: !0
-    }), this.screenSharing = t.property({
+    });
+    this.screenSharing = t.property({
       value: !1,
       readOnly: !0
-    }), this.dataCollaboration = t.property({
+    });
+    this.dataCollaboration = t.property({
       value: !1,
       readOnly: !0
-    }), this._groupChat = t.property({
+    });
+    this._groupChat = t.property({
       value: !1,
       readOnly: !0
     });
   }
   var t = e("jcafe-property-model");
   return n;
-})
+});

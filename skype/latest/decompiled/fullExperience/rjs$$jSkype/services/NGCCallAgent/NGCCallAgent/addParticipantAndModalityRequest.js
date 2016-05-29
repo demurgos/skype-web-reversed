@@ -6,7 +6,9 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/addParticipantAndModalityReque
 ], function (e) {
   var t = e("jSkype/services/NGCCallAgent/NGCCallAgent/utils"), n = e("jSkype/services/NGCCallAgent/NGCCallAgent/urlBuilder"), r = e("jSkype/services/NGCCallAgent/NGCCallAgent/constants"), i = {};
   return i.getPayload = function (e, i) {
-    t.assertNotNull(e, "signalingSession cannot be null"), t.assertNotNull(i, "remoteParticipant cannot be null"), t.assertNotNullOrEmpty(e.threadId, "threadId should be set prior to adding participant");
+    t.assertNotNull(e, "signalingSession cannot be null");
+    t.assertNotNull(i, "remoteParticipant cannot be null");
+    t.assertNotNullOrEmpty(e.threadId, "threadId should be set prior to adding participant");
     var s = {
       payload: {
         participants: {
@@ -38,4 +40,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/addParticipantAndModalityReque
     };
     return s;
   }, i;
-})
+});

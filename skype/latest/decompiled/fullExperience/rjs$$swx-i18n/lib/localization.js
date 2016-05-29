@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -21,7 +21,8 @@ function (e) {
     var t = e.key, r, s, o, u, a;
     if (!t)
       throw new Error("[i18n / localization] Missing key");
-    r = i(t), e.count !== undefined && (s = e.count, e.params = e.params || {}, e.params.count = s, o = n.getPluralSuffix(s, e.locale), t += o);
+    r = i(t);
+    e.count !== undefined && (s = e.count, e.params = e.params || {}, e.params.count = s, o = n.getPluralSuffix(s, e.locale), t += o);
     if (e.params) {
       r = i(t);
       for (u in e.params)
@@ -34,4 +35,4 @@ function (e) {
     }
     return r;
   };
-})
+}));

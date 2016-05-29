@@ -13,4 +13,4 @@ define("experience/api/events", [
       throw new TypeError("invalid arguments; expected an event name (String) and callback (Function)");
     s.subscribe(e, t);
   };
-})
+});

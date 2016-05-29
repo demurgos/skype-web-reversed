@@ -35,22 +35,43 @@ define("ui/viewModels/chat/headerSingleConversation", [
       v.publish(u.events.interaction.SCROLL_START, t);
     }
     var h = e.conversationModel, p = this, d = o.resolve(u.serviceLocator.FEATURE_FLAGS), v = o.resolve(u.serviceLocator.PUBSUB), m = d.isFeatureOn(u.featureFlags.INCLUDE_SELF_IN_PARTICIPANTS_COUNT);
-    p.initializeParticipants = n.observable(!1), p.profileExpanded = n.observable(!1), p.participantsCount = n.observable(h.participantsCount()), h.participantsCount.changed(g), p.selfParticipant = h.selfParticipant, p.participants = r.newObservableCollection(h.participants), p.topic = n.computed(y), p.init = function () {
+    p.initializeParticipants = n.observable(!1);
+    p.profileExpanded = n.observable(!1);
+    p.participantsCount = n.observable(h.participantsCount());
+    h.participantsCount.changed(g);
+    p.selfParticipant = h.selfParticipant;
+    p.participants = r.newObservableCollection(h.participants);
+    p.topic = n.computed(y);
+    p.init = function () {
       i.init();
-    }, p.dispose = function () {
-      h.participantsCount.changed.off(g), i.dispose(), p.topic.dispose(), c.remove("conversationHeader");
-    }, p.getParticipantName = function (e) {
+    };
+    p.dispose = function () {
+      h.participantsCount.changed.off(g);
+      i.dispose();
+      p.topic.dispose();
+      c.remove("conversationHeader");
+    };
+    p.getParticipantName = function (e) {
       return e.person.displayName();
-    }, p.onScroll = t.debounce(w, 1000, {
+    };
+    p.onScroll = t.debounce(w, 1000, {
       leading: !0,
       trailing: !1
-    }), p.toggleProfile = function (e) {
+    });
+    p.toggleProfile = function (e) {
       var t, n = p.profileExpanded();
-      p.profileExpanded(!n), p.profileExpanded() ? c.add("conversationHeader", p.toggleProfile) : c.remove("conversationHeader"), t = b(), t.telemetryItem = e, t.profileExpanded = n, f.get().onProfileToggled(t), p.initializeParticipants(!0);
-    }, p.toggleProfileChevron = function () {
+      p.profileExpanded(!n);
+      p.profileExpanded() ? c.add("conversationHeader", p.toggleProfile) : c.remove("conversationHeader");
+      t = b();
+      t.telemetryItem = e;
+      t.profileExpanded = n;
+      f.get().onProfileToggled(t);
+      p.initializeParticipants(!0);
+    };
+    p.toggleProfileChevron = function () {
       p.toggleProfile(u.telemetry.guestActionsInHeader.telemetryItem[p.profileExpanded() ? "CHEVRON_UP" : "CHEVRON_DOWN"]);
     };
   }
   var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("utils/common/cafeObservable"), i = e("utils/common/eventMixin"), s = e("swx-i18n").localization, o = e("services/serviceLocator"), u = e("constants/common"), a = e("swx-enums"), f = e("ui/telemetry/chat/guestActionsInHeader"), l = e("ui/modelHelpers/personHelper"), c = e("utils/common/outsideClickHandler");
   return t.assign(h.prototype, i), h;
-})
+});

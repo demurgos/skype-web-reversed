@@ -40,24 +40,34 @@ define("ui/viewModels/chat/selectedParticipantsConversation", [
       function f() {
         if (a !== s)
           return;
-        a = null, e.matchingConversations(r.results().map(function (e) {
+        a = null;
+        e.matchingConversations(r.results().map(function (e) {
           return e.result;
         }));
       }
       var r, i, s;
-      i = t.map(o).join(" "), r = n.get().conversationsManager.createSearchQuery(), u("participantsByIds", i), s = r.getMore().then(f), a = s;
+      i = t.map(o).join(" ");
+      r = n.get().conversationsManager.createSearchQuery();
+      u("participantsByIds", i);
+      s = r.getMore().then(f);
+      a = s;
     }
     var e = this, a, f;
     e.init = function (n) {
-      f = n.contacts.subscribe(l), e.matchingConversations = t.observableArray(), e.hasMatchingConversations = t.computed(function () {
+      f = n.contacts.subscribe(l);
+      e.matchingConversations = t.observableArray();
+      e.hasMatchingConversations = t.computed(function () {
         return e.matchingConversations().length > 0;
       });
-    }, e.dispose = function () {
-      e.hasMatchingConversations.dispose(), f.dispose();
-    }, e.navigateToConversation = function (e) {
+    };
+    e.dispose = function () {
+      e.hasMatchingConversations.dispose();
+      f.dispose();
+    };
+    e.navigateToConversation = function (e) {
       r.publish(u.navigation.OPEN_CONVERSATION, { model: e });
     };
   }
   var t = e("vendor/knockout"), n = e("cafe/applicationInstance"), r = e("services/pubSub/pubSub"), i = e("constants/common"), s = e("ui/telemetry/telemetryClient"), o = e("experience/settings"), u = e("constants/common").events;
   return a;
-})
+});

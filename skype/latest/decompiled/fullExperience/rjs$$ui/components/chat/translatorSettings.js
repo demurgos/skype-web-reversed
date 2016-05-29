@@ -11,5 +11,7 @@ define("ui/components/chat/translatorSettings", [
     return t.init(), t;
   }
   var n = e("ui/viewModels/chat/translator/translatorSettings");
-  t.name = e("constants/components").chat.TRANSLATOR_SETTINGS, t.template = e("text!views/chat/translator/translatorSettings.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.TRANSLATOR_SETTINGS;
+  t.template = e("text!views/chat/translator/translatorSettings.html");
+  t.viewModel = { createViewModel: r };
+});

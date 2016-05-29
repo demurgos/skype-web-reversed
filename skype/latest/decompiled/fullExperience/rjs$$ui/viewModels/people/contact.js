@@ -60,17 +60,60 @@ define("ui/viewModels/people/contact", [
       return t ? (e = E.isMobile() ? "message_text_presenceActiveMobile" : "message_text_presenceAvailable", r.fetch({ key: e })) : E.lastSeen();
     }
     var w, E = this, S = v.build(e), x = d.build(e), T = m.build(e), N = s.resolve(i.serviceLocator.FEATURE_FLAGS), C = N.isFeatureOn(i.featureFlags.LAST_SEEN), k = N.isFeatureOn(i.featureFlags.MOBILE_INDICATOR), L = N.isFeatureOn(i.featureFlags.MOBILE_ACTIVE), A = c.newObservableProperty(e.lastSeenAt, { keepAlive: b.keepLastSeenAtSubscription });
-    E.id = c.newObservableProperty(e.id), E.avatar = c.newObservableProperty(e.avatarUrl, { keepAlive: !0 }), E.status = c.newObservableProperty(e.status, { keepAlive: b.keepPresenceSubscription }), E.activity = c.newObservableProperty(e.activity, { keepAlive: b.keepActivitySubscription }), E.endpointType = c.newObservableProperty(e.endpointType, { keepAlive: b.keepEndpointTypeSubscription }), E.isAgent = T.isAgent, E.agentDetails = n.computed(T.compute), E.isEcho = n.observable(g.isEchoContact(e)), E.isBlocked = c.newObservableProperty(e.isBlocked), E.isActive = n.observable(!1), E.location = x.location, E.locationText = n.computed(x.compute), E.isPstn = n.observable(g.isPstn(e)), E.phoneNumbers = n.observable([]), E.isMobile = n.computed(B), E.displayName = n.computed(S.compute), E.lastSeen = C ? n.computed(D) : n.observable(null), E.statusClassName = n.computed(M), E.textDetails = n.computed(P), e.phoneNumbers.changed(O), E.displayMessage = n.computed(j), E.ariaLabel = n.computed(function () {
+    E.id = c.newObservableProperty(e.id);
+    E.avatar = c.newObservableProperty(e.avatarUrl, { keepAlive: !0 });
+    E.status = c.newObservableProperty(e.status, { keepAlive: b.keepPresenceSubscription });
+    E.activity = c.newObservableProperty(e.activity, { keepAlive: b.keepActivitySubscription });
+    E.endpointType = c.newObservableProperty(e.endpointType, { keepAlive: b.keepEndpointTypeSubscription });
+    E.isAgent = T.isAgent;
+    E.agentDetails = n.computed(T.compute);
+    E.isEcho = n.observable(g.isEchoContact(e));
+    E.isBlocked = c.newObservableProperty(e.isBlocked);
+    E.isActive = n.observable(!1);
+    E.location = x.location;
+    E.locationText = n.computed(x.compute);
+    E.isPstn = n.observable(g.isPstn(e));
+    E.phoneNumbers = n.observable([]);
+    E.isMobile = n.computed(B);
+    E.displayName = n.computed(S.compute);
+    E.lastSeen = C ? n.computed(D) : n.observable(null);
+    E.statusClassName = n.computed(M);
+    E.textDetails = n.computed(P);
+    e.phoneNumbers.changed(O);
+    E.displayMessage = n.computed(j);
+    E.ariaLabel = n.computed(function () {
       var e = f.getAvailabilityText(E.status()), t = y.stripHTML(E.displayMessage());
       return e === t ? E.displayName() + " " + e : E.displayName() + " " + e + " " + t;
-    }), E.getPerson = function () {
+    });
+    E.getPerson = function () {
       return e;
-    }, E.dispose = function () {
-      p.get().stop(E.id(), w), E.id.dispose(), E.avatar.dispose(), E.status.dispose(), E.activity.dispose(), E.endpointType.dispose(), E.isBlocked.dispose(), E.locationText.dispose(), E.displayName.dispose(), E.agentDetails.dispose(), A.dispose(), S.dispose(), x.dispose(), T.dispose(), C && E.lastSeen.dispose(), E.statusClassName.dispose(), E.displayMessage.dispose(), E.textDetails.dispose(), E.isMobile.dispose(), e.phoneNumbers.changed.off(O);
-    }, w = p.get().start(E.id(), H);
+    };
+    E.dispose = function () {
+      p.get().stop(E.id(), w);
+      E.id.dispose();
+      E.avatar.dispose();
+      E.status.dispose();
+      E.activity.dispose();
+      E.endpointType.dispose();
+      E.isBlocked.dispose();
+      E.locationText.dispose();
+      E.displayName.dispose();
+      E.agentDetails.dispose();
+      A.dispose();
+      S.dispose();
+      x.dispose();
+      T.dispose();
+      C && E.lastSeen.dispose();
+      E.statusClassName.dispose();
+      E.displayMessage.dispose();
+      E.textDetails.dispose();
+      E.isMobile.dispose();
+      e.phoneNumbers.changed.off(O);
+    };
+    w = p.get().start(E.id(), H);
   }
   var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-i18n").localization, i = e("constants/common"), s = e("services/serviceLocator"), o = e("swx-utils-common").stringUtils, u = e("swx-enums"), a = e("constants/cssClasses"), f = e("utils/common/statusMapper"), l = e("ui/modelHelpers/activityMapper"), c = e("utils/common/cafeObservable"), h = e("utils/people/lastSeenConverter"), p = e("utils/people/progressiveTimeout"), d = e("ui/viewModels/people/properties/locationText"), v = e("ui/viewModels/people/properties/displayNameText"), m = e("ui/viewModels/people/properties/agentDetails"), g = e("ui/modelHelpers/personHelper"), y = e("utils/chat/messageSanitizer");
   return b.build = function (e, t) {
     return new b(e, t);
   }, b;
-})
+});

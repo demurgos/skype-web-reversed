@@ -32,9 +32,12 @@ define("jSkype/modelHelpers/contacts/dataProcessors/contactList", [
       return Promise.resolve();
     }
     function g(t) {
-      e.defaultPersonAuthorization = f.UNAUTHORIZED, c.build().process(e.toArray()), v.get().publish("contacts:loaded", t.filter(function (e) {
+      e.defaultPersonAuthorization = f.UNAUTHORIZED;
+      c.build().process(e.toArray());
+      v.get().publish("contacts:loaded", t.filter(function (e) {
         return e._authorization() === f.AUTHORIZED && !e.isBlocked();
-      })), o.get().personsAndGroupsManager._initialized(!0);
+      }));
+      o.get().personsAndGroupsManager._initialized(!0);
     }
     var t = n.once(g);
     this.process = function (e) {
@@ -47,4 +50,4 @@ define("jSkype/modelHelpers/contacts/dataProcessors/contactList", [
     var e = p.build();
     return new m(e);
   };
-})
+});

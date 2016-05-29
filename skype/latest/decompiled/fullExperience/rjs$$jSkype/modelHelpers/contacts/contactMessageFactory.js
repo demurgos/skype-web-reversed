@@ -20,19 +20,26 @@ define("jSkype/modelHelpers/contacts/contactMessageFactory", [
   var n = e("swx-enums").activityType, r = e("jSkype/constants/people").authorizationStates, i = e("jSkype/modelHelpers/contacts/contactActivityItemHelper"), s = e("jSkype/modelHelpers/personHelper");
   t.getOutgoing = function (e, t) {
     return e.isAgent() ? o(e, !0, n.ContactRequestOutgoingAgent, t) : o(e, !0, n.ContactRequestOutgoing, t);
-  }, t.getOutgoingResend = function (e, t) {
+  };
+  t.getOutgoingResend = function (e, t) {
     return o(e, !0, n.ContactRequestOutgoingResend, t);
-  }, t.getIncoming = function (e, t, r) {
+  };
+  t.getIncoming = function (e, t, r) {
     return o(e, !1, n.ContactRequestIncoming, t, r);
-  }, t.getIncomingInviteFree = function (e, t) {
+  };
+  t.getIncomingInviteFree = function (e, t) {
     return o(e, !1, n.ContactRequestIncomingInviteFree, t - 1);
-  }, t.getIsNowContact = function (e) {
+  };
+  t.getIsNowContact = function (e) {
     return o(e, !1, n.ContactRequestIsNowContact);
-  }, t.getSuggested = function (e, t) {
+  };
+  t.getSuggested = function (e, t) {
     return o(e, !0, n.SuggestedContact, t);
-  }, t.getUnblockContact = function (e) {
+  };
+  t.getUnblockContact = function (e) {
     return o(e, !0, n.UnblockContact);
-  }, t.getActivityItemForInitialConversationLoad = function (e, n) {
+  };
+  t.getActivityItemForInitialConversationLoad = function (e, n) {
     function a() {
       switch (e._authorization()) {
       case r.PENDING_OUTGOING:
@@ -51,4 +58,4 @@ define("jSkype/modelHelpers/contacts/contactMessageFactory", [
     if (!u.length && e.isBlocked())
       return t.getUnblockContact(e);
   };
-})
+});

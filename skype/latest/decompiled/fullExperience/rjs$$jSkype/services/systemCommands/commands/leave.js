@@ -5,7 +5,9 @@ define("jSkype/services/systemCommands/commands/leave", [
   "jSkype/services/systemCommands/commandsHelper"
 ], function (e, t) {
   function r() {
-    this.isAvailableFor = n.availableForAllGroupMembers, this.showInHelp = !0, this.action = function (e) {
+    this.isAvailableFor = n.availableForAllGroupMembers;
+    this.showInHelp = !0;
+    this.action = function (e) {
       e.leave.enabled() && e.leave().catch(function (e) {
       });
     };
@@ -14,4 +16,4 @@ define("jSkype/services/systemCommands/commands/leave", [
   t.build = function () {
     return new r();
   };
-})
+});

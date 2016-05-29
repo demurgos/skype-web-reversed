@@ -23,7 +23,8 @@ define("telemetry/chat/removeConversationHistoryTelemetry", [
         type: r.TYPE,
         data: o.data
       };
-      i.push(e), h();
+      i.push(e);
+      h();
     }
     function d(e, t) {
       return t - e;
@@ -32,19 +33,30 @@ define("telemetry/chat/removeConversationHistoryTelemetry", [
       return new Date().getTime();
     }
     var o = this, u = v(), a, f, l = n.telemetry.NOT_AVAILABLE, c = s.get();
-    t.historyService._lastMessageFromServer && (a = t.historyService._lastMessageFromServer.timestamp()), o.started = function () {
+    t.historyService._lastMessageFromServer && (a = t.historyService._lastMessageFromServer.timestamp());
+    o.started = function () {
       f = v();
-    }, o.canceled = function () {
+    };
+    o.canceled = function () {
       var e = v();
-      o.data.action = r.action.CANCELED, o.data.tim = d(u, e), a && (o.data.lmg = d(a, e)), p();
-    }, o.completed = function () {
+      o.data.action = r.action.CANCELED;
+      o.data.tim = d(u, e);
+      a && (o.data.lmg = d(a, e));
+      p();
+    };
+    o.completed = function () {
       o.data.action = r.action.CONFIRMED;
       var e = v();
-      o.data.statusCode = c.statusCode, o.data.tim = d(u, e), a && (o.data.lmg = d(a, e)), f && (o.data.ttd = d(f, e)), p();
-    }, h();
+      o.data.statusCode = c.statusCode;
+      o.data.tim = d(u, e);
+      a && (o.data.lmg = d(a, e));
+      f && (o.data.ttd = d(f, e));
+      p();
+    };
+    h();
   }
   var n = e("constants/common"), r = n.telemetry.removeConversationHistory, i = e("services/telemetry/skypeData"), s = e("services/telemetry/common/telemetryContext");
   t.build = function (e, t) {
     return new o(e, t);
   };
-})
+});

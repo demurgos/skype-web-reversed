@@ -30,7 +30,9 @@ define("jSkype/services/pluginless/pluginlessTelemetry", ["lodash-compat"], func
     }
     var n = t.telemetryManager, r = t.token, i = t.logger.createChild("Telemetry");
     this.sendMediaSessionStats = function (e) {
-      s("mdsc_conference", e.media.metrics, e.signaling), e.media.ortc && s("mdsc_ortc_reports", e.media.ortc), e.media.webrtc && s("mdsc_webrtc_session", e.media.webrtc);
+      s("mdsc_conference", e.media.metrics, e.signaling);
+      e.media.ortc && s("mdsc_ortc_reports", e.media.ortc);
+      e.media.webrtc && s("mdsc_webrtc_session", e.media.webrtc);
     };
   }
   return {
@@ -38,4 +40,4 @@ define("jSkype/services/pluginless/pluginlessTelemetry", ["lodash-compat"], func
       return new t(e);
     }
   };
-})
+});

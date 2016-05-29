@@ -59,7 +59,8 @@ define("services/pes/configSync", [
       });
     }
     var e = this, v = 0, m, g;
-    e.latestToken = "", e.init = function () {
+    e.latestToken = "";
+    e.init = function () {
       function r() {
         var e;
         if (u.pesConfigUrl)
@@ -86,7 +87,9 @@ define("services/pes/configSync", [
               var e = f.prefetch(g.getConfiguration());
               f.register(e);
             }).catch(function () {
-              r._requiresCDNUrlAuthentication = !0, r._cdnToken = e.latestToken, g.init(r);
+              r._requiresCDNUrlAuthentication = !0;
+              r._cdnToken = e.latestToken;
+              g.init(r);
               var t = f.prefetch(g.getConfiguration());
               f.register(t);
             });
@@ -106,7 +109,8 @@ define("services/pes/configSync", [
         return { configurationLoaded: n };
       }
       return m = p.resolve(o.serviceLocator.FEATURE_FLAGS), u.locale = u.locale || {}, u.initParams = u.initParams || {}, u.locale.pes = c.getPesLocale(u.initParams.locale), g = p.resolve(o.serviceLocator.PES_CONFIG_SERVICE), r().then(b).catch(v);
-    }, e.fetchConfiguration = function (r) {
+    };
+    e.fetchConfiguration = function (r) {
       function s() {
         var e, t = Promise.resolve();
         return m.isFeatureOn(o.featureFlags.PES_CDN_AUTH_ENABLED) && (e = i.get().signInManager._skypeToken(), t = Promise.resolve(e).then(b).then(E)), t;
@@ -135,10 +139,11 @@ define("services/pes/configSync", [
       }).catch(function () {
         return a(r);
       }).catch(f);
-    }, e.dispose = function () {
+    };
+    e.dispose = function () {
       v && r.clearTimeout(v);
     };
   }
   var t = e("lodash-compat"), n = e("reqwest"), r = e("browser/window"), i = e("cafe/applicationInstance"), s = e("swx-enums"), o = e("constants/common"), u = e("experience/settings"), a = e("services/ecs/configLoader"), f = e("services/pes/configProcessor"), l = e("services/pes/constants"), c = e("services/i18n/cultureInfo"), h = e("services/pubSub/pubSub"), p = e("services/serviceLocator"), d = e("utils/chat/pesUtils");
   return new v();
-})
+});

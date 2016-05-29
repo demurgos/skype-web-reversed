@@ -1,3 +1,3 @@
 define("text!views/commerce/subscriptionEntitlement.html", [], function () {
   return "<p class=\"SkypeOutOffer-title fontSize-h4\" data-bind=\"l10n: { key: 'subscription_entitlement_text' }\"></p>\r\n<div class=\"SkypeOutOffer-body\" data-swx-testId=\"skypeOutPage-subscrptions\">\r\n    <span class=\"iconfont calendarDay SkypeOutOffer-icon SkypeOutOffer-icon--skypeSubscriptionFill\"></span>\r\n    <div class=\"SkypeOutOffer-content\">\r\n\r\n        <p class=\"SkypeOutOffer-message\">\r\n            <!-- ko if: showSubscriptionsText -->\r\n            <span data-bind=\"text: subscriptionsText\"></span>\r\n            <!-- /ko -->\r\n        </p>\r\n        <p class=\"SkypeOutOffer-buySubscription\">\r\n            <a data-bind=\"attr: {href: purchaseSubscriptionUrl}, l10n: {key: 'subscription_purchase_link_text'}, click: addSubscriptionTelemetry\" target=\"_blank\"></a>\r\n        </p>\r\n    </div>\r\n</div>\r\n";
-})
+});

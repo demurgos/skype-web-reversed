@@ -7,4 +7,4 @@ define("ui/components/commerce/index", [
     e("ui/components/commerce/creditBalance"),
     e("ui/components/commerce/subscriptionEntitlement")
   ];
-})
+});

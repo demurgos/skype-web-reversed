@@ -31,7 +31,8 @@ define("ui/viewModels/people/contactProfile", [
       w.publish(a.events.interaction.SCROLL_START, t);
     }
     function A() {
-      r.dispatchEvent(a.events.conversation.CLOSE_PROFILE, undefined, r.DIRECTION.PARENT), j();
+      r.dispatchEvent(a.events.conversation.CLOSE_PROFILE, undefined, r.DIRECTION.PARENT);
+      j();
     }
     function O() {
       return r.contact.isAgent() ? v.activityType.ContactRequestOutgoingAgent : v.activityType.ContactRequestOutgoing;
@@ -97,26 +98,64 @@ define("ui/viewModels/people/contactProfile", [
       return !!r.contact.agentDetails() && typeof r.contact.agentDetails()[e] == "function";
     }
     var r = this, b = u.resolve(a.serviceLocator.FEATURE_FLAGS), w = u.resolve(a.serviceLocator.PUBSUB), E = e.conversationModel.participants(0).person, S = s.newObservableProperty(E.isBlocked), x = s.newObservableProperty(E.isBlocked.set.enabled), T = e.conversationTile.contact().getPerson(), N = { source: l.contactProfile };
-    r.closeLabel = i.fetch({ key: "header_text_close" }), r.model = E, r.contact = e.conversationTile.contact(), r.avatar = s.newObservableProperty(e.conversationModel.avatarUrl), r.hasContactInfo = o.computed(F), r.actionsInProgress = o.observable(!1), r.canBlockContact = o.computed(C), r.isInContacts = o.observable(!1), r.blockContactText = o.computed(B), r.hasAgentRating = o.computed(I), r.hasAgentAuthor = o.computed(q), r.hasAgentDescription = o.computed(R), r.hasAgentWebsite = o.computed(U), r.hasAgentPrivacyStatement = o.computed(z), r.hasAgentTermsOfService = o.computed(W), r.hasAgentExtraInfo = o.computed(X), r.hasAgentPrivacyLinks = o.computed(V), r.addContact = function () {
+    r.closeLabel = i.fetch({ key: "header_text_close" });
+    r.model = E;
+    r.contact = e.conversationTile.contact();
+    r.avatar = s.newObservableProperty(e.conversationModel.avatarUrl);
+    r.hasContactInfo = o.computed(F);
+    r.actionsInProgress = o.observable(!1);
+    r.canBlockContact = o.computed(C);
+    r.isInContacts = o.observable(!1);
+    r.blockContactText = o.computed(B);
+    r.hasAgentRating = o.computed(I);
+    r.hasAgentAuthor = o.computed(q);
+    r.hasAgentDescription = o.computed(R);
+    r.hasAgentWebsite = o.computed(U);
+    r.hasAgentPrivacyStatement = o.computed(z);
+    r.hasAgentTermsOfService = o.computed(W);
+    r.hasAgentExtraInfo = o.computed(X);
+    r.hasAgentPrivacyLinks = o.computed(V);
+    r.addContact = function () {
       var t, n = O();
       return r.actionsInProgress(!0), d.get().conversationsManager.conversations.add(e.conversationModel), t = d.get().personsAndGroupsManager.all.persons.add(T, T.id(), undefined, n), M(), t.then(A, j), t;
-    }, r.toggleContactBlocked = function () {
+    };
+    r.toggleContactBlocked = function () {
       var e;
       return r.actionsInProgress(!0), S() ? e = D() : e = H(), e.then(j, j), e;
-    }, r.deleteContact = function () {
+    };
+    r.deleteContact = function () {
       var e = N.source, t = new m(r.contact, e, N), n = i.fetch({ key: "modal_deleteContact_text_aria_label" });
       return c.build(m.ELEMENT_ID, t, g), c.show(m.ELEMENT_ID, n), Promise.resolve();
-    }, r.onScroll = n.debounce(L, 1000, {
+    };
+    r.onScroll = n.debounce(L, 1000, {
       leading: !0,
       trailing: !1
-    }), r.init = function () {
+    });
+    r.init = function () {
       t.init();
-    }, r.dispose = function () {
-      d.get().personsAndGroupsManager.all.persons.changed.off(k), r.hasContactInfo.dispose(), r.hasAgentRating.dispose(), r.hasAgentAuthor.dispose(), r.hasAgentDescription.dispose(), r.hasAgentWebsite.dispose(), r.hasAgentPrivacyStatement.dispose(), r.hasAgentTermsOfService.dispose(), r.hasAgentExtraInfo.dispose(), r.hasAgentPrivacyLinks.dispose(), r.contact.dispose(), r.canBlockContact.dispose(), r.blockContactText.dispose(), t.dispose();
-    }, d.get().personsAndGroupsManager.all.persons.changed(k);
+    };
+    r.dispose = function () {
+      d.get().personsAndGroupsManager.all.persons.changed.off(k);
+      r.hasContactInfo.dispose();
+      r.hasAgentRating.dispose();
+      r.hasAgentAuthor.dispose();
+      r.hasAgentDescription.dispose();
+      r.hasAgentWebsite.dispose();
+      r.hasAgentPrivacyStatement.dispose();
+      r.hasAgentTermsOfService.dispose();
+      r.hasAgentExtraInfo.dispose();
+      r.hasAgentPrivacyLinks.dispose();
+      r.contact.dispose();
+      r.canBlockContact.dispose();
+      r.blockContactText.dispose();
+      t.dispose();
+    };
+    d.get().personsAndGroupsManager.all.persons.changed(k);
   }
   var n = e("lodash-compat"), r = e("utils/common/eventMixin"), i = e("swx-i18n").localization, s = e("utils/common/cafeObservable"), o = e("vendor/knockout"), u = e("services/serviceLocator"), a = e("constants/common"), f = e("ui/telemetry/actions/actionNames"), l = e("ui/telemetry/actions/actionSources"), c = e("ui/modalDialog/modalDialog"), h = e("ui/viewModels/people/blockContactModal"), p = e("text!views/people/blockContactModal.html"), d = e("cafe/applicationInstance"), v = e("swx-enums"), m = e("ui/viewModels/people/deleteContactModal"), g = e("text!views/people/deleteContactModal.html"), y = e("ui/modelHelpers/personHelper");
-  n.assign(b.prototype, r), t.classFunction = b, t.build = function (e, t) {
+  n.assign(b.prototype, r);
+  t.classFunction = b;
+  t.build = function (e, t) {
     return new b(e, t);
   };
-})
+});

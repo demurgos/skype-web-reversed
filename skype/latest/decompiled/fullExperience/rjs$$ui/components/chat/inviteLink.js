@@ -12,5 +12,7 @@ define("ui/components/chat/inviteLink", [
     return i.setContext(s), i.init(), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/inviteLink");
-  t.name = e("constants/components").chat.INVITE_LINK, t.template = e("text!views/chat/inviteLink.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.INVITE_LINK;
+  t.template = e("text!views/chat/inviteLink.html");
+  t.viewModel = { createViewModel: i };
+});

@@ -8,4 +8,4 @@ define("jSkype/constants/events", {
   },
   contacts: { CONTACTS_LOADED: "contactsLoaded" },
   resourceTypes: { USER_PRESENCE: "userpresence" }
-})
+});

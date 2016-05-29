@@ -61,28 +61,36 @@ define("jSkype/services/mediaAgent/deviceEnumerator", [
       var e = typeof u.devicePollingInterval != "undefined" ? u.devicePollingInterval : 3000;
       if (e === 0 || h || f)
         return;
-      o.log("starting device polling"), f = s.setTimeout(t, e);
+      o.log("starting device polling");
+      f = s.setTimeout(t, e);
     }
     function b() {
-      h = !0, f && (o.log("stopping device polling"), s.clearTimeout(f), f = void 0);
+      h = !0;
+      f && (o.log("stopping device polling"), s.clearTimeout(f), f = void 0);
     }
     var i = this, s = n.window, o = r.logger.createChild("DeviceEnumerator"), u = r.settings, a, f, l = {}, c, h;
     l[e.MEDIA_DEVICE.microphone] = {
       id: "default_audio_device",
       label: "Default audio device",
       kind: e.MEDIA_DEVICE.microphone
-    }, l[e.MEDIA_DEVICE.camera] = {
+    };
+    l[e.MEDIA_DEVICE.camera] = {
       id: "default_video_device",
       label: "Default video device",
       kind: e.MEDIA_DEVICE.camera
-    }, this.onDevicesChanged = void 0, this.enumerateDevices = function () {
+    };
+    this.onDevicesChanged = void 0;
+    this.enumerateDevices = function () {
       return p(!1).then(function (e) {
         return y(), e;
       });
-    }, this.getDefaultDevices = function () {
+    };
+    this.getDefaultDevices = function () {
       return l;
-    }, s.navigator.mediaDevices && (s.navigator.mediaDevices.ondevicechange = function () {
-      b(), v();
+    };
+    s.navigator.mediaDevices && (s.navigator.mediaDevices.ondevicechange = function () {
+      b();
+      v();
     });
   }
   return {
@@ -90,4 +98,4 @@ define("jSkype/services/mediaAgent/deviceEnumerator", [
       return new r(e);
     }
   };
-})
+});

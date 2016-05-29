@@ -33,4 +33,4 @@ define("jSkype/services/messageSearch/main", [
   t.build = function () {
     return new o();
   };
-})
+});

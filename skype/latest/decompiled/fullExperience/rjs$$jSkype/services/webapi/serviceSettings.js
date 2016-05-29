@@ -8,4 +8,4 @@ define("jSkype/services/webapi/serviceSettings", [
   t.getHost = function () {
     return n.settings.webApiServiceHost;
   };
-})
+});

@@ -18,7 +18,8 @@ define("jSkype/modelHelpers/signIn/skypeTokenManager", [
       return e.token = t.getToken ? t.getToken() : undefined, o === i.authType.ImplicitOAuth && (e.rpsToken = t.getRpsToken(), e.siteName = t.getSiteName()), e;
     }
     function c(e) {
-      d(e), this.resolve(l());
+      d(e);
+      this.resolve(l());
     }
     function h(e) {
       this.reject(e);
@@ -38,4 +39,4 @@ define("jSkype/modelHelpers/signIn/skypeTokenManager", [
   t.build = function (e) {
     return new o(e);
   };
-})
+});

@@ -1,3 +1,3 @@
 define("text!views/chat/filePicker.html", [], function () {
   return "<div class=\"filePicker\" data-bind=\"css: {disabled: isDisabled, focused: isFocused}\">\r\n    <label data-bind=\"attr: {'title': text}\">\r\n        <span class=\"icon\" data-bind=\"css: iconCssClass\"></span>\r\n        <span class=\"text\" data-bind=\"l10n: {key: text}\"></span>\r\n        <input type=\"file\" class=\"fileInput\"\r\n               multiple=\"multiple\"\r\n               data-bind=\"event: {change: processFiles}, attr: {'title': text, accept:supportedFileTypes},\r\n        \thasFocus: isFocused,\r\n                click: onOpenDialog,\r\n                disable: isDisabled\"/>\r\n    </label>\r\n</div>\r\n";
-})
+});

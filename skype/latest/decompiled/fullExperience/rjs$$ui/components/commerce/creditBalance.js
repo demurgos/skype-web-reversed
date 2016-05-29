@@ -10,5 +10,7 @@ define("ui/components/commerce/creditBalance", [
     return n.build();
   }
   var n = e("ui/viewModels/commerce/creditBalance");
-  t.name = e("constants/components").commerce.CREDIT_BALANCE, t.template = e("text!views/commerce/creditBalance.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").commerce.CREDIT_BALANCE;
+  t.template = e("text!views/commerce/creditBalance.html");
+  t.viewModel = { createViewModel: r };
+});

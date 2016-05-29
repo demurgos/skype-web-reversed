@@ -11,7 +11,8 @@ define("jSkype/modelHelpers/contacts/dataHandlers/meProfile", [
   function u(e) {
     this.onSuccess = function (t) {
       return e.map(t.response, n.get().personsAndGroupsManager.mePerson), a(), s.createResolvedPromise();
-    }, this.onError = function (e) {
+    };
+    this.onError = function (e) {
       return s.createRejectedPromise(e);
     };
   }
@@ -27,4 +28,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/meProfile", [
     var e = o.getProfileMapper();
     return new u(e);
   };
-})
+});

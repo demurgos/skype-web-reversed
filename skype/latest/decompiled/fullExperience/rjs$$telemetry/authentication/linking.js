@@ -16,4 +16,4 @@ define("telemetry/authentication/linking", [
   t.build = function () {
     return new i();
   };
-})
+});

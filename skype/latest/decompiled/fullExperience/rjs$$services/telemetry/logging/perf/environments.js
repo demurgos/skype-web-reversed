@@ -13,4 +13,4 @@ define("services/telemetry/logging/perf/environments", [
       return r[e] || n;
     }
   };
-})
+});

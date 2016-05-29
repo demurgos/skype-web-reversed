@@ -16,4 +16,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/mediaAcknowledgementRequest", 
     };
     return n;
   }, n;
-})
+});

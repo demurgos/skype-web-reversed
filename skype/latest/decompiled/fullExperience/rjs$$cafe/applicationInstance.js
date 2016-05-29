@@ -12,4 +12,4 @@ define("cafe/applicationInstance", [], function () {
     set: t,
     get: n
   };
-})
+});

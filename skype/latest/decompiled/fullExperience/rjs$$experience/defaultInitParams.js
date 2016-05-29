@@ -15,4 +15,4 @@ define("experience/defaultInitParams", [], function () {
     variant: "swx",
     jsonp: !0
   };
-})
+});

@@ -38,14 +38,27 @@ define("services/pes/emoticons/fetcher", [
       function c(e) {
         return e.id + " extraLarge";
       }
-      e.ariaLabel = e.description, e.shortcut = e.shortcuts[0], e.text = e.shortcut, e.staticHtmlClass = a(e), e.staticLargeHtmlClass = l(e), e.staticExtraLargeHtmlClass = c(e), e.animatedHtmlClass = u(e), e.animatedLargeHtmlClass = o(e), e.animatedExtraLargeHtmlClass = s(e), e.htmlClass = t.observable(a(e)), e.htmlLargeClass = t.observable(o(e)), e.htmlExtraLargeClass = t.observable(s(e));
+      e.ariaLabel = e.description;
+      e.shortcut = e.shortcuts[0];
+      e.text = e.shortcut;
+      e.staticHtmlClass = a(e);
+      e.staticLargeHtmlClass = l(e);
+      e.staticExtraLargeHtmlClass = c(e);
+      e.animatedHtmlClass = u(e);
+      e.animatedLargeHtmlClass = o(e);
+      e.animatedExtraLargeHtmlClass = s(e);
+      e.htmlClass = t.observable(a(e));
+      e.htmlLargeClass = t.observable(o(e));
+      e.htmlExtraLargeClass = t.observable(s(e));
       var i = f(r.emoticonsRoot + "/" + e.id + "/views/");
-      n.extend(e, i), e.isLocked = t.observable(!1);
+      n.extend(e, i);
+      e.isLocked = t.observable(!1);
     }
     var e = this;
     e.process = function (e, t) {
       return e.type !== i.itemTypes.emoticon.id ? null : (l(e, t), e);
-    }, e.getResources = function (e, t) {
+    };
+    e.getResources = function (e, t) {
       var s, a, l = [], c = o.resolve(u.serviceLocator.FEATURE_FLAGS);
       return e.type !== i.itemTypes.emoticon.id ? null : (a = [], e.shortcuts.forEach(function (t) {
         a.push({
@@ -62,4 +75,4 @@ define("services/pes/emoticons/fetcher", [
   }
   var t = e("vendor/knockout"), n = e("lodash-compat"), r = e("services/pes/emoticons/stylesFactory"), i = e("services/pes/constants"), s = e("utils/chat/pesUtils"), o = e("services/serviceLocator"), u = e("constants/common"), a = e("experience/settings");
   return new f();
-})
+});

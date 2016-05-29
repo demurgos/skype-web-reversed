@@ -37,4 +37,4 @@ define("jSkype/services/mediaAgent/constants", [], function () {
       video: "video"
     }
   };
-})
+});

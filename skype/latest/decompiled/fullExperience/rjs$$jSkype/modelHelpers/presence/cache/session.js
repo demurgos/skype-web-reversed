@@ -22,7 +22,9 @@ define("jSkype/modelHelpers/presence/cache/session", [
     };
   }
   function h(e, t, n, r, i) {
-    e[t].endpointType = i || e[t].endpointType, e[t].lastSeenAt = r || e[t].lastSeenAt, e[t].status = n || e[t].status;
+    e[t].endpointType = i || e[t].endpointType;
+    e[t].lastSeenAt = r || e[t].lastSeenAt;
+    e[t].status = n || e[t].status;
   }
   function p(e) {
     return function (n, r) {
@@ -48,7 +50,8 @@ define("jSkype/modelHelpers/presence/cache/session", [
         var r = u.getDefaultPresence(n);
         n.status._set(r ? r : e.status);
       }
-      e.lastSeenAt && n.lastSeenAt(e.lastSeenAt), e.endpointType && n.endpointType._set(e.endpointType);
+      e.lastSeenAt && n.lastSeenAt(e.lastSeenAt);
+      e.endpointType && n.endpointType._set(e.endpointType);
     });
   }
   function g(e) {
@@ -57,7 +60,8 @@ define("jSkype/modelHelpers/presence/cache/session", [
     }
     if (!n.isEmpty(e) && y(e)) {
       var t = Object.keys(e).reduce(r, {});
-      s.set(o, JSON.stringify(t)), e = t;
+      s.set(o, JSON.stringify(t));
+      e = t;
     }
     return e;
   }
@@ -70,13 +74,17 @@ define("jSkype/modelHelpers/presence/cache/session", [
   t.restore = function () {
     var e = r.get().personsAndGroupsManager.mePerson, t = d(), n = g(t, e.id());
     return v(n, e), m(n, e), t;
-  }, t.set = p(function (e, t) {
+  };
+  t.set = p(function (e, t) {
     var n = d(), r = t.status, i = t.lastSeenAt, u = t.endpointType;
-    n[e] ? h(n, e, r, i, u) : c(n, e, r, i, u), s.set(o, JSON.stringify(n));
-  }), t.remove = function (e) {
+    n[e] ? h(n, e, r, i, u) : c(n, e, r, i, u);
+    s.set(o, JSON.stringify(n));
+  });
+  t.remove = function (e) {
     var t = d(), n = delete t[e];
     return s.set(o, JSON.stringify(t)), n;
-  }, t.destroy = function () {
+  };
+  t.destroy = function () {
     s.remove(o);
   };
-})
+});

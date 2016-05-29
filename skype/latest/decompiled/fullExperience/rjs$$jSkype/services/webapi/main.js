@@ -8,4 +8,4 @@ define("jSkype/services/webapi/main", [
       return n || (n = new t(e)), n;
     }
   };
-})
+});

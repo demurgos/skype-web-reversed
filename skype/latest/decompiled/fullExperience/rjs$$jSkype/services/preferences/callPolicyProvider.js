@@ -16,4 +16,4 @@ define("jSkype/services/preferences/callPolicyProvider", [
   }, s.prototype.update = function (e) {
     return n.prototype.update.call(this, e === r.privacyPolicyValues.ContactsOnly ? 2 : 0);
   }, t.assign(s, i), s;
-})
+});

@@ -12,4 +12,4 @@ define("constants/extension", [], function () {
     },
     CONNECTION_CHANGE_EVENT: "NMHostConnectionChange"
   };
-})
+});

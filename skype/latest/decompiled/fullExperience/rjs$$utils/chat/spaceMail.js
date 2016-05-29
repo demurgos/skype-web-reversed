@@ -18,4 +18,4 @@ define("utils/chat/spaceMail", [
   t.createMailtoLink = function (e, t) {
     return "mailto:?subject=" + r() + "&body=" + i(e, t);
   };
-})
+});

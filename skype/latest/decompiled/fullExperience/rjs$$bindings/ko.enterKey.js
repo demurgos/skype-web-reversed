@@ -18,4 +18,4 @@ define("bindings/ko.enterKey", [
   }
   var t = e("vendor/knockout"), n = e("utils/common/eventHelper"), r = e("constants/common"), i = e("constants/keys");
   return { register: s };
-})
+});

@@ -8,7 +8,8 @@ define("bindings/ko.fallBackOnDefaultAvatarOnError", [
       update: function (e, n, r) {
         e.onerror = function () {
           e.src = i(r);
-        }, e.src = t.unwrap(n()) || i(r);
+        };
+        e.src = t.unwrap(n()) || i(r);
       }
     };
   }
@@ -18,4 +19,4 @@ define("bindings/ko.fallBackOnDefaultAvatarOnError", [
   }
   var t = e("vendor/knockout"), n = e("experience/settings");
   return { register: r };
-})
+});

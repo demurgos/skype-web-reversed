@@ -6,7 +6,8 @@ define("services/g11n/init", [
   "services/i18n/cultureInfo"
 ], function (e) {
   function s(e, t) {
-    e.locale = e.locale || {}, e.locale.g11n = t;
+    e.locale = e.locale || {};
+    e.locale.g11n = t;
   }
   function o(e, o, u) {
     function c() {
@@ -50,4 +51,4 @@ define("services/g11n/init", [
   }
   var t = e("swx-utils-common").loader, n = e("constants/common"), r = e("services/g11n/globalization"), i = e("services/i18n/cultureInfo");
   return { init: u };
-})
+});

@@ -12,5 +12,7 @@ define("ui/components/chat/contactCard", [
     return i.setContext(n.dataFor(t.element)), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/contactCard");
-  t.name = e("constants/components").chat.CONTACT_CARD, t.template = e("text!views/chat/contactCard.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.CONTACT_CARD;
+  t.template = e("text!views/chat/contactCard.html");
+  t.viewModel = { createViewModel: i };
+});

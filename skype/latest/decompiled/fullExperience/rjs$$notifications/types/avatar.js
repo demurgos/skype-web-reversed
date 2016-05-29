@@ -8,4 +8,4 @@ define("notifications/types/avatar", [
   }
   var t = e("notifications/common/notification");
   return { build: n };
-})
+});

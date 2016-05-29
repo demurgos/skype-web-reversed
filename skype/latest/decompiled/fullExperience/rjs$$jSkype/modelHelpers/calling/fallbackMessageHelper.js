@@ -21,15 +21,20 @@ define("jSkype/modelHelpers/calling/fallbackMessageHelper", [
   var n = e("swx-enums").activityType, r = e("utils/chat/dateTime");
   t.sendWindowsUpdateFallbackMessage = function (e) {
     i(e, n.PluginFreeFallbackWindowsUpdate);
-  }, t.sendScreenSharingFallbackMessage = function (e) {
+  };
+  t.sendScreenSharingFallbackMessage = function (e) {
     i(e, n.PluginFreeFallbackScreenSharing);
-  }, t.sendMicrophoneAccessFallbackMessage = function (e) {
+  };
+  t.sendMicrophoneAccessFallbackMessage = function (e) {
     i(e, n.PluginFreeFallbackMicrophoneAccess);
-  }, t.sendOutgoingP2PCallFallbackMessage = function (e) {
+  };
+  t.sendOutgoingP2PCallFallbackMessage = function (e) {
     i(e, n.PluginFreeFallbackOutgoingP2PCall);
-  }, t.sendIncomingP2PCallFallbackMessage = function (e) {
+  };
+  t.sendIncomingP2PCallFallbackMessage = function (e) {
     i(e, n.PluginFreeFallbackIncomingP2PCall);
-  }, t.sendNoVideoCapabilityMessage = function (e) {
+  };
+  t.sendNoVideoCapabilityMessage = function (e) {
     i(e, n.PluginFreeNoVideoCapability);
   };
-})
+});

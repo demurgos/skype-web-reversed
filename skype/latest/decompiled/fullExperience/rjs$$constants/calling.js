@@ -151,4 +151,4 @@ define("constants/calling", [], function () {
       GVC: "GVC"
     }
   };
-})
+});

@@ -17,4 +17,4 @@ define("jSkype/services/systemCommands/commands/properties/role", [
   t.build = function () {
     return new i();
   };
-})
+});

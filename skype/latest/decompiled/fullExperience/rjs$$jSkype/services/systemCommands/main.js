@@ -23,7 +23,24 @@ define("jSkype/services/systemCommands/main", [
   "lodash-compat"
 ], function (e, t) {
   var n = {}, r;
-  n.topic = e("jSkype/services/systemCommands/commands/topic"), n.add = e("jSkype/services/systemCommands/commands/add"), n.kick = e("jSkype/services/systemCommands/commands/kick"), n.leave = e("jSkype/services/systemCommands/commands/leave"), n.callInfo = e("jSkype/services/systemCommands/commands/callInfo"), n.moji = e("jSkype/services/systemCommands/commands/moji"), n.reportIssue = e("jSkype/services/systemCommands/commands/reportIssue"), n.showmembers = e("jSkype/services/systemCommands/commands/showMembers"), n.swiftCard = e("jSkype/services/systemCommands/commands/swiftCard"), n.callInfo = e("jSkype/services/systemCommands/commands/callInfo"), n.get = e("jSkype/services/systemCommands/commands/property").get, n.set = e("jSkype/services/systemCommands/commands/property").set, n.giphy = e("jSkype/services/systemCommands/commands/giphy"), n.alerts = e("jSkype/services/systemCommands/commands/alerts"), n.alertsoff = e("jSkype/services/systemCommands/commands/alerts").off, n.alertson = e("jSkype/services/systemCommands/commands/alerts").on, n.setrole = e("jSkype/services/systemCommands/commands/setRole"), n.help = e("jSkype/services/systemCommands/commands/help");
+  n.topic = e("jSkype/services/systemCommands/commands/topic");
+  n.add = e("jSkype/services/systemCommands/commands/add");
+  n.kick = e("jSkype/services/systemCommands/commands/kick");
+  n.leave = e("jSkype/services/systemCommands/commands/leave");
+  n.callInfo = e("jSkype/services/systemCommands/commands/callInfo");
+  n.moji = e("jSkype/services/systemCommands/commands/moji");
+  n.reportIssue = e("jSkype/services/systemCommands/commands/reportIssue");
+  n.showmembers = e("jSkype/services/systemCommands/commands/showMembers");
+  n.swiftCard = e("jSkype/services/systemCommands/commands/swiftCard");
+  n.callInfo = e("jSkype/services/systemCommands/commands/callInfo");
+  n.get = e("jSkype/services/systemCommands/commands/property").get;
+  n.set = e("jSkype/services/systemCommands/commands/property").set;
+  n.giphy = e("jSkype/services/systemCommands/commands/giphy");
+  n.alerts = e("jSkype/services/systemCommands/commands/alerts");
+  n.alertsoff = e("jSkype/services/systemCommands/commands/alerts").off;
+  n.alertson = e("jSkype/services/systemCommands/commands/alerts").on;
+  n.setrole = e("jSkype/services/systemCommands/commands/setRole");
+  n.help = e("jSkype/services/systemCommands/commands/help");
   var i = e("lodash-compat");
   t.SystemCommandsService = function () {
     function t(t, n) {
@@ -36,13 +53,16 @@ define("jSkype/services/systemCommands/main", [
     var e = {};
     i.forOwn(n, function (t, n) {
       e[n.toLowerCase()] = t.build();
-    }), this.isSkypeCommand = function (n, r) {
+    });
+    this.isSkypeCommand = function (n, r) {
       return !!t(n, r).command;
-    }, this.executeCommand = function (r, i) {
+    };
+    this.executeCommand = function (r, i) {
       var s = t(r, i), o = s.command, u = s.data;
       return o ? (o === e.help && (u = e), o.action(i, u), !0) : !1;
     };
-  }, t.get = function () {
+  };
+  t.get = function () {
     return r = r || new t.SystemCommandsService(), r;
   };
-})
+});

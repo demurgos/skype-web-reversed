@@ -34,14 +34,16 @@ define("experience/api/helpers/conversation", [
     if (!t.isFeatureOn(f.featureFlags.SINGLE_CONVERSATION_MODE))
       return;
     i.deferActionOnSplashscreen(function (e) {
-      n = d.resolve(f.serviceLocator.PUBSUB), n.publish(f.apiUIEvents.SWX_SINGLE_CONVERSATION, e);
+      n = d.resolve(f.serviceLocator.PUBSUB);
+      n.publish(f.apiUIEvents.SWX_SINGLE_CONVERSATION, e);
     }, e);
   }
   function w(e, t, r) {
     if (!n.isFunction(t))
       return;
     try {
-      t(S(e)), b();
+      t(S(e));
+      b();
     } catch (i) {
       E(r, m.SUCCESS_CALLBACK_ERROR);
     }
@@ -51,7 +53,8 @@ define("experience/api/helpers/conversation", [
       b(t);
     } catch (n) {
     }
-    l.get().onJoinConversationError(t), y(e, t);
+    l.get().onJoinConversationError(t);
+    y(e, t);
   }
   function S(e) {
     return p.API.version === 2 ? e : h.build(e);
@@ -64,7 +67,8 @@ define("experience/api/helpers/conversation", [
         function s() {
           t.results().length ? r(t.results(0).result) : i();
         }
-        t.sources(n).keywords.id = e, t.getMore().then(s, i);
+        t.sources(n).keywords.id = e;
+        t.getMore().then(s, i);
       });
     }), Promise.all(t);
   }
@@ -76,7 +80,8 @@ define("experience/api/helpers/conversation", [
           conversation: f
         }, c = v.get(i);
       s.startModalities(l, function () {
-        c && c.navigateToConversation(f), g(f, n, r);
+        c && c.navigateToConversation(f);
+        g(f, n, r);
       }, o);
     }
     var o = y.bind(null, r), a;
@@ -88,7 +93,8 @@ define("experience/api/helpers/conversation", [
       f([], !0);
       return;
     }
-    a = p.startConversationMaxParticipantCount, a > 0 && e.length > a && (e = e.slice(0, a));
+    a = p.startConversationMaxParticipantCount;
+    a > 0 && e.length > a && (e = e.slice(0, a));
     if (p.authentication && p.authentication.anonymousMode) {
       f(e);
       return;
@@ -98,7 +104,8 @@ define("experience/api/helpers/conversation", [
     }, function () {
       o(m.SEARCH_FAILED);
     }).catch(o);
-  }, t.joinConversation = function (e, t, i, o, u, a) {
+  };
+  t.joinConversation = function (e, t, i, o, u, a) {
     function p(e) {
       var n = {
           modalities: t,
@@ -106,7 +113,8 @@ define("experience/api/helpers/conversation", [
           startChatService: !0
         }, r = v.get(a);
       s.startModalities(n, function () {
-        r && r.navigateToConversation(e), w(e, i, o);
+        r && r.navigateToConversation(e);
+        w(e, i, o);
       }, f);
     }
     var f = E.bind(null, o), h = r.get().conversationsManager;
@@ -118,7 +126,8 @@ define("experience/api/helpers/conversation", [
       l.get().onJoinConversation({
         uri: e,
         prefix: t
-      }), c.sync().then(function () {
+      });
+      c.sync().then(function () {
         if (u)
           h._getConversationByUri(e).then(p).catch(f);
         else
@@ -131,4 +140,4 @@ define("experience/api/helpers/conversation", [
       });
     }).catch(f);
   };
-})
+});

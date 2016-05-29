@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -29,7 +29,9 @@ function (e) {
       n({
         eventName: e,
         callback: t
-      }), this.callbacks[e] = this.callbacks[e] || [], r(t, this.callbacks[e]) || this.callbacks[e].push(t);
+      });
+      this.callbacks[e] = this.callbacks[e] || [];
+      r(t, this.callbacks[e]) || this.callbacks[e].push(t);
     }, e.prototype.unsubscribe = function (e, t) {
       n({
         eventName: e,
@@ -48,5 +50,6 @@ function (e) {
       this.callbacks = {};
     }, e;
   }();
-  t.__esModule = !0, t["default"] = s;
-})
+  t.__esModule = !0;
+  t["default"] = s;
+}));

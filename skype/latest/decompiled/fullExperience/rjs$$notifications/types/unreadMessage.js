@@ -29,7 +29,10 @@ define("notifications/types/unreadMessage", [
           l = {
             model: h,
             origin: i.telemetry.historyLoadOrigin.NOTIFICATION_CONV
-          }, g && y && (l.origin = i.telemetry.historyLoadOrigin.MENTION_ME), e.likeAdded && (l.messageId = c.id), r.publish(i.events.navigation.OPEN_CONVERSATION, l);
+          };
+          g && y && (l.origin = i.telemetry.historyLoadOrigin.MENTION_ME);
+          e.likeAdded && (l.messageId = c.id);
+          r.publish(i.events.navigation.OPEN_CONVERSATION, l);
         }
       }, E = new t(p, v, w);
     return E.description(f(d)), y && g && b && E.title(s.fetch({
@@ -42,4 +45,4 @@ define("notifications/types/unreadMessage", [
   }
   var t = e("notifications/common/notification"), n = e("notifications/common/sender"), r = e("services/pubSub/pubSub"), i = e("constants/common"), s = e("swx-i18n").localization, o = e("cafe/applicationInstance"), u = e("services/serviceLocator");
   return { build: a };
-})
+});

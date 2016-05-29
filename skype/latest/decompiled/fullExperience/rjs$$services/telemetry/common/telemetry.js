@@ -14,9 +14,10 @@ define("services/telemetry/common/telemetry", [
   var n = e("services/telemetry/eventBus"), r = e("services/telemetry/skypeData");
   t.instrumentEvent = function (e, t) {
     n.get().subscribe(e, i(t));
-  }, t.instrumentAllEvents = function (e) {
+  };
+  t.instrumentAllEvents = function (e) {
     Object.keys(e).forEach(function (n) {
       t.instrumentEvent(n, e[n]);
     });
   };
-})
+});

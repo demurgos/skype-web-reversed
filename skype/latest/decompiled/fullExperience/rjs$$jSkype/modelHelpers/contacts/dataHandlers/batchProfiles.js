@@ -26,7 +26,8 @@ define("jSkype/modelHelpers/contacts/dataHandlers/batchProfiles", [
     this.onSuccess = function (e) {
       var n = e && e.response ? e.response : [];
       return n.forEach(u), t(e), s.createResolvedPromise();
-    }, this.onError = function (e) {
+    };
+    this.onError = function (e) {
       return s.createRejectedPromise(e);
     };
   }
@@ -35,4 +36,4 @@ define("jSkype/modelHelpers/contacts/dataHandlers/batchProfiles", [
     var e = u.getProfileMapper();
     return new f(e);
   };
-})
+});

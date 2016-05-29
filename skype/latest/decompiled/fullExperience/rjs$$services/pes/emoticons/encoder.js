@@ -321,7 +321,11 @@ define("services/pes/emoticons/encoder", [], function () {
       "(dog)": "dog",
       ":o3": "dog",
       "(&)": "dog"
-    }, e.maxLength = 16, e.minLength = 2, e.firstLetters = "8:(B;|I]>+xX<*\\", e.firstLettersMap = {
+    };
+    e.maxLength = 16;
+    e.minLength = 2;
+    e.firstLetters = "8:(B;|I]>+xX<*\\";
+    e.firstLettersMap = {
       8: "8",
       ":": ":",
       "(": "(",
@@ -340,4 +344,4 @@ define("services/pes/emoticons/encoder", [], function () {
     };
   }
   return new e();
-})
+});

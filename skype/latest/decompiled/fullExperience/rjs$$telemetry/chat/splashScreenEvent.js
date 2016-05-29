@@ -34,13 +34,21 @@ define("telemetry/chat/splashScreenEvent", [
         timeToSplashGroup: l
       };
     e.startSplashScreenMeasure = function (e, t) {
-      c = u.getDate(), h.isSignInEnabled = typeof e == "undefined" ? l : e, h.isLearnMoreLinkVisible = typeof t == "undefined" ? l : t;
-    }, e.publish = function () {
-      c && (h.timeToSplash = u.getDate() - c, h.timeToSplashGroup = s.getSecondsDurationGroupFromMs(h.timeToSplash)), h.timeToContent = p(), h.timeToContentGroup = s.getSecondsDurationGroupFromMs(h.timeToContent), h.timelineTTL = d(), h.timelineTTLGroup = s.getSecondsDurationGroupFromMs(h.timelineTTL), o.get().sendEvent(r.telemetry.uiTenantToken, t, h);
+      c = u.getDate();
+      h.isSignInEnabled = typeof e == "undefined" ? l : e;
+      h.isLearnMoreLinkVisible = typeof t == "undefined" ? l : t;
+    };
+    e.publish = function () {
+      c && (h.timeToSplash = u.getDate() - c, h.timeToSplashGroup = s.getSecondsDurationGroupFromMs(h.timeToSplash));
+      h.timeToContent = p();
+      h.timeToContentGroup = s.getSecondsDurationGroupFromMs(h.timeToContent);
+      h.timelineTTL = d();
+      h.timelineTTLGroup = s.getSecondsDurationGroupFromMs(h.timelineTTL);
+      o.get().sendEvent(r.telemetry.uiTenantToken, t, h);
     };
   }
   var n = e("usertiming"), r = e("experience/settings"), i = e("constants/common"), s = e("telemetry/chat/telemetryEnumerator"), o = e("ui/telemetry/telemetryClient"), u = e("utils/chat/dateTime"), a = i.telemetry.performanceMarks, f = i.telemetry.measurements, l = i.telemetry.NOT_AVAILABLE;
   t.build = function () {
     return new c();
   };
-})
+});

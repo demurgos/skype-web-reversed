@@ -26,14 +26,17 @@ define("ui/viewModels/calling/skypeOut/countryPickerViewModel", [
     }
     function E(e) {
       var t;
-      e ? t = e.value : t = "", e !== i && (i ? h(h().replace(i.value, t)) : t !== "" && h(t + " " + h())), i = e;
+      e ? t = e.value : t = "";
+      e !== i && (i ? h(h().replace(i.value, t)) : t !== "" && h(t + " " + h()));
+      i = e;
     }
     function S(e) {
       var n;
       t.selectedCountry(null);
       for (n = 0; n < e.length; n++)
         if (e[n].name === m.name && e[n].value === m.value && e[n].description === m.description) {
-          t.selectedCountry(e[n]), m = e[n];
+          t.selectedCountry(e[n]);
+          m = e[n];
           return;
         }
     }
@@ -43,24 +46,31 @@ define("ui/viewModels/calling/skypeOut/countryPickerViewModel", [
       }
       var n = JSON.parse(e).destinations, r = [], i, s, o, u;
       for (u = 0; u < n.length; u++) {
-        i = n[u], s = "+" + i.countryPrefix;
+        i = n[u];
+        s = "+" + i.countryPrefix;
         if (!i.countryPrefix || a(r, s))
           continue;
         o = {
           value: s,
           name: i.name,
           description: l.forceLTREmbedding(s)
-        }, t.countriesMap[s] = o, r.push(o);
+        };
+        t.countriesMap[s] = o;
+        r.push(o);
       }
       r.sort(function (e, t) {
         return e.name.localeCompare(t.name, f.initParams.locale);
-      }), t.countries(r), m && S(r);
+      });
+      t.countries(r);
+      m && S(r);
     }
     function T() {
       var e = new XMLHttpRequest(), t = "?language=" + f.initParams.locale + "&currency=USD&expand=country-prefix&host=" + c.location.hostname + "&client=" + f.version;
       e.addEventListener("readystatechange", function () {
         this.readyState === 4 && (this.status === 200 ? x(this.responseText) : p || (p = !0, T()));
-      }), e.open("GET", f.assetsServiceHost + t), e.send();
+      });
+      e.open("GET", f.assetsServiceHost + t);
+      e.send();
     }
     function N() {
       m ? (t.countries().push(m), t.selectedCountry(m)) : t.countries().push(g);
@@ -75,14 +85,27 @@ define("ui/viewModels/calling/skypeOut/countryPickerViewModel", [
       };
     if (y(e.skypeOutInput) || y(e.selectedCountry))
       throw new Error("[CountryPicker] Passing incorrect parameter, expecting ko.obervables.");
-    t.countriesMap = {}, t.countries = s.observableArray(), t.selectedCountry = e.selectedCountry, h = e.skypeOutInput, t.init = function () {
-      m = JSON.parse(u.get(r.storageKeys.RECENT_COUNTRY)), T(), t.registerEvent(r.events.skypeOut.INPUT_CHANGED, b), t.forwardEvent(r.events.selectBox.TOGGLE, t.DIRECTION.CHILD), n = t.selectedCountry.subscribe(E), N(), v.subscribe(r.events.navigation.FRAGMENT_LOADED, C);
-    }, t.dispose = function () {
-      n.dispose(), v.unsubscribe(r.events.navigation.FRAGMENT_LOADED, C);
+    t.countriesMap = {};
+    t.countries = s.observableArray();
+    t.selectedCountry = e.selectedCountry;
+    h = e.skypeOutInput;
+    t.init = function () {
+      m = JSON.parse(u.get(r.storageKeys.RECENT_COUNTRY));
+      T();
+      t.registerEvent(r.events.skypeOut.INPUT_CHANGED, b);
+      t.forwardEvent(r.events.selectBox.TOGGLE, t.DIRECTION.CHILD);
+      n = t.selectedCountry.subscribe(E);
+      N();
+      v.subscribe(r.events.navigation.FRAGMENT_LOADED, C);
+    };
+    t.dispose = function () {
+      n.dispose();
+      v.unsubscribe(r.events.navigation.FRAGMENT_LOADED, C);
     };
   }
   var n = e("lodash-compat"), r = e("constants/common"), i = e("utils/common/eventMixin"), s = e("vendor/knockout"), o = e("swx-i18n").localization, u = e("utils/common/localStorage"), a = e("services/serviceLocator"), f = e("experience/settings"), l = e("swx-utils-common").stringUtils, c = e("browser/window");
-  n.assign(h.prototype, i), t.build = function (e) {
+  n.assign(h.prototype, i);
+  t.build = function (e) {
     return new h(e);
   };
-})
+});

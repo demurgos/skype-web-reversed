@@ -7,7 +7,10 @@ define("jSkype/services/systemCommands/commands/setRole", [
   "swx-enums"
 ], function (e, t) {
   function o() {
-    this.isAvailableFor = r.availableForGroupLeaders, this.help = "[Skype Name] ADMIN | USER", this.showInHelp = !0, this.action = function (e, t) {
+    this.isAvailableFor = r.availableForGroupLeaders;
+    this.help = "[Skype Name] ADMIN | USER";
+    this.showInHelp = !0;
+    this.action = function (e, t) {
       var r = (t || "").split(/\s+/), o = r[0] && r[0].toLowerCase(), u = r[1] && r[1].toLowerCase();
       o[0] === "@" && (o = o.substring(1));
       var a = n.find(e.participants(), function (e) {
@@ -27,4 +30,4 @@ define("jSkype/services/systemCommands/commands/setRole", [
   t.build = function () {
     return new o();
   };
-})
+});

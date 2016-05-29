@@ -48,4 +48,4 @@ define("jSkype/services/preferences/optionsServiceProvider", [
       });
     });
   }, t.assign(u, o), u;
-})
+});

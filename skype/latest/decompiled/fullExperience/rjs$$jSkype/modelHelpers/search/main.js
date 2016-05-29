@@ -76,11 +76,16 @@ define("jSkype/modelHelpers/search/main", [
         host: o.settings.agentProvisioningService.host
       }), e;
     });
-  }, t.addressBook = function (e, t) {
+  };
+  t.addressBook = function (e, t) {
     var r, s, o, u, a;
     if (!t)
       return m.createResolvedPromise([]);
-    r = i.task(), u = [], a = [], o = E(S(t)), s = t.text();
+    r = i.task();
+    u = [];
+    a = [];
+    o = E(S(t));
+    s = t.text();
     if (o.id) {
       var c = e(o.id);
       c && (u.push(f.getMatch(f.idRule, c.id(), o.id, c)), a.push(c));
@@ -94,11 +99,15 @@ define("jSkype/modelHelpers/search/main", [
       var t = f.get(e, s);
       t && u.push(t);
     })), r.resolve(l.run(u).map(T).filter(N)), r.promise;
-  }, t.skypeDirectory = function (e) {
+  };
+  t.skypeDirectory = function (e) {
     var t, n, r, s;
     if (!e)
       return m.createResolvedPromise([]);
-    r = i.task(), s = c.getStratusService(), t = E(S(e)), n = e.text();
+    r = i.task();
+    s = c.getStratusService();
+    t = E(S(e));
+    n = e.text();
     if (!t.id && !n)
       return r.resolve([]), r.promise;
     if (t.id) {
@@ -117,7 +126,8 @@ define("jSkype/modelHelpers/search/main", [
         r.reject(t);
       });
     return r.promise;
-  }, t.all = function (e, n) {
+  };
+  t.all = function (e, n) {
     var r = i.task();
     return t.addressBook(e, n).then(function (e) {
       e.length === 0 ? t.skypeDirectory(n).then(function (e) {
@@ -125,4 +135,4 @@ define("jSkype/modelHelpers/search/main", [
       }) : r.resolve(e);
     }), r.promise;
   };
-})
+});

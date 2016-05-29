@@ -13,7 +13,8 @@ define("jSkype/services/outOfBrowser/extension", [
 ], function (e, t) {
   function l(e) {
     function w() {
-      r.log("Extension - loading shell app"), f && f.sharedExtension ? t.getAppHost().then(N).then(C).catch(k) : k("SkypeExtension is not available");
+      r.log("Extension - loading shell app");
+      f && f.sharedExtension ? t.getAppHost().then(N).then(C).catch(k) : k("SkypeExtension is not available");
     }
     function E() {
       var e = u.querySelector(s.META_SELECTOR);
@@ -46,17 +47,22 @@ define("jSkype/services/outOfBrowser/extension", [
       });
     }
     function C(e) {
-      c = e, b && h.addMessageHandler(s.CONNECTION_CHANGE_EVENT, b), g();
+      c = e;
+      b && h.addMessageHandler(s.CONNECTION_CHANGE_EVENT, b);
+      g();
     }
     function k(e) {
-      r.warn("Extension - Error loading shell app: ", e), y(e);
+      r.warn("Extension - Error loading shell app: ", e);
+      y(e);
     }
     function L(e) {
       var t = Boolean(h);
-      r.log("Extension - App host init failed, error:", e && e.message ? e.message : e), t ? v(s.ERRORS.MISSING_PLUGIN) : v(s.ERRORS.MISSING_EXTENSION);
+      r.log("Extension - App host init failed, error:", e && e.message ? e.message : e);
+      t ? v(s.ERRORS.MISSING_PLUGIN) : v(s.ERRORS.MISSING_EXTENSION);
     }
     function A(e) {
-      l = e, d(e);
+      l = e;
+      d(e);
     }
     function O() {
       return {
@@ -67,23 +73,32 @@ define("jSkype/services/outOfBrowser/extension", [
     var t = this, l, c, h, p, d, v, m, g, y, b;
     t.openShellApp = function (e) {
       return m || (m = new Promise(function (e, t) {
-        g = e, y = t;
+        g = e;
+        y = t;
       }), w()), b = e, m;
-    }, t.getAppHost = function () {
+    };
+    t.getAppHost = function () {
       return p || (p = new Promise(function (e, t) {
-        d = e, v = t;
+        d = e;
+        v = t;
       }), x()), p;
-    }, t.postMessage = function (e) {
+    };
+    t.postMessage = function (e) {
       return m.then(function () {
         return r.log("Extension::postMessage", e), c.postMessage(e);
       });
-    }, t.addMessageHandler = function (e) {
-      r.log("Extension::addMessageHandler"), l.addMessageHandler("messageFromWindow", e);
-    }, t.addEventHandler = function (e, t) {
+    };
+    t.addMessageHandler = function (e) {
+      r.log("Extension::addMessageHandler");
+      l.addMessageHandler("messageFromWindow", e);
+    };
+    t.addEventHandler = function (e, t) {
       l.addMessageHandler(e, t);
-    }, t.disconnect = function () {
+    };
+    t.disconnect = function () {
       return l && l.disconnect(), Promise.resolve();
-    }, t.dispose = function () {
+    };
+    t.dispose = function () {
       return r.log("Extension::dispose"), p = null, v = null, d = null, m = null, y = null, g = null, h && h.removeMessageHandler(s.CONNECTION_CHANGE_EVENT, b), Promise.resolve();
     };
   }
@@ -91,4 +106,4 @@ define("jSkype/services/outOfBrowser/extension", [
   t.build = function (e) {
     return new l(e);
   };
-})
+});

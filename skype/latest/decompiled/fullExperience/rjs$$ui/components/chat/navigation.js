@@ -17,5 +17,7 @@ define("ui/components/chat/navigation", [
     return t ? t.getAttribute("id") : null;
   }
   var n = e("ui/viewModels/chat/navigation");
-  t.name = e("constants/components").chat.NAVIGATION, t.template = e("text!views/chat/navigation.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").chat.NAVIGATION;
+  t.template = e("text!views/chat/navigation.html");
+  t.viewModel = { createViewModel: r };
+});

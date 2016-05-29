@@ -15,9 +15,12 @@ define("jSkype/services/mediaAgent/ortcChannelStats", [
         if (!r)
           return;
         var u = i + "." + (s ? "msGetStats" : "getStats"), a = new Promise(function (e) {
-            o.log(u, "start"), e(s ? r.msGetStats() : r.getStats());
+            o.log(u, "start");
+            e(s ? r.msGetStats() : r.getStats());
           }).then(function (e) {
-            o.log(u, "complete"), n[i] = n[i] || {}, t.forOwn(e, function (e) {
+            o.log(u, "complete");
+            n[i] = n[i] || {};
+            t.forOwn(e, function (e) {
               n[i][e.type || e.msType] = e;
             });
           }).catch(function (e) {
@@ -39,7 +42,8 @@ define("jSkype/services/mediaAgent/ortcChannelStats", [
         ]).then(function () {
           e(n);
         }).catch(function (t) {
-          o.error("getting statistics should never fail", t), e(n);
+          o.error("getting statistics should never fail", t);
+          e(n);
         });
       });
     };
@@ -49,4 +53,4 @@ define("jSkype/services/mediaAgent/ortcChannelStats", [
       return new n(e, t, r, i);
     }
   };
-})
+});

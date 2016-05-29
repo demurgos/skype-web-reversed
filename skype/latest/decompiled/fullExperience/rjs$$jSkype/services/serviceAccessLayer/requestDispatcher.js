@@ -31,7 +31,8 @@ define("jSkype/services/serviceAccessLayer/requestDispatcher", [
   }
   function f(e, t, n) {
     var r, s = i.get("headerBuilder"), u = typeof n.addContentType == "undefined" || n.addContentType === !0 ? !0 : !1;
-    s.populate(n.headers), r = {
+    s.populate(n.headers);
+    r = {
       url: t,
       type: e,
       headers: s.get(),
@@ -40,7 +41,8 @@ define("jSkype/services/serviceAccessLayer/requestDispatcher", [
       data: n.payload || "",
       crossOrigin: typeof n.crossOrigin != "undefined" ? n.crossOrigin : !0,
       withCredentials: typeof n.withCredentials != "undefined" ? n.withCredentials : !1
-    }, u && (r.contentType = n.contentType || "application/json");
+    };
+    u && (r.contentType = n.contentType || "application/json");
     if (n.jsonp || n.dataType === "jsonp")
       r.jsonp = n.jsonp || "callback";
     return typeof n.processData == "boolean" && (r.processData = n.processData), r;
@@ -48,11 +50,15 @@ define("jSkype/services/serviceAccessLayer/requestDispatcher", [
   var n = e("lodash-compat"), r = e("reqwest"), i = e("jSkype/services/serviceAccessLayer/builders/factory"), s = e("jSkype/services/serviceAccessLayer/requestDecorator"), o = 45000;
   t.get = function (e, t) {
     return u("GET", e, t);
-  }, t.post = function (e, t) {
+  };
+  t.post = function (e, t) {
     return u("POST", e, t);
-  }, t.put = function (e, t) {
+  };
+  t.put = function (e, t) {
     return u("PUT", e, t);
-  }, t.remove = function (e, t) {
+  };
+  t.remove = function (e, t) {
     return u("DELETE", e, t);
-  }, t.REQUEST_DONE_READY_STATE = 4;
-})
+  };
+  t.REQUEST_DONE_READY_STATE = 4;
+});

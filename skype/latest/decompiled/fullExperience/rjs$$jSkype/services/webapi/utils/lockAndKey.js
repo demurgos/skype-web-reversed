@@ -17,4 +17,4 @@ define("jSkype/services/webapi/utils/lockAndKey", [], function () {
       return i(e, s);
     };
   };
-})
+});

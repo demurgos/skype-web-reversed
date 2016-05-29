@@ -21,5 +21,7 @@ define("ui/components/chat/header", [
     return h.setContext(n.dataFor(a)), h.init(f), h.dispatchEvent(r.navigation.COMPONENT_RENDERED, t.name, h.DIRECTION.PARENT), h;
   }
   var n = e("vendor/knockout"), r = e("constants/common").events, i = e("ui/viewModels/chat/header"), s = e("jsviews/chat/header"), o = e("utils/common/focusRestrictor");
-  t.name = e("constants/components").chat.HEADER, t.template = e("text!views/chat/header.html"), t.viewModel = { createViewModel: u };
-})
+  t.name = e("constants/components").chat.HEADER;
+  t.template = e("text!views/chat/header.html");
+  t.viewModel = { createViewModel: u };
+});

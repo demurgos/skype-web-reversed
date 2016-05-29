@@ -8,4 +8,4 @@ define("services/telemetry/eventBus", [
       return t;
     }
   };
-})
+});

@@ -22,7 +22,8 @@ define("ui/viewModels/buttons/button", [
           source: "button",
           isGroupConversation: !1
         }, i = c(e);
-      e.customClientOffset = i, r.show(t, e, n);
+      e.customClientOffset = i;
+      r.show(t, e, n);
     }
     function l(e) {
       r.hide(e);
@@ -44,12 +45,28 @@ define("ui/viewModels/buttons/button", [
       e.cssClass = e.cssClass || [];
     }
     var s = this;
-    p(e), s.ariaLabel = e.ariaLabel ? e.ariaLabel : "", s.title = e.title ? e.title : "", s.disabled = h(e.disabled), s.tabindex = t.observable(e.tabindex), s.buttonCssClass = t.computed(o, s), s.spanCssClass = t.computed(u, s), s.hasMenuOptions = e.hasMenuOptions ? e.hasMenuOptions : t.observable(!1), s.showMenuOptions = e.showMenuOptions ? e.showMenuOptions : t.computed(a, s), s.menuOptions = e.menuOptions ? e.menuOptions : t.observable([]), s.dispose = function () {
-      s.buttonCssClass.dispose(), s.spanCssClass.dispose(), s.showMenuOptions.dispose && s.showMenuOptions.dispose();
-    }, s.onClickHandler = function (t, n) {
+    p(e);
+    s.ariaLabel = e.ariaLabel ? e.ariaLabel : "";
+    s.title = e.title ? e.title : "";
+    s.disabled = h(e.disabled);
+    s.tabindex = t.observable(e.tabindex);
+    s.buttonCssClass = t.computed(o, s);
+    s.spanCssClass = t.computed(u, s);
+    s.hasMenuOptions = e.hasMenuOptions ? e.hasMenuOptions : t.observable(!1);
+    s.showMenuOptions = e.showMenuOptions ? e.showMenuOptions : t.computed(a, s);
+    s.menuOptions = e.menuOptions ? e.menuOptions : t.observable([]);
+    s.dispose = function () {
+      s.buttonCssClass.dispose();
+      s.spanCssClass.dispose();
+      s.showMenuOptions.dispose && s.showMenuOptions.dispose();
+    };
+    s.onClickHandler = function (t, n) {
       s.hasMenuOptions() ? r.isShowing() ? l(n) : f(n) : e.action(n);
-    }, e.textKey ? s.text = n.fetch({ key: e.textKey }) : s.text = e.i18nText, e.titleKey ? s.title = n.fetch({ key: e.titleKey }) : e.i18nTitle && (s.title = e.i18nTitle), e.ariaLabelKey && (s.ariaLabel = n.fetch({ key: e.ariaLabelKey }));
+    };
+    e.textKey ? s.text = n.fetch({ key: e.textKey }) : s.text = e.i18nText;
+    e.titleKey ? s.title = n.fetch({ key: e.titleKey }) : e.i18nTitle && (s.title = e.i18nTitle);
+    e.ariaLabelKey && (s.ariaLabel = n.fetch({ key: e.ariaLabelKey }));
   }
   var t = e("vendor/knockout"), n = e("swx-i18n").localization, r = e("ui/contextMenu/contextMenu"), i = e("browser/dom");
   return s;
-})
+});

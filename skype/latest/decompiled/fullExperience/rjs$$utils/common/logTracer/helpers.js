@@ -28,7 +28,8 @@ define("utils/common/logTracer/helpers", [
       }
     }
     return t;
-  }, t.getTimeOfDayString = function () {
+  };
+  t.getTimeOfDayString = function () {
     var e = new Date(), t = e.getHours();
     t = (t < 10 ? "0" : "") + t;
     var n = e.getMinutes();
@@ -36,4 +37,4 @@ define("utils/common/logTracer/helpers", [
     var r = e.getSeconds();
     return r = (r < 10 ? "0" : "") + r, t + ":" + n + ":" + r + ":" + e.getMilliseconds();
   };
-})
+});

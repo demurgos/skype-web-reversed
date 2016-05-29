@@ -10,7 +10,10 @@ define("ui/controls/calling/sounds", [
       throw new Error("Invalid sound: " + e);
     return n = r[e], n || (n = document.createElement("audio"), s.forEach(function (i) {
       var s = document.createElement("source"), o = t.buildSoundAssetUrl(e, i.extension);
-      s.setAttribute("type", i.mimeType), s.setAttribute("src", o), n.appendChild(s), r[e] = n;
+      s.setAttribute("type", i.mimeType);
+      s.setAttribute("src", o);
+      n.appendChild(s);
+      r[e] = n;
     }), n.id = i + e), n;
   }
   function u(e) {
@@ -62,20 +65,29 @@ define("ui/controls/calling/sounds", [
     VIDEO_MESSAGE_RECORD_START: "video-message-record-start",
     VIDEO_MESSAGE_RECORD_STOP: "video-message-record-stop",
     VOICEMAIL_RECEIVED: "voicemail-received"
-  }, t.playLoop = function (e) {
+  };
+  t.playLoop = function (e) {
     var t = o(e);
-    t.setAttribute("loop", !0), t.play();
-  }, t.playOnce = function (e, t) {
+    t.setAttribute("loop", !0);
+    t.play();
+  };
+  t.playOnce = function (e, t) {
     var n = o(e), r = "ended";
     n.addEventListener(r, function i() {
-      t && t(), n.removeEventListener(r, i);
-    }), n.play();
-  }, t.stop = function (e) {
+      t && t();
+      n.removeEventListener(r, i);
+    });
+    n.play();
+  };
+  t.stop = function (e) {
     var t = o(e);
-    t.pause(), t.load();
-  }, t.clearCache = function () {
+    t.pause();
+    t.load();
+  };
+  t.clearCache = function () {
     r = {};
-  }, t.buildSoundAssetUrl = function (e, t) {
+  };
+  t.buildSoundAssetUrl = function (e, t) {
     return [
       n.assetsBaseUrl,
       "/audio",
@@ -87,4 +99,4 @@ define("ui/controls/calling/sounds", [
       t
     ].join("");
   };
-})
+});

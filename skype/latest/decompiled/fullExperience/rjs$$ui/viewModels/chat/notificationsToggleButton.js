@@ -8,11 +8,15 @@ define("ui/viewModels/chat/notificationsToggleButton", [
 ], function (e, t) {
   function s(e) {
     var t = this;
-    t.notificationsMuted = r.chatNotificationsMuted, t.toggleNotificationsTitle = n.computed(function () {
+    t.notificationsMuted = r.chatNotificationsMuted;
+    t.toggleNotificationsTitle = n.computed(function () {
       return i.fetch({ key: t.notificationsMuted() ? "turnOnChatNotifications_tooltip" : "turnOffChatNotifications_tooltip" });
-    }), t.isDisabled = e.isDisabled ? e.isDisabled : n.observable(!1), t.toggleNotifications = function () {
+    });
+    t.isDisabled = e.isDisabled ? e.isDisabled : n.observable(!1);
+    t.toggleNotifications = function () {
       r.chatNotificationsMuted(!r.chatNotificationsMuted());
-    }, t.dispose = function () {
+    };
+    t.dispose = function () {
       t.toggleNotificationsTitle.dispose();
     };
   }
@@ -20,4 +24,4 @@ define("ui/viewModels/chat/notificationsToggleButton", [
   t.build = function (e) {
     return new s(e);
   };
-})
+});

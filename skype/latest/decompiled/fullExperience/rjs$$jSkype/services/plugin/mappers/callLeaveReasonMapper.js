@@ -38,7 +38,8 @@ define("jSkype/services/plugin/mappers/callLeaveReasonMapper", [
     alreadyEnded: "AlreadyEnded",
     callerUnreachable: "CallerUnreachable",
     unknown: "Unknown"
-  }, t.toCafeReason = function (e) {
+  };
+  t.toCafeReason = function (e) {
     return r[e];
   };
-})
+});

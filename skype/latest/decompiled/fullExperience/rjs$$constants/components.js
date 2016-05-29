@@ -114,4 +114,4 @@ define("constants/components", {
     SHORT_CIRCUIT: "swx-short-circuit",
     ABOUT: "swx-about"
   }
-})
+});

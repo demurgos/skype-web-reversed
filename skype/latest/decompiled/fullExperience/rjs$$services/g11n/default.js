@@ -76,4 +76,4 @@ define("services/g11n/default", [], function () {
     },
     dir: "ltr"
   };
-})
+});

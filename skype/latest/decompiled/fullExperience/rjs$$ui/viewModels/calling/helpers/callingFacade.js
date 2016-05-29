@@ -35,7 +35,8 @@ define("ui/viewModels/calling/helpers/callingFacade", [
       function h(n, i) {
         if (e && i && n === r.PLUGIN_INSTALL_EXIT_METHOD.CALL_STARTED) {
           var o = f(e, t, "pluginInstallCallback");
-          a && s.navigateToConversation(e, u), l(o);
+          a && s.navigateToConversation(e, u);
+          l(o);
         } else
           c(Error("Plugin install result: " + i + ", exitMethod: " + n));
       }
@@ -50,14 +51,20 @@ define("ui/viewModels/calling/helpers/callingFacade", [
   var n = e("services/pubSub/pubSub"), r = e("constants/calling"), i = e("services/calling/pluginInstall"), s = e("ui/viewModels/chat/navigationHelper"), o = e("swx-enums");
   t.placeCall = function (e, t, n, r) {
     return u(e, t, n, r);
-  }, t.acceptCall = function (e, t) {
+  };
+  t.acceptCall = function (e, t) {
     n.publish(r.EVENTS.ANSWER, {
       conversation: e,
       isVideo: t
-    }), t && e.videoService.accept.enabled() ? e.videoService.accept() : e.audioService.accept();
-  }, t.rejectCall = function (e) {
-    n.publish(r.EVENTS.REJECT, { conversation: e }), e.audioService.reject();
-  }, t.installPlugin = function (e, t, n, r) {
-    r = r || !1, c(t, r, n, e);
+    });
+    t && e.videoService.accept.enabled() ? e.videoService.accept() : e.audioService.accept();
   };
-})
+  t.rejectCall = function (e) {
+    n.publish(r.EVENTS.REJECT, { conversation: e });
+    e.audioService.reject();
+  };
+  t.installPlugin = function (e, t, n, r) {
+    r = r || !1;
+    c(t, r, n, e);
+  };
+});

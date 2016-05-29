@@ -40,4 +40,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/joinGivenConversationWithoutCa
     };
     return i;
   }, i;
-})
+});

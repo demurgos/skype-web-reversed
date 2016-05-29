@@ -12,5 +12,7 @@ define("ui/components/calling/startCallButton", [
     return i.setContext(n.dataFor(t.element)), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/calling/startCallButtonViewModel");
-  t.name = e("constants/components").calling.START_CALL_BUTTON, t.template = e("text!views/calling/startCallButton.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").calling.START_CALL_BUTTON;
+  t.template = e("text!views/calling/startCallButton.html");
+  t.viewModel = { createViewModel: i };
+});

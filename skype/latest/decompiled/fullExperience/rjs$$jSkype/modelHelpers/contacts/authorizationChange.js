@@ -22,7 +22,9 @@ define("jSkype/modelHelpers/contacts/authorizationChange", [
       var r;
       if (t === s.AUTHORIZED)
         return;
-      e._authorization._set(s.AUTHORIZED), r = c.getDefaultPresence(e, s.AUTHORIZED), r && e.status._set(r);
+      e._authorization._set(s.AUTHORIZED);
+      r = c.getDefaultPresence(e, s.AUTHORIZED);
+      r && e.status._set(r);
       switch (t) {
       case s.PENDING_OUTGOING:
       case s.PENDING_INCOMING:
@@ -34,7 +36,8 @@ define("jSkype/modelHelpers/contacts/authorizationChange", [
       var i;
       if (t === s.UNAUTHORIZED)
         return;
-      e._authorization._set(s.UNAUTHORIZED), e.status._set(undefined);
+      e._authorization._set(s.UNAUTHORIZED);
+      e.status._set(undefined);
       switch (t) {
       case s.PENDING_INCOMING:
         r && (u.clearContactRequestActivityItems(r), n.get().conversationsManager.conversations.remove(r));
@@ -51,7 +54,8 @@ define("jSkype/modelHelpers/contacts/authorizationChange", [
       var r;
       if (t === s.PENDING_OUTGOING)
         return;
-      e._authorization._set(s.PENDING_OUTGOING), e.status._set(i.onlineStatus.Unknown);
+      e._authorization._set(s.PENDING_OUTGOING);
+      e.status._set(i.onlineStatus.Unknown);
       switch (t) {
       case s.UNKNOWN:
       case s.UNAUTHORIZED:
@@ -61,7 +65,8 @@ define("jSkype/modelHelpers/contacts/authorizationChange", [
     }, e[s.SUGGESTED] = function (e, t, n) {
       if (t === s.SUGGESTED)
         return;
-      e._authorization._set(s.SUGGESTED), n && (t === s.UNAUTHORIZED || t === s.UNKNOWN) && (u.clearContactRequestActivityItems(n), n.historyService._processRawMessage(a.getSuggested(e)));
+      e._authorization._set(s.SUGGESTED);
+      n && (t === s.UNAUTHORIZED || t === s.UNKNOWN) && (u.clearContactRequestActivityItems(n), n.historyService._processRawMessage(a.getSuggested(e)));
     }, e;
   }
   function d(e, t) {
@@ -100,7 +105,8 @@ define("jSkype/modelHelpers/contacts/authorizationChange", [
   t.setAuthorization = function (e, n, r) {
     var i = p()[n];
     return i && i(e, e._authorization(), v(e)), h(r, !0) && t.updateGroups(e), e;
-  }, t.updateGroups = function (e) {
+  };
+  t.updateGroups = function (e) {
     var t = n.get().personsAndGroupsManager.all, r = t.groups().filter(function (e) {
         return e.relationshipLevel() === i.groupPrivacyRelationshipLevel.Blocked;
       })[0];
@@ -114,11 +120,15 @@ define("jSkype/modelHelpers/contacts/authorizationChange", [
       t.persons.remove(e.id(), !0);
     }
     e.isBlocked() ? E(e, r, !1) : r.persons.remove(e);
-  }, t.setBlocked = function (e, r) {
+  };
+  t.setBlocked = function (e, r) {
     var i, o;
     if (e.isBlocked())
       return;
-    r = h(r, !0), e.isBlocked._set(!0), i = v(e), d(e, !0);
+    r = h(r, !0);
+    e.isBlocked._set(!0);
+    i = v(e);
+    d(e, !0);
     switch (e._authorization()) {
     case s.PENDING_INCOMING:
       t.sendDeclineRequest(e), i && (u.clearContactRequestActivityItems(i), n.get().conversationsManager.conversations.remove(i));
@@ -134,11 +144,15 @@ define("jSkype/modelHelpers/contacts/authorizationChange", [
       i && (o = a.getUnblockContact(e), u.clearUnblockContactActivityItems(i), i.historyService._processRawMessage(o)), g(e);
     }
     r && t.updateGroups(e);
-  }, t.setUnblocked = function (e, n) {
+  };
+  t.setUnblocked = function (e, n) {
     var r, i, o;
     if (!e.isBlocked())
       return;
-    n = h(n, !0), e.isBlocked._set(!1), r = v(e), d(e, !1);
+    n = h(n, !0);
+    e.isBlocked._set(!1);
+    r = v(e);
+    d(e, !1);
     switch (e._authorization()) {
     case s.AUTHORIZED:
       r && u.clearUnblockContactActivityItems(r), y(e);
@@ -153,11 +167,13 @@ define("jSkype/modelHelpers/contacts/authorizationChange", [
       r && (o = a.getSuggested(e), u.clearUnblockContactActivityItems(r), r.historyService._processRawMessage(o));
     }
     n && t.updateGroups(e);
-  }, t.sendDeclineRequest = function (e) {
+  };
+  t.sendDeclineRequest = function (e) {
     var i = e.id(), o = r.getStratusService();
     return o.declineContactRequest(i).then(function () {
       var r = f.settings.telemetry.jSkypeTenantToken;
-      t.setAuthorization(e, s.UNAUTHORIZED), n.get()._telemetryManager.sendEvent(r, l.telemetry.contacts.type.CONTACT_REQUESTS, {
+      t.setAuthorization(e, s.UNAUTHORIZED);
+      n.get()._telemetryManager.sendEvent(r, l.telemetry.contacts.type.CONTACT_REQUESTS, {
         name: l.telemetry.contacts.name.CONTACT_REQUEST_DECLINED,
         user_from: [
           i,
@@ -166,4 +182,4 @@ define("jSkype/modelHelpers/contacts/authorizationChange", [
       });
     });
   };
-})
+});

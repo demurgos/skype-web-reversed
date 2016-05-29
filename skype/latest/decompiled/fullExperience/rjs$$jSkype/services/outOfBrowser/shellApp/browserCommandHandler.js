@@ -33,7 +33,8 @@ define("jSkype/services/outOfBrowser/shellApp/browserCommandHandler", [
       }), m && (v = d.setTimeout(S, l.settings.shellApp.contactPollingInterval)), Promise.resolve();
     }
     function E() {
-      d.clearTimeout(v), m = !1;
+      d.clearTimeout(v);
+      m = !1;
     }
     function S() {
       e.sendCommand({
@@ -68,7 +69,8 @@ define("jSkype/services/outOfBrowser/shellApp/browserCommandHandler", [
     function L(e) {
       return i.log("[BrowserCommandHelper] acceptHandler", e), P().then(function () {
         function f() {
-          r.accept(), o.resolve();
+          r.accept();
+          o.resolve();
         }
         function l(e) {
           e !== h.callDisconnectionReason.CallEscalated && M();
@@ -96,7 +98,8 @@ define("jSkype/services/outOfBrowser/shellApp/browserCommandHandler", [
       };
     }
     function M() {
-      E(), d.shellAppInfo.supportsPreloading ? d.shellApp.invoke(r.shellAppMethods.HideWindow) : d.shellApp.invoke(r.shellAppMethods.CloseWindow);
+      E();
+      d.shellAppInfo.supportsPreloading ? d.shellApp.invoke(r.shellAppMethods.HideWindow) : d.shellApp.invoke(r.shellAppMethods.CloseWindow);
     }
     function _(e) {
       d.shellApp.removeEventListener(r.shellAppEvents.WindowClosing, b);
@@ -119,7 +122,9 @@ define("jSkype/services/outOfBrowser/shellApp/browserCommandHandler", [
           return;
         if (u === h.callConnectionState.Notified)
           return;
-        u === h.callConnectionState.Disconnecting && j() && (a = h.callDisconnectionReason.MissingSpeaker), u === h.callConnectionState.Disconnected && (t.selfParticipant.audio.state.changed.off(n), t.selfParticipant.audio.isMuted.changed.off(i), t.spawnedConversation.changed.off(s), t.spawnedConversation._set(undefined), t._callData.pluginCallInfo.changed.off(o)), e.sendCommand({
+        u === h.callConnectionState.Disconnecting && j() && (a = h.callDisconnectionReason.MissingSpeaker);
+        u === h.callConnectionState.Disconnected && (t.selfParticipant.audio.state.changed.off(n), t.selfParticipant.audio.isMuted.changed.off(i), t.spawnedConversation.changed.off(s), t.spawnedConversation._set(undefined), t._callData.pluginCallInfo.changed.off(o));
+        e.sendCommand({
           name: r.commands.CHANGE_STATE,
           type: r.commandTypes.REQUEST,
           data: {
@@ -133,7 +138,8 @@ define("jSkype/services/outOfBrowser/shellApp/browserCommandHandler", [
         var i;
         if (n === undefined)
           return;
-        n ? i = r.commands.MUTE : i = r.commands.UNMUTE, e.sendCommand({
+        n ? i = r.commands.MUTE : i = r.commands.UNMUTE;
+        e.sendCommand({
           name: i,
           type: r.commandTypes.REQUEST,
           data: { conversationId: t.conversationId }
@@ -147,7 +153,8 @@ define("jSkype/services/outOfBrowser/shellApp/browserCommandHandler", [
             newConversationId: n.conversationId,
             oldConversationId: t.conversationId
           }
-        }), B(n);
+        });
+        B(n);
       }
       function o() {
         e.sendCommand({
@@ -159,7 +166,10 @@ define("jSkype/services/outOfBrowser/shellApp/browserCommandHandler", [
           }
         });
       }
-      t.selfParticipant.audio.state.changed(n), t.selfParticipant.audio.isMuted.changed(i), t.spawnedConversation.changed(s), t._callData.pluginCallInfo.changed(o);
+      t.selfParticipant.audio.state.changed(n);
+      t.selfParticipant.audio.isMuted.changed(i);
+      t.spawnedConversation.changed(s);
+      t._callData.pluginCallInfo.changed(o);
     }
     function j() {
       var e = f.get().devicesManager;
@@ -192,10 +202,23 @@ define("jSkype/services/outOfBrowser/shellApp/browserCommandHandler", [
       callInfo: D,
       contactsData: w,
       settings: q
-    }, e.registerCommandHandler(r.commands.SHOW, t.show), e.registerCommandHandler(r.commands.HIDE, t.hide), e.registerCommandHandler(r.commands.START, t.start), e.registerCommandHandler(r.commands.HOST_CALL, t.hostCall), e.registerCommandHandler(r.commands.JOIN_CALL, t.joinCall), e.registerCommandHandler(r.commands.ACCEPT, t.accept), e.registerCommandHandler(r.commands.UPDATE_INCOMING_PAYLOAD, t.updateIncomingCallPayload), e.registerCommandHandler(r.commands.MUTE, t.mute), e.registerCommandHandler(r.commands.UNMUTE, t.unmute), e.registerCommandHandler(r.commands.STOP, t.stop), e.registerCommandHandler(r.commands.CALL_INFO, t.callInfo), e.registerCommandHandler(r.commands.CONTACTS_DATA_RESPONSE, t.contactsData), e.registerCommandHandler(r.commands.SETTINGS_UPDATE, t.settings);
+    };
+    e.registerCommandHandler(r.commands.SHOW, t.show);
+    e.registerCommandHandler(r.commands.HIDE, t.hide);
+    e.registerCommandHandler(r.commands.START, t.start);
+    e.registerCommandHandler(r.commands.HOST_CALL, t.hostCall);
+    e.registerCommandHandler(r.commands.JOIN_CALL, t.joinCall);
+    e.registerCommandHandler(r.commands.ACCEPT, t.accept);
+    e.registerCommandHandler(r.commands.UPDATE_INCOMING_PAYLOAD, t.updateIncomingCallPayload);
+    e.registerCommandHandler(r.commands.MUTE, t.mute);
+    e.registerCommandHandler(r.commands.UNMUTE, t.unmute);
+    e.registerCommandHandler(r.commands.STOP, t.stop);
+    e.registerCommandHandler(r.commands.CALL_INFO, t.callInfo);
+    e.registerCommandHandler(r.commands.CONTACTS_DATA_RESPONSE, t.contactsData);
+    e.registerCommandHandler(r.commands.SETTINGS_UPDATE, t.settings);
   }
   var n = e("jcafe-property-model"), r = e("constants/outOfBrowser"), i = e("jSkype/telemetry/logging/callingLogTracer").get(), s = e("jSkype/services/callController"), o = e("jSkype/services/callRegister"), u = e("jSkype/modelHelpers/calling/pstnEventsHandler"), a = e("jSkype/services/outOfBrowser/shellApp/pstnEventsDispatcher"), f = e("jSkype/client"), l = e("jSkype/settings"), c = e("jSkype/modelHelpers/participantHelper"), h = e("swx-enums"), p = e("constants/common"), d = e("browser/window");
   t.build = function (e) {
     return new v(e);
   };
-})
+});

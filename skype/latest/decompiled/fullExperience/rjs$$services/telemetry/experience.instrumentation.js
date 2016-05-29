@@ -32,4 +32,4 @@ define("services/telemetry/experience.instrumentation", [
       }
     };
   }, r;
-})
+});

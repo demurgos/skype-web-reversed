@@ -35,4 +35,4 @@ define("ui/viewModels/chat/messageParsers/swiftCard", [
     }
     return c = i.build(s), e.isDisjoined = !0, e.customMessageClasses = "swiftCard", e.contentTemplate = "skypeSwiftCardMessageContentTemplate", e.swiftCard = c.process(l), r.observable(a.textContent);
   };
-})
+});

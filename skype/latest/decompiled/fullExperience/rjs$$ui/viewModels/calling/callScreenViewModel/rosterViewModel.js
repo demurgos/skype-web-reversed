@@ -16,10 +16,31 @@ define("ui/viewModels/calling/callScreenViewModel/rosterViewModel", [
       });
     }
     var o = this, f, l, c, h, p, d = !1;
-    o.participants = e.participants, o.isGroupConversation = e.isGroupConversation, o.selfParticipant = e.selfParticipant, o.isLocalVideoOn = e.isLocalVideoOn, o.localAspectRatio = n.observable(""), o.isVisible = e.isVisible, o.isLocalVideoAllowed = e.isLocalVideoAllowed, o.disposed = !1, o.init = function (e) {
-      p = e, p.init(v), f = a.build(t), f.init({ horizontal: !0 }), l = o.participants.subscribe(v), c = o.isLocalVideoOn.subscribe(v), h = o.selfParticipant.audio.state.when(i.callConnectionState.Connected, v);
-    }, o.dispose = function () {
-      d = !0, p.dispose(), f.dispose(), l.dispose(), c.dispose(), h.dispose(), s.removeEventListener(r.events.browser.RESIZE, v);
+    o.participants = e.participants;
+    o.isGroupConversation = e.isGroupConversation;
+    o.selfParticipant = e.selfParticipant;
+    o.isLocalVideoOn = e.isLocalVideoOn;
+    o.localAspectRatio = n.observable("");
+    o.isVisible = e.isVisible;
+    o.isLocalVideoAllowed = e.isLocalVideoAllowed;
+    o.disposed = !1;
+    o.init = function (e) {
+      p = e;
+      p.init(v);
+      f = a.build(t);
+      f.init({ horizontal: !0 });
+      l = o.participants.subscribe(v);
+      c = o.isLocalVideoOn.subscribe(v);
+      h = o.selfParticipant.audio.state.when(i.callConnectionState.Connected, v);
+    };
+    o.dispose = function () {
+      d = !0;
+      p.dispose();
+      f.dispose();
+      l.dispose();
+      c.dispose();
+      h.dispose();
+      s.removeEventListener(r.events.browser.RESIZE, v);
     };
   }
   var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("constants/common"), i = e("swx-enums"), s = e("browser/window"), o = e("utils/common/eventMixin"), u = e("utils/common/async"), a = e("utils/common/scroll");
@@ -28,4 +49,4 @@ define("ui/viewModels/calling/callScreenViewModel/rosterViewModel", [
       return new f(e, t);
     }
   };
-})
+});

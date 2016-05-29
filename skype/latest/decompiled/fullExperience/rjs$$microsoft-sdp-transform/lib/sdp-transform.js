@@ -1,11 +1,12 @@
-function (e) {
+(function (e) {
   if (typeof exports == "object" && typeof module != "undefined")
     module.exports = e();
   else if (typeof define == "function" && define.amd)
     define("microsoft-sdp-transform/lib/sdp-transform", [], e);
   else {
     var t;
-    typeof window != "undefined" ? t = window : typeof global != "undefined" ? t = global : typeof self != "undefined" ? t = self : t = this, t.sdpTransform = e();
+    typeof window != "undefined" ? t = window : typeof global != "undefined" ? t = global : typeof self != "undefined" ? t = self : t = this;
+    t.sdpTransform = e();
   }
 }(function () {
   var e, t, n;
@@ -415,7 +416,8 @@ function (e) {
         Object.keys(r).forEach(function (e) {
           var t = r[e];
           t.forEach(function (e) {
-            e.reg || (e.reg = /(.*)/), e.format || (e.format = "%s");
+            e.reg || (e.reg = /(.*)/);
+            e.format || (e.format = "%s");
           });
         });
       },
@@ -435,7 +437,8 @@ function (e) {
             var r = e.name && e.names;
             e.push && !t[e.push] ? t[e.push] = [] : r && !t[e.name] && (t[e.name] = {});
             var s = e.push ? {} : r ? t[e.name] : t;
-            i(n.match(e.reg), s, e.names, e.name), e.push && t[e.push].push(s);
+            i(n.match(e.reg), s, e.names, e.name);
+            e.push && t[e.push].push(s);
           }, o = e("./grammar"), u = RegExp.prototype.test.bind(/^([a-z])=(.*)/);
         n.parse = function (e) {
           var t = {}, n = [], r = t;
@@ -458,9 +461,11 @@ function (e) {
         };
         n.parseFmtpConfig = function (e) {
           return e.split(/\;\s?/).reduce(a, {});
-        }, n.parsePayloads = function (e) {
+        };
+        n.parsePayloads = function (e) {
           return e.split(" ").map(Number);
-        }, n.parseRemoteCandidates = function (e) {
+        };
+        n.parseRemoteCandidates = function (e) {
           var t = [], n = e.split(" ").map(r);
           for (var i = 0; i < n.length; i += 3)
             t.push({
@@ -524,7 +529,10 @@ function (e) {
             "a"
           ];
         t.exports = function (e, t) {
-          t = t || {}, e.version == null && (e.version = 0), e.name == null && (e.name = " "), e.media.forEach(function (e) {
+          t = t || {};
+          e.version == null && (e.version = 0);
+          e.name == null && (e.name = " ");
+          e.media.forEach(function (e) {
             e.payloads == null && (e.payloads = "");
           });
           var n = t.outerOrder || u, i = t.innerOrder || a, s = [];
@@ -535,7 +543,8 @@ function (e) {
               });
             });
           }), e.media.forEach(function (e) {
-            s.push(o("m", r.m[0], e)), i.forEach(function (t) {
+            s.push(o("m", r.m[0], e));
+            i.forEach(function (t) {
               r[t].forEach(function (n) {
                 n.name in e && e[n.name] != null ? s.push(o(t, n, e)) : n.push in e && e[n.push] != null && e[n.push].forEach(function (e) {
                   s.push(o(t, n, e));
@@ -550,7 +559,11 @@ function (e) {
     "sdp-transform": [
       function (e, t, n) {
         var r = e("./parser"), i = e("./writer");
-        n.write = i, n.parse = r.parse, n.parseFmtpConfig = r.parseFmtpConfig, n.parsePayloads = r.parsePayloads, n.parseRemoteCandidates = r.parseRemoteCandidates;
+        n.write = i;
+        n.parse = r.parse;
+        n.parseFmtpConfig = r.parseFmtpConfig;
+        n.parsePayloads = r.parsePayloads;
+        n.parseRemoteCandidates = r.parseRemoteCandidates;
       },
       {
         "./parser": 2,
@@ -558,4 +571,4 @@ function (e) {
       }
     ]
   }, {}, [])("sdp-transform");
-})
+}));

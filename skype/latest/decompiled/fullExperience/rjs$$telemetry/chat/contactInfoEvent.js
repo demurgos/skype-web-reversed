@@ -37,7 +37,8 @@ define("telemetry/chat/contactInfoEvent", [
   var n = e("experience/settings"), r = e("constants/common"), i = r.telemetry.contactInfo, s = e("ui/telemetry/telemetryClient"), o = e("telemetry/chat/telemetryEnumerator"), u = e("ui/modelHelpers/personHelper");
   t.publishShowEvent = function (e) {
     return e.actionName = i.action.SHOW, h(e);
-  }, t.publishActionEvent = function (e) {
+  };
+  t.publishActionEvent = function (e) {
     return e.actionName = i.action.CLICK, h(e);
   };
-})
+});

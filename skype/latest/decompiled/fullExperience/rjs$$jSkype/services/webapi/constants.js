@@ -36,7 +36,9 @@ define("jSkype/services/webapi/constants", [
     REMOVE_ALL_MESSAGES: "removeAllMessage",
     SET_FAVORITES: "setFavorites",
     GET_FAVORITES: "getFavorites"
-  }, t.ENDPOINT_PROPERTIES = { SUPPORTS_MESSAGE_PROPERTIES: "supportsMessageProperties" }, t.MESSAGE_PROPERTIES = {
+  };
+  t.ENDPOINT_PROPERTIES = { SUPPORTS_MESSAGE_PROPERTIES: "supportsMessageProperties" };
+  t.MESSAGE_PROPERTIES = {
     GLOBAL: {
       ACTIVITY_DATA: "activityData",
       PINNED: "pinned",
@@ -47,5 +49,7 @@ define("jSkype/services/webapi/constants", [
       POLL: "poll",
       TRANSLATIONS: "translations"
     }
-  }, t.ACTIVATE_ENDPOINT_TIMEOUT = 12000, t.ACTIVATE_ENDPOINT_TOLERANCE = 6000;
-})
+  };
+  t.ACTIVATE_ENDPOINT_TIMEOUT = 12000;
+  t.ACTIVATE_ENDPOINT_TOLERANCE = 6000;
+});

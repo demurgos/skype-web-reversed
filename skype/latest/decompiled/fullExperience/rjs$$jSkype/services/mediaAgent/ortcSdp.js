@@ -91,13 +91,23 @@ define("jSkype/services/mediaAgent/ortcSdp", [
       if (!r.descr.enabled)
         return f.type === t.MEDIA_TYPE.video ? f.payloads = "34" : f.payloads = "9", f;
       var l = a(e), c = l[0], h = l[1];
-      f.port = c.port, o.ip !== c.ip && (f.connection = {
+      f.port = c.port;
+      o.ip !== c.ip && (f.connection = {
         version: 4,
         ip: c.ip
-      }), f.iceUfrag = e.iceParams.usernameFragment, f.icePwd = e.iceParams.password, f.type === t.MEDIA_TYPE.audio && (f.maxptime = 200, f.ptime = 20), f.direction = i(r.descr.send, r.descr.recv), f.xSsrcRange = {
+      });
+      f.iceUfrag = e.iceParams.usernameFragment;
+      f.icePwd = e.iceParams.password;
+      f.type === t.MEDIA_TYPE.audio && (f.maxptime = 200, f.ptime = 20);
+      f.direction = i(r.descr.send, r.descr.recv);
+      f.xSsrcRange = {
         ssrcMin: r.ssrcRange.min,
         ssrcMax: r.ssrcRange.max
-      }, f.label = r.descr.label, r.bundledWithOther || (f.xSource = r.descr.label), r.rtcpReducedSize && (f.rtcpRsize = !0), s && r.justAdded ? (e.doRtcpMux && (f.rtcpMux = !0), f.rtcp = { port: h && h.port || f.port + 1 }) : e.doRtcpMux ? f.rtcpMux = !0 : f.rtcp = { port: h && h.port || f.port + 1 };
+      };
+      f.label = r.descr.label;
+      r.bundledWithOther || (f.xSource = r.descr.label);
+      r.rtcpReducedSize && (f.rtcpRsize = !0);
+      s && r.justAdded ? (e.doRtcpMux && (f.rtcpMux = !0), f.rtcp = { port: h && h.port || f.port + 1 }) : e.doRtcpMux ? f.rtcpMux = !0 : f.rtcp = { port: h && h.port || f.port + 1 };
       var p = null;
       r.rtpCaps && r.rtpCaps.codecs && r.rtpCaps.codecs.forEach(function (e) {
         f.rtp.push({
@@ -112,14 +122,16 @@ define("jSkype/services/mediaAgent/ortcSdp", [
         t !== "" && f.fmtp.push({
           payload: e.preferredPayloadType,
           config: t
-        }), f.payloads += (f.payloads ? " " : "") + e.preferredPayloadType;
+        });
+        f.payloads += (f.payloads ? " " : "") + e.preferredPayloadType;
         if (!p)
           for (var i = 0; i < e.rtcpFeedback.length; i++)
             if (n(e.rtcpFeedback[i].type, "x-message")) {
               p = e.rtcpFeedback[i].parameter;
               break;
             }
-      }), p && f.rtcpFb.push({
+      });
+      p && f.rtcpFb.push({
         payload: "*",
         type: "x-message",
         subtype: p
@@ -139,9 +151,11 @@ define("jSkype/services/mediaAgent/ortcSdp", [
           });
         }
       if (!r.bundledWithOther) {
-        e.iceCandidatePair ? (u([e.iceCandidatePair.local], 1, f.candidates, f.xCandidatesIpv6), e.rtcpIceCandidatePair && !e.doRtcpMux && u([e.rtcpIceCandidatePair.local], 2, f.candidates, f.xCandidatesIpv6), f.remoteCandidates = "1 " + e.iceCandidatePair.remote.ip + " " + e.iceCandidatePair.remote.port, e.doRtcpMux ? f.remoteCandidates += " 2 " + e.iceCandidatePair.remote.ip + " " + e.iceCandidatePair.remote.port : f.remoteCandidates += " 2 " + e.rtcpIceCandidatePair.remote.ip + " " + e.rtcpIceCandidatePair.remote.port) : (u(e.iceCandidates, 1, f.candidates, f.xCandidatesIpv6), (s && r.justAdded || !e.doRtcpMux) && u(e.rtcpIceCandidates, 2, f.candidates, f.xCandidatesIpv6)), f.candidates.sort(function (e, t) {
+        e.iceCandidatePair ? (u([e.iceCandidatePair.local], 1, f.candidates, f.xCandidatesIpv6), e.rtcpIceCandidatePair && !e.doRtcpMux && u([e.rtcpIceCandidatePair.local], 2, f.candidates, f.xCandidatesIpv6), f.remoteCandidates = "1 " + e.iceCandidatePair.remote.ip + " " + e.iceCandidatePair.remote.port, e.doRtcpMux ? f.remoteCandidates += " 2 " + e.iceCandidatePair.remote.ip + " " + e.iceCandidatePair.remote.port : f.remoteCandidates += " 2 " + e.rtcpIceCandidatePair.remote.ip + " " + e.rtcpIceCandidatePair.remote.port) : (u(e.iceCandidates, 1, f.candidates, f.xCandidatesIpv6), (s && r.justAdded || !e.doRtcpMux) && u(e.rtcpIceCandidates, 2, f.candidates, f.xCandidatesIpv6));
+        f.candidates.sort(function (e, t) {
           return +e.foundation - +t.foundation || e.foundation === t.foundation && e.component - t.component;
-        }), f.xCandidatesIpv6.sort(function (e, t) {
+        });
+        f.xCandidatesIpv6.sort(function (e, t) {
           return +e.foundation - +t.foundation || e.foundation === t.foundation && e.component - t.component;
         });
         if (e.dtlsParams) {
@@ -200,7 +214,8 @@ define("jSkype/services/mediaAgent/ortcSdp", [
     function p(e, t, n) {
       e.candidates && e.candidates.forEach(function (e) {
         e.component === t && n.push(h(e));
-      }), e.xCandidatesIpv6 && e.xCandidatesIpv6.forEach(function (e) {
+      });
+      e.xCandidatesIpv6 && e.xCandidatesIpv6.forEach(function (e) {
         e.component === t && n.push(h(e));
       });
     }
@@ -221,10 +236,15 @@ define("jSkype/services/mediaAgent/ortcSdp", [
       n.iceParams = {
         usernameFragment: t.iceUfrag,
         password: t.icePwd
-      }, n.iceCandidates = [], p(t, 1, n.iceCandidates), n.doRtcpMux = !!t.rtcpMux, t.rtcpMux || (n.rtcpIceParams = {
+      };
+      n.iceCandidates = [];
+      p(t, 1, n.iceCandidates);
+      n.doRtcpMux = !!t.rtcpMux;
+      t.rtcpMux || (n.rtcpIceParams = {
         usernameFragment: t.iceUfrag,
         password: t.icePwd
-      }, n.rtcpIceCandidates = [], p(t, 2, n.rtcpIceCandidates)), t.remoteCandidates && (n.iceCandidatePair = {});
+      }, n.rtcpIceCandidates = [], p(t, 2, n.rtcpIceCandidates));
+      t.remoteCandidates && (n.iceCandidatePair = {});
       if (e.fingerprint || t.fingerprint) {
         var r = t.fingerprint ? t.fingerprint : e.fingerprint, i = t.setup ? t.setup : e.setup, s = "auto";
         switch (i) {
@@ -311,33 +331,41 @@ define("jSkype/services/mediaAgent/ortcSdp", [
     }
     this.paramsToSdp = function (n) {
       var i = {}, s = n.transportParams[0] ? n.transportParams[0] : n.transportParams[1], o = r(s), u = a(s), l = u[0];
-      i.version = 0, i.origin = {
+      i.version = 0;
+      i.origin = {
         username: "-",
         sessionId: 0,
         sessionVersion: n.sessionVersion,
         netType: "IN",
         ipVer: 4,
         address: o
-      }, i.bandwidth = [{
+      };
+      i.bandwidth = [{
           type: "CT",
           limit: 99980
-        }], i.timing = {
+        }];
+      i.timing = {
         start: 0,
         stop: 0
-      }, i.name = "session", i.connection = {
+      };
+      i.name = "session";
+      i.connection = {
         version: 4,
         ip: l.ip
-      }, i.xMediaBw = {
+      };
+      i.xMediaBw = {
         label: t.MEDIA_LABEL.video,
         sendBw: 8100,
         receiveBw: 8000
-      }, i.media = [];
+      };
+      i.media = [];
       for (var c = 0; c < n.media.length; c++) {
         var h = n.media[c].descr.label === t.MEDIA_LABEL.audio ? 0 : 1, p = n.transportParams[h];
         i.media.push(f(p, n.media[c], n.isOffer, l));
       }
       return e.write(i);
-    }, this.sdpToParams = function (n) {
+    };
+    this.sdpToParams = function (n) {
       var r = e.parse(n), i = {
           sessionVersion: r.origin.sessionVersion,
           transportParams: [],
@@ -355,4 +383,4 @@ define("jSkype/services/mediaAgent/ortcSdp", [
     };
   }
   return n;
-})
+});

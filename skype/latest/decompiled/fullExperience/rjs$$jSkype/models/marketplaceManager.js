@@ -6,8 +6,9 @@ define("jSkype/models/marketplaceManager", [
   function r() {
     this.createSearchQuery = function () {
       return new n();
-    }, this.purchase = t.disabledCommand();
+    };
+    this.purchase = t.disabledCommand();
   }
   var t = e("jcafe-property-model"), n = e("jSkype/models/marketplaceSearchQuery");
   return r;
-})
+});

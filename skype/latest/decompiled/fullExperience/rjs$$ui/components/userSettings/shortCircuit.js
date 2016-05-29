@@ -11,5 +11,7 @@ define("ui/components/userSettings/shortCircuit", [
     return e;
   }
   var n = e("ui/viewModels/userSettings/shortCircuitViewModel");
-  t.name = e("constants/components").userSettings.SHORT_CIRCUIT, t.template = e("text!views/userSettings/shortCircuit.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").userSettings.SHORT_CIRCUIT;
+  t.template = e("text!views/userSettings/shortCircuit.html");
+  t.viewModel = { createViewModel: r };
+});

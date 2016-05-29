@@ -18,9 +18,11 @@ define("utils/people/userDataProcessor", [
       return s.escapeIncomingHTML(u.decode(t));
     }
     return "";
-  }, t.sanitizeXml = function (e) {
+  };
+  t.sanitizeXml = function (e) {
     return n.isString(e) ? n.escape(e) : "";
-  }, t.stripAnchors = function (e) {
+  };
+  t.stripAnchors = function (e) {
     return n.isString(e) ? s.removeAnchorTags(e) : "";
   };
-})
+});

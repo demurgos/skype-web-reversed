@@ -19,7 +19,8 @@ define("experience/components/chat", [
   var n = e("lodash-compat"), r = e("experience/settings"), i = e("constants/common"), s = e("services/serviceLocator"), o = e("swx-utils-common").loader, u = e("utils/chat/urlParser"), a = e("utils/chat/dateTime"), f = e("ui/components/chat/index"), l = e("ui/components/registrar"), c = e("constants/components").chat, h = e("ui/components/chat/pes.v2/expressionPicker"), p = e("ui/components/chat/pes.v2/itemsPicker"), d = e("ui/components/chat/pes.v2/itemRoster");
   t.init = function (e) {
     var t = s.resolve(i.serviceLocator.FEATURE_FLAGS);
-    t.isFeatureOn(i.featureFlags.LOCATION_MESSAGE_SUPPORT) && o.loadScript(r.mapsApiUrl + (u.isHttps(location.href) ? "&s=1" : "")), t.isFeatureOn(i.featureFlags.PES_V2_ENABLED) && (f = n.map(f, function (e) {
+    t.isFeatureOn(i.featureFlags.LOCATION_MESSAGE_SUPPORT) && o.loadScript(r.mapsApiUrl + (u.isHttps(location.href) ? "&s=1" : ""));
+    t.isFeatureOn(i.featureFlags.PES_V2_ENABLED) && (f = n.map(f, function (e) {
       switch (e.name) {
       case c.EXPRESSION_PICKER:
         return h;
@@ -30,6 +31,9 @@ define("experience/components/chat", [
       default:
         return e;
       }
-    })), a.notifyOnDayChange(), l.register(f), e();
+    }));
+    a.notifyOnDayChange();
+    l.register(f);
+    e();
   };
-})
+});

@@ -15,9 +15,12 @@ define("telemetry/chat/emotionActionEvent", [
         SET: "set",
         UNSET: "unset"
       }
-    }, e.publish = function () {
-      s.get().sendEvent(r.telemetry.uiTenantToken, t, e.data), e.init();
-    }, e.init = function () {
+    };
+    e.publish = function () {
+      s.get().sendEvent(r.telemetry.uiTenantToken, t, e.data);
+      e.init();
+    };
+    e.init = function () {
       e.data = {
         emotionType: n.telemetry.NOT_AVAILABLE,
         action: n.telemetry.NOT_AVAILABLE,
@@ -29,16 +32,22 @@ define("telemetry/chat/emotionActionEvent", [
         participantsCountGroup: n.telemetry.NOT_AVAILABLE,
         messageType: n.telemetry.NOT_AVAILABLE
       };
-    }, e.setDuration = function (t) {
-      e.data.tts = t, e.data.timeDelta = i.getDurationGroup(t);
-    }, e.setParticipantCount = function (t) {
-      e.data.participantsCount = t, e.data.participantsCountGroup = i.getParticipantCountGroup(t);
-    }, e.setMessageType = function (t) {
+    };
+    e.setDuration = function (t) {
+      e.data.tts = t;
+      e.data.timeDelta = i.getDurationGroup(t);
+    };
+    e.setParticipantCount = function (t) {
+      e.data.participantsCount = t;
+      e.data.participantsCountGroup = i.getParticipantCountGroup(t);
+    };
+    e.setMessageType = function (t) {
       e.data.messageType = i.getMessageType(t);
-    }, e.init();
+    };
+    e.init();
   }
   var n = e("constants/common"), r = e("experience/settings"), i = e("telemetry/chat/telemetryEnumerator"), s = e("ui/telemetry/telemetryClient");
   t.build = function () {
     return new o();
   };
-})
+});

@@ -1,6 +1,7 @@
 module.exports = function () {
   function e(e) {
-    this._errorCode = 0, this._errorCode = e;
+    this._errorCode = 0;
+    this._errorCode = e;
   }
   return e.prototype.ErrorCode = function () {
     return this._errorCode;

@@ -15,10 +15,12 @@ define("jSkype/services/plugin/electron/electronBase", [
   }, i.prototype.checkExistence = function (e) {
     e && e(!0);
   }, i.prototype.dispose = function (e) {
-    this.isDisposed = !0, e && e();
+    this.isDisposed = !0;
+    e && e();
   }, i.prototype._raiseEvent = function (e, t) {
-    n.log(this.constructor.name + " Event - " + e + ": " + JSON.stringify(t)), this["on" + e] && this["on" + e](t);
+    n.log(this.constructor.name + " Event - " + e + ": " + JSON.stringify(t));
+    this["on" + e] && this["on" + e](t);
   }, i.prototype._raiseLoadComplete = function (e) {
     this._raiseEvent("LoadComplete", { result: e ? r.LOAD_RESULT.LOAD_SUCCESSFUL : r.LOAD_RESULT.COMPONENT_INIT_FAILED });
   }, i;
-})
+});

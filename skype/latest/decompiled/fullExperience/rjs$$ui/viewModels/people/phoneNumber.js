@@ -17,12 +17,18 @@ define("ui/viewModels/people/phoneNumber", [
       return i.forceLTREmbedding(t.phoneNumber());
     }
     var t = this;
-    t.phoneNumber = r.newObservableProperty(e.displayString), t.displayString = n.computed(a), t.type = r.newObservableProperty(e.type), t.displayType = n.computed(u);
+    t.phoneNumber = r.newObservableProperty(e.displayString);
+    t.displayString = n.computed(a);
+    t.type = r.newObservableProperty(e.type);
+    t.displayType = n.computed(u);
   }
   var n = e("vendor/knockout"), r = e("utils/common/cafeObservable"), i = e("swx-utils-common").stringUtils, s = e("swx-i18n").localization, o = e("swx-enums");
   u.prototype.dispose = function () {
-    this.displayType.dispose(), this.displayString.dispose();
-  }, t.classFunction = u, t.build = function (e) {
+    this.displayType.dispose();
+    this.displayString.dispose();
+  };
+  t.classFunction = u;
+  t.build = function (e) {
     return new u(e);
   };
-})
+});

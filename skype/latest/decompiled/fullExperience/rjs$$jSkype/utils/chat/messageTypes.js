@@ -91,10 +91,16 @@ define("jSkype/utils/chat/messageTypes", [
   function H(e) {
     if (e._proccessed)
       return;
-    e.content = g.removeMetaData(e.content), e.content.length === 0 && (e.isDeleted = !0, e.content = x(new Date(parseInt(e.timestamp)))), e._proccessed = !0;
+    e.content = g.removeMetaData(e.content);
+    e.content.length === 0 && (e.isDeleted = !0, e.content = x(new Date(parseInt(e.timestamp))));
+    e._proccessed = !0;
   }
   function B(e, t) {
-    H(t), e.html._set(t.content), !t.isMyself || e._htmlSetEnabled(!0), e.isDeleted._set(!!t.isDeleted), e.isEdited._set(!!t.skypeeditedid && !t.isDeleted);
+    H(t);
+    e.html._set(t.content);
+    !t.isMyself || e._htmlSetEnabled(!0);
+    e.isDeleted._set(!!t.isDeleted);
+    e.isEdited._set(!!t.skypeeditedid && !t.isDeleted);
   }
   function j(e) {
     var t = P(e.author), n;
@@ -129,17 +135,32 @@ define("jSkype/utils/chat/messageTypes", [
           users: []
         };
       });
-    p.parseMessageProperties(i, e), i._id = e.id, i.sender = t, i.conversationId._set(e.conversationModel.conversationId), H(e), !e.isMyself || i._htmlSetEnabled.set(!0), i.isDeleted._set(!!e.isDeleted), i.isEdited._set(!!e.skypeeditedid && !e.isDeleted), i.type._set(s.activityType.PollMessage), i.direction._set(e.isMyself ? s.direction.Outgoing : s.direction.Incoming);
+    p.parseMessageProperties(i, e);
+    i._id = e.id;
+    i.sender = t;
+    i.conversationId._set(e.conversationModel.conversationId);
+    H(e);
+    !e.isMyself || i._htmlSetEnabled.set(!0);
+    i.isDeleted._set(!!e.isDeleted);
+    i.isEdited._set(!!e.skypeeditedid && !e.isDeleted);
+    i.type._set(s.activityType.PollMessage);
+    i.direction._set(e.isMyself ? s.direction.Outgoing : s.direction.Incoming);
     if (i.poll) {
       var b = n.find(i.poll(), function (e) {
         return e.key === "pollAnswer";
       });
       b && b.users && (b.users.forEach(function (e) {
         var t = e.value ? JSON.parse(e.value) : [], n = {};
-        v++, n.person = e.person, e.person ? n.displayName = e.person.displayName() : n.displayName = e.mri, t.forEach(function (e) {
+        v++;
+        n.person = e.person;
+        e.person ? n.displayName = e.person.displayName() : n.displayName = e.mri;
+        t.forEach(function (e) {
           var t = y[e];
-          t.votes = t.votes + 1, t.users.push(n), d < t.votes && (d = t.votes);
-        }), e.person === r && (m = t);
+          t.votes = t.votes + 1;
+          t.users.push(n);
+          d < t.votes && (d = t.votes);
+        });
+        e.person === r && (m = t);
       }), b.users.forEach(function (e) {
         var t = JSON.parse(e.value);
         t.forEach(function (e) {
@@ -240,14 +261,16 @@ define("jSkype/utils/chat/messageTypes", [
     };
   t.fetch = function (e) {
     return tt.hasOwnProperty(e) ? tt[e] : tt.Unknown;
-  }, t.parse = function (e, t) {
+  };
+  t.parse = function (e, t) {
     try {
       return e(t);
     } catch (n) {
       var r = t.content.match(/<URIObject[^>]*?\stype=\"([^"]+?)\"/i);
       return r && r[1] && r[1].split(".")[0].toLowerCase() === "poll" && d.error(t.conversationModel.conversationId, t.key, r[1], o.telemetry.poll.errorType.PARSING), L(t);
     }
-  }, t._isDeletedMessage = M;
+  };
+  t._isDeletedMessage = M;
   var tt = {
     Unknown: O,
     Text: _,
@@ -332,4 +355,4 @@ define("jSkype/utils/chat/messageTypes", [
       return o || u ? h = s.activityType.CallStarted : i ? (l = parseInt(i[1], 10), h = s.activityType.CallEnded) : f && e.isMyself && (h = s.activityType.CallEnded), p = new a.CallingActivityItem(), p.duration._set(l), p.isRead._set(!1), p.type._set(h), p.direction._set(e.isMyself ? s.direction.Outgoing : s.direction.Incoming), p;
     }
   };
-})
+});

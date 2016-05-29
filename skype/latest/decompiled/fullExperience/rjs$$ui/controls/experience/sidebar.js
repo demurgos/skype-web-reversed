@@ -59,8 +59,16 @@ define("ui/controls/experience/sidebar", [
     ].join(e);
   }
   var n = e("vendor/knockout"), r = e("browser/dom"), i = e("text!views/experience/sidebar.html"), s = e("ui/controls/experience/shareDialogController"), o = e("ui/viewModels/experience/sidebar"), u = e("utils/common/styleModeHelper"), a = e("constants/common"), f = e("lodash-compat"), l = e("services/serviceLocator"), c = "side themeWhite", h = "inactive";
-  t.name = "sidebar", t.render = function (e, t) {
+  t.name = "sidebar";
+  t.render = function (e, t) {
     var o = r.createElement("div"), f = l.resolve(a.serviceLocator.FEATURE_FLAGS);
-    o.className = c, r.addClass(o, d(e)), o.innerHTML = i, f.isFeatureOn(a.featureFlags.HIDE_SIDEBAR_ON_START) && v(o), n.applyBindings(m(o), o), t(o), s.conditionallyLaunchSharingExperience(), u.get().addContainer(o);
+    o.className = c;
+    r.addClass(o, d(e));
+    o.innerHTML = i;
+    f.isFeatureOn(a.featureFlags.HIDE_SIDEBAR_ON_START) && v(o);
+    n.applyBindings(m(o), o);
+    t(o);
+    s.conditionallyLaunchSharingExperience();
+    u.get().addContainer(o);
   };
-})
+});

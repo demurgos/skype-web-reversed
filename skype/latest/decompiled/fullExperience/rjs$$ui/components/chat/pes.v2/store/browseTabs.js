@@ -17,4 +17,4 @@ define("ui/components/chat/pes.v2/store/browseTabs", [
   }
   var t = e("text!views/chat/pes.v2/store/browseTabs.html"), n = e("ui/viewModels/chat/pes.v2/store/browseTabs");
   return new r();
-})
+});

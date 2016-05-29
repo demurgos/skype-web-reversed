@@ -68,12 +68,16 @@ define("ui/viewModels/chat/recent", [
       r = new E({
         noUrlPreview: !0,
         noTranslationItem: !0
-      }), r.init(n, N), S.isLiveSession(r.group() === i.activityItemGroups.CALL), S.isInfoMessage(r.group() === i.activityItemGroups.CONTACT_REQUEST);
+      });
+      r.init(n, N);
+      S.isLiveSession(r.group() === i.activityItemGroups.CALL);
+      S.isInfoMessage(r.group() === i.activityItemGroups.CONTACT_REQUEST);
       if (S.isLiveSession.peek())
         S.callAction(r.callAction || ""), k("live-session");
       else if (S.isInfoMessage.peek()) {
         var s = r.model.type(), o = $(s);
-        S.infoType(o), k("info");
+        S.infoType(o);
+        k("info");
       } else
         k("message");
       return x && x.dispose(), x = r, r;
@@ -99,14 +103,73 @@ define("ui/viewModels/chat/recent", [
     }
     var S = this, x, T, N, C, k, L, A, O, M, D = 300, P = u.resolve(i.serviceLocator.FEATURE_FLAGS), H, B, j, F;
     S.init = function (t) {
-      N = t, O = g.build(t), M = b.build(t), k = n.observable("message"), T = y.build(N), A = u.resolve(i.serviceLocator.NAVIGATION_CONTEXT), H = P.isFeatureOn(i.featureFlags.HEARTS_ENABLED), B = P.isFeatureOn(i.featureFlags.HEARTS_NOTIFICATION_ENABLED), j = P.isFeatureOn(i.featureFlags.FAVORITES_CONVERSATION_ENABLED), S.displayMessage = T.displayMessage, S.isBlocked = T.isBlocked, S.topic = M.topic, S.unreadCount = l.newObservableProperty(N.historyService.unreadActivityItemsCount), C = l.newObservableCollection(N.historyService.activityItems), S.isLiveSession = n.observable(!1), S.callAction = n.observable(""), S.isOnCall = O.isOnCall, S.canJoinCall = O.canJoinCall, S.isFavorited = N._isFavorited ? l.newObservableProperty(N._isFavorited) : n.observable(!1), S.isInfoMessage = n.observable(!1), S.infoType = n.observable(""), S.isGroupConversation = l.newObservableProperty(N.isGroupConversation), S.avatarUrl = l.newObservableProperty(N.avatarUrl, { keepAlive: !0 }), S.timestamp = l.newObservableProperty(N.lastModificationTimestamp), S.statusClassName = T.statusClassName, S.groupSearchResults = 0, S.conversation = N, S.isAgent = T.isAgent, S.isCertifiedAgent = T.isCertifiedAgent, S.isPstn = T.isPstn, S.unreadActivityItemsCount = n.computed(R.bind(null, S.unreadCount)), N.historyService._unreadActivityItemsWithKeywordsCount ? (S.unreadWithKeywordsCount = l.newObservableProperty(N.historyService._unreadActivityItemsWithKeywordsCount), S.unreadActivityItemsWithKeywordsCount = n.computed(R.bind(null, S.unreadWithKeywordsCount))) : S.unreadActivityItemsWithKeywordsCount = n.observable(!1), S.notificationEnabled = n.observable(!0), L = n.computed(V), S.lastMessageIsOutgoing = n.computed(U), S.content = n.computed(X), S.isActive = n.computed(z), S.isRead = n.computed(W).extend({ rateLimit: D }), S.hasUnseenHearts = n.observable(!1), S.displayUnseenHeartsIcon = n.computed(function () {
+      N = t;
+      O = g.build(t);
+      M = b.build(t);
+      k = n.observable("message");
+      T = y.build(N);
+      A = u.resolve(i.serviceLocator.NAVIGATION_CONTEXT);
+      H = P.isFeatureOn(i.featureFlags.HEARTS_ENABLED);
+      B = P.isFeatureOn(i.featureFlags.HEARTS_NOTIFICATION_ENABLED);
+      j = P.isFeatureOn(i.featureFlags.FAVORITES_CONVERSATION_ENABLED);
+      S.displayMessage = T.displayMessage;
+      S.isBlocked = T.isBlocked;
+      S.topic = M.topic;
+      S.unreadCount = l.newObservableProperty(N.historyService.unreadActivityItemsCount);
+      C = l.newObservableCollection(N.historyService.activityItems);
+      S.isLiveSession = n.observable(!1);
+      S.callAction = n.observable("");
+      S.isOnCall = O.isOnCall;
+      S.canJoinCall = O.canJoinCall;
+      S.isFavorited = N._isFavorited ? l.newObservableProperty(N._isFavorited) : n.observable(!1);
+      S.isInfoMessage = n.observable(!1);
+      S.infoType = n.observable("");
+      S.isGroupConversation = l.newObservableProperty(N.isGroupConversation);
+      S.avatarUrl = l.newObservableProperty(N.avatarUrl, { keepAlive: !0 });
+      S.timestamp = l.newObservableProperty(N.lastModificationTimestamp);
+      S.statusClassName = T.statusClassName;
+      S.groupSearchResults = 0;
+      S.conversation = N;
+      S.isAgent = T.isAgent;
+      S.isCertifiedAgent = T.isCertifiedAgent;
+      S.isPstn = T.isPstn;
+      S.unreadActivityItemsCount = n.computed(R.bind(null, S.unreadCount));
+      N.historyService._unreadActivityItemsWithKeywordsCount ? (S.unreadWithKeywordsCount = l.newObservableProperty(N.historyService._unreadActivityItemsWithKeywordsCount), S.unreadActivityItemsWithKeywordsCount = n.computed(R.bind(null, S.unreadWithKeywordsCount))) : S.unreadActivityItemsWithKeywordsCount = n.observable(!1);
+      S.notificationEnabled = n.observable(!0);
+      L = n.computed(V);
+      S.lastMessageIsOutgoing = n.computed(U);
+      S.content = n.computed(X);
+      S.isActive = n.computed(z);
+      S.isRead = n.computed(W).extend({ rateLimit: D });
+      S.hasUnseenHearts = n.observable(!1);
+      S.displayUnseenHeartsIcon = n.computed(function () {
         return B && S.hasUnseenHearts() && !S.isActive();
-      }), H && B && N.historyService._messagesWithUnseenHearts.changed(I), S.cssClass = n.computed(J), S.callDuration = n.computed(K), N._notificationsEnabled && (F = N._notificationsEnabled.changed(function (e) {
+      });
+      H && B && N.historyService._messagesWithUnseenHearts.changed(I);
+      S.cssClass = n.computed(J);
+      S.callDuration = n.computed(K);
+      N._notificationsEnabled && (F = N._notificationsEnabled.changed(function (e) {
         S.notificationEnabled(e);
       }));
-    }, S.dispose = function () {
-      S.unreadActivityItemsCount.dispose(), L.dispose(), S.lastMessageIsOutgoing.dispose(), S.content.dispose(), S.isActive.dispose(), S.isRead.dispose(), S.cssClass.dispose(), M.dispose(), T.dispose(), x && (x.dispose(), x = null), O.dispose(), H && B && N.historyService._messagesWithUnseenHearts.changed.off(I), S.displayUnseenHeartsIcon.dispose(), F && F.dispose(), S.unreadActivityItemsWithKeywordsCount && S.unreadActivityItemsWithKeywordsCount.dispose && S.unreadActivityItemsWithKeywordsCount.dispose();
-    }, S.showContextMenu = function (e, n) {
+    };
+    S.dispose = function () {
+      S.unreadActivityItemsCount.dispose();
+      L.dispose();
+      S.lastMessageIsOutgoing.dispose();
+      S.content.dispose();
+      S.isActive.dispose();
+      S.isRead.dispose();
+      S.cssClass.dispose();
+      M.dispose();
+      T.dispose();
+      x && (x.dispose(), x = null);
+      O.dispose();
+      H && B && N.historyService._messagesWithUnseenHearts.changed.off(I);
+      S.displayUnseenHeartsIcon.dispose();
+      F && F.dispose();
+      S.unreadActivityItemsWithKeywordsCount && S.unreadActivityItemsWithKeywordsCount.dispose && S.unreadActivityItemsWithKeywordsCount.dispose();
+    };
+    S.showContextMenu = function (e, n) {
       function u() {
         if (!j)
           return;
@@ -120,7 +183,11 @@ define("ui/viewModels/chat/recent", [
             source: v.contextMenuItem.deleteItem,
             parent: v.recentItem
           };
-        s.push(d.getConversationContextMenuItemGroup(e, r, o)), s.push(new p.BlockContactMenuItem(e, t)), s.push(new p.DeleteContactMenuItem(e, r, i)), d.sortMenuItems(s), h.show(s, n, o);
+        s.push(d.getConversationContextMenuItemGroup(e, r, o));
+        s.push(new p.BlockContactMenuItem(e, t));
+        s.push(new p.DeleteContactMenuItem(e, r, i));
+        d.sortMenuItems(s);
+        h.show(s, n, o);
       }
       var r = i.telemetry.historyLoadOrigin.TIMELINE_CLICK, s = [
           new p.LeaveConversationMenuItem(N),
@@ -129,10 +196,13 @@ define("ui/viewModels/chat/recent", [
           source: v.recentItem,
           isGroupConversation: !1
         };
-      u(), S.isGroupConversation() ? (o.isGroupConversation = !0, h.show(s, n, o)) : c.once(T.contact, t.isObject, a);
-    }, S.handleClick = function (t, n) {
+      u();
+      S.isGroupConversation() ? (o.isGroupConversation = !0, h.show(s, n, o)) : c.once(T.contact, t.isObject, a);
+    };
+    S.handleClick = function (t, n) {
       var r = i.telemetry.historyLoadOrigin.TIMELINE_CLICK;
-      f.getInstance().startTrace("navigateConversation"), n.preventDefault();
+      f.getInstance().startTrace("navigateConversation");
+      n.preventDefault();
       if (!t.model.isActive()) {
         var s = a.get();
         s.timelineInSearchMode && (r = i.telemetry.historyLoadOrigin.GROUP_SEARCH);
@@ -141,14 +211,16 @@ define("ui/viewModels/chat/recent", [
         model: N,
         origin: r
       });
-    }, S.ariaLabel = n.pureComputed(function () {
+    };
+    S.ariaLabel = n.pureComputed(function () {
       var e, t;
       return e = S.unreadCount() > 0, t = q(S.isGroupConversation(), e), r.fetch({
         key: t,
         count: S.unreadCount(),
         params: { topic: S.topic() }
       });
-    }), S.getSearchItemDetails = function (e) {
+    });
+    S.getSearchItemDetails = function (e) {
       var t = "";
       return S.isGroupConversation() ? (S.displayMessage() ? t = r.fetch({
         key: "accessibility_searchItem_group_displayMessage",
@@ -168,4 +240,4 @@ define("ui/viewModels/chat/recent", [
       }), t) : t;
     };
   };
-})
+});

@@ -21,7 +21,9 @@ define("notifications/modelObservers/contactRequestObserver", [
           conversation: e,
           activityItem: n
         };
-      i = r.build(t.notifications.CONTACT_REQUEST, s), u(i), n.isRead.once(!0, function () {
+      i = r.build(t.notifications.CONTACT_REQUEST, s);
+      u(i);
+      n.isRead.once(!0, function () {
         i.active(!1);
       });
     }
@@ -44,4 +46,4 @@ define("notifications/modelObservers/contactRequestObserver", [
       return new s();
     }
   };
-})
+});

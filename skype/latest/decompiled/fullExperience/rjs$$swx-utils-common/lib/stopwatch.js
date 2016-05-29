@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -13,7 +13,9 @@ function (e) {
   }
   var n = function () {
     function e() {
-      this.msElapsed = 0, this.isPaused = !1, this.startTime = new Date().getTime();
+      this.msElapsed = 0;
+      this.isPaused = !1;
+      this.startTime = new Date().getTime();
     }
     return e.prototype.pause = function () {
       this.isPaused || (this.msElapsed += new Date().getTime() - this.startTime, this.isPaused = !0);
@@ -29,5 +31,6 @@ function (e) {
       return Math.ceil(e);
     }, e;
   }();
-  t.Stopwatch = n, t.build = r;
-})
+  t.Stopwatch = n;
+  t.build = r;
+}));

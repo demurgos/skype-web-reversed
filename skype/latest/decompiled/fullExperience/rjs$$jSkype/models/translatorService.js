@@ -60,13 +60,18 @@ define("jSkype/models/translatorService", [
     function c() {
       var i = n.task(), u = s.buildUrl(r.settings.translatorServiceURI.LANGUAGES, { scope: "text" });
       return t(u).then(function (t) {
-        l(t), e.state._set(o.translatorServiceState.Authenticated), i.resolve(e.supportedLanguages());
+        l(t);
+        e.state._set(o.translatorServiceState.Authenticated);
+        i.resolve(e.supportedLanguages());
       }, function (t) {
-        e.state._set(o.translatorServiceState.Error), i.reject(t);
+        e.state._set(o.translatorServiceState.Error);
+        i.reject(t);
       }), i.promise;
     }
     var e = this;
-    e.supportedLanguages = n.collection({ get: c }), e.translateMessage = n.command(f, n.boolProperty(!0)), e.state = n.property({
+    e.supportedLanguages = n.collection({ get: c });
+    e.translateMessage = n.command(f, n.boolProperty(!0));
+    e.state = n.property({
       readOnly: !0,
       value: o.translatorServiceState.NotReady
     });
@@ -75,4 +80,4 @@ define("jSkype/models/translatorService", [
   t.build = function () {
     return new f();
   };
-})
+});

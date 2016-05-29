@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -10,5 +10,6 @@ function (e) {
       "./sha256Auth"
     ], e);
 }(function (e, t) {
-  t.aes = e("./msrcrypto.aes"), t.sha256Auth = e("./sha256Auth");
-})
+  t.aes = e("./msrcrypto.aes");
+  t.sha256Auth = e("./sha256Auth");
+}));

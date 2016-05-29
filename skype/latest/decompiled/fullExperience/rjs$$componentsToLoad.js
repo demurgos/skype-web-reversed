@@ -8,4 +8,4 @@ define("componentsToLoad", [
   "experience/components/me"
 ], function () {
   return Array.prototype.slice.apply(arguments);
-})
+});

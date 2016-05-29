@@ -11,14 +11,20 @@ define("jSkype/services/plugin/baseComponent", [
   "constants/plugin.const"
 ], function (e) {
   function l(e) {
-    this._componentName = e, this._loadDelayMilisec = 0, this._loadDelayTimer = null, this._heartBeatTimer = null, this._pluginExistenceCheckTimer = null, this._useNativeArguments = !1;
+    this._componentName = e;
+    this._loadDelayMilisec = 0;
+    this._loadDelayTimer = null;
+    this._heartBeatTimer = null;
+    this._pluginExistenceCheckTimer = null;
+    this._useNativeArguments = !1;
   }
   function c(e) {
     return !!e.plugin && (m() || !!e.plugin.Load);
   }
   function h(e) {
     e._loadDelayMilisec < u.settings.plugin.maxTotalLoadDelayMilisec ? e._loadDelayTimer = o.setTimeout(function () {
-      e._loadDelayMilisec += u.settings.plugin.loadDelayMilisec, e.load();
+      e._loadDelayMilisec += u.settings.plugin.loadDelayMilisec;
+      e.load();
     }, u.settings.plugin.loadDelayMilisec) : e.onError && e.onError("Plugin Failed to Initialize");
   }
   function p(e) {
@@ -26,7 +32,8 @@ define("jSkype/services/plugin/baseComponent", [
   }
   function d(e) {
     function n() {
-      o.clearTimeout(e._heartBeatTimer), e._heartBeatTimer = o.setTimeout(function () {
+      o.clearTimeout(e._heartBeatTimer);
+      e._heartBeatTimer = o.setTimeout(function () {
         e.onComponentCrashed && e.onComponentCrashed();
       }, u.settings.plugin.pingHeartBeatTimeout);
     }
@@ -35,17 +42,21 @@ define("jSkype/services/plugin/baseComponent", [
     }
     function i(t, n) {
       var i = e._decodeArgs(n);
-      s.log(e._componentName + " Event - " + t + ": " + JSON.stringify(i) + " @" + e.componentId), t === "__FxLoadComplete" ? t = "LoadComplete" : t === "__FxUnLoadComplete" && (t = "UnLoadComplete"), r(e, t, i);
+      s.log(e._componentName + " Event - " + t + ": " + JSON.stringify(i) + " @" + e.componentId);
+      t === "__FxLoadComplete" ? t = "LoadComplete" : t === "__FxUnLoadComplete" && (t = "UnLoadComplete");
+      r(e, t, i);
     }
     function a() {
-      e._pluginExistenceCheckTimer && (o.clearTimeout(e._pluginExistenceCheckTimer), e._pluginExistenceCheckTimer = null), n();
+      e._pluginExistenceCheckTimer && (o.clearTimeout(e._pluginExistenceCheckTimer), e._pluginExistenceCheckTimer = null);
+      n();
       try {
         return e.plugin.PingResponse(), !0;
       } catch (t) {
       }
       return !1;
     }
-    e.plugin.OnEvent = i, e.plugin.OnPing = a;
+    e.plugin.OnEvent = i;
+    e.plugin.OnPing = a;
   }
   function v(e, t, r) {
     var i = {
@@ -76,11 +87,18 @@ define("jSkype/services/plugin/baseComponent", [
   var t = e("utils/common/async"), n = e("jSkype/services/plugin/pluginEmbed"), r = e("swx-utils-common").guid, i = e("browser/detect"), s = e("jSkype/telemetry/logging/callingLogTracer").get(), o = e("browser/window"), u = e("jSkype/settings"), a = e("utils/common/version"), f = e("constants/plugin.const");
   return l.prototype._init = function (t, r) {
     var i = this;
-    i.componentId = p(i._componentName), i.plugin = v(t, i.componentId, r), i.whenUnloaded = new Promise(function (e) {
+    i.componentId = p(i._componentName);
+    i.plugin = v(t, i.componentId, r);
+    i.whenUnloaded = new Promise(function (e) {
       i.onUnLoadComplete = function () {
-        n.removeComponent(i.componentId), i.isDisposed = !0, delete i.plugin, e();
+        n.removeComponent(i.componentId);
+        i.isDisposed = !0;
+        delete i.plugin;
+        e();
       };
-    }), d(this), y(this);
+    });
+    d(this);
+    y(this);
   }, l.prototype.load = function (t) {
     c(this) ? (this._useNativeArguments = g(this.plugin.GetVersion()), this.plugin.Load(this._componentName, this._encodeArgs(t))) : h(this);
   }, l.prototype._invokeMethod = function (t, n, r, i) {
@@ -91,15 +109,18 @@ define("jSkype/services/plugin/baseComponent", [
     }
     var u = this._encodeArgs(n), a, f = function () {
       };
-    r = r || f, i = i || f;
+    r = r || f;
+    i = i || f;
     try {
       a = this.plugin.ProcessMethod(t, u);
     } catch (l) {
-      s.warn("e", l.stack), i(l);
+      s.warn("e", l.stack);
+      i(l);
       return;
     }
     var h = this._decodeArgs(a), p = o + " Result: " + JSON.stringify(a);
-    s.log(p), h.error ? i(h.error) : r(h);
+    s.log(p);
+    h.error ? i(h.error) : r(h);
   }, l.prototype.getVersion = function (t) {
     var n = this.plugin.GetVersion();
     t && t(n);
@@ -111,18 +132,22 @@ define("jSkype/services/plugin/baseComponent", [
     t && t(n);
   }, l.prototype.unload = function (t) {
     try {
-      this.whenUnloaded.then(t), this.plugin.UnLoad();
+      this.whenUnloaded.then(t);
+      this.plugin.UnLoad();
     } catch (n) {
-      s.warn("[BaseComponent] unable to unload component", n), t && t();
+      s.warn("[BaseComponent] unable to unload component", n);
+      t && t();
     }
   }, l.prototype.dispose = function (t) {
     var r = this;
     this.isDisposed || (o.clearTimeout(this._loadDelayTimer), o.clearTimeout(this._heartBeatTimer), o.clearTimeout(this._pluginExistenceCheckTimer), this.unload(function () {
-      n.removeComponent(r.componentId), delete r.plugin, t && t();
+      n.removeComponent(r.componentId);
+      delete r.plugin;
+      t && t();
     }), this.isDisposed = !0);
   }, l.prototype._encodeArgs = function (e) {
     return this._useNativeArguments ? e || {} : JSON.stringify(e || {});
   }, l.prototype._decodeArgs = function (e) {
     return this._useNativeArguments ? e || {} : JSON.parse(e || "{}");
   }, l;
-})
+});

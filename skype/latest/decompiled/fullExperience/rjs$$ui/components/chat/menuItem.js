@@ -9,5 +9,7 @@ define("ui/components/chat/menuItem", [
     return e.viewModel;
   }
   var n = e("text!views/chat/timeline/menuItem.html");
-  t.name = e("constants/components").chat.MENU_ITEM, t.viewModel = { createViewModel: r }, t.template = n;
-})
+  t.name = e("constants/components").chat.MENU_ITEM;
+  t.viewModel = { createViewModel: r };
+  t.template = n;
+});

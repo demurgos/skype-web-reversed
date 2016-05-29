@@ -15,4 +15,4 @@ define("jSkype/constants/people", {
     AUTHORIZED: "AUTHORIZED",
     SUGGESTED: "SUGGESTED"
   }
-})
+});

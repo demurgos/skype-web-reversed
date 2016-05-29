@@ -10,7 +10,8 @@ define("services/calling/layouts/galleryLayout", [
       t.layoutPosition !== n && (t.layoutPosition = n, e(t));
     }
     function p(e) {
-      l = Math.floor(e / s), l = Math.min(u, Math.max(o, l));
+      l = Math.floor(e / s);
+      l = Math.min(u, Math.max(o, l));
     }
     function d() {
       var e = m(), t = c.filter(function (t) {
@@ -44,21 +45,30 @@ define("services/calling/layouts/galleryLayout", [
     n.call(this);
     var a = this, f, l = 1, c = [];
     a.addItem = function (e) {
-      i.insertAt(c, l, e), d();
-    }, a.removeItems = function (e) {
+      i.insertAt(c, l, e);
+      d();
+    };
+    a.removeItems = function (e) {
       var n = c.filter(e);
       n.length > 0 && (n.forEach(function (e) {
         t.remove(c, e);
       }), d());
-    }, a.onActiveSpeakerChanged = function (e) {
+    };
+    a.onActiveSpeakerChanged = function (e) {
       var t, n, r;
       e.forEach(function (i) {
-        t = v(i), n = c.indexOf(t), t && n >= l && (r = g(e, n, i) || r);
-      }), r && d();
-    }, a.onWidthChanged = function (e) {
+        t = v(i);
+        n = c.indexOf(t);
+        t && n >= l && (r = g(e, n, i) || r);
+      });
+      r && d();
+    };
+    a.onWidthChanged = function (e) {
       if (e === f)
         return;
-      f = e, p(e), d();
+      f = e;
+      p(e);
+      d();
     };
   }
   var t = e("lodash-compat"), n = e("services/calling/layouts/baseLayout"), r = e("constants/calling").LAYOUT_PLACES, i = e("utils/common/array"), s = 400, o = 1;
@@ -67,4 +77,4 @@ define("services/calling/layouts/galleryLayout", [
       return new u(e, t);
     }
   };
-})
+});

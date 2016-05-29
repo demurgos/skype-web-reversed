@@ -18,4 +18,4 @@ define("jSkype/constants/data", [], function () {
       CONVERSATION: t("conv")
     }
   };
-})
+});

@@ -19,4 +19,4 @@ define("jSkype/services/mediaAgent/mediaLegId", [], function () {
       return new e();
     }
   };
-})
+});

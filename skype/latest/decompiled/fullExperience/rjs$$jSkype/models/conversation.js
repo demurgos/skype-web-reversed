@@ -37,12 +37,17 @@ define("jSkype/models/conversation", [
       var n = !1;
       e.forEach(function (e) {
         var r = f.getTypeFromKey(e.id), i = f.getId(e.id);
-        e.contactType || (e.contactType = r), e.id = i, t[e.id] = e;
+        e.contactType || (e.contactType = r);
+        e.id = i;
+        t[e.id] = e;
         var s = e.linkedMri && e.linkedMri.indexOf(I.id()) > 0;
         n = n || e.id === I.id() || s;
-      }), st(n), B.each(function (e) {
+      });
+      st(n);
+      B.each(function (e) {
         t[e.id] || zt(e.id);
-      }), _t(t, function (e) {
+      });
+      _t(t, function (e) {
         var n = t[e].role.toLowerCase(), r = t[e].contactType;
         Xt(e, M[n], null, r);
       });
@@ -50,7 +55,10 @@ define("jSkype/models/conversation", [
     function st(e) {
       if (e === $)
         return;
-      $ = e, rt && H._isFavorited() && !$ && H._isFavorited(!1), mt(), gt();
+      $ = e;
+      rt && H._isFavorited() && !$ && H._isFavorited(!1);
+      mt();
+      gt();
     }
     function ot(t) {
       if (t.length === 0)
@@ -83,7 +91,8 @@ define("jSkype/models/conversation", [
     }
     function ht(e) {
       var t;
-      e.threadProperties && e.threadProperties.topic && e.threadProperties.topic !== " " ? t = e.threadProperties.topic : e.members && (t = ct(e.members)), tt = e.members && e.members.length || tt;
+      e.threadProperties && e.threadProperties.topic && e.threadProperties.topic !== " " ? t = e.threadProperties.topic : e.members && (t = ct(e.members));
+      tt = e.members && e.members.length || tt;
       if (!t)
         return;
       if (t === I.id()) {
@@ -97,7 +106,8 @@ define("jSkype/models/conversation", [
         if (r === I.id() || r === "...")
           continue;
         if (!pt(r)) {
-          tt = null, H.topic._set(l.parseTopic(t));
+          tt = null;
+          H.topic._set(l.parseTopic(t));
           return;
         }
         s.push(r);
@@ -117,14 +127,16 @@ define("jSkype/models/conversation", [
     function vt() {
       j.forEach(function (e) {
         e.subscription.dispose();
-      }), j = [];
+      });
+      j = [];
     }
     function mt() {
       var t = e.isOnline() && $ && !bt() && !yt();
       H.activeModalities.chat._set(t);
     }
     function gt() {
-      H.audioService._membershipChanged($), H.videoService._membershipChanged($);
+      H.audioService._membershipChanged($);
+      H.videoService._membershipChanged($);
     }
     function yt() {
       return P === "8:echo123";
@@ -169,7 +181,9 @@ define("jSkype/models/conversation", [
     }
     function Nt() {
       function r(e) {
-        st(!0), H.selfParticipant.role._set(n), t.reject(e);
+        st(!0);
+        H.selfParticipant.role._set(n);
+        t.reject(e);
       }
       var t = s.task(), n = H.selfParticipant.role();
       return rt && H._isFavorited() && H._isFavorited(!1), H.selfParticipant.role._set(C.participantRole.Attendee), st(!1), e.removeParticipant(H.conversationId, H.selfParticipant.person.id(), t.resolve.bind(t), r), nt.dispose(), nt = null, t.promise;
@@ -183,13 +197,17 @@ define("jSkype/models/conversation", [
       return e.sendContactInfoMessage(H, r, t, n.resolve.bind(n), n.reject.bind(n)), n.promise;
     }
     function At(e) {
-      Lt.push(e), n.clearTimeout(At.asyncRef), At.asyncRef = n.setTimeout(function () {
-        H._callHandler.extendCall(Lt), Lt = [];
+      Lt.push(e);
+      n.clearTimeout(At.asyncRef);
+      At.asyncRef = n.setTimeout(function () {
+        H._callHandler.extendCall(Lt);
+        Lt = [];
       }, 0);
     }
     function Ot(t) {
       function i(e) {
-        zt(r), n.reject(e);
+        zt(r);
+        n.reject(e);
       }
       var n, r = t.person.id();
       if (H.selfParticipant.audio.state() === C.callConnectionState.Connected)
@@ -206,10 +224,12 @@ define("jSkype/models/conversation", [
     }
     function Mt(t) {
       function i(e) {
-        Q.add(t, r), It({
+        Q.add(t, r);
+        It({
           id: r,
           role: t.role()
-        }), n.reject(e);
+        });
+        n.reject(e);
       }
       var n = s.task(), r = t.person.id();
       if (!pt(r)) {
@@ -223,17 +243,20 @@ define("jSkype/models/conversation", [
         e.hasOwnProperty(n) && t(n);
     }
     function Dt() {
-      H._isAlive = !0, B.each(function (e) {
+      H._isAlive = !0;
+      B.each(function (e) {
         Q(e.id) || Ht(Ft(e.id, e.type));
       });
     }
     function Pt() {
-      H._isAlive = !1, Q.empty();
+      H._isAlive = !1;
+      Q.empty();
     }
     function Ht(e) {
       var t = B(e.person.id());
       try {
-        t && e.role._set(t.role), Q.add(e, e.person.id());
+        t && e.role._set(t.role);
+        Q.add(e, e.person.id());
       } catch (n) {
         return !1;
       }
@@ -252,10 +275,12 @@ define("jSkype/models/conversation", [
     }
     function It(e) {
       var t = e.id;
-      pt(t) === !1 ? B.add(e, t) : B(t).role = e.role, $t();
+      pt(t) === !1 ? B.add(e, t) : B(t).role = e.role;
+      $t();
     }
     function qt(e) {
-      pt(e) && B.remove(e), $t();
+      pt(e) && B.remove(e);
+      $t();
     }
     function Rt() {
     }
@@ -263,16 +288,19 @@ define("jSkype/models/conversation", [
       return q.remove(e);
     }
     function zt(e) {
-      qt(e), Bt() && Q.remove(e);
+      qt(e);
+      Bt() && Q.remove(e);
     }
     function Wt() {
       if (F)
         return;
-      F = !0, setTimeout(function () {
+      F = !0;
+      setTimeout(function () {
         var e = j.map(function (e) {
           return e.person.displayName();
         });
-        H.topic._set(l.parseTopic(e.join(i))), F = !1;
+        H.topic._set(l.parseTopic(e.join(i)));
+        F = !1;
       }, 0);
     }
     function Xt(e, t, n, r) {
@@ -294,7 +322,8 @@ define("jSkype/models/conversation", [
       }), e;
     }
     function $t() {
-      H.audioService._setPSTNParticipants(Vt()), H.videoService._setPSTNParticipants(Vt());
+      H.audioService._setPSTNParticipants(Vt());
+      H.videoService._setPSTNParticipants(Vt());
     }
     function Jt() {
       var e = H.isJoiningEnabled(), t = H.activeModalities.chat() && !H.selfParticipant.isAnonymous() && !yt();
@@ -329,73 +358,153 @@ define("jSkype/models/conversation", [
         subscribed: Dt,
         unsubscribed: Pt
       } : null), G = s.task().resolve(), Y = s.task().resolve(), Z = s.boolProperty(!1), et = s.command(ot, Z), tt, nt, rt = N.isFeatureOn(r.featureFlags.FAVORITES_CONVERSATION_ENABLED);
-    this._isAlive = !1, this.avatarUrl = s.property({ value: O }), this.topic = s.property({
+    this._isAlive = !1;
+    this.avatarUrl = s.property({ value: O });
+    this.topic = s.property({
       set: et,
       value: ""
-    }), this.isGroupConversation = s.property({
+    });
+    this.isGroupConversation = s.property({
       readOnly: !0,
       value: D
-    }), this.spawnedConversation = s.property({ readOnly: !0 }), this.conversationId = P, this.uri = s.property({
+    });
+    this.spawnedConversation = s.property({ readOnly: !0 });
+    this.conversationId = P;
+    this.uri = s.property({
       readOnly: !0,
       get: Tt
-    }), this.participantsCount = B.size, this._topicSetEnabled = s.boolProperty(!1), rt && (this._isFavorited = s.property({
+    });
+    this.participantsCount = B.size;
+    this._topicSetEnabled = s.boolProperty(!1);
+    rt && (this._isFavorited = s.property({
       value: !1,
       set: s.command(Et, W)
-    })), this.autoCall = s.boolProperty(!1), this.activeModalities = new h(), this.selfParticipant = new p(I, this, e), P && (this._topicSetEnabled(!0), Gt()), this.lastModificationTimestamp = s.property({
+    }));
+    this.autoCall = s.boolProperty(!1);
+    this.activeModalities = new h();
+    this.selfParticipant = new p(I, this, e);
+    P && (this._topicSetEnabled(!0), Gt());
+    this.lastModificationTimestamp = s.property({
       readOnly: !0,
       value: null
-    }), this.isJoiningEnabled = s.property({
+    });
+    this.isJoiningEnabled = s.property({
       value: !1,
       set: s.command(wt, R)
-    }), this.pendingInvitations = q.asWritable({
+    });
+    this.pendingInvitations = q.asWritable({
       add: s.command(Rt, s.boolProperty(!0)),
       remove: s.command(Ut, this.activeModalities.chat)
-    }), this.participants = Q.asWritable({
+    });
+    this.participants = Q.asWritable({
       add: s.command(Ot, J),
       remove: s.command(Mt, K)
-    }), this.historyService = new w(b, e, this), this.audioService = v.build(this), this._autoCallingService = m.build(this), this.videoService = g.build(this), this.screenSharingService = y.build(this), this.chatService = new d(e, this), this.fileTransferService = E.build(this, e), this.mediaConnectionType = s.property({ value: C.mediaConnectionType.Unknown }), this.leave = s.command(Nt, U), this.sendPollMessage = s.command(Ct, z), this.sendContactInfo = s.command(kt, X), this.acknowledge = s.enabledCommand(function () {
+    });
+    this.historyService = new w(b, e, this);
+    this.audioService = v.build(this);
+    this._autoCallingService = m.build(this);
+    this.videoService = g.build(this);
+    this.screenSharingService = y.build(this);
+    this.chatService = new d(e, this);
+    this.fileTransferService = E.build(this, e);
+    this.mediaConnectionType = s.property({ value: C.mediaConnectionType.Unknown });
+    this.leave = s.command(Nt, U);
+    this.sendPollMessage = s.command(Ct, z);
+    this.sendContactInfo = s.command(kt, X);
+    this.acknowledge = s.enabledCommand(function () {
       return o.createResolvedPromise();
-    }), this.createParticipant = function (t) {
+    });
+    this.createParticipant = function (t) {
       return new p(t, this, e);
-    }, this.createInvitation = function () {
+    };
+    this.createInvitation = function () {
       return null;
-    }, this.activeModalities.chat.changed(function (e) {
-      Jt(), Kt(), Gt(), U(D && e), Zt(), en(), Qt();
-    }), this.selfParticipant.role.changed(function (e) {
+    };
+    this.activeModalities.chat.changed(function (e) {
+      Jt();
+      Kt();
+      Gt();
+      U(D && e);
+      Zt();
+      en();
+      Qt();
+    });
+    this.selfParticipant.role.changed(function (e) {
       var t = e === C.participantRole.Leader;
-      Kt(), Gt(), R(t), H.historyService.historyDisclosedCommandEnabled(t);
-    }), Q.removed(function (e) {
-      e.person._authorization.changed.off(Jt), e.person.isBlocked.changed.off(Yt), e._dispose();
-    }), this._onlineStateChanged = function () {
-      mt(), H.audioService.start.enabled._set(e.isOnline());
-    }, this._properties = {}, this._consumptionHorizon = {
+      Kt();
+      Gt();
+      R(t);
+      H.historyService.historyDisclosedCommandEnabled(t);
+    });
+    Q.removed(function (e) {
+      e.person._authorization.changed.off(Jt);
+      e.person.isBlocked.changed.off(Yt);
+      e._dispose();
+    });
+    this._onlineStateChanged = function () {
+      mt();
+      H.audioService.start.enabled._set(e.isOnline());
+    };
+    this._properties = {};
+    this._consumptionHorizon = {
       lastReadMessageTimestamp: 0,
       modificationTime: 0,
       lastReadMessageId: 0
-    }, this._setCallHandler = function (e) {
+    };
+    this._setCallHandler = function (e) {
       this._callHandler = e;
-    }, this._callData = c.build(), this._addParticipant = function (e, t) {
+    };
+    this._callData = c.build();
+    this._addParticipant = function (e, t) {
       return Xt(e.id(), t, e);
-    }, this._updateConsumptionHorizon = function (e) {
+    };
+    this._updateConsumptionHorizon = function (e) {
       if (!e)
         return;
       var t = x.parseConsumptionHorizon(e), n = !H._consumptionHorizon || H._consumptionHorizon.modificationTime < t.modificationTime;
       n && (H._consumptionHorizon = t, H.historyService._updateReadStatusFromServer());
-    }, this._updateConsumptionHorizonModificationTime = function () {
+    };
+    this._updateConsumptionHorizonModificationTime = function () {
       if (!H._consumptionHorizon || !H.conversationId)
         return;
-      H._consumptionHorizon.modificationTime = new Date().getTime(), e.setConsumptionHorizon(H);
-    }, this._update = function (e) {
-      H._updateConversationProperties(e), D && this._updateThreadProperties(e);
-    }, this._notificationsEnabled = s.boolProperty(!0), this._updateConversationProperties = function (e) {
-      H._updateConsumptionHorizon(e.properties.consumptionhorizon), H.chatService._setNotificationSettings(e.properties.alerts, e.properties.alertmatches), e.lastMessage && H.historyService._processRawMessage(e.lastMessage, !0);
-    }, this._updateThreadProperties = function (e) {
-      it(e.members), ht(e), ut(e), at(e), ft(e), lt(e), St(e);
-    }, this._setCanJoinCall = function (e, t, n) {
-      H._callPayload = n, H._callHostId = t, H.activeModalities.audio._set(e), H.activeModalities.video._set(e);
-    }, this._setCanJoinNGCCall = function (e, t, n, r) {
-      H.activeModalities.audio._set(e), H.activeModalities.video._set(e), H._ngcJoinUrl = n, H._ngcCorrelationId = r, H._callHostId = t, H._callPayload = {};
-    }, nt = k.build(new L()), nt.subscribeToConversation(H);
+      H._consumptionHorizon.modificationTime = new Date().getTime();
+      e.setConsumptionHorizon(H);
+    };
+    this._update = function (e) {
+      H._updateConversationProperties(e);
+      D && this._updateThreadProperties(e);
+    };
+    this._notificationsEnabled = s.boolProperty(!0);
+    this._updateConversationProperties = function (e) {
+      H._updateConsumptionHorizon(e.properties.consumptionhorizon);
+      H.chatService._setNotificationSettings(e.properties.alerts, e.properties.alertmatches);
+      e.lastMessage && H.historyService._processRawMessage(e.lastMessage, !0);
+    };
+    this._updateThreadProperties = function (e) {
+      it(e.members);
+      ht(e);
+      ut(e);
+      at(e);
+      ft(e);
+      lt(e);
+      St(e);
+    };
+    this._setCanJoinCall = function (e, t, n) {
+      H._callPayload = n;
+      H._callHostId = t;
+      H.activeModalities.audio._set(e);
+      H.activeModalities.video._set(e);
+    };
+    this._setCanJoinNGCCall = function (e, t, n, r) {
+      H.activeModalities.audio._set(e);
+      H.activeModalities.video._set(e);
+      H._ngcJoinUrl = n;
+      H._ngcCorrelationId = r;
+      H._callHostId = t;
+      H._callPayload = {};
+    };
+    nt = k.build(new L());
+    nt.subscribeToConversation(H);
     var Lt = [];
   }
   var t = e("jSkype/client"), n = e("browser/window"), r = e("constants/common"), i = r.conversation.TOPIC_DELIMITER, s = e("jcafe-property-model"), o = e("jSkype/modelHelpers/propertyModelHelper"), u = e("jSkype/modelHelpers/propertyValidator"), a = e("jSkype/modelHelpers/personsAndGroupsHelper"), f = e("jSkype/modelHelpers/personHelper"), l = e("jSkype/utils/chat/parser"), c = e("jSkype/modelHelpers/calling/callData"), h = e("jSkype/models/capabilities"), p = e("jSkype/models/participant"), d = e("jSkype/models/chatService"), v = e("jSkype/models/audioService"), m = e("jSkype/services/calling/autoCalling"), g = e("jSkype/models/videoService"), y = e("jSkype/models/screenSharingService"), b = e("jSkype/utils/chat/messagesCache"), w = e("jSkype/models/historyService"), E = e("jSkype/models/fileTransferService"), S = e("jSkype/services/spaces"), x = e("jSkype/utils/chat/conversation"), T = e("jSkype/constants/people").authorizationStates, N = e("jSkype/settings"), C = e("swx-enums"), k = e("jSkype/modelHelpers/calling/pstnEventsHandler"), L = e("jSkype/modelHelpers/calling/pstnActivityItemAdder"), A = e("jSkype/utils/chat/generator"), O = null, M = {
@@ -408,4 +517,4 @@ define("jSkype/models/conversation", [
       HISTORY_DISCLOSED: "historydisclosed"
     };
   return D;
-})
+});

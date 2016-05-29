@@ -6,7 +6,9 @@ define("jSkype/services/preferences/videoPolicyProvider", [
   "utils/common/builderMixin"
 ], function (e) {
   function s() {
-    this.allowVideoCallsFromContactsOnly = n.build(r.skypeFlagsApiMappings.ALLOW_VIDEO_CALLS_FROM_CONTACTS_ONLY), this.dontAllowVideoCalls = n.build(r.skypeFlagsApiMappings.DONT_ALLOW_VIDEO_CALLS), this.cachedValue = null;
+    this.allowVideoCallsFromContactsOnly = n.build(r.skypeFlagsApiMappings.ALLOW_VIDEO_CALLS_FROM_CONTACTS_ONLY);
+    this.dontAllowVideoCalls = n.build(r.skypeFlagsApiMappings.DONT_ALLOW_VIDEO_CALLS);
+    this.cachedValue = null;
   }
   var t = e("lodash-compat"), n = e("jSkype/services/preferences/flagsServiceProvider"), r = e("swx-enums"), i = e("utils/common/builderMixin");
   return s.prototype.read = function () {
@@ -24,4 +26,4 @@ define("jSkype/services/preferences/videoPolicyProvider", [
       n.cachedValue = t;
     });
   }, t.assign(s, i), s;
-})
+});

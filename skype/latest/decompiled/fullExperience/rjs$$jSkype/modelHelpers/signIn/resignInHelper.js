@@ -23,7 +23,8 @@ define("jSkype/modelHelpers/signIn/resignInHelper", [
       client_id: r.settings.implicitOAuthParams.client_id,
       site_name: t.site_name
     });
-    o.get().implicitSignOut = !0, e.signOut().then(function () {
+    o.get().implicitSignOut = !0;
+    e.signOut().then(function () {
       e.signIn(n);
     });
   }
@@ -37,4 +38,4 @@ define("jSkype/modelHelpers/signIn/resignInHelper", [
       callback: u
     });
   };
-})
+});

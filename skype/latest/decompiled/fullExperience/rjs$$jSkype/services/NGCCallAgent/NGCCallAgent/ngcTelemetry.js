@@ -23,4 +23,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/ngcTelemetry", [
   t.getLogger = function (e) {
     return new s(e);
   };
-})
+});

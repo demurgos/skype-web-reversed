@@ -20,13 +20,24 @@ define("ui/viewModels/chat/filePicker", [
       f.getBrowserInfo().browserName === f.BROWSERS.FIREFOX ? e.focus() : e.click();
     }
     var u = this, l = i.resolve(r.serviceLocator.FEATURE_FLAGS), c = l.isFeatureOn(r.featureFlags.FILE_TRANSFER_ENABLED);
-    u.conversationModel = e.conversationModel, e.text && (u.text = n.fetch({ key: e.text })), u.isDisabled = e.isDisabled, u.iconCssClass = t.computed(h, this), u.isFocused = t.observable(!1), u.supportedFileTypes = c ? "" : r.fileTransfer.SUPPORTED_PICTURE_TYPES, u.mediaPickerTelemetryEvent = e.mediaPickerTelemetryEvent || s.build(), u.init = function () {
+    u.conversationModel = e.conversationModel;
+    e.text && (u.text = n.fetch({ key: e.text }));
+    u.isDisabled = e.isDisabled;
+    u.iconCssClass = t.computed(h, this);
+    u.isFocused = t.observable(!1);
+    u.supportedFileTypes = c ? "" : r.fileTransfer.SUPPORTED_PICTURE_TYPES;
+    u.mediaPickerTelemetryEvent = e.mediaPickerTelemetryEvent || s.build();
+    u.init = function () {
       u.registerEvent(r.events.mediaPicker.FILE_PICKER_SELECTED, p);
-    }, u.onOpenDialog = function () {
+    };
+    u.onOpenDialog = function () {
       return u.mediaPickerTelemetryEvent.data.filePickerClicked = !0, u.mediaPickerTelemetryEvent.publish(), u.dispatchEvent(r.events.mediaPicker.CLOSE_PICKER, u.DIRECTION.PARENT), u.isFocused(!1), !0;
-    }, u.processFiles = function (e, t) {
-      u.conversationModel.fileTransferService.send(t.target.files), t.target.value = null;
-    }, u.dispose = function () {
+    };
+    u.processFiles = function (e, t) {
+      u.conversationModel.fileTransferService.send(t.target.files);
+      t.target.value = null;
+    };
+    u.dispose = function () {
       u.iconCssClass.dispose();
     };
   }
@@ -36,4 +47,4 @@ define("ui/viewModels/chat/filePicker", [
       return new l(e, t);
     }
   };
-})
+});

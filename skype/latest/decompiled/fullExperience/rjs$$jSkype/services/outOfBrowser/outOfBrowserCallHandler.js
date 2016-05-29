@@ -31,39 +31,53 @@ define("jSkype/services/outOfBrowser/outOfBrowserCallHandler", [
           return;
         }
         var n = l.get().isPluginlessCallingSupported() ? o.callDisconnectionReason.OutOfBrowserCall : "";
-        c.handleParticipantLeavingStateTransition(e.selfParticipant, n), (t === a.ERRORS.MISSING_EXTENSION || t === a.ERRORS.MISSING_PLUGIN) && g();
+        c.handleParticipantLeavingStateTransition(e.selfParticipant, n);
+        (t === a.ERRORS.MISSING_EXTENSION || t === a.ERRORS.MISSING_PLUGIN) && g();
       }), f;
-    }, t.hostCall = function (n) {
+    };
+    t.hostCall = function (n) {
       p.log("[OutOfBrowserCallHandler] hostCall");
       var i = {
         conversation: e,
         withVideo: n
       };
       return r.hostCall(i);
-    }, t.joinCall = function (n) {
+    };
+    t.joinCall = function (n) {
       p.log("[OutOfBrowserCallHandler] joinCall");
       var i = {
         conversation: e,
         withVideo: n
       };
       return e.isGroupConversation() && e.activeModalities.audio() && (i.callHostId = e._callHostId, i.accessToken = e._callPayload.AccessToken), r.joinCall(i);
-    }, t.acceptCall = function (i) {
+    };
+    t.acceptCall = function (i) {
       return p.log("[OutOfBrowserCallHandler] acceptCall"), n = !0, r.accept(e, i);
-    }, t.endCall = r.stop, t.cancelCall = r.cancel, t.requestCallInfo = function () {
+    };
+    t.endCall = r.stop;
+    t.cancelCall = r.cancel;
+    t.requestCallInfo = function () {
       p.log("[OutOfBrowserCallHandler] requestCallInfo");
       var t = i.task(), n = e._callData.oncePluginCallInfoReady(function () {
-          d.clearTimeout(s), t.resolve(e._callData.pluginCallInfo());
+          d.clearTimeout(s);
+          t.resolve(e._callData.pluginCallInfo());
         }), s = d.setTimeout(function () {
-          n.dispose(), t.reject("Call info request timeout");
+          n.dispose();
+          t.reject("Call info request timeout");
         }, 5000);
       return r.requestCallInfo().catch(function () {
-        n.dispose(), d.clearTimeout(s), t.reject("Shell app not initialized");
+        n.dispose();
+        d.clearTimeout(s);
+        t.reject("Shell app not initialized");
       }), t.promise;
-    }, t.mute = function () {
+    };
+    t.mute = function () {
       return p.log("[OutOfBrowserCallHandler] mute"), t.toggleMuteTask && t.toggleMuteTask.promise.state() === "pending" ? t.toggleMuteTask.promise : (t.toggleMuteTask = i.task(), r.mute(), t.toggleMuteTask.promise);
-    }, t.unmute = function () {
+    };
+    t.unmute = function () {
       return p.log("[OutOfBrowserCallHandler] unmute"), t.toggleMuteTask && t.toggleMuteTask.promise.state() === "pending" ? t.toggleMuteTask.promise : (t.toggleMuteTask = i.task(), r.unmute(), t.toggleMuteTask.promise);
-    }, t.acknowledge = function () {
+    };
+    t.acknowledge = function () {
       p.log("[OutOfBrowserCallHandler] acknowledge");
       if (!n && e.selfParticipant.audio.state() === o.callConnectionState.Disconnected)
         return p.log("[OutOfBrowserCallHandler] acknowledge, first payload, setting Notified state"), c.updateParticipantAudioVideoState(e.selfParticipant, o.callConnectionState.Notified, o.callDisconnectionReason.OutOfBrowserCall), !0;
@@ -71,12 +85,20 @@ define("jSkype/services/outOfBrowser/outOfBrowserCallHandler", [
         return p.log("[OutOfBrowserCallHandler] acknowledge, call is connecting, updating payload"), r.updateIncomingCallPayload(e);
       p.log("[OutOfBrowserCallHandler] acknowledge, call not yet accepted/rejected, ignore update");
       return;
-    }, t.rejectCall = function () {
+    };
+    t.rejectCall = function () {
       return p.log("[OutOfBrowserCallHandler] rejectCall"), c.handleParticipantLeavingStateTransition(e.selfParticipant, o.callDisconnectionReason.Busy), c.handleRemoteParticipantsLeavingStateTransition(e.participants()), Promise.resolve();
-    }, t.startParticipantVideo = y, t.stopParticipantVideo = y, t.attachParticipantVideo = y, t.detachParticipantVideo = y, t.dispose = y, t.setSoundLevelEventMode = y;
+    };
+    t.startParticipantVideo = y;
+    t.stopParticipantVideo = y;
+    t.attachParticipantVideo = y;
+    t.detachParticipantVideo = y;
+    t.dispose = y;
+    t.setSoundLevelEventMode = y;
   }
   function g() {
-    p.log("[OutOfBrowserCallHandler] dispose"), v && (v.dispose({ preventReinitialisation: !0 }), v = null);
+    p.log("[OutOfBrowserCallHandler] dispose");
+    v && (v.dispose({ preventReinitialisation: !0 }), v = null);
   }
   function y() {
     return Promise.resolve();
@@ -103,7 +125,9 @@ define("jSkype/services/outOfBrowser/outOfBrowserCallHandler", [
     if (!f.isFeatureOn(u.featureFlags.PRELOAD_SHELL_APP))
       return;
     b();
-  }, t.dispose = g, t.build = function (t) {
+  };
+  t.dispose = g;
+  t.build = function (t) {
     return new m(t);
   };
-})
+});

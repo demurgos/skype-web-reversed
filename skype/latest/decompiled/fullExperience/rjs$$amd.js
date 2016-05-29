@@ -1,2 +1,2 @@
 define("amd", function () {
-})
+});

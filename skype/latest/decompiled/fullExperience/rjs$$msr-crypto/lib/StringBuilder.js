@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -18,7 +18,9 @@ function (e) {
     function r() {
       if (arguments.length !== 0)
         throw new Error("InvalidParameterCount");
-      this._parts = [], this._value = {}, this._len = 0;
+      this._parts = [];
+      this._value = {};
+      this._len = 0;
     }
     function i() {
       if (arguments.length !== 0)
@@ -40,7 +42,9 @@ function (e) {
     }
     var e = {};
     return e.StringBuilder = function (n) {
-      this._parts = e.isNullOrEmpty(n) ? [] : [n.toString()], this._value = {}, this._len = 0;
+      this._parts = e.isNullOrEmpty(n) ? [] : [n.toString()];
+      this._value = {};
+      this._len = 0;
     }, e.StringBuilder.prototype = {
       append: t,
       appendLine: n,
@@ -51,4 +55,4 @@ function (e) {
       return !t || !t.length;
     }, e;
   }();
-})
+}));

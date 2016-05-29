@@ -24,4 +24,4 @@ define("jSkype/services/trouter/handlers/stopRingingMessageHandler", [
   t.build = function () {
     return new o();
   };
-})
+});

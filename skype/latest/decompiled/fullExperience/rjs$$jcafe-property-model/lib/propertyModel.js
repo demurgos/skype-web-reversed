@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -102,7 +102,8 @@ function (e) {
         try {
           i();
         } finally {
-          n = !1, e.length && r(s, !1);
+          n = !1;
+          e.length && r(s, !1);
         }
       }
       function o() {
@@ -111,7 +112,8 @@ function (e) {
         r(s, !0);
       }
       function u(t) {
-        e.push(t), o();
+        e.push(t);
+        o();
       }
       var e = [], t = 16, n = !1;
       return u;
@@ -120,13 +122,15 @@ function (e) {
       var t = [];
       for (var n = 1; n < arguments.length; n++)
         t[n - 1] = arguments[n];
-      e = e.bind.apply(e, [this].concat(t)), E ? e() : q(e);
+      e = e.bind.apply(e, [this].concat(t));
+      E ? e() : q(e);
     }
     function U(e) {
       t(e >= 0);
       var n = o(e + " sec timeout", {
           cancel: function (e) {
-            m(r), n.reject(e);
+            m(r);
+            n.reject(e);
           }
         }), r = v(function () {
           n.resolve();
@@ -187,7 +191,8 @@ function (e) {
       for (var n = 1; n < arguments.length; n++)
         t[n - 1] = arguments[n];
       var r, i, s, o = t[t.length - 1];
-      e = e || {}, o = Et(o) ? o : "";
+      e = e || {};
+      o = Et(o) ? o : "";
       for (i = 0; i < t.length; i++) {
         r = t[i] || {};
         if (r !== o)
@@ -230,7 +235,8 @@ function (e) {
       return e.trim ? e.trim() : e.replace(/^\s+|\s+$/gm, "");
     }
     function it(e, n) {
-      t(bt(e) || yt(e)), t(xt(n));
+      t(bt(e) || yt(e));
+      t(xt(n));
       var r, i, s;
       if (bt(e))
         for (i = 0; i < e.length; ++i)
@@ -240,7 +246,8 @@ function (e) {
           r = n(e[s], s), t(r === void 0);
     }
     function st(e, n) {
-      t(bt(e) || yt(e)), t(xt(n));
+      t(bt(e) || yt(e));
+      t(xt(n));
       var r;
       return bt(e) ? (r = [], it(e, function (e, t) {
         n(e, t) && r.push(e);
@@ -259,7 +266,8 @@ function (e) {
       return t(bt(e) || yt(e)), bt(e) ? e.length : Q(e).length;
     }
     function at(e, n) {
-      t(bt(e) || yt(e)), t(xt(n));
+      t(bt(e) || yt(e));
+      t(xt(n));
       var r;
       if (bt(e)) {
         for (r = 0; r < e.length; ++r)
@@ -272,7 +280,8 @@ function (e) {
       return !1;
     }
     function ft(e, n) {
-      t(bt(e) || yt(e)), t(xt(n));
+      t(bt(e) || yt(e));
+      t(xt(n));
       var r, i = {};
       if (bt(e)) {
         for (r = 0; r < e.length; ++r)
@@ -325,7 +334,8 @@ function (e) {
     }
     function vt(e, t, n) {
       var r, i = {};
-      e = e || {}, t = t || {};
+      e = e || {};
+      t = t || {};
       for (r in t)
         if (!(r in e) || n != "append")
           i[r] = {
@@ -471,14 +481,22 @@ function (e) {
       return this instanceof s ? (n = this, Y(n, r), n._listeners = [], n._modes = [], n._locked = !1, n.observer = t, F(t, s.prototype.observer), t._event = n, n) : new s(e);
     }
     function Vt(e, t) {
-      this.event = e, this.listener = t;
+      this.event = e;
+      this.listener = t;
     }
     function $t(e, t) {
       if (!(this instanceof o))
         return new o(e, t);
-      Et(e) || (t = e, e = void 0), t = t || {};
+      Et(e) || (t = e, e = void 0);
+      t = t || {};
       var n = this, r = {};
-      r.leafs = [], r.state = "pending", r.status = h({ value: e }), t.mode && (r.mode = t.mode), t.cancel && (r.fnCancel = t.cancel), r.promise = new o.Promise(n), Y(n, {
+      r.leafs = [];
+      r.state = "pending";
+      r.status = h({ value: e });
+      t.mode && (r.mode = t.mode);
+      t.cancel && (r.fnCancel = t.cancel);
+      r.promise = new o.Promise(n);
+      Y(n, {
         _: r,
         status: r.status,
         promise: r.promise
@@ -547,7 +565,8 @@ function (e) {
           i = e[r].exec(t, n);
           if (!i)
             return;
-          s.push(i.res), n = i.pos;
+          s.push(i.res);
+          n = i.pos;
         }
         return {
           res: s,
@@ -617,7 +636,10 @@ function (e) {
         }, f = function () {
           return t.text || s.reduce(o, "");
         };
-      this.attrs = i, this.nodes = s, this.name = u, this.text = f;
+      this.attrs = i;
+      this.nodes = s;
+      this.name = u;
+      this.text = f;
     }
     function an(e) {
       return { root: a(rt(e.replace(/^<\?.+?\?>/, ""))) };
@@ -682,7 +704,9 @@ function (e) {
           dispose: function () {
             if (r)
               throw N("AlreadyDisposed");
-            r = !0, n--, n == 0 && t && t();
+            r = !0;
+            n--;
+            n == 0 && t && t();
           }
         };
       };
@@ -698,7 +722,8 @@ function (e) {
       }), Object.defineProperty(t, "changed", {
         get: t._getChanged,
         set: function (e) {
-          t._getChanged(), t._changed.observer = e;
+          t._getChanged();
+          t._changed.observer = e;
         }
       }), t;
     }
@@ -738,7 +763,10 @@ function (e) {
     }
     function wn(e) {
       function f(n, r) {
-        t(!s[n]), t(n > e), t(xt(r)), s[n] = Wt(r);
+        t(!s[n]);
+        t(n > e);
+        t(xt(r));
+        s[n] = Wt(r);
       }
       function l(e) {
         n(e >= i(), "InvalidTargetState", {
@@ -750,16 +778,22 @@ function (e) {
         return e > i() && (u = o("advancing to target state " + e, { cancel: c }), i.set(e), p(u)), u.promise;
       }
       function c(e) {
-        a.cancel(e), a = null;
+        a.cancel(e);
+        a = null;
       }
       function p(e) {
         if (a)
           return;
         var t = r() + 1;
-        e.status("advancing to state " + t), a = s[t].call(null), a.then(function (n) {
-          a = null, r.set(t), r() < i() ? p(e) : e.resolve(n);
+        e.status("advancing to state " + t);
+        a = s[t].call(null);
+        a.then(function (n) {
+          a = null;
+          r.set(t);
+          r() < i() ? p(e) : e.resolve(n);
         }, function (t) {
-          a = null, e.reject(t);
+          a = null;
+          e.reject(t);
         });
       }
       var r = h({ value: e }), i = h({ value: e }), s = {}, u, a;
@@ -778,34 +812,47 @@ function (e) {
       }
       function c() {
         var t = i.splice(0, 1)[0], n = u[t], o = s[t];
-        delete u[t], delete s[t], a.splice(0, 1), r++, f[t] = e(n), f[t].then(function (e) {
+        delete u[t];
+        delete s[t];
+        a.splice(0, 1);
+        r++;
+        f[t] = e(n);
+        f[t].then(function (e) {
           o.resolve(e);
         }, function (e) {
           o.reject(e);
         }, o.status).then(function () {
-          r--, delete f[t], l();
+          r--;
+          delete f[t];
+          l();
         });
       }
       function h(e, t) {
         var n = a.length;
         while (n > 0 && t > a[n - 1])
           n--;
-        a.splice(n, 0, t), i.splice(n, 0, e);
+        a.splice(n, 0, t);
+        i.splice(n, 0, e);
       }
       function p(e, t) {
         var n;
         if (f[e])
           f[e].cancel(t);
         else {
-          s[e].reject(t), delete u[e], delete s[e];
+          s[e].reject(t);
+          delete u[e];
+          delete s[e];
           for (n = 0; n < i.length; n++)
             if (i[n] == e) {
-              i.splice(n, 1), a.splice(n, 1);
+              i.splice(n, 1);
+              a.splice(n, 1);
               break;
             }
         }
       }
-      t(xt(e)), t(n > 0), e = Wt(e);
+      t(xt(e));
+      t(n > 0);
+      e = Wt(e);
       var r = 0, i = [], s = {}, u = {}, a = [], f = {};
       return function (e, t) {
         var n = tt(), r = o("Waiting in the throttling queue.", { cancel: V(p, n) });
@@ -821,7 +868,8 @@ function (e) {
     }
     function xn(e, n) {
       function s(e, n, i) {
-        t(St(e)), t(i instanceof o);
+        t(St(e));
+        t(i instanceof o);
         var s = 0;
         while (s < r.length && e > r[s].priority)
           s++;
@@ -832,7 +880,8 @@ function (e) {
         });
       }
       function u(e) {
-        t(e > 0), t(r.length > 0);
+        t(e > 0);
+        t(r.length > 0);
         var n, i = [], s = [];
         for (n = r.length - 1; n >= 0 && i.length < e; n--)
           i.push(r[n].request), s.push(r[n].task);
@@ -906,7 +955,10 @@ function (e) {
         return t(Nt(e)), u[e.toLowerCase()];
       }
       function s(e, n) {
-        t(Nt(e)), t(Nt(n)), e = e.toLowerCase(), u[e] ? u[e] += "\n" + n : u[e] = n;
+        t(Nt(e));
+        t(Nt(n));
+        e = e.toLowerCase();
+        u[e] ? u[e] += "\n" + n : u[e] = n;
       }
       function o() {
         var e, t, n, r = "";
@@ -974,7 +1026,8 @@ function (e) {
         debugger;
         throw C(e, n);
       }
-    }, t.args = function (e, t) {
+    };
+    t.args = function (e, t) {
       it(t, function (t, n) {
         var i = e && e[n];
         if (!r(i, t)) {
@@ -982,16 +1035,19 @@ function (e) {
           throw k(n, i, t);
         }
       });
-    }, n.equals = function (e, t) {
+    };
+    n.equals = function (e, t) {
       if (e != t)
         throw L(e, t);
-    }, n.state = function (e, t) {
+    };
+    n.state = function (e, t) {
       if (bt(t)) {
         if ($(t, e) == -1)
           throw O(e, t);
       } else if (e != t)
         throw O(e, t);
-    }, n.belongs = function (e, t) {
+    };
+    n.belongs = function (e, t) {
       if (!(e in t))
         throw M(e, t);
     };
@@ -1006,24 +1062,29 @@ function (e) {
       Boolean: Tt,
       Void: Ct,
       Number: St
-    }, i.entities = {
+    };
+    i.entities = {
       lt: "<",
       gt: ">",
       amp: "&",
       nbsp: "\xA0",
       quot: "\""
-    }, Y(Vt.prototype, {
+    };
+    Y(Vt.prototype, {
       dispose: function () {
         this.event.off(this.listener);
       }
-    }), s.prototype = function () {
-    }, Y(s.prototype, {
+    });
+    s.prototype = function () {
+    };
+    Y(s.prototype, {
       constructor: s,
       fire: function () {
         var e = this;
         if (e._enqueue(e, e._fire, arguments))
           return;
-        e._fire.apply(e, arguments), e._dequeue();
+        e._fire.apply(e, arguments);
+        e._dequeue();
       },
       _fire: function () {
         var e, t = this;
@@ -1076,24 +1137,32 @@ function (e) {
               t
             ]))
             return;
-          this._addListener(e, t), n._dequeue();
+          this._addListener(e, t);
+          n._dequeue();
         },
         _addListener: function (e, n) {
           var r = this._event;
-          t(xt(e)), r.adding && r.adding.call(r.context, e), r._listeners.push(e), r._modes.push(n), r.added && r.added.call(r.context, e), r._listeners.length == 1 && r.subscribed && r.subscribed.call(r.context);
+          t(xt(e));
+          r.adding && r.adding.call(r.context, e);
+          r._listeners.push(e);
+          r._modes.push(n);
+          r.added && r.added.call(r.context, e);
+          r._listeners.length == 1 && r.subscribed && r.subscribed.call(r.context);
         },
         off: function (e) {
           var t = this._event;
           if (t._enqueue(this, this._removeListener, [e]))
             return;
-          this._removeListener(e), t._dequeue();
+          this._removeListener(e);
+          t._dequeue();
         },
         _removeListener: function (e) {
           var t = this._event, n = $(t._listeners, e);
           n >= 0 && (t._listeners.splice(n, 1), t._modes.splice(n, 1), t._listeners.length == 0 && t.unsubscribed && t.unsubscribed.call(t.context));
         }
       }
-    }), Y(o.prototype, {
+    });
+    Y(o.prototype, {
       resolve: function (e) {
         var t = this, r = t._;
         return n.state(r.state, "pending"), r.value = e, r.state = "resolved", r.$state && r.$state._set(r.state), r.promise.result = e, t._complete();
@@ -1109,9 +1178,13 @@ function (e) {
           t.leafs[n]();
         return t.fnCancel = null, e;
       }
-    }), o.Promise = function (e) {
-      this.task = e, Object.defineProperty(this, "state", { get: this._getState }), Object.defineProperty(this, "status", { get: this._getStatus });
-    }, o.Promise.prototype = vt(Jt.prototype, {
+    });
+    o.Promise = function (e) {
+      this.task = e;
+      Object.defineProperty(this, "state", { get: this._getState });
+      Object.defineProperty(this, "status", { get: this._getStatus });
+    };
+    o.Promise.prototype = vt(Jt.prototype, {
       _getState: function () {
         var e = this.task._;
         return e.$state || (e.$state = h({
@@ -1135,7 +1208,8 @@ function (e) {
       },
       cancel: function (e) {
         var t = this.task, r = t._;
-        n.state(r.state, "pending"), r.fnCancel ? r.fnCancel(e) : t.reject(e);
+        n.state(r.state, "pending");
+        r.fnCancel ? r.fnCancel(e) : t.reject(e);
       },
       then: function (e, t, n) {
         function f() {
@@ -1163,7 +1237,8 @@ function (e) {
           if (i.leafs.length < 2)
             i.promise.cancel(e);
           else {
-            J(i.leafs, $(i.leafs, a)), i.status.changed.off(l);
+            J(i.leafs, $(i.leafs, a));
+            i.status.changed.off(l);
             try {
               xt(t) ? u.promise.from(o.wait(t(e))) : u.reject(e);
             } catch (n) {
@@ -1174,7 +1249,8 @@ function (e) {
         var r = this.task, i = r._, s, u = o({ cancel: c }), a = i.mode == "sync" ? f : V(R, f);
         return i.state == "pending" ? (i.status.changed(l), i.leafs.push(a)) : a(), u.promise;
       }
-    }), o.waitAny = function (e) {
+    });
+    o.waitAny = function (e) {
       function i(t) {
         it(e, function (e) {
           try {
@@ -1186,9 +1262,11 @@ function (e) {
       var t = e.length, n = o({ cancel: i }), r = n.promise;
       return t == 1 ? r = o.wait(e[0]) : t == 0 ? n.reject(Error()) : it(e, function (r) {
         r.then(function (e) {
-          t--, n && (n.resolve(e), n = null, i(N("CompetingTaskResolved")));
+          t--;
+          n && (n.resolve(e), n = null, i(N("CompetingTaskResolved")));
         }, function (e) {
-          t--, t || (n.reject(e), n = null);
+          t--;
+          t || (n.reject(e), n = null);
         }, function () {
           var t = dt(e, function (e, t) {
             return e.status() || "#" + t;
@@ -1196,7 +1274,8 @@ function (e) {
           n.status(t.join(" || "));
         });
       }), r;
-    }, o.waitAll = function (e) {
+    };
+    o.waitAll = function (e) {
       function u(t) {
         for (var n = 0; n < e.length; n++)
           try {
@@ -1218,14 +1297,22 @@ function (e) {
         s[n] = e[n] = o.wait(t);
       }), a(), it(e, function (e, i) {
         e.then(function (e) {
-          n[i] = e, delete s[i], a(), t--, t || (r.resolve(n), r = null);
+          n[i] = e;
+          delete s[i];
+          a();
+          t--;
+          t || (r.resolve(n), r = null);
         }, function (e) {
-          delete s[i], t--, r && (r.reject(e), r = null, u(e));
+          delete s[i];
+          t--;
+          r && (r.reject(e), r = null, u(e));
         }, a);
       })), i;
-    }, o.wait = function (e, t) {
+    };
+    o.wait = function (e, t) {
       return Pt(e) ? e : It(e) ? Jt(V.call(e, e.then)) : o({ mode: t }).resolve(e).promise;
-    }, Y(Jt.prototype, {
+    };
+    Y(Jt.prototype, {
       "catch": function (e) {
         return this.then(null, e || function () {
         });
@@ -1241,7 +1328,8 @@ function (e) {
           });
         });
       }
-    }), Y(Kt.prototype, {
+    });
+    Y(Kt.prototype, {
       then: function (e) {
         var t = this.exec;
         return Kt(function (n, r) {
@@ -1278,22 +1366,28 @@ function (e) {
           return r;
         });
       }
-    }), u.encodeData = function (e) {
+    });
+    u.encodeData = function (e) {
       return encodeURIComponent(e).replace(/%20/gm, "+");
-    }, u.decodeData = function (e) {
+    };
+    u.decodeData = function (e) {
       return decodeURIComponent(e.replace(/\+/gm, " "));
-    }, u.pattern = function () {
+    };
+    u.pattern = function () {
       var e = Gt(/[^()<>@,;:\\\x22\/\[\]?=\s]+/), t = en(e, Qt("/"), e).merge(), n = Gt(/[^\uffff]*/).then(u.decodeData), r = sn(Qt("\""), Qt("\"")), i = en(Gt(/\s*=\s*/), tn(r, e)).select(1), s = en(Gt(/\s*;\s*/), e, Yt(i, !0));
       return en(Qt("data:"), Yt(t), nn(s).join(1, 2), Gt(/\s*,\s*/), n).as({
         mime: 1,
         attributes: 2,
         data: 4
       });
-    }(), a.prototype.toString = function () {
+    }();
+    a.prototype.toString = function () {
       return "[object XmlNode]";
-    }, a.prototype.attr = function (e) {
+    };
+    a.prototype.attr = function (e) {
       return t(e in this.attrs, "Attribute does not exist: " + this.name() + "." + e), this.attrs[e];
-    }, a.prototype.selectOne = function (e, n) {
+    };
+    a.prototype.selectOne = function (e, n) {
       var r = st(this.nodes, xt(e) ? e : function (t) {
         var r, i;
         if (n)
@@ -1305,7 +1399,8 @@ function (e) {
         return t.name() == e.toLowerCase();
       });
       return t(r.length == 1, "Single node expected: " + e), r[0];
-    }, a.pattern = function () {
+    };
+    a.pattern = function () {
       var e, t = Gt(/[\x00-\x20]*/), n = Gt(/\x22[^\x22]*\x22/).then(function (e) {
           return e.slice(1, -1);
         }), r = Gt(/[^\s<>\x22]+/), s = tn(n, r).then(i), o = Gt(/[^<]+/m).then(i), u = Gt(/[\w\d:-]+/).then(function (e) {
@@ -1328,11 +1423,15 @@ function (e) {
           throw new SyntaxError("</" + e[2] + "> does not match <" + e[0].name + ">");
         });
       return e = tn(d, c);
-    }(), f.pattern = function () {
+    }();
+    f.pattern = function () {
       var e = Gt(/[\s,]*/), t = Gt(/[^\s,=]+/), n = sn(Qt("\""), Qt("\"")), r = en(t, Gt(/\s*=\s*/), n), i = rn(r, e).join(0, 2), s = en(t, e, i);
       return rn(s, e).join(0, 2);
-    }(), h.sUpdated = {}, h.prototype = function () {
-    }, Y(h.prototype, {
+    }();
+    h.sUpdated = {};
+    h.prototype = function () {
+    };
+    Y(h.prototype, {
       constructor: h,
       toString: function () {
         return "[Property: value = " + this() + "]";
@@ -1368,7 +1467,8 @@ function (e) {
       },
       once: function (e, t) {
         return this.when(e, function () {
-          this.dispose(), t.apply(null, arguments);
+          this.dispose();
+          t.apply(null, arguments);
         });
       },
       equals: function (e) {
@@ -1416,11 +1516,14 @@ function (e) {
         var e = this;
         return e.subscribe = dn(e._subscribed, e._unsubscribed), e.subscribe();
       }
-    }), Y(h.prototype, {
+    });
+    Y(h.prototype, {
       _set: function (e, t) {
         var n = this, r = n._value, i, s = n._forks, o = n._changed;
         if (!qt(e, r) || !qt(t, n.reason)) {
-          n._value = e, n.reason = t, o && o.fire(e, t, r);
+          n._value = e;
+          n.reason = t;
+          o && o.fire(e, t, r);
           if (s)
             for (i = 0; i < s.length; i++)
               s[i]._set(e, t);
@@ -1459,17 +1562,27 @@ function (e) {
           n._set(e, t);
         }) : n._set(e, t);
       }
-    }), h.true = h({
+    });
+    h.true = h({
       value: !0,
       readOnly: !0
-    }), h.false = h({
+    });
+    h.false = h({
       value: !1,
       readOnly: !0
-    }), h.true.get.enabled = h.true, h.true.set.enabled = h.false, h.false.get.enabled = h.true, h.false.set.enabled = h.false, c.instance.enabled = h.false, h.null = h({
+    });
+    h.true.get.enabled = h.true;
+    h.true.set.enabled = h.false;
+    h.false.get.enabled = h.true;
+    h.false.set.enabled = h.false;
+    c.instance.enabled = h.false;
+    h.null = h({
       value: null,
       readOnly: !0
-    }), p.prototype = function () {
-    }, Y(p.prototype, {
+    });
+    p.prototype = function () {
+    };
+    Y(p.prototype, {
       _init: function () {
         var e = this;
         Object.defineProperties(e, {
@@ -1477,28 +1590,32 @@ function (e) {
             enumerable: !0,
             get: e._initAddedEvent,
             set: function (t) {
-              e._initAddedEvent(), e._.added.observer = t;
+              e._initAddedEvent();
+              e._.added.observer = t;
             }
           },
           removed: {
             enumerable: !0,
             get: e._initRemovedEvent,
             set: function (t) {
-              e._initRemovedEvent(), e._.removed.observer = t;
+              e._initRemovedEvent();
+              e._.removed.observer = t;
             }
           },
           changed: {
             enumerable: !0,
             get: e._initChangedEvent,
             set: function (t) {
-              e._initChangedEvent(), e._.changed.observer = t;
+              e._initChangedEvent();
+              e._.changed.observer = t;
             }
           },
           size: {
             enumerable: !0,
             get: e._initSizeProperty,
             set: function (t) {
-              e._initSizeProperty(), e._.size.observer = t;
+              e._initSizeProperty();
+              e._.size.observer = t;
             }
           }
         });
@@ -1543,7 +1660,9 @@ function (e) {
         var r, i = this._, s = i.vals.length;
         for (r = n; r < s; r++)
           i.idxs[i.keys[r]]++;
-        K(i.vals, n, e), K(i.keys, n, t), i.idxs[t] = n;
+        K(i.vals, n, e);
+        K(i.keys, n, t);
+        i.idxs[t] = n;
       },
       add: function (e, t, n) {
         var r = this._, i = r.vals.length;
@@ -1554,11 +1673,17 @@ function (e) {
       },
       remove: function (e) {
         var t = this._, n, r, i;
-        kt(e) ? (n = e, e = t.keys[n]) : n = t.idxs[e], r = t.vals[n];
+        kt(e) ? (n = e, e = t.keys[n]) : n = t.idxs[e];
+        r = t.vals[n];
         if (n >= 0 && n < t.vals.length) {
           for (i = n + 1; i < t.keys.length; i++)
             t.idxs[t.keys[i]]--;
-          J(t.vals, n), J(t.keys, n), delete t.idxs[e], t.size && t.size.dec(), t.removed && t.removed.fire(r, e, n), t.changed && t.changed.fire();
+          J(t.vals, n);
+          J(t.keys, n);
+          delete t.idxs[e];
+          t.size && t.size.dec();
+          t.removed && t.removed.fire(r, e, n);
+          t.changed && t.changed.fire();
         }
       },
       _getFromCache: function (e) {
@@ -1593,7 +1718,11 @@ function (e) {
         if (e.removed)
           for (t = 0; t < e.vals.length; t++)
             e.removed.fire(e.vals[t], e.keys[t]);
-        e.vals = [], e.keys = [], e.idxs = {}, e.size && e.size(0), e.changed && e.changed.fire();
+        e.vals = [];
+        e.keys = [];
+        e.idxs = {};
+        e.size && e.size(0);
+        e.changed && e.changed.fire();
       },
       _addArray: function (e) {
         for (var t = 0; t < e.length; t++)
@@ -1625,7 +1754,8 @@ function (e) {
       asWritable: function (e) {
         return this.fork(e);
       }
-    }), Y(p.prototype, {
+    });
+    Y(p.prototype, {
       constructor: p,
       toString: function () {
         return "[Collection: " + this.size() + " items]";
@@ -1641,15 +1771,22 @@ function (e) {
       },
       observe: function (e) {
         function s(e, t) {
-          r[t] = e, delete i[t], u();
+          r[t] = e;
+          delete i[t];
+          u();
         }
         function o(e, t) {
-          i[t] = e, delete r[t], u();
+          i[t] = e;
+          delete r[t];
+          u();
         }
         function u() {
           t || (t = v(function () {
             var n = r, s = i;
-            r = {}, i = {}, t = null, e(n, s);
+            r = {};
+            i = {};
+            t = null;
+            e(n, s);
           }, 0));
         }
         function a() {
@@ -1658,7 +1795,9 @@ function (e) {
         var t, n = this, r = {}, i = {};
         return n.added(s), n.removed(o), {
           dispose: function () {
-            a(), n.added.off(s), n.removed.off(o);
+            a();
+            n.added.off(s);
+            n.removed.off(o);
           }
         };
       },
@@ -1700,10 +1839,12 @@ function (e) {
           var o, u, a;
           if (!e(n))
             return;
-          o = s + 1, u = t.size();
+          o = s + 1;
+          u = t.size();
           while (o < u && !e(t(o)))
             o++;
-          a = o < u ? r.index(t.key(o)) : r.size(), r.add(n, i, a);
+          a = o < u ? r.index(t.key(o)) : r.size();
+          r.add(n, i, a);
         }), t.removed(function (e, t) {
           r.remove(t);
         }), r.asReadOnly();
@@ -1736,7 +1877,8 @@ function (e) {
           r.remove(t);
         }), r.asReadOnly();
       }
-    }), p.empty = p().asReadOnly();
+    });
+    p.empty = p().asReadOnly();
     var Tn = function (t) {
       function r(e) {
         var t = function (t) {
@@ -1752,7 +1894,13 @@ function (e) {
       n = Tn.pattern.exec((t || "") + "");
       if (!n)
         throw new SyntaxError("Invalid URI: " + t);
-      e.scheme = r("scheme"), e.user = r("user"), e.host = r("host"), e.port = r("port"), e.path = r("path"), e.query = r("query"), e.hash = r("hash");
+      e.scheme = r("scheme");
+      e.user = r("user");
+      e.host = r("host");
+      e.port = r("port");
+      e.path = r("path");
+      e.query = r("query");
+      e.hash = r("hash");
     };
     Tn.prototype.toString = function () {
       function e(e, t) {
@@ -1760,7 +1908,8 @@ function (e) {
       }
       var t = (this.user() ? this.user() + "@" : "") + (this.host() || "") + e(":", this.port());
       return (this.scheme() ? this.scheme() + ":" : "") + e("//", t) + this.path() + e("?", this.query()) + e("#", this.hash());
-    }, Tn.pattern = {
+    };
+    Tn.pattern = {
       regexp: /^(?:([a-zA-Z][\w+-.]*):)?(?:\/\/(?:([^\/@]*)@)?([^:\/?#]*)(?:\:(\d*))?)?([^?#]*)(?:\?([^#]*))?(?:#(.*))?$/,
       exec: function (e) {
         var t = this.regexp.exec(e);
@@ -1774,17 +1923,20 @@ function (e) {
           hash: t[7]
         };
       }
-    }, Tn.Query = function (e) {
+    };
+    Tn.Query = function (e) {
       if (!(this instanceof Tn.Query))
         return new Tn.Query(e);
       var t = this;
       Et(e) ? it(e.split("&"), function (e) {
         var n, r, i = e.indexOf("=");
-        i < 0 ? (n = e, r = "") : (n = e.slice(0, i), r = e.slice(i + 1)), n && (t[decodeURIComponent(n)] = decodeURIComponent(r));
+        i < 0 ? (n = e, r = "") : (n = e.slice(0, i), r = e.slice(i + 1));
+        n && (t[decodeURIComponent(n)] = decodeURIComponent(r));
       }) : e && it(mt(e), function (e, n) {
         t[n] = e + "";
       });
-    }, Tn.Query.prototype.toString = function () {
+    };
+    Tn.Query.prototype.toString = function () {
       var e = [];
       return it(mt(this), function (t, n) {
         e.push(t ? encodeURIComponent(n) + "=" + encodeURIComponent(t) : encodeURIComponent(n));
@@ -1827,4 +1979,4 @@ function (e) {
     }
   }();
   return i;
-})
+}));

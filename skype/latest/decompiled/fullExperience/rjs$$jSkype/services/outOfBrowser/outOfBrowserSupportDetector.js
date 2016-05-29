@@ -30,4 +30,4 @@ define("jSkype/services/outOfBrowser/outOfBrowserSupportDetector", [
       return new i();
     }
   };
-})
+});

@@ -13,7 +13,8 @@ define("ui/controls/experience/shareDialogController", [
   function c() {
     h();
     var e = p(), t = a.build(e.sharedUrl, e.flowId), r = d();
-    n.applyBindings(t, r), t.show();
+    n.applyBindings(t, r);
+    t.show();
   }
   function h() {
     var e = r.getElement("#" + l);
@@ -26,7 +27,8 @@ define("ui/controls/experience/shareDialogController", [
     var n = e.split("&"), r = {};
     for (var i = 0; i < n.length; i++) {
       var s = n[i].split("="), o = decodeURIComponent(s[0] || "").toLowerCase(), u = decodeURIComponent(s[1] || ""), a = r[o];
-      a || (a = [], r[o] = a), a.push(u);
+      a || (a = [], r[o] = a);
+      a.push(u);
     }
     return {
       sharedUrl: (r.sharedurl || [])[0],
@@ -42,8 +44,9 @@ define("ui/controls/experience/shareDialogController", [
   var n = e("vendor/knockout"), r = e("browser/dom"), i = e("browser/window"), s = e("constants/common"), o = e("services/serviceLocator"), u = e("text!views/chat/shareDialog.html"), a = e("ui/viewModels/chat/shareDialog"), f = ".swx", l = "swx-share-dialog";
   t.getRawQueryString = function () {
     return i.location.search;
-  }, t.conditionallyLaunchSharingExperience = function () {
+  };
+  t.conditionallyLaunchSharingExperience = function () {
     var e = o.resolve(s.serviceLocator.FEATURE_FLAGS), t = e.isFeatureOn(s.featureFlags.SHOW_ALTERNATE_SHARE_DIALOG_EXPERIENCE);
     t && c();
   };
-})
+});

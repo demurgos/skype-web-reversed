@@ -12,5 +12,7 @@ define("ui/components/calling/joinCallButton", [
     return i.setContext(n.dataFor(t.element)), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/calling/joinCallButtonViewModel");
-  t.name = e("constants/components").calling.JOINCALL_BUTTON, t.template = e("text!views/calling/joinCallButton.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").calling.JOINCALL_BUTTON;
+  t.template = e("text!views/calling/joinCallButton.html");
+  t.viewModel = { createViewModel: i };
+});

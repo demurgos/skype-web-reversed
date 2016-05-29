@@ -37,5 +37,6 @@ define("notifications/common/sender", [
     return !e() || n.isFeatureOn(f.featureFlags.SHOW_DEFAULT_AVATAR_IN_NOTIFICATIONS) ? i.observable(t) : r.newObservableProperty(e);
   }
   var n = e("utils/chat/messageSanitizer"), r = e("utils/common/cafeObservable"), i = e("vendor/knockout"), s = e("swx-utils-common").guid, o = e("swx-enums").onlineStatus, u = e("swx-i18n").localization, a = e("experience/settings"), f = e("constants/common"), l = e("services/serviceLocator");
-  t.fromConversation = h, t.fromPerson = p;
-})
+  t.fromConversation = h;
+  t.fromPerson = p;
+});

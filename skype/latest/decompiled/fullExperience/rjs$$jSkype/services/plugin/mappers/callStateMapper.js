@@ -21,7 +21,8 @@ define("jSkype/services/plugin/mappers/callStateMapper", [
     inVoiceMail: "InVoiceMail",
     finished: "Finished",
     unknown: "Unknown"
-  }, t.toCafeState = function (e) {
+  };
+  t.toCafeState = function (e) {
     return r[e];
   };
-})
+});

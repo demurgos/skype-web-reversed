@@ -31,4 +31,4 @@ define("jSkype/services/NGCCallAgent/NGCCallAgent/mediaRenegotiationResponse", [
     };
     return u;
   }, i;
-})
+});

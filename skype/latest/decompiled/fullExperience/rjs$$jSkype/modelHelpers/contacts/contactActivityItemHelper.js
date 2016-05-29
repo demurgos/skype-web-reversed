@@ -27,23 +27,28 @@ define("jSkype/modelHelpers/contacts/contactActivityItemHelper", [
     ];
   t.filterContactRequestActivityItems = function (e) {
     return e.filter(u);
-  }, t.filterUnblockContactActivityItems = function (e) {
+  };
+  t.filterUnblockContactActivityItems = function (e) {
     return e.filter(a);
-  }, t.clearContactRequestActivityItems = function (e, n) {
+  };
+  t.clearContactRequestActivityItems = function (e, n) {
     var r = e.historyService, i = t.filterContactRequestActivityItems(r.activityItems()), s = !1;
     return i.forEach(function (e) {
       e.type() !== n ? r._removeMessage(e) : s = !0;
     }), s;
-  }, t.clearUnblockContactActivityItems = function (e) {
+  };
+  t.clearUnblockContactActivityItems = function (e) {
     var n = e.historyService, r = t.filterUnblockContactActivityItems(n.activityItems());
     r.forEach(function (e) {
       n._removeMessage(e);
     });
-  }, t.getContactRequestIncomingActivityItem = function (e) {
+  };
+  t.getContactRequestIncomingActivityItem = function (e) {
     var t = e.historyService.activityItems();
     return n.find(t, s);
-  }, t.getContactRequestIncomingInviteFreeActivityItem = function (e) {
+  };
+  t.getContactRequestIncomingInviteFreeActivityItem = function (e) {
     var t = e.historyService.activityItems();
     return n.find(t, o);
   };
-})
+});

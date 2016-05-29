@@ -7,7 +7,8 @@ define("services/pes.v2/tabs/fetcher", [
     var e = this;
     e.process = function () {
       return null;
-    }, e.getResources = function (e) {
+    };
+    e.getResources = function (e) {
       return e.type !== n.itemTypes.tab.id ? null : {
         styleDef: t.create(e),
         prefetchUrls: [e.thumbnailUrl],
@@ -17,4 +18,4 @@ define("services/pes.v2/tabs/fetcher", [
   }
   var t = e("services/pes.v2/tabs/stylesFactory"), n = e("services/pes/constants");
   return new r();
-})
+});

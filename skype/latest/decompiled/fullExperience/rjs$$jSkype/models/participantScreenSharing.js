@@ -40,7 +40,8 @@ define("jSkype/models/participantScreenSharing", [
       u.state._set(n.callConnectionState.Connected);
     }
     function E() {
-      u.state() !== n.callConnectionState.Disconnecting && u.state() !== n.callConnectionState.Disconnected && u.state._set(n.callConnectionState.Disconnecting), u.state._set(n.callConnectionState.Disconnected);
+      u.state() !== n.callConnectionState.Disconnecting && u.state() !== n.callConnectionState.Disconnected && u.state._set(n.callConnectionState.Disconnecting);
+      u.state._set(n.callConnectionState.Disconnected);
     }
     function S() {
       a ? g() : v();
@@ -55,13 +56,15 @@ define("jSkype/models/participantScreenSharing", [
     }), u.stream = f, u.isControlling = i.property({ value: !1 }), l.push(f.source.sink.container.changed(function () {
       c() ? v() : h() && m();
     })), l.push(f.state.when(n.mediaStreamState.Started, b)), l.push(f.state.when(n.mediaStreamState.Active, w)), l.push(f.state.when(n.mediaStreamState.Stopped, E)), l.push(u.state.when(n.callConnectionState.Connecting, S)), l.push(u.state.when(n.callConnectionState.Disconnecting, x)), u._dispose = function () {
-      E(), l.forEach(function (e) {
+      E();
+      l.forEach(function (e) {
         e.dispose();
-      }), l.length = 0;
+      });
+      l.length = 0;
     }, u;
   }
   var n = e("swx-enums"), r = e("constants/calling"), i = e("jcafe-property-model"), s = e("jSkype/models/mediaStream"), o = e("jSkype/modelHelpers/personsAndGroupsHelper");
   t.build = function (e, t) {
     return new u(e, t.id());
   };
-})
+});

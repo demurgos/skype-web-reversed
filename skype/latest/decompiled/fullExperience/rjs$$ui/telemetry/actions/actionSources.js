@@ -43,4 +43,4 @@ define("ui/telemetry/actions/actionSources", {
     area: "me_area",
     avatar: "me_avatarFilePicker"
   }
-})
+});

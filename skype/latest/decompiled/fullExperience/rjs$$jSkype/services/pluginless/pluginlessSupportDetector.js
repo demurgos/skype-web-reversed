@@ -19,4 +19,4 @@ define("jSkype/services/pluginless/pluginlessSupportDetector", [
       return new n();
     }
   };
-})
+});

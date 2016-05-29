@@ -15,23 +15,36 @@ define("ui/viewModels/chat/pes.v2/itemsPicker", [
       }, null, !0);
     }
     var r = this, o, a;
-    r.params = u.overrideDefaults({}, r.getDefaultParams(), e), a = r.params.item.subscribe(function (t) {
+    r.params = u.overrideDefaults({}, r.getDefaultParams(), e);
+    a = r.params.item.subscribe(function (t) {
       var n;
       if (!t)
         return;
-      n = s.activeElement, n && n.focus();
-    }), r.params.isVisible() ? f() : o = r.params.isVisible.subscribe(function (t) {
+      n = s.activeElement;
+      n && n.focus();
+    });
+    r.params.isVisible() ? f() : o = r.params.isVisible.subscribe(function (t) {
       t && (o.dispose(), f());
-    }), r.showEmptyTabMessage = i.computed(function () {
+    });
+    r.showEmptyTabMessage = i.computed(function () {
       return r.params.tab().packs().length === 0;
-    }), r.tabStyleOverride = i.computed(function () {
+    });
+    r.tabStyleOverride = i.computed(function () {
       return r.params.tab().styleOverride ? r.params.tab().styleOverride() : "";
-    }), r.emptyTabMessageKey = i.computed(function () {
+    });
+    r.emptyTabMessageKey = i.computed(function () {
       return i.utils.unwrapObservable(r.params.tab().emptyTabMessageKey);
-    }), r.init = function () {
+    });
+    r.init = function () {
       t.init();
-    }, r.dispose = function () {
-      o && o.dispose(), a.dispose(), r.showEmptyTabMessage.dispose(), r.tabStyleOverride.dispose(), r.emptyTabMessageKey.dispose(), t.dispose();
+    };
+    r.dispose = function () {
+      o && o.dispose();
+      a.dispose();
+      r.showEmptyTabMessage.dispose();
+      r.tabStyleOverride.dispose();
+      r.emptyTabMessageKey.dispose();
+      t.dispose();
     };
   }
   var t = e("lodash-compat"), n = e("utils/common/async"), r = e("utils/common/builderMixin"), i = e("vendor/knockout"), s = e("browser/document"), o = e("utils/common/eventHelper"), u = e("utils/common/stateMixin");
@@ -46,4 +59,4 @@ define("ui/viewModels/chat/pes.v2/itemsPicker", [
       eventEmitter: o.emptyEmitter
     };
   }, t.assign(a.prototype, u), t.assign(a, r), a;
-})
+});

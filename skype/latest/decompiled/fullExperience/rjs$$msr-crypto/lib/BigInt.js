@@ -1,4 +1,4 @@
-function (e) {
+(function (e) {
   if (typeof module == "object" && typeof module.exports == "object") {
     var t = e(require, exports);
     t !== undefined && (module.exports = t);
@@ -12,7 +12,11 @@ function (e) {
   var t = e("./StringBuilder");
   return function () {
     var e = "0123456789abcdef", n = 16, r = 3, i = function (t, n) {
-        this._elements = [], this._radix = t, this._elements.splice(0, 0, n), this._length = 1, this._normalize();
+        this._elements = [];
+        this._radix = t;
+        this._elements.splice(0, 0, n);
+        this._length = 1;
+        this._normalize();
       };
     return i.hexRadix = 16, i.decRadix = 1000, i._createDec = function (t) {
       return new i(i.decRadix, t);
@@ -42,7 +46,10 @@ function (e) {
       var s = 9, o = i._createHex(1000000000), u = i._createHex(0), a = Math.ceil(n.length / s), f = i._createHex(1), l = n.length;
       for (var c = 0; c < a; c++) {
         var h = l - s < 0 ? 0 : l - s, p = parseInt(n.substr(h, l - h), 10), d = i._createHex(p);
-        d.multiply(f), u.add(d), f.multiply(o), l -= s;
+        d.multiply(f);
+        u.add(d);
+        f.multiply(o);
+        l -= s;
       }
       return u._isNegative = r, u;
     }, i._parseDecIntToDecRadixBigInt = function (t) {
@@ -109,7 +116,8 @@ function (e) {
             }
             for (t = 0; t < this._length - 1; t++) {
               var r;
-              this._elements[t] < 0 && (r = Math.ceil(-this._elements[t] / this._radix), this._elements[t] = this._elements[t] + this._radix * r, this._elements[t + 1] = this._elements[t + 1] - r), this._elements[t] >= this._radix && (r = Math.floor(this._elements[t] / this._radix), this._elements[t] = this._elements[t] % this._radix, this._elements[t + 1] = this._elements[t + 1] + r);
+              this._elements[t] < 0 && (r = Math.ceil(-this._elements[t] / this._radix), this._elements[t] = this._elements[t] + this._radix * r, this._elements[t + 1] = this._elements[t + 1] - r);
+              this._elements[t] >= this._radix && (r = Math.floor(this._elements[t] / this._radix), this._elements[t] = this._elements[t] % this._radix, this._elements[t + 1] = this._elements[t + 1] + r);
             }
             while (this._elements[this._length - 1] >= this._radix)
               this._ensureCapacity(), this._elements[this._length] = Math.floor(this._elements[this._length - 1] / this._radix), this._elements[this._length - 1] = this._elements[this._length - 1] % this._radix, this._length++;
@@ -147,7 +155,10 @@ function (e) {
             r._elements[n + s] = r._elements[n + s] + t._elements[n] * this._elements[s], r._elements[n + s] !== 0 && (r._length = Math.max(r._length, n + s + 1));
           r._normalize();
         }
-        r._isNegative = t._isNegative !== this._isNegative, this._elements = r._elements, this._isNegative = r._isNegative, this._length = r._length;
+        r._isNegative = t._isNegative !== this._isNegative;
+        this._elements = r._elements;
+        this._isNegative = r._isNegative;
+        this._length = r._length;
       },
       modulus: function (t) {
         for (;;) {
@@ -166,9 +177,11 @@ function (e) {
           }
           if (n === 0)
             break;
-          this._elements[this._length - 2] = this._elements[this._length - 2] + this._radix * this._elements[this._length - 1], this._length--;
+          this._elements[this._length - 2] = this._elements[this._length - 2] + this._radix * this._elements[this._length - 1];
+          this._length--;
         }
-        this._isNegative && (t._isNegative ? (t._isNegative = !1, this.add(t), t._isNegative = !0) : this.add(t)), this._normalize();
+        this._isNegative && (t._isNegative ? (t._isNegative = !1, this.add(t), t._isNegative = !0) : this.add(t));
+        this._normalize();
       },
       toString: function () {
         switch (this._radix) {
@@ -204,4 +217,4 @@ function (e) {
       }
     }, i;
   }();
-})
+}));

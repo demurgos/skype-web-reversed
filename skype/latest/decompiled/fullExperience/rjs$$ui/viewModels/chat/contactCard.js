@@ -23,24 +23,36 @@ define("ui/viewModels/chat/contactCard", [
     var f = e.participant, m = s.newObservableProperty(e.model.participants.remove.enabled), b = d.build(f.person), w = this, E = s.newObservableProperty(f.role), S = c.resolve(u.serviceLocator.FEATURE_FLAGS), x = S.isFeatureOn(u.featureFlags.HIDE_USER_ROLE), T = n.computed(function () {
         return f.isAnonymous() ? v.GUEST : E() === o.participantRole.Leader ? v.ADMIN : v.ATTENDEE;
       });
-    t.merge(w, b), w.role = n.computed(function () {
+    t.merge(w, b);
+    w.role = n.computed(function () {
       var e;
       return x ? "" : T() === v.ATTENDEE ? "" : (e = "header_text_" + T(), T() === v.ADMIN && g() && (e = y(e)), r.fetch({ key: e }));
-    }), w.chevronAriaLabel = n.computed(function () {
+    });
+    w.chevronAriaLabel = n.computed(function () {
       return r.fetch({
         key: "accessibility_groupProfile_" + T() + "Menu",
         params: { participantName: w.displayName() }
       });
-    }), w.isMenuDisabled = n.computed(function () {
+    });
+    w.isMenuDisabled = n.computed(function () {
       return e.model.selfParticipant.isAnonymous() || f.isAnonymous() && !m();
-    }), w.dispose = function () {
-      b.dispose(), T.dispose(), w.role.dispose(), w.chevronAriaLabel.dispose(), w.isMenuDisabled.dispose();
-    }, w.onMenuHandlerKeydown = function (e, t) {
+    });
+    w.dispose = function () {
+      b.dispose();
+      T.dispose();
+      w.role.dispose();
+      w.chevronAriaLabel.dispose();
+      w.isMenuDisabled.dispose();
+    };
+    w.onMenuHandlerKeydown = function (e, t) {
       var n, r = a.isActivation(t);
       return r && (n = N(t), w.menuHandler(e, n)), !r;
-    }, w.menuHandler = function (t, n) {
+    };
+    w.menuHandler = function (t, n) {
       var r = [], s = { source: i.conversation.groupRoster };
-      f.isAnonymous() || ((S.isFeatureOn(u.featureFlags.PSTN_ENABLED) || !p.isPstn(f.person)) && r.push(new h.OpenConversationWithPersonMenuItem(f.person)), r.push(new h.ViewPersonProfileMenuItem(f.person, u.telemetry.historyLoadOrigin.ROSTER, s))), m() && r.push(new h.RemoveParticipantMenuItem(e.model, e.participant)), l.show(r, n);
+      f.isAnonymous() || ((S.isFeatureOn(u.featureFlags.PSTN_ENABLED) || !p.isPstn(f.person)) && r.push(new h.OpenConversationWithPersonMenuItem(f.person)), r.push(new h.ViewPersonProfileMenuItem(f.person, u.telemetry.historyLoadOrigin.ROSTER, s)));
+      m() && r.push(new h.RemoveParticipantMenuItem(e.model, e.participant));
+      l.show(r, n);
     };
   }
   function g() {
@@ -55,4 +67,4 @@ define("ui/viewModels/chat/contactCard", [
       ATTENDEE: "attendee"
     };
   return t.assign(m.prototype, f), m;
-})
+});

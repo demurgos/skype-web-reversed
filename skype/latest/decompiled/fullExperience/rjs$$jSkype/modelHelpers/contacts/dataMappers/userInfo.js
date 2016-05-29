@@ -8,4 +8,4 @@ define("jSkype/modelHelpers/contacts/dataMappers/userInfo", [
   return t.map = function (e, t) {
     n.mapRegistrationDate(e.registrationDate, t);
   }, t;
-})
+});

@@ -11,12 +11,19 @@ define("telemetry/chat/messagesCollector", [
   function p() {
     function d() {
       function t() {
-        h = new o(), h.publish(e.sentMessagesInfo), e.sentMessagesInfo = [], window.setTimeout(t, l);
+        h = new o();
+        h.publish(e.sentMessagesInfo);
+        e.sentMessagesInfo = [];
+        window.setTimeout(t, l);
       }
       function n() {
-        p = new u(), p.publish(e.receivedMessagesInfo), e.receivedMessagesInfo = [], window.setTimeout(n, c);
+        p = new u();
+        p.publish(e.receivedMessagesInfo);
+        e.receivedMessagesInfo = [];
+        window.setTimeout(n, c);
       }
-      window.setTimeout(t, l), window.setTimeout(n, c);
+      window.setTimeout(t, l);
+      window.setTimeout(n, c);
     }
     var e = a.get(), h, p, v = function (s) {
         var o = r.IM_SEND.TTS + s, u = r.IM_SEND.TTS404 + s, a = n.IM_SEND.POST_START + s, f = n.IM_SEND.POST_END_OK + s, l = n.IM_SEND.POST_END_404 + s, c = n.IM_SEND.POST_END_ERROR + s, h = i.getEntriesByName(f), p = h.length > 0;
@@ -33,14 +40,19 @@ define("telemetry/chat/messagesCollector", [
       };
     this.enqueueSentMessageInfo = function (n) {
       var r = v(n.clientmessageid);
-      r.typeId = s.getTelemetryMessageTypeObsolete(n), e.sentMessagesInfo.push(r);
-    }, this.enqueueReceivedMessageInfo = function (n) {
+      r.typeId = s.getTelemetryMessageTypeObsolete(n);
+      e.sentMessagesInfo.push(r);
+    };
+    this.enqueueReceivedMessageInfo = function (n) {
       var r = { cmid: n.clientmessageid };
-      r.typeId = s.getTelemetryMessageTypeObsolete(n), r.appIsActive = f.get().appIsVisible(), e.receivedMessagesInfo.push(r);
-    }, d();
+      r.typeId = s.getTelemetryMessageTypeObsolete(n);
+      r.appIsActive = f.get().appIsVisible();
+      e.receivedMessagesInfo.push(r);
+    };
+    d();
   }
   var t = e("constants/common"), n = t.telemetry.performanceMarks, r = t.telemetry.measurements, i = e("usertiming"), s = e("telemetry/chat/activityItemHelper"), o = e("telemetry/chat/messagesSent"), u = e("telemetry/chat/messagesReceived"), a = e("services/telemetry/common/telemetryContext"), f = e("utils/common/styleModeHelper"), l = 20000, c = 30000, h;
   return p.get = function () {
     return h || (h = new p()), h;
   }, p;
-})
+});
