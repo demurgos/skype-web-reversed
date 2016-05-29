@@ -17,19 +17,23 @@ define("utils/people/progressiveTimeout", [
         s.callbacks.hasOwnProperty(i) && s.callbacks[i].call();
     }
     var e = this;
-    e.timeouts = {}, e.start = function (r, i) {
+    e.timeouts = {};
+    e.start = function (r, i) {
       var s, o = n.create();
       return e.timeouts.hasOwnProperty(r) || (e.timeouts[r] = {
         callbacks: {},
         timeoutId: null,
         timeout: l()
       }), s = e.timeouts[r], s.callbacks || (s.callbacks = {}), s.callbacks[o] = i, s.timeoutId === null && t(r), o;
-    }, e.stop = function (t, n) {
+    };
+    e.stop = function (t, n) {
       var i = e.timeouts[t];
       if (!i)
         return;
-      i.callbacks.hasOwnProperty(n) && delete i.callbacks[n], Object.keys(i.callbacks).length === 0 && (r.clearTimeout(i.timeoutId), i.timeoutId = null);
-    }, e.reset = function (t, n) {
+      i.callbacks.hasOwnProperty(n) && delete i.callbacks[n];
+      Object.keys(i.callbacks).length === 0 && (r.clearTimeout(i.timeoutId), i.timeoutId = null);
+    };
+    e.reset = function (t, n) {
       e.timeouts.hasOwnProperty(t) && (e.timeouts[t].timeout = l(n));
     };
   }
@@ -65,7 +69,8 @@ define("utils/people/progressiveTimeout", [
       },
       { timeout: o.ONE_DAY }
     ];
-  t.classFunction = a, t.get = function () {
+  t.classFunction = a;
+  t.get = function () {
     return i.resolve(s.serviceLocator.PROGRESSIVE_TIMEOUT);
   };
-})
+});

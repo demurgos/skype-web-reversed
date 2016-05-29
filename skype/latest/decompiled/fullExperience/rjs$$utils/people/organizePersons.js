@@ -36,7 +36,8 @@ define("utils/people/organizePersons", [
     var n = {};
     return e.forEach(function (e) {
       var r = t.getBucketName(e);
-      n[r] || (n[r] = []), n[r].push(e);
+      n[r] || (n[r] = []);
+      n[r].push(e);
     }), s(n);
   }, t;
-})
+});

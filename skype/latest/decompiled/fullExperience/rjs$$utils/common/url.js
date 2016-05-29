@@ -11,4 +11,4 @@ define("utils/common/url", [
   }
   var n = e("lodash-compat");
   t.buildUrl = r;
-})
+});

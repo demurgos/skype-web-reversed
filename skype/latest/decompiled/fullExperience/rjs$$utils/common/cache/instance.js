@@ -8,4 +8,4 @@ define("utils/common/cache/instance", [
   t.get = function () {
     return r || (r = new n()), r;
   };
-})
+});

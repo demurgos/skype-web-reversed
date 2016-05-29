@@ -16,19 +16,24 @@ define("utils/common/array", [
     return e.sort(function (e, i) {
       return r(n(e, t), n(i, t));
     });
-  }, t.sortByObservableProperty = function (e, t) {
+  };
+  t.sortByObservableProperty = function (e, t) {
     function n(e, t) {
       return e[t]();
     }
     return e.sort(function (e, i) {
       return r(n(e, t), n(i, t));
     });
-  }, t.insertAt = function (e, t, n) {
+  };
+  t.insertAt = function (e, t, n) {
     e.splice(t, 0, n);
-  }, t.swapItems = function (e, t, n) {
+  };
+  t.swapItems = function (e, t, n) {
     var r = e[t];
-    e[t] = e[n], e[n] = r;
-  }, t.removeFrom = function (e, t) {
+    e[t] = e[n];
+    e[n] = r;
+  };
+  t.removeFrom = function (e, t) {
     return e.splice(t, 1)[0];
   };
-})
+});

@@ -10,5 +10,7 @@ define("ui/components/calling/cqfQuestion", [
     return n.build(e);
   }
   var n = e("ui/viewModels/calling/cqfQuestionViewModel");
-  t.name = e("constants/components").calling.CQF_QUESTION, t.template = e("text!views/calling/cqfQuestion.html"), t.viewModel = { createViewModel: r };
-})
+  t.name = e("constants/components").calling.CQF_QUESTION;
+  t.template = e("text!views/calling/cqfQuestion.html");
+  t.viewModel = { createViewModel: r };
+});

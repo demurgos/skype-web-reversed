@@ -6,14 +6,17 @@ define("utils/common/logTracer/messageBuffer", [
   function n() {
     var e = [], t = 0;
     this.addMessage = function (n) {
-      t += n.length, e.push(n);
-    }, this.toString = function () {
+      t += n.length;
+      e.push(n);
+    };
+    this.toString = function () {
       return e.join("\n");
-    }, this.clear = function () {
+    };
+    this.clear = function () {
       e = [];
     };
   }
   t.build = function () {
     return new n();
   };
-})
+});

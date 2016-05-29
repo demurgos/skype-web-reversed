@@ -22,7 +22,8 @@ define("utils/common/cafeObservable", [
       s.getSubscriptionsCount() || (e.observed() || (t = e.get.bind(e)), f && (a = e.subscribe()), e.changed(l, t));
     }
     function h() {
-      e.changed.off(l), a && (a.dispose(), a = null);
+      e.changed.off(l);
+      a && (a.dispose(), a = null);
     }
     var i = t.observable(), s, o, u, a, f;
     return n = n || {}, f = n.keepAlive, s = t.pureComputed({
@@ -33,7 +34,8 @@ define("utils/common/cafeObservable", [
     }), o = r(s, "subscribe"), u = s[o], s.subscribe = s[o] = function () {
       var e, t, n;
       return c(), t = r(s, "dispose"), e = u.apply(s, arguments), n = e[t].bind(e), e.dispose = e[t] = function () {
-        n(), s.getSubscriptionsCount() || h();
+        n();
+        s.getSubscriptionsCount() || h();
       }, e;
     }, s;
   }
@@ -57,10 +59,13 @@ define("utils/common/cafeObservable", [
     }), o = r(u, "subscribe"), a = u[o], u.subscribe = u[o] = function () {
       var e, t, n;
       return t = r(u, "dispose"), e = a.apply(u, arguments), n = e[t].bind(e), h(), e.dispose = e[t] = function () {
-        n(), p();
+        n();
+        p();
       }, e;
     }, u.bindToProperty = function (e) {
-      s = e, h(), c();
+      s = e;
+      h();
+      c();
     }, u;
   }
   function u(e, n) {
@@ -71,7 +76,8 @@ define("utils/common/cafeObservable", [
       }), t && t());
     }
     function p() {
-      f && (f.dispose(), f = null), l && (l.dispose(), l = null);
+      f && (f.dispose(), f = null);
+      l && (l.dispose(), l = null);
     }
     var s = t.observable(), o, u, a, f, l, c;
     return n = n || {}, c = n.keepAlive, o = t.pureComputed({
@@ -82,7 +88,8 @@ define("utils/common/cafeObservable", [
     }), u = r(o, "subscribe"), a = o[u].bind(o), o.subscribe = o[u] = function () {
       var e, t, n;
       return h(), t = r(o, "dispose"), e = a.apply(o, arguments), n = e[t].bind(e), e.dispose = e[t] = function () {
-        n(), o.getSubscriptionsCount() === s.getSubscriptionsCount() && p();
+        n();
+        o.getSubscriptionsCount() === s.getSubscriptionsCount() && p();
       }, e;
     }, o = i(o), o;
   }
@@ -92,4 +99,4 @@ define("utils/common/cafeObservable", [
     newDeferredObservableProperty: o,
     newObservableCollection: u
   };
-})
+});

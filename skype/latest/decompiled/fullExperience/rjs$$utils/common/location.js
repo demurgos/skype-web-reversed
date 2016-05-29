@@ -4,4 +4,4 @@ define("utils/common/location", [], function () {
       window.location.href = e;
     }
   };
-})
+});

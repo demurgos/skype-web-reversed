@@ -6,7 +6,8 @@ define("utils/common/logTracer/telemetryReporter", [
 ], function (e, t) {
   function r() {
     var e = this;
-    e.send = n.noop, e.update = function (t) {
+    e.send = n.noop;
+    e.update = function (t) {
       var r = t.reporting.telemetryManager, i = t.reporting.telemetryToken, s = t.reporting.throttleInterval;
       r && i ? e.send = n.throttle(function (e) {
         r.sendEvent(i, "logging", e);
@@ -17,4 +18,4 @@ define("utils/common/logTracer/telemetryReporter", [
   t.build = function () {
     return new r();
   };
-})
+});

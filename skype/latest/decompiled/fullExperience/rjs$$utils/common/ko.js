@@ -26,32 +26,43 @@ define("utils/common/ko", [
     var t = e();
     t.forEach(function (e) {
       e.dispose && e.dispose();
-    }), t.splice(0);
-  }, t.wrapObservable = function (e) {
-    return e === null || r.isUndefined(e) ? n.observable() : n.isObservable(e) ? e : n.observable(e);
-  }, t.changed = s, t.when = o, t.once = function (e, t, n) {
-    return o(e, t, function (e) {
-      this.dispose(), n(e);
     });
-  }, t.handleArrayChanges = function (e, t, n, r) {
+    t.splice(0);
+  };
+  t.wrapObservable = function (e) {
+    return e === null || r.isUndefined(e) ? n.observable() : n.isObservable(e) ? e : n.observable(e);
+  };
+  t.changed = s;
+  t.when = o;
+  t.once = function (e, t, n) {
+    return o(e, t, function (e) {
+      this.dispose();
+      n(e);
+    });
+  };
+  t.handleArrayChanges = function (e, t, n, r) {
     function f(e) {
       return o.filter(function (t) {
         return t.key === e;
       })[0];
     }
     function l(t) {
-      t.moved >= 0 ? (a = f(t.value), i.insertAt(e, t.index, a ? a.value : e[t.moved + s])) : n(t.index, t.value), s++;
+      t.moved >= 0 ? (a = f(t.value), i.insertAt(e, t.index, a ? a.value : e[t.moved + s])) : n(t.index, t.value);
+      s++;
     }
     function c(t) {
       var n = t.index + s;
       t.moved >= 0 && o.push({
         key: t.value,
         value: e[n]
-      }), r(n, t.value), s--;
+      });
+      r(n, t.value);
+      s--;
     }
     var s = 0, o = [], u, a;
-    n = n || i.insertAt.bind(null, e), r = r || i.removeFrom.bind(null, e);
+    n = n || i.insertAt.bind(null, e);
+    r = r || i.removeFrom.bind(null, e);
     for (var h = 0; h < t.length; h++)
       u = t[h], u.status === "added" ? l(u) : c(u);
   };
-})
+});

@@ -12,5 +12,7 @@ define("ui/components/chat/currentCallActions", [
     return i.setContext(n.dataFor(t.element)), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/currentCallActions");
-  t.name = e("constants/components").chat.CURRENT_CALL_ACTIONS, t.template = e("text!views/chat/timeline/currentCallActions.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.CURRENT_CALL_ACTIONS;
+  t.template = e("text!views/chat/timeline/currentCallActions.html");
+  t.viewModel = { createViewModel: i };
+});

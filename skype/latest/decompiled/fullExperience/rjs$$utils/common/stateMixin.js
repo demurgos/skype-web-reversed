@@ -7,7 +7,8 @@ define("utils/common/stateMixin", [
   function i() {
   }
   function s() {
-    this.storage = [], this.lastFreeSlot = -1;
+    this.storage = [];
+    this.lastFreeSlot = -1;
   }
   function u() {
   }
@@ -33,7 +34,8 @@ define("utils/common/stateMixin", [
   }
   function E(e, n, r, i, s) {
     var o = i.resolve(e), u = s.resolve(e), a, f = undefined, l;
-    o !== d && (l = t.findIndex(r, w.bind(null, i, o)), l !== -1 && l !== n && (f = r[l], r[l] = undefined)), f || (f = r[n]);
+    o !== d && (l = t.findIndex(r, w.bind(null, i, o)), l !== -1 && l !== n && (f = r[l], r[l] = undefined));
+    f || (f = r[n]);
     if (f && u !== d) {
       a = s.resolve(f);
       if (a === d || a !== u && !t.isEqual(a, u))
@@ -63,7 +65,8 @@ define("utils/common/stateMixin", [
     new y().execute(this.state, e, t);
   }
   function k(e) {
-    this.afterStateApplied && this.afterStateApplied(), t.forEach(e, function (e) {
+    this.afterStateApplied && this.afterStateApplied();
+    t.forEach(e, function (e) {
       e && t.isFunction(e) && e.call(this);
     });
   }
@@ -74,7 +77,8 @@ define("utils/common/stateMixin", [
   s.prototype.get = function (e) {
     var n = t.find(this.storage, { key: e });
     return n && n.value;
-  }, s.prototype.set = function (e, n) {
+  };
+  s.prototype.set = function (e, n) {
     var r = this.lastFreeSlot;
     if (r === -1) {
       r = t.findIndex(this.storage, null);
@@ -89,37 +93,53 @@ define("utils/common/stateMixin", [
     this.storage[r] = {
       key: e,
       value: n
-    }, this.lastFreeSlot = -1;
-  }, s.prototype.delete = function (e) {
+    };
+    this.lastFreeSlot = -1;
+  };
+  s.prototype.delete = function (e) {
     var n = t.findIndex(this.storage, { key: e });
     if (n === -1)
       return;
-    this.storage[n] = null, this.lastFreeSlot = n;
+    this.storage[n] = null;
+    this.lastFreeSlot = n;
   };
   var o = s;
-  typeof WeakMap == "function" && (o = WeakMap), u.prototype.EMPTY_VALUE = null, u.prototype.isBound = function (e, t) {
+  typeof WeakMap == "function" && (o = WeakMap);
+  u.prototype.EMPTY_VALUE = null;
+  u.prototype.isBound = function (e, t) {
     return t === null ? !0 : e && e.hasOwnProperty(t);
-  }, u.prototype.resolve = function (e, t) {
+  };
+  u.prototype.resolve = function (e, t) {
     return t === null ? e : e && e[t];
-  }, u.prototype.assign = function (e, t, n) {
+  };
+  u.prototype.assign = function (e, t, n) {
     if (t === null)
       throw new Error("References are immutable");
     e[t] = n;
-  }, u.prototype.delete = function (e, t) {
+  };
+  u.prototype.delete = function (e, t) {
     if (t === null)
       throw new Error("References are immutable");
     e.hasOwnProperty(t) ? delete e[t] : e[t] = undefined;
-  }, a.prototype = Object.create(u.prototype), a.prototype.resolve = function (e, t) {
+  };
+  a.prototype = Object.create(u.prototype);
+  a.prototype.resolve = function (e, t) {
     return t === null ? e && e() : e && e[t] && e[t]();
-  }, a.prototype.assign = function (e, t, r) {
+  };
+  a.prototype.assign = function (e, t, r) {
     t !== null ? e[t] ? e[t](r) : e[t] = n.observable(r) : e(r);
-  }, a.prototype.delete = function (e) {
+  };
+  a.prototype.delete = function (e) {
     this.assign(e, undefined);
-  }, f.prototype = Object.create(a.prototype), f.prototype.assign = function (e, t, r) {
+  };
+  f.prototype = Object.create(a.prototype);
+  f.prototype.assign = function (e, t, r) {
     t !== null ? e[t] ? e[t](r) : e[t] = n.observableArray(r) : e(r);
-  }, f.prototype.EMPTY_VALUE = [];
+  };
+  f.prototype.EMPTY_VALUE = [];
   var l = new u(), c = new a(), h = new f(), d = [NaN];
-  v.prototype = Object.create(u.prototype), v.prototype.resolve = function (e) {
+  v.prototype = Object.create(u.prototype);
+  v.prototype.resolve = function (e) {
     return this.key ? typeof this.key == "function" ? this.key(e) || d : this.key.map(function (t) {
       return p(e, t).resolve(e, t);
     }) : d;
@@ -133,7 +153,8 @@ define("utils/common/stateMixin", [
   };
   b.prototype.valueAssign = function (e, t, n) {
     var r;
-    typeof t != "string" && typeof t != "number" || !!e.hasOwnProperty(t) ? r = p(e, t) : r = typeof n == "function" ? l : c, r.assign(e, t, n);
+    typeof t != "string" && typeof t != "number" || !!e.hasOwnProperty(t) ? r = p(e, t) : r = typeof n == "function" ? l : c;
+    r.assign(e, t, n);
   };
   var w = function (n, r, i) {
     return t.isEqual(n.resolve(i), r);
@@ -142,7 +163,8 @@ define("utils/common/stateMixin", [
     var s, o, u;
     (typeof r == "string" || typeof r == "number") && !e.hasOwnProperty(r) && (e[r] = n.observableArray());
     var a = p(e, r), f = a.resolve(e, r) || [], l = [], c;
-    o = new v(this.typeKeyFor(i)), s = new v(this.keyFor(i));
+    o = new v(this.typeKeyFor(i));
+    s = new v(this.keyFor(i));
     for (c = 0; c < i.length; ++c) {
       var h = p(i, c).resolve(i, c);
       g(h) ? p(l, c).assign(l, c, h) : t.isArray(h) ? this.deepArrayAssign(l, c, h) : (u = E(h, c, f, s, o) || {}, p(l, c).assign(l, c, u), this.deepObjectAssign(l, c, h));
@@ -150,7 +172,8 @@ define("utils/common/stateMixin", [
     Array.prototype.splice.apply(f, [
       0,
       f.length
-    ].concat(l)), a.assign(e, r, f);
+    ].concat(l));
+    a.assign(e, r, f);
   }, b.prototype.deepObjectAssign = function (e, n, r) {
     var i, s, o = p(e, n), u = new v(this.typeKeyFor(r)), a, f, l = !1;
     if (!r) {
@@ -159,7 +182,8 @@ define("utils/common/stateMixin", [
     }
     i = this.getFromStack(r);
     if (i) {
-      this.breakCycles && (i = null), o.assign(e, n, i);
+      this.breakCycles && (i = null);
+      o.assign(e, n, i);
       return;
     }
     if (this.preserveReferences) {
@@ -169,13 +193,20 @@ define("utils/common/stateMixin", [
         return;
       }
     }
-    s = null, o.isBound(e, n) && (s = o.resolve(e, n)), a = u.resolve(r);
+    s = null;
+    o.isBound(e, n) && (s = o.resolve(e, n));
+    a = u.resolve(r);
     if (s && a !== d) {
-      f = u.resolve(s), l = !0;
+      f = u.resolve(s);
+      l = !0;
       if (f === d || f !== a && !t.isEqual(f, a))
         l = !1;
     }
-    s === null && (s = {}), this.pushContextUpdate(r, s), y.prototype.execute(s, r, this), this.popContext(r), l || o.assign(e, n, s);
+    s === null && (s = {});
+    this.pushContextUpdate(r, s);
+    y.prototype.execute(s, r, this);
+    this.popContext(r);
+    l || o.assign(e, n, s);
   }, b.prototype.getFromStack = function (e) {
     var t = this.contextStack && this.contextStack.get(e);
     return t && t.target;
@@ -183,16 +214,22 @@ define("utils/common/stateMixin", [
     return this.knownObjects && this.knownObjects.get(e);
   }, b.prototype.pushContextUpdate = function (e, t) {
     var n = this.contextStack || new o(), r;
-    this.contextStack = n, this.preserveReferences && (r = this.knownObjects || new o(), this.knownObjects = r, r.set(e, t)), n.set(e, {
+    this.contextStack = n;
+    this.preserveReferences && (r = this.knownObjects || new o(), this.knownObjects = r, r.set(e, t));
+    n.set(e, {
       target: t,
       breakCycles: this.breakCycles,
       removeExtra: this.removeExtra
-    }), this.breakCycles = !0, this.removeExtra = !1;
+    });
+    this.breakCycles = !0;
+    this.removeExtra = !1;
   }, b.prototype.popContext = function (e) {
     var t = this.contextStack && this.contextStack.get(e);
     if (!t)
       return;
-    this.breakCycles = t.breakCycles, this.removeExtra = t.removeExtra, this.contextStack.delete(e);
+    this.breakCycles = t.breakCycles;
+    this.removeExtra = t.removeExtra;
+    this.contextStack.delete(e);
   }, b.prototype.ignoreProperty = function (e) {
     return e && (e[0] === "_" || e[0] === "@");
   }, b.prototype.keyFor = function () {
@@ -285,11 +322,14 @@ define("utils/common/stateMixin", [
     this.state = this.state || {};
     if (t.isString(n) || t.isArray(n))
       r = n, n = null;
-    t.isString(r) && (r = [r]), this._taskQueue = this._taskQueue || [], this._taskQueue.push({
+    t.isString(r) && (r = [r]);
+    this._taskQueue = this._taskQueue || [];
+    this._taskQueue.push({
       newState: e,
       callback: n,
       limitKeys: r
-    }), s.call(this);
+    });
+    s.call(this);
   }, i.prototype.applyState = i.prototype.baseApplyState, i.prototype.scheduleStateMerge = function () {
     var e = this.processTaskQueue || i.prototype.processTaskQueue;
     if (this._scheduledTaskHandler)
@@ -302,9 +342,15 @@ define("utils/common/stateMixin", [
       this._scheduledTaskHandler = null;
       return;
     }
-    n = x.call(this), e = T.call(this, n, t), e = N.call(this, e), C.call(this, e), this._scheduledTaskHandler = null, this._taskQueue.length && r.call(this), k.call(this, t);
+    n = x.call(this);
+    e = T.call(this, n, t);
+    e = N.call(this, e);
+    C.call(this, e);
+    this._scheduledTaskHandler = null;
+    this._taskQueue.length && r.call(this);
+    k.call(this, t);
   }, i.overrideDefaults = function () {
     var e = Array.prototype.slice.call(arguments);
     return e.push(L), t.assign.apply(t, e), e[0];
   }, t.assign(i, i.prototype), i;
-})
+});

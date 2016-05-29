@@ -15,20 +15,25 @@ define("utils/calling/callingStack", [
       return s.featureFlags[r.featureFlags.NG_CALLING] ? e.isPluginlessCallingSupported && t() : !1;
     }
     var e = this;
-    e.isPluginlessEnabledInCurrentBrowser = t, e.isPluginlessCallingSupported = i, e.isInBrowserPluginSupported = function () {
+    e.isPluginlessEnabledInCurrentBrowser = t;
+    e.isPluginlessCallingSupported = i;
+    e.isInBrowserPluginSupported = function () {
       return n.getBrowserInfo().isInBrowserPluginSupported;
-    }, e.isInBrowserCallingSupported = function () {
+    };
+    e.isInBrowserCallingSupported = function () {
       return n.getBrowserInfo().isInBrowserPluginSupported || i();
-    }, e.isOutofBrowserCallingSupported = function () {
+    };
+    e.isOutofBrowserCallingSupported = function () {
       return !n.getBrowserInfo().isInBrowserPluginSupported && !i();
     };
   }
   var n = e("browser/detect"), r = e("constants/common"), i, s;
   t.init = function (e) {
     s = e;
-  }, t.get = function () {
+  };
+  t.get = function () {
     if (!s)
       throw new Error("No settings found for calling stack!");
     return i = i || new o(), i;
   };
-})
+});

@@ -16,12 +16,14 @@ define("ui/modelObservers/agentAuthorizationObserver", [
       t.isConversationWithUnauthorizedAgent(!r);
     }
     var t = this;
-    t.isConversationWithUnauthorizedAgent = n.observable(!1), t.dispose = function () {
+    t.isConversationWithUnauthorizedAgent = n.observable(!1);
+    t.dispose = function () {
       r.get().personsAndGroupsManager.all.persons.changed.off(u);
-    }, o();
+    };
+    o();
   }
   var n = e("vendor/knockout"), r = e("cafe/applicationInstance"), i = e("ui/modelHelpers/conversationHelper"), s = e("ui/modelHelpers/personHelper");
   t.build = function (e) {
     return new o(e);
   };
-})
+});

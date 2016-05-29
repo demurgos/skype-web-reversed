@@ -13,13 +13,15 @@ define("ui/modalDialog/downloadFileConfirmationDialog", [
 ], function (e, t) {
   function l(e, t, r) {
     var i = r ? "file_transfer_download_safe_file_dialog_text" : "file_transfer_download_unsafe_file_dialog_text";
-    this.isSafetype = r, this.text = s.fetch({
+    this.isSafetype = r;
+    this.text = s.fetch({
       key: i,
       params: {
         filename: e,
         author: t
       }
-    }), this.stopShowingAgain = n.observable(!1);
+    });
+    this.stopShowingAgain = n.observable(!1);
   }
   var n = e("vendor/knockout"), r = e("constants/common"), i = e("experience/settings"), s = e("swx-i18n").localization, o = e("ui/modalDialog/confirmationDialog"), u = e("text!views/chat/downloadFileConfirmationDialog.html"), a = e("swx-flags-service-api"), f = e("cafe/applicationInstance");
   t.start = function (e, t, n, c) {
@@ -38,6 +40,7 @@ define("ui/modalDialog/downloadFileConfirmationDialog", [
       contentViewModel: p,
       onConfirm: v,
       confirmButtonTitle: s.fetch({ key: "file_transfer_download_dialog_confirm_button_title" })
-    }), h.show();
+    });
+    h.show();
   };
-})
+});

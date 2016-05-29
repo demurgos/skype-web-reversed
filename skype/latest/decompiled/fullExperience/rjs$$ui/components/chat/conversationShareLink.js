@@ -12,5 +12,7 @@ define("ui/components/chat/conversationShareLink", [
     return i.setContext(n.dataFor(t.element)), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/conversationShareLink");
-  t.name = e("constants/components").chat.CONVERSATION_SHARE_LINK, t.template = e("text!views/chat/conversationShareLink.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.CONVERSATION_SHARE_LINK;
+  t.template = e("text!views/chat/conversationShareLink.html");
+  t.viewModel = { createViewModel: i };
+});

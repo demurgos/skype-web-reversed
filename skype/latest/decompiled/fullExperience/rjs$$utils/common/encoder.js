@@ -15,4 +15,4 @@ define("utils/common/encoder", [
       };
     return t.isFeatureOn(r.featureFlags.PES_USE_EXTRA_LARGE_EMOTICONS) && (o.largeEmoticonClass = "extraLarge"), n.build(o);
   };
-})
+});

@@ -33,13 +33,20 @@ define("ui/calling/telemetry/cqfActions", [
     this.submit = function (t) {
       if (typeof t.score != "number")
         return this.cancel(t);
-      t.reason = n.reason.RANDOM, e(t);
-    }, this.cancel = function (t) {
-      t.score = n.CANCEL_SCORE, t.reason = n.reason.CANCEL, t.problemTokens = n.PROBLEM_TOKEN_PREFIX, t.tokensSelected = [], t.othersSelected = [], e(t);
+      t.reason = n.reason.RANDOM;
+      e(t);
+    };
+    this.cancel = function (t) {
+      t.score = n.CANCEL_SCORE;
+      t.reason = n.reason.CANCEL;
+      t.problemTokens = n.PROBLEM_TOKEN_PREFIX;
+      t.tokensSelected = [];
+      t.othersSelected = [];
+      e(t);
     };
   }
   var n = e("constants/common").telemetry.callQualityFeedback, r = e("experience/settings"), i = e("ui/telemetry/telemetryClient"), s;
   t.get = function () {
     return s || (s = new o()), s;
   };
-})
+});

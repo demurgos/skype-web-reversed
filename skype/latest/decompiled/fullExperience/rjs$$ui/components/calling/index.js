@@ -37,4 +37,4 @@ define("ui/components/calling/index", [
     e("ui/components/calling/skypeOut/dialpad"),
     e("ui/components/calling/skypeOut/countryPicker")
   ];
-})
+});

@@ -19,10 +19,12 @@ define("ui/modelHelpers/groupHelper", [
         return e.relationshipLevel() === s.groupPrivacyRelationshipLevel.Blocked;
       });
     return t;
-  }, t.getPersonsOtherThanEcho = function () {
+  };
+  t.getPersonsOtherThanEcho = function () {
     var e = r.get().personsAndGroupsManager.all.persons();
     return n.filter(e, o);
-  }, t.getPersonsOtherThanEchoAndAgents = function () {
+  };
+  t.getPersonsOtherThanEchoAndAgents = function () {
     return n.filter(t.getPersonsOtherThanEcho(), u);
   };
-})
+});

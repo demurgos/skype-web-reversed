@@ -7,4 +7,4 @@ define("utils/common/stringPolyfills", [
     var t = this;
     return t < e ? -1 : t > e ? 1 : 0;
   };
-})
+});

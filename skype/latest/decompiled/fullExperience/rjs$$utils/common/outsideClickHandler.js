@@ -27,7 +27,8 @@ define("utils/common/outsideClickHandler", [
       return;
     a.forEach(function (e) {
       e.callback();
-    }), e.stopPropagation();
+    });
+    e.stopPropagation();
   }
   function h(e) {
     n.remove(a, function (t) {
@@ -40,20 +41,30 @@ define("utils/common/outsideClickHandler", [
       throw new Error("className is mandatory");
     if (!t)
       throw new Error("handler is not provided");
-    a = a || [], h(e), a.length === 0 && (i.body.addEventListener(s.events.browser.CLICK, f, !0), i.body.addEventListener(s.events.browser.KEYDOWN, c, !0)), a.push({
+    a = a || [];
+    h(e);
+    a.length === 0 && (i.body.addEventListener(s.events.browser.CLICK, f, !0), i.body.addEventListener(s.events.browser.KEYDOWN, c, !0));
+    a.push({
       name: e,
       callback: t
     });
-  }, t.remove = function (e) {
+  };
+  t.remove = function (e) {
     if (!e)
       throw new Error("className is mandatory");
     h(e);
     if (a === null || a.length > 0)
       return;
-    a = null, i.body.removeEventListener(s.events.browser.CLICK, f, !0), i.body.removeEventListener(s.events.browser.KEYDOWN, c, !0);
-  }, t._getListenters = function () {
-    return a;
-  }, t._dispose = function () {
-    a = null, i.body.removeEventListener(s.events.browser.CLICK, f, !0), i.body.removeEventListener(s.events.browser.KEYDOWN, c, !0);
+    a = null;
+    i.body.removeEventListener(s.events.browser.CLICK, f, !0);
+    i.body.removeEventListener(s.events.browser.KEYDOWN, c, !0);
   };
-})
+  t._getListenters = function () {
+    return a;
+  };
+  t._dispose = function () {
+    a = null;
+    i.body.removeEventListener(s.events.browser.CLICK, f, !0);
+    i.body.removeEventListener(s.events.browser.KEYDOWN, c, !0);
+  };
+});

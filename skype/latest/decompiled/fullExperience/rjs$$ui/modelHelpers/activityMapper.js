@@ -9,4 +9,4 @@ define("ui/modelHelpers/activityMapper", [
   t.map = function (e) {
     return r[e] ? n.fetch({ key: "message_text_activity_" + r[e] }) : e;
   };
-})
+});

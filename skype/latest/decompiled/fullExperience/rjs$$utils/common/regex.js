@@ -5,7 +5,8 @@ define("utils/common/regex", [
 ], function (e, t) {
   t.escapeSpecialChars = function (e) {
     return e.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-  }, t.multilineRegExp = function (e, t) {
+  };
+  t.multilineRegExp = function (e, t) {
     return new RegExp(e.join(""), t);
   };
-})
+});

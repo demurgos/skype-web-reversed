@@ -21,7 +21,8 @@ define("utils/common/elementQueryHelper", [
     };
   t.initialiseSelectors = function () {
     n.elementQuery && n.elementQuery(r);
-  }, t.refresh = function () {
+  };
+  t.refresh = function () {
     n.elementQuery && n.elementQuery();
   };
-})
+});

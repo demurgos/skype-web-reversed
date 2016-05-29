@@ -5,6 +5,7 @@ var esprima = require("esprima");
 var escodegen = require("escodegen");
 var _ = require("lodash");
 
+var ast = require("./ast");
 var requirejs = require("./requirejs");
 var msBond = require("./ms-bond");
 
@@ -92,6 +93,7 @@ function decompile(options) {
   return readFile(filePath)
     .then(function (contentStr) {
       var program = esprima.parse(contentStr);
+      ast.expandAllExpressionStatements(program);
 
       var requirejsResult = requirejs.decompile(program, options);
       program = requirejsResult.program;

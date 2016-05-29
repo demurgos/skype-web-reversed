@@ -12,17 +12,22 @@ define("utils/common/logTracer/bufferingWriter", [
           e[i]("[" + u + "]", a + " -> " + f);
         } catch (c) {
         }
-      t.addMessage(l), "error" === s && r.addMessage(l);
+      t.addMessage(l);
+      "error" === s && r.addMessage(l);
     }
     this.log = function () {
       return i("log", "log", arguments);
-    }, this.info = function () {
+    };
+    this.info = function () {
       return i("info", "info", arguments);
-    }, this.warn = function () {
+    };
+    this.warn = function () {
       return i("warn", "warn", arguments);
-    }, this.error = function () {
+    };
+    this.error = function () {
       return i("error", "error", arguments);
-    }, this.debug = function () {
+    };
+    this.debug = function () {
       return i("log", "debug", arguments);
     };
   }
@@ -30,4 +35,4 @@ define("utils/common/logTracer/bufferingWriter", [
   t.build = function (e, t, n) {
     return new r(e, t, n);
   };
-})
+});

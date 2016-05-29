@@ -13,7 +13,8 @@ define("utils/common/logTracer/api", [
   "utils/common/logTracer/telemetryReporter"
 ], function (e, t) {
   function p() {
-    h && (window.removeEventListener("error", d), h = null), c.logUnhandled && (h = t.getLogger("Unhandled Exceptions"), window.addEventListener("error", d));
+    h && (window.removeEventListener("error", d), h = null);
+    c.logUnhandled && (h = t.getLogger("Unhandled Exceptions"), window.addEventListener("error", d));
   }
   function d(e) {
     try {
@@ -34,9 +35,12 @@ define("utils/common/logTracer/api", [
       all: o.toString(),
       error: u.toString()
     };
-  }, t.clearLogs = function () {
-    o.clear(), u.clear();
-  }, t.getLogger = function (e, t) {
+  };
+  t.clearLogs = function () {
+    o.clear();
+    u.clear();
+  };
+  t.getLogger = function (e, t) {
     var n, h = function () {
         var n, h = function () {
             return e;
@@ -60,7 +64,8 @@ define("utils/common/logTracer/api", [
       debug: { get: p("debug") },
       createChild: { get: p("createChild") }
     });
-  }, t.configure = function (e) {
+  };
+  t.configure = function (e) {
     c = {
       logToConsole: !1,
       logToBuffer: !1,
@@ -71,6 +76,10 @@ define("utils/common/logTracer/api", [
         telemetryManager: null,
         telemetryToken: null
       }
-    }, n.merge(c, e), l.update(c), p();
-  }, t.configure();
-})
+    };
+    n.merge(c, e);
+    l.update(c);
+    p();
+  };
+  t.configure();
+});

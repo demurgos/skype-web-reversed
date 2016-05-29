@@ -322,4 +322,4 @@ define("utils/chat/message", [
       return n.PARTICIPANT_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.PARTICIPANT : n.CALL_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CALL : n.NGC_UPGRADE_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.NGC_UPGRADE : n.PLUGIN_FREE_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.PLUGIN_FREE : n.MEDIA_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.MEDIA : n.CONTACT_REQUEST_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CONTACT_REQUEST : n.POLL_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.POLL : n.CONTACT_INFO_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CONTACT_INFO : n.TRANSACTION_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.TRANSACTION : n.PSTN_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.PSTN : n.CUSTOM_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CUSTOM : r.activityItemGroups.TEXT;
     }
   };
-})
+});

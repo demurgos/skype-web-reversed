@@ -9,12 +9,15 @@ define("utils/common/accessibility", [
   t.initFocusRing = function (e) {
     e.addEventListener("keydown", function () {
       n.hasClass(e, i) || n.addClass(e, i);
-    }, !1), e.addEventListener("mousedown", function () {
+    }, !1);
+    e.addEventListener("mousedown", function () {
       n.removeClass(e, i);
     }, !1);
-  }, t.updateAriaLiveHtml = function (e, t) {
+  };
+  t.updateAriaLiveHtml = function (e, t) {
     if (!r.isObservable(e))
       throw new Error("Parameter must be a ko.observable.");
-    e(""), e("<span>" + t + "</span>");
+    e("");
+    e("<span>" + t + "</span>");
   };
-})
+});

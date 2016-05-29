@@ -15,7 +15,8 @@ define("utils/common/feedback", [
       userId: n.initParams.correlationIds.userId,
       sessionId: n.initParams.correlationIds.sessionId
     }, m = n.feedbackPageUrl + "?p=" + encodeURIComponent(e) + "&v=" + encodeURIComponent(t) + "&lang=" + encodeURIComponent(u) + "&e=" + encodeURIComponent(f), a && (m += "&u=" + encodeURIComponent(a)), l && (m += "&tag=" + encodeURIComponent(l)), m += "&tcg=" + encodeURIComponent(JSON.stringify(c))), m;
-  }, t.getFeedbackPageTarget = function () {
+  };
+  t.getFeedbackPageTarget = function () {
     return n.feedbackPageUrl.indexOf("mailto:") === 0 ? "_self" : "_blank";
   };
-})
+});

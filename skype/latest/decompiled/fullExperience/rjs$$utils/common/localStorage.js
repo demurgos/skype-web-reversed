@@ -28,4 +28,4 @@ define("utils/common/localStorage", [], function () {
         }
     }
   };
-})
+});

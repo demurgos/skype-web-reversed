@@ -12,5 +12,7 @@ define("ui/components/calling/participant", [
     return i.setContext(s), i.init(), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/calling/callScreenViewModel/participantViewModel");
-  t.name = e("constants/components").calling.PARTICIPANT, t.template = e("text!views/calling/participant.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").calling.PARTICIPANT;
+  t.template = e("text!views/calling/participant.html");
+  t.viewModel = { createViewModel: i };
+});

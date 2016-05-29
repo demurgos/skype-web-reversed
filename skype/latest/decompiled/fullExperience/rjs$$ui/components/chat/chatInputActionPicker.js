@@ -12,5 +12,7 @@ define("ui/components/chat/chatInputActionPicker", [
     return i.setContext(n.dataFor(t.element)), i.init(), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/chat/chatInputActionPicker");
-  t.name = e("constants/components").chat.CHAT_INPUT_ACTION_PICKER, t.template = e("text!views/chat/chatInputActionPicker.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.CHAT_INPUT_ACTION_PICKER;
+  t.template = e("text!views/chat/chatInputActionPicker.html");
+  t.viewModel = { createViewModel: i };
+});

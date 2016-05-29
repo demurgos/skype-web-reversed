@@ -1,3 +1,5 @@
+var estraverse = require("estraverse");
+
 function isStatement(node) {
   if(!node.type) {
     return false;
@@ -53,6 +55,33 @@ function expandVariableDeclarations (statementsList) {
       statementsList.splice(i, 1);
     }
   }
+}
+
+function expandExpressionStatements (statementsList) {
+  for (var i = statementsList.length - 1; i >= 0; i--) {
+    var statement = statementsList[i];
+    if (statement.type == "ExpressionStatement" && statement.expression.type === "SequenceExpression") {
+      statementsList.splice(i, 1);
+      for (var j = statement.expression.expressions.length - 1; j >= 0; j--) {
+        var newStatement = {
+          type: "ExpressionStatement",
+          expression: statement.expression.expressions[j]
+        };
+        statementsList.splice(i, 0, newStatement);
+      }
+    }
+  }
+}
+
+function expandAllExpressionStatements (root) {
+  estraverse.replace (root, {
+    enter: function (node) {
+      if (node.type === "BlockStatement") {
+        expandExpressionStatements(node.body);
+        return node;
+      }
+    }
+  })
 }
 
 /**
@@ -188,6 +217,7 @@ function testSimpleVarDeclaration (node) {
 exports.isStatement = isStatement;
 exports.isExpression = isExpression;
 exports.expandVariableDeclarations = expandVariableDeclarations;
+exports.expandAllExpressionStatements = expandAllExpressionStatements;
 
 exports.matchExpressionStatement = matchExpressionStatement;
 exports.matchSimpleMemberIdentifierAssignation = matchSimpleMemberIdentifierAssignation;

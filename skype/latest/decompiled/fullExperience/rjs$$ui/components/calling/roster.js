@@ -13,5 +13,7 @@ define("ui/components/calling/roster", [
     return o.setContext(u), o.init(a), o;
   }
   var n = e("vendor/knockout"), r = e("jsviews/calling/roster"), i = e("ui/viewModels/calling/callScreenViewModel/rosterViewModel");
-  t.name = e("constants/components").calling.ROSTER, t.template = e("text!views/calling/roster.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").calling.ROSTER;
+  t.template = e("text!views/calling/roster.html");
+  t.viewModel = { createViewModel: s };
+});

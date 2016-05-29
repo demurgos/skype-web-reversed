@@ -15,10 +15,15 @@ define("ui/contactInfoMessage/contactInfoMessage", [
         return u.isMyself ? i.fetch({ key: "chat_contactSent_label" }) : o.isKnownPerson(e) ? i.fetch({ key: "contact_information_already_contact" }) : i.fetch({ key: "contact_information_add_to_contacts" });
       }
       var t = {};
-      t.name = n.observable(e.id()), t.fullName = n.observable(e.displayName()), t.actionKey = n.observable(s(e)), t.titleKey = n.observable(i.fetch({
+      t.name = n.observable(e.id());
+      t.fullName = n.observable(e.displayName());
+      t.actionKey = n.observable(s(e));
+      t.titleKey = n.observable(i.fetch({
         key: "label_text_openConversation",
         params: { displayName: e.displayName() }
-      })), t.avatar = r.newObservableProperty(e.avatarUrl, { keepAlive: !0 }), u.contacts.push(t);
+      }));
+      t.avatar = r.newObservableProperty(e.avatarUrl, { keepAlive: !0 });
+      u.contacts.push(t);
     }
     function l(e) {
       return u.isMyself ? i.fetch({ key: "message_text_sentContacts" }) : i.fetch({
@@ -26,16 +31,20 @@ define("ui/contactInfoMessage/contactInfoMessage", [
         params: { from: e.sender.displayName() }
       });
     }
-    u.contacts = n.observableArray([]), t.contacts().forEach(function (e) {
-      f(e), s.publishShowEvent({
+    u.contacts = n.observableArray([]);
+    t.contacts().forEach(function (e) {
+      f(e);
+      s.publishShowEvent({
         participantsCount: a.participantsCount(),
         timeInStale: u.timestamp.getTime(),
         person: e
       });
-    }), u.content = n.observable(l(t));
-  }, t.handleContactAdded = function (t, n) {
+    });
+    u.content = n.observable(l(t));
+  };
+  t.handleContactAdded = function (t, n) {
     n.contacts().forEach(function (e) {
       e.name() === t && e.actionKey(i.fetch({ key: "contact_information_already_contact" }));
     });
   };
-})
+});

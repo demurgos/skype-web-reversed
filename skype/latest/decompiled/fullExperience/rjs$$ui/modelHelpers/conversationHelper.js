@@ -28,35 +28,45 @@ define("ui/modelHelpers/conversationHelper", [
   var n = e("swx-enums"), r = e("cafe/applicationInstance"), i = e("browser/detect"), s = e("utils/calling/callingStack"), o = e("swx-i18n").localization, u = e("ui/modelHelpers/personHelper"), a = e("lodash-compat"), f = e("ui/viewModels/calling/helpers/conversationTracker");
   t.createConversation = function (e, t) {
     return e.length > 1 || t ? h(e) : c(e[0]);
-  }, t.createSpaceTopic = function () {
+  };
+  t.createSpaceTopic = function () {
     return o.fetch({ key: "spaces_default_name" });
-  }, t.isCallingActive = function (e) {
+  };
+  t.isCallingActive = function (e) {
     return l(e) ? s.get().isOutofBrowserCallingSupported() ? !1 : i.getBrowserInfo().isShellApp ? !0 : f.isP2PConversation(e) ? !1 : e.selfParticipant.audio.state.reason === n.callDisconnectionReason.OutOfBrowserCall ? !1 : s.get().isPluginlessCallingSupported() && e.selfParticipant.audio.state.reason === n.callDisconnectionReason.CallEscalated ? !1 : e.autoCall && e.autoCall() ? !0 : !0 : !1;
-  }, t.addPersonsToConversation = function (e, t) {
+  };
+  t.addPersonsToConversation = function (e, t) {
     return Promise.all(a.map(e, function (e) {
       var n = t.createParticipant(e);
       return t.participants.add(n);
     }));
-  }, t.isOneToOneConversationWithEcho = function (e) {
+  };
+  t.isOneToOneConversationWithEcho = function (e) {
     var t = p(e);
     return !!t && u.isEchoContact(t);
-  }, t.isOneToOneConversationWithAgent = function (e) {
+  };
+  t.isOneToOneConversationWithAgent = function (e) {
     var t = p(e);
     return !!t && u.isAgent(t);
-  }, t.isOneToOneConversationWithBlockedPerson = function (e) {
+  };
+  t.isOneToOneConversationWithBlockedPerson = function (e) {
     var t = p(e);
     return !!t && t.isBlocked();
-  }, t.agentSupportsIm = function (e) {
+  };
+  t.agentSupportsIm = function (e) {
     var n;
     return t.isOneToOneConversationWithAgent(e) ? (n = e.participants()[0], !!n.person.capabilities.chat()) : !1;
-  }, t.getExistingConversationWithPerson = function (e) {
+  };
+  t.getExistingConversationWithPerson = function (e) {
     var t = r.get().conversationsManager.conversations();
     return a.find(t, function (t) {
       return !t.isGroupConversation() && t.participants.size() === 1 && t.participants()[0].person.id() === e.id();
     });
-  }, t.isPstnEndpoint = function (e) {
+  };
+  t.isPstnEndpoint = function (e) {
     return /^(\+)?\d+$/.test(e);
-  }, t.isPstnOnlyConversation = function (e) {
+  };
+  t.isPstnOnlyConversation = function (e) {
     var n = e.participants.subscribe();
     if (!e.participants.size())
       return n.dispose(), !1;
@@ -66,14 +76,16 @@ define("ui/modelHelpers/conversationHelper", [
         return n.dispose(), !1;
     }
     return n.dispose(), !0;
-  }, t.isConversationWithPstn = function (e) {
+  };
+  t.isConversationWithPstn = function (e) {
     return e.participants().some(function (e) {
       return e.audio.endpoint && t.isPstnEndpoint(e.audio.endpoint());
     });
-  }, t.isAtLeastOnceParticipantOnline = function (e) {
+  };
+  t.isAtLeastOnceParticipantOnline = function (e) {
     return e.participants().some(function (e) {
       var t = e.person.status();
       return t !== n.onlineStatus.Offline || t !== n.onlineStatus.Unknown;
     });
   };
-})
+});

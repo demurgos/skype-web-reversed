@@ -17,13 +17,15 @@ define("utils/common/logTracer/decoratingLogger", [
           return e[n].bind(e, t());
         }
       });
-    }), i ? ["debug"].forEach(function (n) {
+    });
+    i ? ["debug"].forEach(function (n) {
       Object.defineProperty(s, n, {
         get: function () {
           return e[n].bind(e, t());
         }
       });
-    }) : s.debug = n.noop, s.createChild = function (n, s) {
+    }) : s.debug = n.noop;
+    s.createChild = function (n, s) {
       var o = typeof n == "function" ? function () {
         return t() + "::" + n();
       } : function () {
@@ -36,4 +38,4 @@ define("utils/common/logTracer/decoratingLogger", [
   t.build = function (e, t, n) {
     return new r(e, t, n);
   };
-})
+});

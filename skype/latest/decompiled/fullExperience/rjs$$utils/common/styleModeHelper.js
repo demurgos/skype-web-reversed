@@ -29,16 +29,24 @@ define("utils/common/styleModeHelper", [
       return e && (c = e), !!e;
     }
     var e = this, t = 500, a = n.debounce(d, t), l = [], c, h = m();
-    e.currentMode = i.observable(v(p())), h || r.addEventListener(s.events.browser.RESIZE, a), e.addContainer = function (t) {
-      l.push(t), e.currentMode(v(p()));
-    }, e.appIsVisible = function () {
+    e.currentMode = i.observable(v(p()));
+    h || r.addEventListener(s.events.browser.RESIZE, a);
+    e.addContainer = function (t) {
+      l.push(t);
+      e.currentMode(v(p()));
+    };
+    e.appIsVisible = function () {
       return l.length > 0 && p() > 0;
-    }, e.isIntegratedProperty = function () {
+    };
+    e.isIntegratedProperty = function () {
       return h;
-    }, e.host = function () {
+    };
+    e.host = function () {
       return c;
-    }, e.dispose = function () {
-      h || r.removeEventListener(s.events.browser.RESIZE, a), l = [];
+    };
+    e.dispose = function () {
+      h || r.removeEventListener(s.events.browser.RESIZE, a);
+      l = [];
     };
   }
   var n = e("lodash-compat"), r = e("browser/window"), i = e("vendor/knockout"), s = e("constants/common"), o = e("experience/settings"), u = s.styleMode, a = null, f = {
@@ -49,7 +57,8 @@ define("utils/common/styleModeHelper", [
     };
   t.get = function () {
     return a === null && (a = new l()), a;
-  }, t.dispose = function () {
+  };
+  t.dispose = function () {
     a !== null && (a.dispose(), a = null);
   };
-})
+});

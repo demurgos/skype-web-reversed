@@ -13,5 +13,7 @@ define("ui/components/chat/contactPill", [
     throw new Error("missing parameter: \"person\"");
   }
   var n = e("ui/viewModels/people/contact"), r = e("ui/viewModels/people/contactBuilder");
-  t.name = e("constants/components").chat.CONTACT_PILL, t.template = e("text!views/chat/contactPill.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").chat.CONTACT_PILL;
+  t.template = e("text!views/chat/contactPill.html");
+  t.viewModel = { createViewModel: i };
+});

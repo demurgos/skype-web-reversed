@@ -42,19 +42,23 @@ define("ui/contextMenu/menuItemHelper", [
   t.getMenuItemTelemetryContext = function (e, t) {
     var n = { source: e };
     return t && t.source && (n.parent = t.source), n;
-  }, t.getConversationContextMenuItemGroup = function (e, n, i) {
+  };
+  t.getConversationContextMenuItemGroup = function (e, n, i) {
     var s = [], o = t.getCallPhoneContextMenuItems(e, n, i);
     return s.push(new r.CallSkypeMenuItem(e, n, i)), Array.prototype.push.apply(s, o), s.push(new r.VideoCallMenuItem(e, n, i)), s.push(new r.ViewPersonProfileMenuItem(e.getPerson(), n, i)), new r.MenuItemGroup(r.CallSkypeMenuItem.TYPE, s);
-  }, t.getCallPhoneContextMenuItems = function (e, s, u) {
+  };
+  t.getCallPhoneContextMenuItems = function (e, s, u) {
     var a = [], f = e.getPerson();
     if (f.phoneNumbers.size()) {
       var l = f.phoneNumbers();
-      l.sort(o), i.forEach(l, function (i) {
+      l.sort(o);
+      i.forEach(l, function (i) {
         a.push(new r.StartPSTNCallMenuItem(e, i, s, t.getMenuItemTelemetryContext(n.contextMenuItem.startPSTNCall, u)));
       });
     }
     return a;
-  }, t.sortMenuItems = function (e) {
+  };
+  t.sortMenuItems = function (e) {
     e.sort(f);
   };
-})
+});

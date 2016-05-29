@@ -12,4 +12,4 @@ define("utils/common/builderMixin", [
       return this.apply(e, arguments) || e;
     }
   }, t.assign(n, n.prototype), n;
-})
+});

@@ -56,4 +56,4 @@ define("utils/chat/urlValidator", [
       explodeURL: a
     }
   };
-})
+});

@@ -4,7 +4,8 @@ define("utils/common/prefetcher", [
 ], function (e) {
   function i() {
     var e = document.createDocumentFragment();
-    s(e), document.head.appendChild(e);
+    s(e);
+    document.head.appendChild(e);
   }
   function s(e) {
     r.forEach(function (r) {
@@ -26,7 +27,8 @@ define("utils/common/prefetcher", [
     var t = [], n = e.length;
     for (var r = 0; r < n; r++) {
       var i = new Image();
-      i.src = e[r], t[r] = i;
+      i.src = e[r];
+      t[r] = i;
     }
   }
   var t = e("ui/controls/calling/sounds"), n = [
@@ -44,4 +46,4 @@ define("utils/common/prefetcher", [
     prefetchAssets: i,
     prefetchImages: a
   };
-})
+});

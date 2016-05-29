@@ -12,5 +12,7 @@ define("ui/components/calling/cqf", [
     return i.setContext(n.dataFor(t.element)), i.init(e, s), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/calling/cqfViewModel");
-  t.name = e("constants/components").calling.CQF, t.template = e("text!views/calling/cqf.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").calling.CQF;
+  t.template = e("text!views/calling/cqf.html");
+  t.viewModel = { createViewModel: i };
+});

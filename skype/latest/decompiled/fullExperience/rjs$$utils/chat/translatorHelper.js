@@ -21,15 +21,18 @@ define("utils/chat/translatorHelper", [
       return;
     var t = /original./, n = t.test(e), r = e.replace(t, "");
     return n ? r.substring(0, r.lastIndexOf(".")) : e;
-  }, t.isMatchingMyLanguage = function (e, n) {
+  };
+  t.isMatchingMyLanguage = function (e, n) {
     var r = n && n.isEnabled && n.meLanguage ? n.meLanguage.code : null, i = t.extractLanguageKey(e);
     return i === r;
-  }, t.findMatchingTranslation = function (e, n) {
+  };
+  t.findMatchingTranslation = function (e, n) {
     var r = e && e().length, i, s;
     return r ? (a.some(e(), function (e) {
       return t.isMatchingMyLanguage(e.key, n) && e.users && e.users[0] && e.users[0].value ? (i = e.users[0].value, !0) : !1;
     }), i || (s = f(e), i = s ? s.users[0].value : i), i) : i;
-  }, t.requestTranslation = function (e, t, s, a) {
+  };
+  t.requestTranslation = function (e, t, s, a) {
     function b(e) {
       typeof a == "function" && a(e);
     }
@@ -39,7 +42,8 @@ define("utils/chat/translatorHelper", [
         action: o.action.TRANSLATE,
         error: t,
         language: g
-      }), b({ message: v });
+      });
+      b({ message: v });
     }
     function E(t) {
       var n = i.removeNoTranslateTags(t), r = p ? y : g, s = p ? i.processOutgoingTextMessage(v) : n, u = p ? n : v, a = {
@@ -64,6 +68,7 @@ define("utils/chat/translatorHelper", [
       b(a);
     }
     var f = n.get(), l = f.translatorService, c = f.personsAndGroupsManager.mePerson.id(), h = u.build(), p = t === r.chat.messageType.OUTGOING, d = p ? o.eventType.OUTGOING : o.eventType.INCOMING, v = e, m = p ? i.processOutgoingTextMessageForTranslation(e) : i.processIncomingSanitizedTextMessageForTranslation(e), g, y;
-    p ? (y = s._translatorSettings.meLanguage.code, g = s._translatorSettings.participantLanguage.code) : g = s._translatorSettings.meLanguage.code, l.translateMessage(y, g, m).then(E, w);
+    p ? (y = s._translatorSettings.meLanguage.code, g = s._translatorSettings.participantLanguage.code) : g = s._translatorSettings.meLanguage.code;
+    l.translateMessage(y, g, m).then(E, w);
   };
-})
+});

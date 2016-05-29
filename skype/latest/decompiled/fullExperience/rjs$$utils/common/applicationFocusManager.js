@@ -27,7 +27,9 @@ define("utils/common/applicationFocusManager", [
   }
   var n = e("services/serviceLocator"), r = e("constants/common"), i = e("ui/telemetry/actions/actionNames"), s = e("browser/dom"), o = e("browser/document"), u = e("browser/detect"), a = ".swx .chat .inputField", f = ".swx .search .inputField", l = "#swxSplashScreen", c = "data-focusManager", h = 2, p = [], d = null, v = 0;
   return t.focusTrackingEnabled = !1, t.reset = function () {
-    p.forEach(y), p = [], v = 0;
+    p.forEach(y);
+    p = [];
+    v = 0;
   }, t.setDefaultFocusElement = function (e) {
     d = e;
   }, t.getDefaultFocusElement = function () {
@@ -62,4 +64,4 @@ define("utils/common/applicationFocusManager", [
     var e = o.activeElement;
     return !!(!u.getBrowserInfo().isIeEngine || e && Object.keys(e).length) && !s.isA(e, "body");
   }, t;
-})
+});

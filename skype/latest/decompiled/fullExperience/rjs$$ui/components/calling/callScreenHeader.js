@@ -12,5 +12,7 @@ define("ui/components/calling/callScreenHeader", [
     return i.setContext(s), i.init(), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/calling/callScreenViewModel/callScreenHeaderViewModel");
-  t.name = e("constants/components").calling.HEADER, t.template = e("text!views/calling/callScreenHeader.html"), t.viewModel = { createViewModel: i };
-})
+  t.name = e("constants/components").calling.HEADER;
+  t.template = e("text!views/calling/callScreenHeader.html");
+  t.viewModel = { createViewModel: i };
+});

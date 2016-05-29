@@ -27,8 +27,14 @@ define("ui/urlPreview/urlPreview", [
         return n.urlPreviewShowTelemetryEvent = s, n.urlRequest = e, n.encodedRequest = t, i(n) ? (s.succeeded(n.status_code, !!n.thumbnail), new Promise(function (e, t) {
           var r = m.setTimeout(t, w), i = new m.Image();
           i.onload = function () {
-            m.clearTimeout(r), n.width = this.width, n.height = this.height, n.oneUrlOnly = O(u.urlPosition), e(n);
-          }, i.onerror = t.bind(null, n), i.src = n.thumbnail;
+            m.clearTimeout(r);
+            n.width = this.width;
+            n.height = this.height;
+            n.oneUrlOnly = O(u.urlPosition);
+            e(n);
+          };
+          i.onerror = t.bind(null, n);
+          i.src = n.thumbnail;
         })) : (s.error(n.status_code), Promise.reject(n));
       }
       function f() {
@@ -154,7 +160,10 @@ define("ui/urlPreview/urlPreview", [
       var t = 0;
       e.forEach(function (e) {
         e.skip || _(e, t++);
-      }), n.onAfterExpanded(), n.copyLinkEnabled(v && n.previews().length === 1), w(n.copyLinkEnabled());
+      });
+      n.onAfterExpanded();
+      n.copyLinkEnabled(v && n.previews().length === 1);
+      w(n.copyLinkEnabled());
     }
     function _(e, t) {
       function h(e) {
@@ -166,14 +175,36 @@ define("ui/urlPreview/urlPreview", [
       if (r)
         return;
       var s = c.resolve(i.serviceLocator.FEATURE_FLAGS), o = g.isYT(e.url), u, f = L(e.content_type), l = e.width / e.height;
-      u = !o || !s.isFeatureOn(i.featureFlags.URL_PREVIEW_LOAD_YOUTUBE_PLAYER) || !!e.restrictions, r = M(e.urlRequest), r.title(e.title), r.description(e.description), r.target(u ? "_blank" : ""), r.url(e.url), r.favicon(e.favicon), r.thumbnail(e.thumbnail), r.category(e.category), r.isGif(f), r.type(f ? i.urlPreviewType.GIF : i.urlPreviewType.WWW), r.site(f ? "" : A(e.site)), r.ytPlayer(!1), r.ordinal = t, r.typeClasses.youtube(o), r.originalRequest = e.urlRequest, r.encodedRequest = e.encodedRequest, r.restrictions = e.restrictions, o && r.type(i.urlPreviewType.YT);
+      u = !o || !s.isFeatureOn(i.featureFlags.URL_PREVIEW_LOAD_YOUTUBE_PLAYER) || !!e.restrictions;
+      r = M(e.urlRequest);
+      r.title(e.title);
+      r.description(e.description);
+      r.target(u ? "_blank" : "");
+      r.url(e.url);
+      r.favicon(e.favicon);
+      r.thumbnail(e.thumbnail);
+      r.category(e.category);
+      r.isGif(f);
+      r.type(f ? i.urlPreviewType.GIF : i.urlPreviewType.WWW);
+      r.site(f ? "" : A(e.site));
+      r.ytPlayer(!1);
+      r.ordinal = t;
+      r.typeClasses.youtube(o);
+      r.originalRequest = e.urlRequest;
+      r.encodedRequest = e.encodedRequest;
+      r.restrictions = e.restrictions;
+      o && r.type(i.urlPreviewType.YT);
       if (f || h(l))
         r.originalSize(!r.isGif()), r.scaledByW(!1), r.scaledByH(!1);
       else {
         var d = l < y;
-        r.scaledByW(d), r.scaledByH(!d), r.originalSize(!1);
+        r.scaledByW(d);
+        r.scaledByH(!d);
+        r.originalSize(!1);
       }
-      r.tall(!f && l <= 1), r.wide(!f && l > 1), n.previews.push(r);
+      r.tall(!f && l <= 1);
+      r.wide(!f && l > 1);
+      n.previews.push(r);
     }
     var h = S(t, o, g);
     if (!h)
@@ -183,13 +214,16 @@ define("ui/urlPreview/urlPreview", [
       h[m] = f.unescapeHTML(T(h[m]));
     return n.previews ? h = k(h, n) : n.previews = a.observableArray([]), n.isUrlPreview(!0), n.group(i.activityItemGroups.MEDIA), n.contentTemplate("urlMessageContentTemplate"), n.copyUrlPreviewText = function () {
       var e = n.elementInfo.element, t = n.previews()[0].originalRequest;
-      n.urlLinkToCopy = a.observable(t), n.copyActive(!0);
+      n.urlLinkToCopy = a.observable(t);
+      n.copyActive(!0);
       try {
         var r = s.getElement(".copyArea", e);
-        r.select(), !document.execCommand("copy");
+        r.select();
+        !document.execCommand("copy");
       } catch (i) {
       }
-      n.copyActive(!1), delete n.urlLinkToCopy;
+      n.copyActive(!1);
+      delete n.urlLinkToCopy;
     }, Promise.all(h.map(x)).then(C);
   };
-})
+});

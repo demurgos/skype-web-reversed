@@ -13,7 +13,8 @@ define("ui/players/ytPlayer", [
       e.testContext.removePlayer(this.playerId);
     }
     function c(t) {
-      e.testContext.players[t] && (e.testContext.players[t].destroy(), delete e.testContext.players[t]), e.testContext.previewItems[t] && delete e.testContext.previewItems[t];
+      e.testContext.players[t] && (e.testContext.players[t].destroy(), delete e.testContext.players[t]);
+      e.testContext.previewItems[t] && delete e.testContext.previewItems[t];
     }
     function h(e) {
       return e.B ? e.B.currentTime : e.F ? e.F.currentTime : e.getCurrentTime ? e.getCurrentTime() : 0;
@@ -117,33 +118,59 @@ define("ui/players/ytPlayer", [
       },
       onPlayerError: function (e) {
       }
-    }, e.actionType = {
+    };
+    e.actionType = {
       PLAYING: "play",
       PAUSED: "pause",
       FULLSCREEN: "fullscreen",
       ENDED: "end"
-    }, e.render = function (i, s, o, u) {
+    };
+    e.render = function (i, s, o, u) {
       var a = i.originalRequest, f = /(?:youtube.com|youtu.be)\/(watch)?(\?v=|v\/|embed\/)?(?:.*)([\w-]{11})(?:.*)?/.exec(a);
       if (f) {
         var c = f[3], h = !!u;
-        i.originalSize(!0), i.typeClasses.youtube(!0), i.target(""), i.youtubeId = c, i.youtubeUri = b(c, h), i.playerId = g(s.contentId, c), i.messageId = s.model.key(), i.contentId = s.contentId, i.isMyself = s.isMyself, i.messageTimestamp = s.timestamp, i.lastActionTimestamp = null, i.ytPlayer(!0), i.type(t.urlPreviewType.YT), i.dispose = l.bind(i), i.conversation = o, e.testContext.previewItems[i.playerId] = i, r.setTimeout(m.bind(null, s), n.youtubeWrapDelay);
+        i.originalSize(!0);
+        i.typeClasses.youtube(!0);
+        i.target("");
+        i.youtubeId = c;
+        i.youtubeUri = b(c, h);
+        i.playerId = g(s.contentId, c);
+        i.messageId = s.model.key();
+        i.contentId = s.contentId;
+        i.isMyself = s.isMyself;
+        i.messageTimestamp = s.timestamp;
+        i.lastActionTimestamp = null;
+        i.ytPlayer(!0);
+        i.type(t.urlPreviewType.YT);
+        i.dispose = l.bind(i);
+        i.conversation = o;
+        e.testContext.previewItems[i.playerId] = i;
+        r.setTimeout(m.bind(null, s), n.youtubeWrapDelay);
       } else
         i.target("_blank");
       return !!f;
-    }, e.parseYTLinks = function (e) {
+    };
+    e.parseYTLinks = function (e) {
       var t = e.match(/(?:https?:\/\/|\/\/)?(?:www\.|m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+?&v=))([\w-]{11})/gi);
       return t ? t : [];
-    }, e.isYT = function (t) {
+    };
+    e.isYT = function (t) {
       return e.parseYTLinks(t).length > 0;
-    }, e.handleClick = function (t) {
+    };
+    e.handleClick = function (t) {
       var n = e.testContext.players[t.playerId];
       if (!n)
         return;
       n.getPlayerState() === r.YT.PlayerState.PLAYING ? n.pauseVideo() : n.playVideo();
-    }, e.randomIdEnabled = !0, r.onYouTubeIframeAPIReady = function () {
-      i.addEventListener("mozfullscreenchange", e.testContext.onFullscreenChangedHandler), i.addEventListener("webkitfullscreenchange", e.testContext.onFullscreenChangedHandler), i.addEventListener("fullscreenchange", e.testContext.onFullscreenChangedHandler), i.addEventListener("MSFullscreenChange", e.testContext.onFullscreenChangedHandler);
+    };
+    e.randomIdEnabled = !0;
+    r.onYouTubeIframeAPIReady = function () {
+      i.addEventListener("mozfullscreenchange", e.testContext.onFullscreenChangedHandler);
+      i.addEventListener("webkitfullscreenchange", e.testContext.onFullscreenChangedHandler);
+      i.addEventListener("fullscreenchange", e.testContext.onFullscreenChangedHandler);
+      i.addEventListener("MSFullscreenChange", e.testContext.onFullscreenChangedHandler);
     };
   }
   var t = e("constants/common"), n = e("experience/settings"), r = e("browser/window"), i = e("browser/document"), s = e("telemetry/chat/youtubeShowEvent"), o = e("telemetry/chat/youtubeActionEvent"), u = e("services/pubSub/pubSub");
   return new a();
-})
+});

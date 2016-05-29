@@ -13,5 +13,7 @@ define("ui/components/calling/callScreenContent", [
     return s.setContext(u), s.init(o, e.callState, e.footerButtonsWidth), s;
   }
   var n = e("vendor/knockout"), r = e("jsviews/calling/callScreenContent"), i = e("ui/viewModels/calling/callScreenViewModel/callScreenContentViewModel");
-  t.name = e("constants/components").calling.CONTENT, t.template = e("text!views/calling/callScreenContent.html"), t.viewModel = { createViewModel: s };
-})
+  t.name = e("constants/components").calling.CONTENT;
+  t.template = e("text!views/calling/callScreenContent.html");
+  t.viewModel = { createViewModel: s };
+});

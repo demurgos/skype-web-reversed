@@ -17,7 +17,8 @@ define("utils/common/signInNotificationHandler", [
       return e.loginUrl + "?response_type=token" + "&client_id=" + s.encodeURIComponent(e.clientId) + "&redirect_uri=" + s.encodeURIComponent(t) + "&resource=" + s.encodeURIComponent(e.resourceUrl);
     }
     function c(e, t) {
-      e = e || r.loginPopup.defaultWidth, t = t || r.loginPopup.defaultHeight;
+      e = e || r.loginPopup.defaultWidth;
+      t = t || r.loginPopup.defaultHeight;
       var n = s.screenLeft !== undefined ? s.screenLeft : screen.left, i = s.screenTop !== undefined ? s.screenTop : screen.top, u = s.innerWidth ? s.innerWidth : o.documentElement.clientWidth ? o.documentElement.clientWidth : screen.width, a = s.innerHeight ? s.innerHeight : o.documentElement.clientHeight ? o.documentElement.clientHeight : screen.height, f = u / 2 - e / 2 + n, l = a / 2 - t / 2 + i;
       return "scrollbars=1,status=0,menubar=0,toolbar=0,resizable=1,width=" + e + ",height=" + t + ",left=" + f + ",top=" + l;
     }
@@ -31,7 +32,10 @@ define("utils/common/signInNotificationHandler", [
       return e;
     }
     var u = this, a = null, f = null;
-    u.url = e || l(), u.name = t || "O365_ExternalSignInWindow", u.props = n || c(), u.open = function (e) {
+    u.url = e || l();
+    u.name = t || "O365_ExternalSignInWindow";
+    u.props = n || c();
+    u.open = function (e) {
       if (!e)
         throw new Error("\"callback\" parameter is required");
       if (f === null || f.closed || !f.focus)
@@ -42,7 +46,9 @@ define("utils/common/signInNotificationHandler", [
         }
       else
         f.focus();
-      h(i.externalSignIn.openSignInWindow), a && s.clearInterval(a), a = s.setInterval(function () {
+      h(i.externalSignIn.openSignInWindow);
+      a && s.clearInterval(a);
+      a = s.setInterval(function () {
         f.closed && (e(), s.clearInterval(a), a = null);
       }, 100);
     };
@@ -54,11 +60,14 @@ define("utils/common/signInNotificationHandler", [
     var e = this, t = r.splashScreen.signInNotificationEnabled, s = new u(n.notifications.SIGN_IN_REQUEST), o = new l(), a = !1;
     e.isEnabled = function () {
       return t && c();
-    }, e.setSignInPopup = function (e) {
+    };
+    e.setSignInPopup = function (e) {
       a = e;
-    }, e.notify = function () {
+    };
+    e.notify = function () {
       function t(e) {
-        h(e), f.notify(s);
+        h(e);
+        f.notify(s);
       }
       if (!e.isEnabled())
         return;
@@ -79,4 +88,4 @@ define("utils/common/signInNotificationHandler", [
   t.build = function () {
     return new c();
   };
-})
+});

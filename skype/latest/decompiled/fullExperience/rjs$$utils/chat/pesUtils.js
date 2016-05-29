@@ -26,17 +26,19 @@ define("utils/chat/pesUtils", [
       f = a(f);
       var l = u[i] + (s ? "Animated" : "");
       return o.buildUrl(f + r.profiles.emoticons[l](), { etag: n.etag });
-    }, this.rewriteUrls = function (n, r) {
+    };
+    this.rewriteUrls = function (n, r) {
       if (typeof n != "string")
         return n;
       var i = n;
       return t.any(r, function (e) {
         return i.search(e.from) !== -1 ? (i = i.replace(e.from, e.to), !0) : !1;
       }), i;
-    }, this._resetUrlRewriterSetup = function () {
+    };
+    this._resetUrlRewriterSetup = function () {
       a = f;
     };
   }
   var t = e("lodash-compat"), n = e("constants/common"), r = e("services/pes/constants"), i = e("services/serviceLocator"), s = e("experience/settings"), o = e("utils/common/url");
   return new u();
-})
+});

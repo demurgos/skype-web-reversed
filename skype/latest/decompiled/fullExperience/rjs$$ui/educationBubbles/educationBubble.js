@@ -46,7 +46,12 @@ define("ui/educationBubbles/educationBubble", [
     }
     function A(e, t, n, r, i) {
       var o = O(i), u = o.parentNode;
-      x = g.build(e, t, u, n, r, i), P(o), H(o, x), B(o, x), c.initLocaleDirection(o), s.applyBindings(x, o);
+      x = g.build(e, t, u, n, r, i);
+      P(o);
+      H(o, x);
+      B(o, x);
+      c.initLocaleDirection(o);
+      s.applyBindings(x, o);
     }
     function O(e) {
       var t = r.createElement("div"), n = M();
@@ -64,7 +69,8 @@ define("ui/educationBubbles/educationBubble", [
     }
     function P(e) {
       var t = function () {
-        e.parentNode.removeChild(e), e.removeEventListener(u.events.browser.TRANSITIONEND, t);
+        e.parentNode.removeChild(e);
+        e.removeEventListener(u.events.browser.TRANSITIONEND, t);
       };
       e.addEventListener(u.events.browser.TRANSITIONEND, t);
     }
@@ -88,16 +94,19 @@ define("ui/educationBubbles/educationBubble", [
       t.recordAction(p.educationBubbles.educationBubbleShown, { educationBubbleId: e });
     }
     var S, x;
-    E && E.isBusinessFlagService ? S = v.getInstance(E.isBusinessFlagService) : S = v.getInstance(), this.show = function () {
+    E && E.isBusinessFlagService ? S = v.getInstance(E.isBusinessFlagService) : S = v.getInstance();
+    this.show = function () {
       return S.fetchFlags().then(function () {
         return !T() && !N() && C() ? k(e, t, b, w, E) : !1;
       });
-    }, this.hide = function () {
+    };
+    this.hide = function () {
       x && x.hidden(!0);
     };
   }
   var n = e("lodash-compat"), r = e("browser/dom"), i = e("browser/document"), s = e("vendor/knockout"), o = e("swx-i18n").localization, u = e("constants/common"), a = e("constants/cssClasses"), f = e("constants/keys"), l = e("utils/common/async"), c = e("services/g11n/globalization"), h = e("services/serviceLocator"), p = e("ui/telemetry/actions/actionNames"), d = e("experience/settings"), v = e("services/flagsApi/flagsProvider"), m = e("text!views/ui/educationBubbles.html"), g = e("ui/viewModels/educationBubbles/educationBubbleViewModel"), y = e("ui/modalDialog/welcomeDialog");
-  t.EDUCATION_BUBBLE_TEXT_ELEMENT_CLASS = "js-EducationBubble-text", t.build = function (e, t, n, r, i) {
+  t.EDUCATION_BUBBLE_TEXT_ELEMENT_CLASS = "js-EducationBubble-text";
+  t.build = function (e, t, n, r, i) {
     return new b(e, t, n, r, i);
   };
-})
+});

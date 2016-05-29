@@ -17,13 +17,15 @@ define("utils/common/logTracer/consoleWriter", [
           return console[t].bind(console, n.getTimeOfDayString());
         }
       });
-    }), this.debug = function () {
+    });
+    this.debug = function () {
       function e(e, t, n) {
         var r = e.length, i = 0, s = e.indexOf("\n", i);
         do {
           var o = Math.min(r, i + t);
           for (var u = o; s >= i && s < u; o = s + 1, s = e.indexOf("\n", s + 1));
-          n(e.substring(i, o)), i = o;
+          n(e.substring(i, o));
+          i = o;
         } while (i < r);
       }
       function u(e, n) {
@@ -45,7 +47,8 @@ define("utils/common/logTracer/consoleWriter", [
       var f = o;
       for (a = f; a < arguments.length; a++) {
         var l = u(arguments[a], 0);
-        a > f && (l || a === arguments.length - 1) && console.log.apply(console, Array.prototype.slice.call(arguments, f, a)), l && (e(arguments[a], r, console.log.bind(console)), f = a + 1);
+        a > f && (l || a === arguments.length - 1) && console.log.apply(console, Array.prototype.slice.call(arguments, f, a));
+        l && (e(arguments[a], r, console.log.bind(console)), f = a + 1);
       }
     };
   }
@@ -53,4 +56,4 @@ define("utils/common/logTracer/consoleWriter", [
   t.build = function () {
     return new r();
   };
-})
+});
