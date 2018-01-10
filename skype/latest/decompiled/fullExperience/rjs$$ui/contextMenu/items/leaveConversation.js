@@ -3,7 +3,7 @@ define("ui/contextMenu/items/leaveConversation", [
   "swx-i18n",
   "ui/contextMenu/menuItem",
   "ui/modalDialog/leaveConversationDialog",
-  "constants/common"
+  "swx-constants"
 ], function (e) {
   function s(e) {
     function u() {
@@ -17,6 +17,6 @@ define("ui/contextMenu/items/leaveConversation", [
       return r.canLeaveConversation(e);
     };
   }
-  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("ui/modalDialog/leaveConversationDialog"), i = e("constants/common").telemetry.removeConversationHistory.cta;
+  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("ui/modalDialog/leaveConversationDialog"), i = e("swx-constants").COMMON.telemetry.removeConversationHistory.cta;
   return s.prototype = Object.create(n.prototype), s.TYPE = "LeaveConversationMenuItem", s;
 });

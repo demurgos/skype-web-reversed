@@ -1,7 +1,7 @@
 define("jsviews/calling/callScreenContent", [
   "require",
   "browser/window",
-  "constants/common"
+  "swx-constants"
 ], function (e) {
   function i(e) {
     var i;
@@ -16,7 +16,7 @@ define("jsviews/calling/callScreenContent", [
       t.removeEventListener(n.events.browser.RESIZE, i);
     };
   }
-  var t = e("browser/window"), n = e("constants/common"), r = ".stage";
+  var t = e("browser/window"), n = e("swx-constants").COMMON, r = ".stage";
   return {
     build: function (e) {
       return new i(e);

@@ -4,9 +4,9 @@ define("ui/viewModels/chat/shareDialog", [
   "module",
   "lodash-compat",
   "vendor/knockout",
-  "constants/common",
+  "swx-constants",
   "utils/common/eventMixin",
-  "cafe/applicationInstance"
+  "swx-cafe-application-instance"
 ], function (e, t) {
   function u(e, t) {
     function a() {
@@ -58,7 +58,7 @@ define("ui/viewModels/chat/shareDialog", [
       return Promise.all(u);
     };
   }
-  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("constants/common").events, s = e("utils/common/eventMixin"), o = e("cafe/applicationInstance");
+  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("swx-constants").COMMON.events, s = e("utils/common/eventMixin"), o = e("swx-cafe-application-instance");
   n.assign(u.prototype, s);
   t.build = function (e, t) {
     return new u(e, t);

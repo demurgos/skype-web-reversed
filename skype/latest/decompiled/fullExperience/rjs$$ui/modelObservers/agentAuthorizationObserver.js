@@ -3,7 +3,7 @@ define("ui/modelObservers/agentAuthorizationObserver", [
   "exports",
   "module",
   "vendor/knockout",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "ui/modelHelpers/conversationHelper",
   "ui/modelHelpers/personHelper"
 ], function (e, t) {
@@ -22,7 +22,7 @@ define("ui/modelObservers/agentAuthorizationObserver", [
     };
     o();
   }
-  var n = e("vendor/knockout"), r = e("cafe/applicationInstance"), i = e("ui/modelHelpers/conversationHelper"), s = e("ui/modelHelpers/personHelper");
+  var n = e("vendor/knockout"), r = e("swx-cafe-application-instance"), i = e("ui/modelHelpers/conversationHelper"), s = e("ui/modelHelpers/personHelper");
   t.build = function (e) {
     return new o(e);
   };

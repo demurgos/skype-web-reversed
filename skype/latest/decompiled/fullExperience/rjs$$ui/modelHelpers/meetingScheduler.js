@@ -2,51 +2,52 @@ define("ui/modelHelpers/meetingScheduler", [
   "require",
   "exports",
   "module",
-  "ui/modelHelpers/conversationHelper",
+  "swx-cafe-application-instance",
+  "swx-utils-chat",
   "ui/viewModels/chat/conversationTopic",
   "swx-i18n",
-  "constants/common",
+  "swx-constants",
   "experience/settings",
-  "services/serviceLocator"
+  "swx-service-locator-instance"
 ], function (e, t) {
-  function a(e) {
-    return e ? e.isGroupConversation() ? e.isJoiningEnabled() ? e : l(e) : f(e) : l();
-  }
   function f(e) {
-    var t = c(e);
-    return h(t, e);
+    return e ? e.isGroupConversation() ? e.isJoiningEnabled() ? e : c(e) : l(e) : c();
   }
   function l(e) {
-    return h([], e);
+    var t = h(e);
+    return p(t, e);
   }
   function c(e) {
+    return p([], e);
+  }
+  function h(e) {
     var t, n = [];
     if (e)
       for (t = 0; t < e.participants.size(); ++t)
         n.push(e.participants(t).person);
     return n;
   }
-  function h(e, t) {
-    var r = n.createConversation(e, !0), i = p(t);
-    return r.topic.set.enabled.once(!0, function () {
-      r.topic.set(i);
-    }), r;
+  function p(e, t) {
+    var i = n.get().conversationsManager, s = r.createConversation(e, i, !0), o = d(t);
+    return s.topic.set.enabled.once(!0, function () {
+      s.topic.set(o);
+    }), s;
   }
-  function p(e) {
+  function d(e) {
     var t, n;
-    return !e || e.participants.size() === 0 ? i.fetch({ key: "schedule_call_new_conversation_topic" }) : (t = r.build(e), n = t.topic(), t.dispose(), i.fetch({
+    return !e || e.participants.size() === 0 ? s.fetch({ key: "schedule_call_new_conversation_topic" }) : (t = i.build(e), n = t.topic(), t.dispose(), s.fetch({
       key: "schedule_call_subject_text",
       params: { topic: n }
     }));
   }
-  function d(e) {
-    var t = u.resolve(s.serviceLocator.PUBSUB);
-    t.publish(s.events.navigation.OPEN_CONVERSATION, {
+  function v(e) {
+    var t = a.resolve(o.serviceLocator.PUBSUB);
+    t.publish(o.events.navigation.OPEN_CONVERSATION, {
       model: e,
-      origin: s.telemetry.historyLoadOrigin.CREATE_CONVERSATION_FOR_SCHEDULED_CALL
+      origin: o.telemetry.historyLoadOrigin.CREATE_CONVERSATION_FOR_SCHEDULED_CALL
     });
   }
-  function v(e) {
+  function m(e) {
     return new Promise(function (t) {
       e.isJoiningEnabled.set.enabled.once(!0, function () {
         e.isJoiningEnabled.set(!0).then(function () {
@@ -55,59 +56,59 @@ define("ui/modelHelpers/meetingScheduler", [
       });
     });
   }
-  function m(e, t, n) {
+  function g(e, t, n) {
     var r, i, s;
-    return n ? (s = o.legacyCalendarUrl, r = g(e, t)) : (s = o.calendarUrl, r = y(e, t)), i = Object.keys(r).map(function (e) {
+    return n ? (s = u.legacyCalendarUrl, r = y(e, t)) : (s = u.calendarUrl, r = b(e, t)), i = Object.keys(r).map(function (e) {
       return e + "=" + encodeURIComponent(r[e]);
     }), s + i.join("&");
   }
-  function g(e, t) {
-    var n = p(t);
+  function y(e, t) {
+    var n = d(t);
     return {
       summary: n,
-      description: b(e, n),
+      description: w(e, n),
       location: n,
-      dtstart: x(w()),
-      dtend: x(E())
-    };
-  }
-  function y(e, t) {
-    var n = p(t);
-    return {
-      subject: n,
-      location: n,
-      body: b(e, n),
-      startdt: S(w()),
-      enddt: S(E())
+      dtstart: T(E()),
+      dtend: T(S())
     };
   }
   function b(e, t) {
+    var n = d(t);
+    return {
+      subject: n,
+      location: n,
+      body: w(e, n),
+      startdt: x(E()),
+      enddt: x(S())
+    };
+  }
+  function w(e, t) {
     return t + "\n" + e.uri();
   }
-  function w() {
+  function E() {
     var e = new Date();
     return e.setUTCDate(e.getUTCDate() + 7), e;
   }
-  function E() {
-    var e = w();
+  function S() {
+    var e = E();
     return e.setUTCHours(e.getUTCHours() + 1), e;
   }
-  function S(e) {
-    var t = e.getUTCFullYear(), n = T(e.getUTCMonth() + 1), r = T(e.getUTCDate()), i = T(e.getUTCHours()), s = T(e.getUTCMinutes()), o = T(e.getUTCSeconds()), u = i + ":" + s + ":" + o;
+  function x(e) {
+    var t = e.getUTCFullYear(), n = N(e.getUTCMonth() + 1), r = N(e.getUTCDate()), i = N(e.getUTCHours()), s = N(e.getUTCMinutes()), o = N(e.getUTCSeconds()), u = i + ":" + s + ":" + o;
     return t + "-" + n + "-" + r + "T" + u;
   }
-  function x(e) {
-    var t = e.getUTCFullYear(), n = T(e.getUTCMonth() + 1), r = T(e.getUTCDate()), i = T(e.getUTCHours()), s = T(e.getUTCMinutes()), o = T(e.getUTCSeconds()), u = i.toString() + s.toString() + o.toString();
+  function T(e) {
+    var t = e.getUTCFullYear(), n = N(e.getUTCMonth() + 1), r = N(e.getUTCDate()), i = N(e.getUTCHours()), s = N(e.getUTCMinutes()), o = N(e.getUTCSeconds()), u = i.toString() + s.toString() + o.toString();
     return t.toString() + n.toString() + r.toString() + "T" + u;
   }
-  function T(e) {
+  function N(e) {
     return ("0" + e).slice(-2);
   }
-  var n = e("ui/modelHelpers/conversationHelper"), r = e("ui/viewModels/chat/conversationTopic"), i = e("swx-i18n").localization, s = e("constants/common"), o = e("experience/settings"), u = e("services/serviceLocator");
+  var n = e("swx-cafe-application-instance"), r = e("swx-utils-chat").conversation, i = e("ui/viewModels/chat/conversationTopic"), s = e("swx-i18n").localization, o = e("swx-constants").COMMON, u = e("experience/settings"), a = e("swx-service-locator-instance").default;
   t.generateMeetingUri = function (t, n) {
-    var r = a(t);
-    return d(r), v(r).then(function () {
-      return m(r, t, n);
+    var r = f(t);
+    return v(r), m(r).then(function () {
+      return g(r, t, n);
     });
   };
 });

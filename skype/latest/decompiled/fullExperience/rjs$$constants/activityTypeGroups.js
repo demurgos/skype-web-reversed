@@ -16,17 +16,16 @@ define("constants/activityTypeGroups", [
     n.activityType.PstnForbiddenNumber
   ];
   t.PLUGIN_FREE_MESSAGES = [
-    n.activityType.PluginFreeFallbackWindowsUpdate,
     n.activityType.PluginFreeFallbackScreenSharing,
     n.activityType.PluginFreeFallbackMicrophoneAccess,
-    n.activityType.PluginFreeFallbackOutgoingP2PCall,
-    n.activityType.PluginFreeFallbackIncomingP2PCall,
-    n.activityType.PluginFreeNoVideoCapability
+    n.activityType.PluginFreeNoVideoCapability,
+    n.activityType.PluginFreeVideoCompatibility
   ];
   t.NGC_UPGRADE_MESSAGES = [n.activityType.NgcUpgradeMessage];
   t.MEDIA_MESSAGES = [
     n.activityType.VideoMessage,
     n.activityType.PictureMessage,
+    n.activityType.AudioMessage,
     n.activityType.MojiMessage,
     n.activityType.FileTransfer
   ];
@@ -56,4 +55,6 @@ define("constants/activityTypeGroups", [
   t.TRANSACTION_MESSAGES = [n.activityType.CreditTransaction];
   t.POLL_MESSAGES = [n.activityType.PollMessage];
   t.CUSTOM_MESSAGES = [n.activityType.CustomMessage];
+  t.TRANSCRIPT_MESSAGES = [n.activityType.Transcript];
+  t.SYSTEM_MESSAGES = [n.activityType.SystemMessage];
 });

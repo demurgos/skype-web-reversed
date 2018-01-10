@@ -2,7 +2,7 @@ define("ui/viewModels/chat/startConversationOverlay", [
   "require",
   "lodash-compat",
   "vendor/knockout",
-  "constants/common",
+  "swx-constants",
   "utils/common/eventMixin",
   "ui/viewModels/people/contactBuilder",
   "ui/viewModels/chat/conversation/callButtonViewModel"
@@ -40,7 +40,7 @@ define("ui/viewModels/chat/startConversationOverlay", [
       f.dispose();
     };
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("constants/common"), i = e("utils/common/eventMixin"), s = e("ui/viewModels/people/contactBuilder"), o = e("ui/viewModels/chat/conversation/callButtonViewModel");
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-constants").COMMON, i = e("utils/common/eventMixin"), s = e("ui/viewModels/people/contactBuilder"), o = e("ui/viewModels/chat/conversation/callButtonViewModel");
   return t.assign(u.prototype, i), {
     build: function (e) {
       return new u(e);

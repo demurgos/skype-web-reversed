@@ -2,7 +2,7 @@ define("telemetry/calling/pstn/pstn", [
   "require",
   "experience/settings",
   "ui/telemetry/telemetryClient",
-  "constants/common"
+  "swx-constants"
 ], function (e) {
   function i() {
     function e(e, r) {
@@ -26,6 +26,6 @@ define("telemetry/calling/pstn/pstn", [
       i(r.eventName.CREDIT_BALANCE_UPDATE_CALL_END, e);
     };
   }
-  var t = e("experience/settings"), n = e("ui/telemetry/telemetryClient"), r = e("constants/common").telemetry.pstn;
+  var t = e("experience/settings"), n = e("ui/telemetry/telemetryClient"), r = e("swx-constants").COMMON.telemetry.pstn;
   return new i();
 });

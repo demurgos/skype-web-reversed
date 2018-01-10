@@ -112,7 +112,7 @@
         t.invokeMethod("openWindow", e).then(function () {
           t.hostWindow = new c(t);
           n(t.hostWindow);
-        }).catch(r);
+        })["catch"](r);
       });
     };
     this.addMessageHandler = function (e, t) {
@@ -180,7 +180,7 @@
         }).then(function (r) {
           t.nmHost = new h(e, t);
           n(t.nmHost);
-        }).catch(r);
+        })["catch"](r);
       });
     };
   }
@@ -214,7 +214,7 @@
         t.invokeMethod("openWindow", e).then(function () {
           t.hostWindow = new d(t);
           n(t.hostWindow);
-        }).catch(r);
+        })["catch"](r);
       });
     };
     this.addMessageHandler = function (e, t) {
@@ -328,7 +328,7 @@
         }).then(function (n) {
           var r = new p(e, n);
           t(r);
-        }).catch(n);
+        })["catch"](n);
       });
     },
     sharedExtension: function (e, t) {
@@ -341,7 +341,7 @@
         n.connect(e, t).then(function (e) {
           s = e;
           r(s);
-        }).catch(i);
+        })["catch"](i);
       });
     },
     sharedNMHost: function (e, t, n) {

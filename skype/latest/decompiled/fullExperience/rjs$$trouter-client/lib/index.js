@@ -9,7 +9,24 @@
       "./trouterclient"
     ], e);
 }(function (e) {
-  return e("./trouterclient"), function () {
-    return this.trouter;
+  if (typeof module == "object" && typeof module.exports == "object") {
+    var t = {
+      createServer: function () {
+        return {
+          open: function () {
+          },
+          close: function () {
+          },
+          on: function () {
+          },
+          getServerState: function () {
+          }
+        };
+      }
+    };
+    return t;
+  }
+  return function () {
+    return e("./trouterclient"), this.trouter;
   }.call();
 }));

@@ -12,7 +12,7 @@
       function p(e, t, n, r, i) {
         return [];
       }
-      function w() {
+      function E() {
         function u(e) {
           var t;
           for (t = e.length - 1; t >= 0; t -= 1) {
@@ -42,7 +42,7 @@
           s = 1;
         }
         function c(e) {
-          var s = [], o = new m.aes(t);
+          var s = [], o = new g.aes(t);
           while (s.length < i) {
             u(n);
             var a = n.slice(0, 16), f = o.encrypt(a);
@@ -63,7 +63,7 @@
             c(r);
           } else
             r = l.getVector(i);
-          var a = [], f = new m.aes(t);
+          var a = [], f = new g.aes(t);
           while (a.length < e) {
             u(n);
             var h = n.slice(0, n.length), p = f.encrypt(h);
@@ -71,7 +71,7 @@
           }
           return a = a.slice(0, e), c(r), s += 1, a;
         }
-        if (this instanceof w) {
+        if (this instanceof E) {
           var e = !1, t, n, r, i, s = 1, o = 1 << 24;
           return a(), {
             reseed: f,
@@ -102,7 +102,7 @@
         }
         throw new Error("create MsrcryptoPrng object with new keyword");
       }
-      function S() {
+      function x() {
         function a() {
           var n, r = [];
           for (n = 0; n < e; n += 1)
@@ -133,7 +133,7 @@
             t.push(e[r]);
           t.length >= n && c.stopCollectors();
         }
-        var e = 48, t = [], n = 128, r = 0, i = new w(), s = !1, o = !1, u = [
+        var e = 48, t = [], n = 128, r = 0, i = new E(), s = !1, o = !1, u = [
             "Cookie",
             "RedirectUri",
             "ETag",
@@ -428,7 +428,7 @@
       i && (self.onmessage = function (e) {
         if (e.data.prngSeed) {
           var t = e.data.prngSeed;
-          E.init(t);
+          S.init(t);
           return;
         }
         c.jsCryptoRunner(e);
@@ -548,6 +548,46 @@
       f["sha-224"] = v.sha224;
       f["sha-256"] = v.sha256;
       var m = function () {
+        function t(e, t, n, r, i) {
+          var s = t + r | 0, o = s >>> 0 < r >>> 0;
+          i[0] = e + n + o | 0;
+          i[1] = s;
+          return;
+        }
+        function n(e, n, r, i, s) {
+          var o, u, a = 128, f, l, c, h, p, d, v = [], m = [], g = [], y, b = r[0], w = r[1], E = r[2], S = r[3], x = r[4], T = r[5], N = r[6], C = r[7], k = r[8], L = r[9], A = r[10], O = r[11], M = r[12], _ = r[13], D = r[14], P = r[15];
+          for (o = 0; o < 32; o++)
+            y = n * a + o * 4, s[o] = e.slice(y, y + 4), s[o] = s[o][0] << 24 | s[o][1] << 16 | s[o][2] << 8 | s[o][3];
+          for (o = 32; o < 160; o += 2)
+            p = s[o - 30], d = s[o - 29], f = (p >>> 1 | d << 31) ^ (p >>> 8 | d << 24) ^ p >>> 7, l = (d >>> 1 | p << 31) ^ (d >>> 8 | p << 24) ^ (d >>> 7 | p << 25), p = s[o - 4], d = s[o - 3], c = (p >>> 19 | d << 13) ^ (d >>> 29 | p << 3) ^ p >>> 6, h = (d >>> 19 | p << 13) ^ (p >>> 29 | d << 3) ^ (d >>> 6 | p << 26), t(c, h, s[o - 14], s[o - 13], v), t(f, l, v[0], v[1], v), t(s[o - 32], s[o - 31], v[0], v[1], v), s[o] = v[0], s[o + 1] = v[1];
+          for (u = 0; u < 160; u += 2)
+            f = (k >>> 14 | L << 18) ^ (k >>> 18 | L << 14) ^ (L >>> 9 | k << 23), l = (L >>> 14 | k << 18) ^ (L >>> 18 | k << 14) ^ (k >>> 9 | L << 23), c = k & A ^ M & ~k, h = L & O ^ _ & ~L, t(D, P, f, l, v), t(c, h, i[u], i[u + 1], m), t(v[0], v[1], s[u], s[u + 1], g), t(m[0], m[1], g[0], g[1], g), t(g[0], g[1], N, C, v), N = v[0], C = v[1], l = (w >>> 28 | b << 4) ^ (b >>> 2 | w << 30) ^ (b >>> 7 | w << 25), f = (b >>> 28 | w << 4) ^ (w >>> 2 | b << 30) ^ (w >>> 7 | b << 25), h = w & (S ^ T) ^ S & T, c = b & (E ^ x) ^ E & x, t(g[0], g[1], f, l, v), f = v[0], l = v[1], t(c, h, f, l, v), f = v[0], l = v[1], D = M, P = _, M = A, _ = O, A = k, O = L, k = N, L = C, N = x, C = T, x = E, T = S, E = b, S = w, b = f, w = l;
+          return t(r[0], r[1], b, w, v), r[0] = v[0], r[1] = v[1], t(r[2], r[3], E, S, v), r[2] = v[0], r[3] = v[1], t(r[4], r[5], x, T, v), r[4] = v[0], r[5] = v[1], t(r[6], r[7], N, C, v), r[6] = v[0], r[7] = v[1], t(r[8], r[9], k, L, v), r[8] = v[0], r[9] = v[1], t(r[10], r[11], A, O, v), r[10] = v[0], r[11] = v[1], t(r[12], r[13], M, _, v), r[12] = v[0], r[13] = v[1], t(r[14], r[15], D, P, v), r[14] = v[0], r[15] = v[1], r;
+        }
+        var e = l, r, i, s, o, u, a, f, c = e.unpackData;
+        return r = c("y7udXcEFnthimikqNnzVB5FZAVowcN0XFS/s2PcOWTlnMyZn/8ALMY60SodoWBUR2wwuDWT5j6dHtUgdvvpPpA==", 4, 1), i = c("agnmZ/O8yQi7Z66FhMqnOzxu83L+lPgrpU/1Ol8dNvFRDlJ/reaC0ZsFaIwrPmwfH4PZq/tBvWtb4M0ZE34heQ", 4, 1), s = c("QoovmNcoriJxN0SRI+9lzbXA+8/sTTsv6bXbpYGJ27w5VsJb80i1OFnxEfG2BdAZkj+CpK8ZT5urHF7V2m2BGNgHqpijAwJCEoNbAUVwb74kMYW+TuSyjFUMfcPV/7Ticr5ddPJ7iW+A3rH+OxaWsZvcBqclxxI1wZvxdM9pJpTkm2nBnvFK0u++R4Y4TyXjD8GdxouM1bUkDKHMd6ycZS3pLG9ZKwJ1SnSEqm6m5INcsKncvUH71Hb5iNqDEVO1mD5RUu5m36uoMcZtLbQyELADJ8iY+yE/v1l/x77vDuTG4AvzPaiPwtWnkUeTCqclBspjUeADgm8UKSlnCg5ucCe3CoVG0i/8LhshOFwmySZNLG38WsQq7VM4DROdlbPfZQpzVIuvY952agq7PHeyqIHCyS5H7a7mknIshRSCNTuiv+ihTPEDZKgaZku8QjABwkuLcND4l5HHbFGjBlS+MNGS6BnW71IY1pkGJFVlqRD0DjWFV3EgKhBqoHAyu9G4GaTBFrjS0MgeN2wIUUGrUydId0zfjuuZNLC8teGbSKg5HAyzxclaY07YqkrjQYrLW5zKT3dj43NoLm/z1rK4o3SPgu5d77L8eKVjb0MXL2CEyHgUofCrcozHAggaZDnskL7/+iNjHiikUGzr3oK96b75o/eyxnkVxnF48uNyUyvKJz7O6iZhnNGGuMchwMIH6tp91s3g6x71fU9/7m7ReAbwZ6pyF2+6CmN9xaLImKYRP5gEvvkNrhtxCzUTHEcbKNt39SMEfYQyyqt7QMckkzyevgoVyb68Qx1nxJwQDUxMxdS+yz5Ctll/KZz8ZX4qX8tvqzrW+uxsRBmMSkdYFw==", 4, 1), o = c("MEEwDQYJYIZIAWUDBAICBQAEMA"), u = c("MFEwDQYJYIZIAWUDBAIDBQAEQA"), a = c("MC0wDQYJYIZIAWUDBAIFBQAEHA"), f = c("MDEwDQYJYIZIAWUDBAIGBQAEIA"), {
+          sha384: d("SHA-384", o, r, s, 128, n, 384),
+          sha512: d("SHA-512", u, i, s, 128, n, 512),
+          sha512_224: d("SHA-512.224", a, i, s, 128, n, 224),
+          sha512_256: d("SHA-512.256", f, i, s, 128, n, 256)
+        };
+      }();
+      typeof e != "undefined" && (m.hash384 = function (e) {
+        if (e.operationSubType === "process") {
+          m.sha384.process(e.buffer);
+          return;
+        }
+        return e.operationSubType === "finish" ? m.sha384.finish() : m.sha384.computeHash(e.buffer);
+      }, m.hash512 = function (e) {
+        if (e.operationSubType === "process") {
+          m.sha512.process(e.buffer);
+          return;
+        }
+        return e.operationSubType === "finish" ? m.sha512.finish() : m.sha512.computeHash(e.buffer);
+      }, e.register("digest", "sha-384", m.hash384), e.register("digest", "sha-512", m.hash512));
+      f["sha-384"] = m.sha384;
+      f["sha-512"] = m.sha512;
+      var g = function () {
           var e, t, n, r, i, s, o, u, a, f;
           return {
             aes: function (c) {
@@ -717,8 +757,8 @@
               };
             }
           };
-        }(), g = g || {};
-      g.pkcsv7 = function (e) {
+        }(), y = y || {};
+      y.pkcsv7 = function (e) {
         function t(t) {
           var n = t.length - 1 >= 0 ? t.length - 1 : 0, r = t[n], i = r.length, s = i === e;
           if (s) {
@@ -748,7 +788,7 @@
           unpad: n
         };
       };
-      var y = function (e) {
+      var b = function (e) {
           function i(e) {
             var n = [];
             a = a.concat(e);
@@ -774,7 +814,7 @@
             f = [];
             c = null;
           }
-          var t = e.blockSize / 8, n = g.pkcsv7(t), r = function (e) {
+          var t = e.blockSize / 8, n = y.pkcsv7(t), r = function (e) {
               var t = [], n, r;
               for (n = 0; n < e.length; n += 1) {
                 var i = e[n];
@@ -816,29 +856,29 @@
               return u(), e;
             }
           };
-        }, b = null;
-      typeof e != "undefined" && (y.workerEncrypt = function (e) {
+        }, w = null;
+      typeof e != "undefined" && (b.workerEncrypt = function (e) {
         var t;
-        b || (b = y(m.aes(e.keyData)), b.init(e.algorithm.iv));
+        w || (w = b(g.aes(e.keyData)), w.init(e.algorithm.iv));
         if (e.operationSubType === "process") {
-          b.processEncrypt(e.buffer);
+          w.processEncrypt(e.buffer);
           return;
         }
-        return e.operationSubType === "finish" ? (t = b.finishEncrypt(), b = null, t) : (t = b.encrypt(e.buffer), b = null, t);
-      }, y.workerDecrypt = function (e) {
+        return e.operationSubType === "finish" ? (t = w.finishEncrypt(), w = null, t) : (t = w.encrypt(e.buffer), w = null, t);
+      }, b.workerDecrypt = function (e) {
         var t;
-        b || (b = y(m.aes(e.keyData)), b.init(e.algorithm.iv));
+        w || (w = b(g.aes(e.keyData)), w.init(e.algorithm.iv));
         if (e.operationSubType === "process") {
-          b.processDecrypt(e.buffer);
+          w.processDecrypt(e.buffer);
           return;
         }
-        return e.operationSubType === "finish" ? (t = b.finishDecrypt(), b = null, t) : (t = b.decrypt(e.buffer), b = null, t);
-      }, y.generateKey = function (e) {
+        return e.operationSubType === "finish" ? (t = w.finishDecrypt(), w = null, t) : (t = w.decrypt(e.buffer), w = null, t);
+      }, b.generateKey = function (e) {
         if (e.algorithm.length % 8 !== 0)
           throw new Error();
         return {
           type: "keyGeneration",
-          keyData: E.getBytes(Math.floor(e.algorithm.length / 8)),
+          keyData: S.getBytes(Math.floor(e.algorithm.length / 8)),
           keyHandle: {
             algorithm: e.algorithm,
             extractable: e.extractable,
@@ -846,7 +886,7 @@
             type: "secret"
           }
         };
-      }, y.importKey = function (e) {
+      }, b.importKey = function (e) {
         var t = h.jwkToKey(e.keyData, e.algorithm, ["k"]);
         return {
           type: "keyImport",
@@ -858,15 +898,15 @@
             type: "secret"
           }
         };
-      }, y.exportKey = function (e) {
+      }, b.exportKey = function (e) {
         var t = h.keyToJwk(e.keyHandle, e.keyData);
         return {
           type: "keyExport",
           keyHandle: t
         };
-      }, e.register("importKey", "aes-cbc", y.importKey), e.register("exportKey", "aes-cbc", y.exportKey), e.register("generateKey", "aes-cbc", y.generateKey), e.register("encrypt", "aes-cbc", y.workerEncrypt), e.register("decrypt", "aes-cbc", y.workerDecrypt));
-      var E = new w(), x;
-      i || (x = function () {
+      }, e.register("importKey", "aes-cbc", b.importKey), e.register("exportKey", "aes-cbc", b.exportKey), e.register("generateKey", "aes-cbc", b.generateKey), e.register("encrypt", "aes-cbc", b.workerEncrypt), e.register("decrypt", "aes-cbc", b.workerDecrypt));
+      var S = new E(), T;
+      i || (T = function () {
         function n() {
           function t(t) {
             try {
@@ -975,7 +1015,7 @@
           if (!e.exists(t, n))
             throw new Error("unsupported algorithm");
         }
-        function S(e) {
+        function E(e) {
           var t = v.lookup(e);
           if (!t)
             throw new Error("key not found");
@@ -1001,9 +1041,9 @@
         function T(e, t, n) {
           var r = x(e, t);
           y(e, r.algorithm.name);
-          r.keyHandle && (r.keyData = S(r.keyHandle));
-          r.keyHandle1 && (r.keyData1 = S(r.keyHandle1));
-          r.algorithm && r.algorithm.publicKey && (r.additionalKeyData = S(r.algorithm.publicKey));
+          r.keyHandle && (r.keyData = E(r.keyHandle));
+          r.keyHandle1 && (r.keyData1 = E(r.keyHandle1));
+          r.algorithm && r.algorithm.publicKey && (r.additionalKeyData = E(r.algorithm.publicKey));
           var i = n ? f(r) : h(r);
           return (n || r.buffer || e === "deriveBits" || e === "wrapKey") && m.runJob(i, r), i;
         }
@@ -1084,7 +1124,7 @@
               if (u)
                 try {
                   r = new Worker(t);
-                  r.postMessage({ prngSeed: E.getBytes(48) });
+                  r.postMessage({ prngSeed: S.getBytes(48) });
                   r.isWebWorker = !0;
                 } catch (i) {
                   u = !1;
@@ -1100,7 +1140,7 @@
                   if (o[n].operation === r.operation) {
                     var i = o[n];
                     o.splice(n, 1);
-                    S(r, i.data);
+                    E(r, i.data);
                     return;
                   }
                 t && e.data.type !== "process" && (m(r), t.dispatchEvent(e));
@@ -1127,17 +1167,17 @@
                 throw v(t, n), new Error("could not create new worker");
               i.operation = t;
               i.busy = !0;
-              S(i, n);
+              E(i, n);
             }
             function w(e, t) {
               var n = d(e);
               if (n) {
-                S(n, t);
+                E(n, t);
                 return;
               }
               b(e, t);
             }
-            function S(e, t) {
+            function E(e, t) {
               u ? (e.data = t, e.postMessage(t)) : setTimeout(function () {
                 e.postMessage(t);
               }, 0);
@@ -1312,10 +1352,10 @@
           };
         return N;
       }());
-      var T = {
-        subtle: x,
+      var N = {
+        subtle: T,
         getRandomValues: function (e) {
-          var t, n = E.getBytes(e.length);
+          var t, n = S.getBytes(e.length);
           for (t = 0; t < e.length; t += 1)
             e[t] = n[t];
           return e;
@@ -1324,8 +1364,8 @@
           var t = Object.prototype.toString.call(e);
           if (t !== "[object Array]" && t !== "[object Uint8Array]")
             throw new Error("entropyData must be a Array or Uint8Array");
-          N && N.reseed(e);
-          E.reseed(N.read(48));
+          C && C.reseed(e);
+          S.reseed(C.read(48));
           n = !0;
         },
         toBase64: function (e, t) {
@@ -1336,18 +1376,19 @@
         },
         utilities: l,
         sha256: v.sha256,
+        sha512: m.sha512,
         url: t
       };
-      typeof cryptoMath != "undefined" && (T.cryptoMath = cryptoMath);
-      typeof testInterface != "undefined" && (T.testInterface = testInterface);
-      var N;
+      typeof cryptoMath != "undefined" && (N.cryptoMath = cryptoMath);
+      typeof testInterface != "undefined" && (N.testInterface = testInterface);
+      var C;
       if (!i) {
-        N = N || new S();
-        N.init();
-        var C = N.read(48);
-        E.init(C);
+        C = C || new x();
+        C.init();
+        var k = C.read(48);
+        S.init(k);
       }
-      return T;
+      return N;
     }();
   return t;
 }));

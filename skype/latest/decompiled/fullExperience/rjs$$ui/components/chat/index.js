@@ -47,12 +47,18 @@ define("ui/components/chat/index", [
   "ui/components/chat/startConversationOverlay",
   "ui/components/chat/suggestions/suggestionList",
   "ui/components/chat/videoPlayer",
+  "ui/components/chat/audioPlayer",
+  "ui/components/chat/gifPlayer",
   "ui/components/chat/userListPopup",
   "ui/components/chat/translatorSettings",
   "ui/components/chat/translatorLanguagePicker",
   "ui/components/chat/moreActionsButton",
   "ui/components/chat/heart",
-  "ui/components/chat/pes.v2/store/browseTabs"
+  "ui/components/chat/narrator",
+  "ui/components/chat/pes/store/browseTabs",
+  "ui/components/chat/muteConversationSettingItem",
+  "ui/components/chat/messageDestinationPicker",
+  "ui/components/chat/smsPrice"
 ], function (e) {
   return [
     e("ui/components/chat/chatLog"),
@@ -102,11 +108,17 @@ define("ui/components/chat/index", [
     e("ui/components/chat/startConversationOverlay"),
     e("ui/components/chat/suggestions/suggestionList"),
     e("ui/components/chat/videoPlayer"),
+    e("ui/components/chat/audioPlayer"),
+    e("ui/components/chat/gifPlayer"),
     e("ui/components/chat/userListPopup"),
     e("ui/components/chat/translatorSettings"),
     e("ui/components/chat/translatorLanguagePicker"),
     e("ui/components/chat/moreActionsButton"),
     e("ui/components/chat/heart"),
-    e("ui/components/chat/pes.v2/store/browseTabs")
+    e("ui/components/chat/narrator"),
+    e("ui/components/chat/pes/store/browseTabs"),
+    e("ui/components/chat/muteConversationSettingItem"),
+    e("ui/components/chat/messageDestinationPicker"),
+    e("ui/components/chat/smsPrice")
   ];
 });

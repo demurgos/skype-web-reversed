@@ -3,7 +3,7 @@ define("experience/api/builder", [
   "exports",
   "module",
   "jCafe",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "experience/api/me",
   "experience/api/contact",
   "experience/api/conversation",
@@ -17,89 +17,93 @@ define("experience/api/builder", [
   "experience/api/rendering",
   "experience/settings",
   "experience/api/messageFilter",
+  "experience/api/navigation",
   "experience/api/flagsObservable"
 ], function (e, t) {
-  function y(e) {
+  function b(e) {
     e.isAvailable = function () {
       return !0;
     };
   }
-  function b(e) {
+  function w(e) {
     e.setPluginAutoUpdate = function (e) {
       v.featureFlags.pluginAutoUpdate = e;
     };
   }
-  function w(e) {
+  function E(e) {
     e.application = n.Application;
   }
-  function E(e) {
+  function S(e) {
     e.subscribeUI = c.subscribeUI;
   }
-  function S(e) {
+  function x(e) {
     e.renderContent = d.renderContent;
     e.renderSidebar = d.renderSidebar;
     e.renderMe = d.renderMe;
   }
-  function x(e) {
+  function T(e) {
     e.me = i.expose();
   }
-  function T(e) {
+  function N(e) {
     e.contact = s.getByUri;
   }
-  function N(e) {
+  function C(e) {
     e.setNotificationHandler = u.setNotificationHandler;
   }
-  function C(e) {
+  function k(e) {
     e.startConversation = o.startConversation;
     e.joinConversation = o.joinConversation;
     e.newConversation = o.newConversation;
   }
-  function k(e) {
+  function L(e) {
     e.activity = { unreadConversations: a.getInstance().getCount };
   }
-  function L(e) {
+  function A(e) {
     e.setFocus = h.setFocus;
   }
-  function A(e) {
+  function O(e) {
     e.focus = { restoreFocus: p.restoreFocus };
   }
-  function O(e) {
+  function M(e) {
     e.calling = f.buildApi();
   }
-  function M(e) {
+  function _(e) {
     l.init();
     e.setAuthProvider = l.setAuthProvider;
     e.signIn = l.signIn;
     e.signOut = l.signOut;
   }
-  function _(e) {
+  function D(e) {
     e.getVersion = function () {
       return v.version;
     };
   }
-  function D(e) {
+  function P(e) {
     e.renderConversation = o.renderConversation;
   }
-  function P(e) {
+  function H(e) {
     e.setAnonymousUserMode = function (e) {
       v.authentication.anonymousMode = !!e;
     };
   }
-  function H(e) {
+  function B(e) {
     e.UIApplicationInstance = r.get();
   }
-  function B(e) {
+  function j(e) {
     e.setOutgoingMessageFilter = m.setOutgoingMessageFilter;
   }
-  function j(e) {
+  function F(e) {
     e.setChatLogMessageFilter = m.setChatLogMessageFilter;
   }
-  function F(e) {
-    e.setFlag = g.expose().setFlag;
+  function I(e) {
+    e.flags = y.expose();
   }
-  var n = e("jCafe"), r = e("cafe/applicationInstance"), i = e("experience/api/me"), s = e("experience/api/contact"), o = e("experience/api/conversation"), u = e("experience/api/notifications"), a = e("utils/chat/unreadConversations"), f = e("experience/api/calling"), l = e("experience/api/authentication"), c = e("experience/api/events"), h = e("experience/api/visibility"), p = e("experience/api/focus"), d = e("experience/api/rendering"), v = e("experience/settings"), m = e("experience/api/messageFilter"), g = e("experience/api/flagsObservable");
+  function q(e) {
+    e.navigateBySkypeUri = g.navigateBySkypeUri;
+  }
+  var n = e("jCafe"), r = e("swx-cafe-application-instance"), i = e("experience/api/me"), s = e("experience/api/contact"), o = e("experience/api/conversation"), u = e("experience/api/notifications"), a = e("utils/chat/unreadConversations"), f = e("experience/api/calling"), l = e("experience/api/authentication"), c = e("experience/api/events"), h = e("experience/api/visibility"), p = e("experience/api/focus"), d = e("experience/api/rendering"), v = e("experience/settings"), m = e("experience/api/messageFilter"), g = e("experience/api/navigation"), y = e("experience/api/flagsObservable");
   t.get = function () {
     var t = {};
-    return v.API.version === 1 && (M(t), x(t), T(t), N(t), S(t), C(t), k(t), L(t), A(t), E(t), _(t), O(t), b(t), y(t), F(t)), v.API.version === 2 && (H(t), D(t), P(t), B(t), j(t)), v.API.exposeCafe && w(t), t;
+    return v.API.version === 1 && (_(t), T(t), N(t), C(t), x(t), k(t), L(t), A(t), O(t), S(t), D(t), M(t), w(t), b(t), I(t), q(t)), v.API.version === 2 && (B(t), P(t), H(t), j(t), F(t)), v.API.exposeCafe && E(t), t;
   };
 });

@@ -3,10 +3,10 @@ define("experience/api/events", [
   "exports",
   "module",
   "lodash-compat",
-  "services/serviceLocator",
-  "constants/common"
+  "swx-service-locator-instance",
+  "swx-constants"
 ], function (e, t) {
-  var n = e("lodash-compat"), r = e("services/serviceLocator"), i = e("constants/common");
+  var n = e("lodash-compat"), r = e("swx-service-locator-instance").default, i = e("swx-constants").COMMON;
   t.subscribeUI = function (e, t) {
     var s = r.resolve(i.serviceLocator.PUBSUB);
     if (!n.isString(e) || !n.isFunction(t))

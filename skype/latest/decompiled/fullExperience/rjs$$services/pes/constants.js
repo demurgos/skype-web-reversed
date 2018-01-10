@@ -1,9 +1,12 @@
 define("services/pes/constants", [
   "require",
-  "browser/detect"
+  "lodash-compat",
+  "swx-browser-detect"
 ], function (e) {
-  function n() {
-    var e = t.getScreenInfo().pixelRatio > 1;
+  function r() {
+    var e = t.once(function () {
+      return n.getScreenInfo().pixelRatio > 1;
+    });
     this.CACHE_KEY = "swx|pes";
     this.SAVED_DATA_VERSION = "v1.0";
     this.FEATURED_IN_PREFIX = "FeaturedIn-";
@@ -64,22 +67,22 @@ define("services/pes/constants", [
     this.profiles = {
       emoticons: {
         getSmall: function () {
-          return e ? "default_40" : "default_20";
+          return e() ? "default_40" : "default_20";
         },
         getLarge: function () {
-          return e ? "default_80" : "default_40";
+          return e() ? "default_80" : "default_40";
         },
         getExtraLarge: function () {
-          return e ? "default_160" : "default_80";
+          return e() ? "default_160" : "default_80";
         },
         getSmallAnimated: function () {
-          return e ? "default_40_anim" : "default_20_anim";
+          return e() ? "default_40_anim" : "default_20_anim";
         },
         getLargeAnimated: function () {
-          return e ? "default_80_anim" : "default_40_anim";
+          return e() ? "default_80_anim" : "default_40_anim";
         },
         getExtraLargeAnimated: function () {
-          return e ? "default_160_anim" : "default_80_anim";
+          return e() ? "default_160_anim" : "default_80_anim";
         }
       },
       moji: {
@@ -88,6 +91,6 @@ define("services/pes/constants", [
       }
     };
   }
-  var t = e("browser/detect");
-  return new n();
+  var t = e("lodash-compat"), n = e("swx-browser-detect").default;
+  return new r();
 });

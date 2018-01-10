@@ -3,23 +3,26 @@ define("ui/modelHelpers/personHelper", [
   "exports",
   "module",
   "lodash-compat",
-  "cafe/applicationInstance",
-  "constants/people"
+  "swx-cafe-application-instance",
+  "swx-constants"
 ], function (e, t) {
   function o(e) {
-    return typeof e.isAgent == "function";
+    return n.isFunction(e.type);
   }
   function u(e) {
-    return !!e._authorization && typeof e._authorization == "function";
+    return n.isFunction(e.isAgent);
   }
   function a(e) {
+    return !!e._authorization && n.isFunction(e._authorization);
+  }
+  function f(e) {
     if (n.isString(e))
       return e.replace(s, "");
   }
-  var n = e("lodash-compat"), r = e("cafe/applicationInstance"), i = e("constants/people"), s = /^(?:(\d+):)+/;
+  var n = e("lodash-compat"), r = e("swx-cafe-application-instance"), i = e("swx-constants").PEOPLE, s = /^(?:(\d+):)+/;
   t.isMePersonId = function (e) {
-    var t = r.get().personsAndGroupsManager.mePerson, n = a(e);
-    return t.id() === n || t._msaId && a(t._msaId()) === n;
+    var t = r.get().personsAndGroupsManager.mePerson, n = f(e);
+    return t.id() === n || t._msaId && f(t._msaId()) === n;
   };
   t.isMePerson = function (e) {
     return t.isMePersonId(e.id());
@@ -40,16 +43,16 @@ define("ui/modelHelpers/personHelper", [
     return e === i.ECHO_CONTACT_ID;
   };
   t.isAgent = function (e) {
-    return o(e) && e.isAgent();
+    return u(e) && e.isAgent();
   };
   t.isAuthorizedContact = function (e) {
-    return u(e) ? e._authorization() === i.authorizationStates.AUTHORIZED : !0;
+    return a(e) ? e._authorization() === i.authorizationStates.AUTHORIZED : !0;
   };
   t.isSuggestedContact = function (e) {
-    return u(e) && e._authorization() === i.authorizationStates.SUGGESTED;
+    return a(e) && e._authorization() === i.authorizationStates.SUGGESTED;
   };
   t.isPstn = function (e) {
-    return !!e.phoneNumbers.size() && e.id() === e.phoneNumbers(0).telUri();
+    return o(e) && e.type() === "Phone" || !!e.phoneNumbers.size() && e.id() === e.phoneNumbers(0).telUri();
   };
   t.hasPhoneNumbers = function (e) {
     return !!e.phoneNumbers.size();
@@ -59,5 +62,11 @@ define("ui/modelHelpers/personHelper", [
       return t.id() === e.id();
     }).length === 1;
   };
-  t.getId = a;
+  t.isOrganizationContact = function (e) {
+    return n.isFunction(e._isOrganizationContact) ? e._isOrganizationContact() : !1;
+  };
+  t.getId = f;
+  t.isWelcomeAgent = function (e) {
+    return !!e && !!o(e) && e.type() === "ReplayBot";
+  };
 });

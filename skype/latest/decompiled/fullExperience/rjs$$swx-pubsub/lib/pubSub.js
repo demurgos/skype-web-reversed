@@ -21,11 +21,21 @@
       return;
     t.splice(t.indexOf(e), 1);
   }
+  function o() {
+    return new s();
+  }
   var s = function () {
     function e() {
       this.callbacks = {};
+      this.bulkHandlers = [];
     }
-    return e.prototype.subscribe = function (e, t) {
+    return e.prototype.addBulkSubscriber = function (e) {
+      n({ callback: e });
+      r(e, this.bulkHandlers) || this.bulkHandlers.push(e);
+    }, e.prototype.removeBulkSubscriber = function (e) {
+      n({ callback: e });
+      i(e, this.bulkHandlers);
+    }, e.prototype.subscribe = function (e, t) {
       n({
         eventName: e,
         callback: t
@@ -40,16 +50,22 @@
       var r = this.callbacks[e];
       i(t, r);
     }, e.prototype.publish = function (e, t) {
+      t === void 0 && (t = null);
       n({ eventName: e });
       if (this.callbacks[e]) {
         var r = this.callbacks[e].slice(0);
         for (var i = r.length - 1; i >= 0; i--)
           r[i](t);
       }
+      this.bulkHandlers.slice(0).reverse().forEach(function (n) {
+        return n(e, t);
+      });
     }, e.prototype.unsubscribeAll = function () {
       this.callbacks = {};
+      this.bulkHandlers = [];
     }, e;
   }();
   t.__esModule = !0;
   t["default"] = s;
+  t.build = o;
 }));

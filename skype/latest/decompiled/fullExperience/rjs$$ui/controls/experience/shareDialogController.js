@@ -5,8 +5,8 @@ define("ui/controls/experience/shareDialogController", [
   "vendor/knockout",
   "browser/dom",
   "browser/window",
-  "constants/common",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-service-locator-instance",
   "text!views/chat/shareDialog.html",
   "ui/viewModels/chat/shareDialog"
 ], function (e, t) {
@@ -41,7 +41,7 @@ define("ui/controls/experience/shareDialogController", [
     var t = e.firstChild, n = r.getElement(f);
     return n.appendChild(t), t;
   }
-  var n = e("vendor/knockout"), r = e("browser/dom"), i = e("browser/window"), s = e("constants/common"), o = e("services/serviceLocator"), u = e("text!views/chat/shareDialog.html"), a = e("ui/viewModels/chat/shareDialog"), f = ".swx", l = "swx-share-dialog";
+  var n = e("vendor/knockout"), r = e("browser/dom"), i = e("browser/window"), s = e("swx-constants").COMMON, o = e("swx-service-locator-instance").default, u = e("text!views/chat/shareDialog.html"), a = e("ui/viewModels/chat/shareDialog"), f = ".swx", l = "swx-share-dialog";
   t.getRawQueryString = function () {
     return i.location.search;
   };

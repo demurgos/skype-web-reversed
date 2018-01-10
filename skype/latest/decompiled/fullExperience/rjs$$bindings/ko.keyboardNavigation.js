@@ -2,128 +2,129 @@ define("bindings/ko.keyboardNavigation", [
   "require",
   "lodash-compat",
   "vendor/knockout",
-  "constants/keys",
+  "swx-focus-handler",
+  "swx-constants",
   "browser/window",
   "browser/document",
   "utils/common/eventHelper",
-  "constants/common"
+  "swx-constants"
 ], function (e) {
-  function a() {
+  function f() {
     var e = "tabindex";
     n.bindingHandlers.keyboardNavigation = {
-      init: function (a, f) {
-        function h() {
-          var e = p();
-          e.forEach(E);
-        }
+      init: function (f, l) {
         function p() {
-          var e = a.querySelectorAll(c.itemSelector);
-          return d(e);
+          var e = d();
+          e.forEach(S);
         }
-        function d(e) {
+        function d() {
+          var e = f.querySelectorAll(h.itemSelector);
+          return v(e);
+        }
+        function v(e) {
           return Array.prototype.slice.call(e);
         }
-        function v() {
-          a.addEventListener(u.events.browser.FOCUS, m, !0);
-          a.addEventListener(u.events.browser.BLUR, g, !0);
-          a.addEventListener(u.events.browser.KEYDOWN, y);
-          n.utils.domNodeDisposal.addDisposeCallback(a, function () {
-            a.removeEventListener(u.events.browser.FOCUS, m, !0);
-            a.removeEventListener(u.events.browser.BLUR, g, !0);
-            a.removeEventListener(u.events.browser.KEYDOWN, y);
+        function m() {
+          f.addEventListener(a.events.browser.FOCUS, g, !0);
+          f.addEventListener(a.events.browser.BLUR, y, !0);
+          f.addEventListener(a.events.browser.KEYDOWN, b);
+          n.utils.domNodeDisposal.addDisposeCallback(f, function () {
+            f.removeEventListener(a.events.browser.FOCUS, g, !0);
+            f.removeEventListener(a.events.browser.BLUR, y, !0);
+            f.removeEventListener(a.events.browser.KEYDOWN, b);
           });
         }
-        function m(e) {
+        function g(e) {
           var t;
-          if (!S(e.target))
+          if (!x(e.target))
             return;
-          t = p();
+          t = d();
           if (!t.length)
             return;
-          E(a);
-          h();
-          t.indexOf(l) !== -1 ? b(l) : c.selectLastItem ? b(t[t.length - 1]) : t.length && b(t[0]);
-        }
-        function g(e) {
-          var t = e.target;
-          i.setTimeout(function () {
-            function n() {
-              return S(t) || e.indexOf(s.activeElement) !== -1;
-            }
-            var e = p();
-            n() || w(a);
-          }, 1);
+          S(f);
+          p();
+          t.indexOf(c) !== -1 ? w(c) : h.selectLastItem ? w(t[t.length - 1]) : t.length && w(t[0]);
         }
         function y(e) {
-          function i(n) {
+          var t = e.target;
+          s.setTimeout(function () {
+            function n() {
+              return x(t) || e.indexOf(o.activeElement) !== -1;
+            }
+            var e = d();
+            n() || E(f);
+          }, 1);
+        }
+        function b(e) {
+          function r(n) {
             var r = t[t.indexOf(e.target)];
             do {
               r = t[t.indexOf(r) + n];
               if (!r)
                 break;
-              b(r);
-            } while (s.activeElement !== r);
+              w(r);
+            } while (o.activeElement !== r);
           }
-          function u() {
-            b(t[0]);
+          function s() {
+            w(t[0]);
           }
           function a() {
-            b(t[t.length - 1]);
+            w(t[t.length - 1]);
           }
-          var t, n = o.getKeyCode(e);
-          if (T(e)) {
-            N(e);
+          var t, n = u.getKeyCode(e);
+          if (N(e)) {
+            C(e);
             return;
           }
-          if (!x(n))
+          if (!T(n))
             return;
-          return t = p(), e.preventDefault(), e.stopPropagation(), n === r.LEFT || n === r.UP ? i(-1) : n === r.RIGHT || n === r.DOWN ? i(1) : n === r.HOME ? u() : n === r.END && a(), !1;
+          return t = d(), e.preventDefault(), e.stopPropagation(), n === i.LEFT || n === i.UP ? r(-1) : n === i.RIGHT || n === i.DOWN ? r(1) : n === i.HOME ? s() : n === i.END && a(), !1;
         }
-        function b(e) {
-          e.focus();
-          c.persistSelection && (l = e);
-        }
-        function w(t) {
-          t.setAttribute(e, 0);
+        function w(e) {
+          r.get().addFocusRequestToQueue(e, r.Priorities.Immediate);
+          h.persistSelection && (c = e);
         }
         function E(t) {
+          t.setAttribute(e, 0);
+        }
+        function S(t) {
           t.setAttribute(e, -1);
         }
-        function S(e) {
-          return e === a;
-        }
         function x(e) {
+          return e === f;
+        }
+        function T(e) {
           var t = [
-            r.LEFT,
-            r.UP,
-            r.RIGHT,
-            r.DOWN,
-            r.HOME,
-            r.END
+            i.LEFT,
+            i.UP,
+            i.RIGHT,
+            i.DOWN,
+            i.HOME,
+            i.END
           ];
           return t.indexOf(e) > -1;
         }
-        function T(e) {
-          var t = o.getKeyCode(e);
-          return e.shiftKey && t === r.F10;
-        }
         function N(e) {
-          var t = s.createEvent("MouseEvents"), n = e.target.getBoundingClientRect();
+          var t = u.getKeyCode(e);
+          return e.shiftKey && t === i.F10;
+        }
+        function C(e) {
+          var t = o.createEvent("MouseEvents"), n = e.target.getBoundingClientRect();
           e.preventDefault();
           e.stopPropagation();
           t.initMouseEvent("contextmenu", !0, !1, window, 0, 0, 0, n.right, n.top, !1, !1, !0, !1, 2, null);
           e.target.dispatchEvent(t);
         }
-        var l, c = t.defaults(f(), {
+        var c, h = t.defaults(l(), {
             persistSelection: !0,
             selectLastItem: !1
           });
-        w(a);
-        h();
-        v();
+        E(f);
+        p();
+        m();
       }
     };
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("constants/keys"), i = e("browser/window"), s = e("browser/document"), o = e("utils/common/eventHelper"), u = e("constants/common");
-  return { register: a };
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-focus-handler"), i = e("swx-constants").KEYS, s = e("browser/window"), o = e("browser/document"), u = e("utils/common/eventHelper"), a = e("swx-constants").COMMON;
+  return { register: f };
 });

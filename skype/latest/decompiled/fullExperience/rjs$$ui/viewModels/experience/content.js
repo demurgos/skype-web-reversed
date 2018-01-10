@@ -1,8 +1,8 @@
 define("ui/viewModels/experience/content", [
   "require",
   "vendor/knockout",
-  "constants/common",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-service-locator-instance",
   "ui/telemetry/actions/actionSources",
   "usertiming"
 ], function (e) {
@@ -22,6 +22,6 @@ define("ui/viewModels/experience/content", [
       a.publish(o.search.RESET, t);
     };
   }
-  var t = e("vendor/knockout"), n = e("constants/common"), r = e("services/serviceLocator"), i = e("ui/telemetry/actions/actionSources"), s = e("usertiming"), o = n.events, u = n.telemetry.performanceMarks;
+  var t = e("vendor/knockout"), n = e("swx-constants").COMMON, r = e("swx-service-locator-instance").default, i = e("ui/telemetry/actions/actionSources"), s = e("usertiming"), o = n.events, u = n.telemetry.performanceMarks;
   return a;
 });

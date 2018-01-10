@@ -2,8 +2,8 @@ define("experience/api/auth/authEventHandler", [
   "require",
   "exports",
   "module",
-  "constants/common",
-  "services/pubSub/pubSub"
+  "swx-constants",
+  "swx-pubsub-instance"
 ], function (e, t) {
   function s(e) {
     return e && e.name === n.api.auth.errorTypes.NOT_LINKED;
@@ -15,7 +15,7 @@ define("experience/api/auth/authEventHandler", [
     i = !0;
     r.unsubscribe(n.apiUIEvents.SWX_SPLASHSCREEN_LOADED, u);
   }
-  var n = e("constants/common"), r = e("services/pubSub/pubSub"), i;
+  var n = e("swx-constants").COMMON, r = e("swx-pubsub-instance").default, i;
   t.init = function () {
     r.subscribe(n.apiUIEvents.SWX_SPLASHSCREEN_LOADED, u);
   };

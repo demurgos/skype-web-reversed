@@ -7,7 +7,7 @@ define("services/i18n/cultureInfo", [], function () {
     }
     function s(e) {
       for (t = 0; t < r.length; t++)
-        if (r[t].locale.toLowerCase() === e.toLowerCase() && r[t])
+        if (r[t].locale.toLowerCase() === e.toLowerCase())
           return r[t];
     }
     var e = this, t, n = [

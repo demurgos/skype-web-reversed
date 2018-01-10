@@ -2,7 +2,7 @@ define("services/flagsApi/flagsApiService", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "reqwest",
   "experience/settings",
   "browser/window"
@@ -43,7 +43,7 @@ define("services/flagsApi/flagsApiService", [
     };
     return t && (r.method = t), n && (r.url += "/" + s.encodeURIComponent(n)), r;
   }
-  var n = e("cafe/applicationInstance"), r = e("reqwest"), i = e("experience/settings"), s = e("browser/window");
+  var n = e("swx-cafe-application-instance"), r = e("reqwest"), i = e("experience/settings"), s = e("browser/window");
   t.build = function () {
     return new o();
   };

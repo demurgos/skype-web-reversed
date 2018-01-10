@@ -147,7 +147,10 @@
                 "payload",
                 "param"
               ],
-              format: "rtcp-fb:%d x-message %s"
+              format: function (e) {
+                var t = e.payload === "*" ? "%s" : "%d";
+                return "rtcp-fb:" + t + " x-message %s";
+              }
             },
             {
               push: "rtcpFbTrrInt",
@@ -406,6 +409,24 @@
                 "value"
               ],
               format: "x-caps:%d %s"
+            },
+            {
+              name: "signalingFbXMessage",
+              reg: /^x-signaling-fb:(\*|\d*) x-message ([\S| ]*)/,
+              names: [
+                "payload",
+                "param"
+              ],
+              format: function (e) {
+                var t = e.payload === "*" ? "%s" : "%d";
+                return "x-signaling-fb:" + t + " x-message %s";
+              }
+            },
+            {
+              push: "xMediaSettings",
+              reg: /^x-mediasettings:([\S| ]*)/,
+              names: ["settings"],
+              format: "x-mediasettings:%s"
             },
             {
               push: "invalid",

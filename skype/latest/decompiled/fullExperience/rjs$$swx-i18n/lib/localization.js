@@ -18,21 +18,21 @@
   t.fetch = function (e) {
     if (typeof e != "object")
       throw new Error("[i18n / localization] Argument must be type of object");
-    var t = e.key, r, s, o, u, a;
+    var t = e.key, r, s, o, u;
     if (!t)
       throw new Error("[i18n / localization] Missing key");
-    r = i(t);
-    e.count !== undefined && (s = e.count, e.params = e.params || {}, e.params.count = s, o = n.getPluralSuffix(s, e.locale), t += o);
+    var a = i(t);
+    e.count !== undefined && (r = e.count, e.params = e.params || {}, e.params.count = r, s = n.getPluralSuffix(r, e.locale), t += s);
     if (e.params) {
-      r = i(t);
-      for (u in e.params)
-        if (e.params.hasOwnProperty(u)) {
-          a = e.params[u];
-          if (typeof a == "function")
+      a = i(t);
+      for (o in e.params)
+        if (e.params.hasOwnProperty(o)) {
+          u = e.params[o];
+          if (typeof u == "function")
             throw new Error("[i18n / localization] Replacement value must not be a function");
-          r = r.replace(new RegExp("{" + u + "}", "g"), a);
+          a = a.replace(new RegExp("{" + o + "}", "g"), u);
         }
     }
-    return r;
+    return a;
   };
 }));

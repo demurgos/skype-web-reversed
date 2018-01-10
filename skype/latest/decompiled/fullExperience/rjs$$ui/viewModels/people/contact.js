@@ -3,8 +3,8 @@ define("ui/viewModels/people/contact", [
   "lodash-compat",
   "vendor/knockout",
   "swx-i18n",
-  "constants/common",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-service-locator-instance",
   "swx-utils-common",
   "swx-enums",
   "constants/cssClasses",
@@ -12,108 +12,110 @@ define("ui/viewModels/people/contact", [
   "ui/modelHelpers/activityMapper",
   "utils/common/cafeObservable",
   "utils/people/lastSeenConverter",
-  "utils/people/progressiveTimeout",
   "ui/viewModels/people/properties/locationText",
   "ui/viewModels/people/properties/displayNameText",
   "ui/viewModels/people/properties/agentDetails",
-  "ui/modelHelpers/personHelper",
-  "utils/chat/messageSanitizer"
+  "ui/viewModels/people/properties/pstnDetails",
+  "swx-utils-chat"
 ], function (e) {
-  function b(e, b) {
+  function y(e, y) {
     function O() {
-      E.phoneNumbers(e.phoneNumbers());
+      return w.isBlocked() ? a.presence.BLOCKED : f.getStatusIconClass(w.status(), w.endpointType(), k);
     }
     function M() {
-      return E.isBlocked() ? a.presence.BLOCKED : f.getStatusIconClass(E.status(), E.endpointType(), k);
+      var e, n, r;
+      if (L() === undefined)
+        return;
+      return e = t.isString(L()) ? new Date(L()).getTime() : L().getTime(), n = Math.floor((Date.now() - e) / 1000), r = Math.round(n / 60), A.reset(w.id(), r), h.getMessage(r);
     }
     function D() {
-      var e, n, r;
-      if (A() === undefined)
-        return;
-      return e = t.isString(A()) ? new Date(A()).getTime() : A().getTime(), n = Math.floor((Date.now() - e) / 1000), r = Math.round(n / 60), p.get().reset(E.id(), r), h.getMessage(r);
+      return w.displayName() + ", " + w.id() + ", " + f.getAvailabilityText(w.status());
     }
     function P() {
-      return E.displayName() + ", " + E.id() + ", " + f.getAvailabilityText(E.status());
+      L.notifySubscribers();
     }
     function H() {
-      A.notifySubscribers();
+      return w.endpointType() === u.endpointType.Mobile && k;
     }
     function B() {
-      return E.endpointType() === u.endpointType.Mobile && L;
+      var e;
+      if (w.isBlocked())
+        return r.fetch({ key: "message_text_contactBlocked" });
+      if (w.isAgent() && w.agentDetails()) {
+        var t = w.agentDetails().description();
+        if (t)
+          return t;
+      }
+      if (w.isPstn()) {
+        var n = w.phoneNumbers();
+        if (n.length === 1)
+          return n[0].displayString() === w.displayName() ? "" : o.forceLTREmbedding(n[0].displayString());
+      }
+      return y.moodMessageFirst ? e = j() || F() : e = F() || j(), e || w.locationText() || f.getAvailabilityText(w.status(), w.endpointType(), k);
     }
     function j() {
-      var e, t = E.phoneNumbers();
-      if (E.isBlocked())
-        return r.fetch({ key: "message_text_contactBlocked" });
-      if (E.isAgent() && E.agentDetails()) {
-        var n = E.agentDetails().description();
-        if (n)
-          return n;
-      }
-      return E.isPstn() && t.length === 1 ? t[0].displayString() === E.displayName() ? "" : o.forceLTREmbedding(t[0].displayString()) : (b.moodMessageFirst ? e = F() || I() : e = I() || F(), e || E.locationText() || f.getAvailabilityText(E.status()));
+      return l.map(w.activity());
     }
     function F() {
-      return l.map(E.activity());
+      var e = w.status() === u.onlineStatus.Online;
+      return e ? f.getAvailabilityText(w.status()) : w.lastSeen();
     }
-    function I() {
-      var e, t = E.status() === u.onlineStatus.Online;
-      return t ? (e = E.isMobile() ? "message_text_presenceActiveMobile" : "message_text_presenceAvailable", r.fetch({ key: e })) : E.lastSeen();
-    }
-    var w, E = this, S = v.build(e), x = d.build(e), T = m.build(e), N = s.resolve(i.serviceLocator.FEATURE_FLAGS), C = N.isFeatureOn(i.featureFlags.LAST_SEEN), k = N.isFeatureOn(i.featureFlags.MOBILE_INDICATOR), L = N.isFeatureOn(i.featureFlags.MOBILE_ACTIVE), A = c.newObservableProperty(e.lastSeenAt, { keepAlive: b.keepLastSeenAtSubscription });
-    E.id = c.newObservableProperty(e.id);
-    E.avatar = c.newObservableProperty(e.avatarUrl, { keepAlive: !0 });
-    E.status = c.newObservableProperty(e.status, { keepAlive: b.keepPresenceSubscription });
-    E.activity = c.newObservableProperty(e.activity, { keepAlive: b.keepActivitySubscription });
-    E.endpointType = c.newObservableProperty(e.endpointType, { keepAlive: b.keepEndpointTypeSubscription });
-    E.isAgent = T.isAgent;
-    E.agentDetails = n.computed(T.compute);
-    E.isEcho = n.observable(g.isEchoContact(e));
-    E.isBlocked = c.newObservableProperty(e.isBlocked);
-    E.isActive = n.observable(!1);
-    E.location = x.location;
-    E.locationText = n.computed(x.compute);
-    E.isPstn = n.observable(g.isPstn(e));
-    E.phoneNumbers = n.observable([]);
-    E.isMobile = n.computed(B);
-    E.displayName = n.computed(S.compute);
-    E.lastSeen = C ? n.computed(D) : n.observable(null);
-    E.statusClassName = n.computed(M);
-    E.textDetails = n.computed(P);
-    e.phoneNumbers.changed(O);
-    E.displayMessage = n.computed(j);
-    E.ariaLabel = n.computed(function () {
-      var e = f.getAvailabilityText(E.status()), t = y.stripHTML(E.displayMessage());
-      return e === t ? E.displayName() + " " + e : E.displayName() + " " + e + " " + t;
+    var b, w = this, E = d.build(e), S = p.build(e), x = v.build(e), T = m.build(e), N = s.resolve(i.serviceLocator.FEATURE_FLAGS), C = N.isFeatureOn(i.featureFlags.LAST_SEEN), k = N.isFeatureOn(i.featureFlags.MOBILE_INDICATOR), L = c.newObservableProperty(e.lastSeenAt, { keepAlive: y.keepLastSeenAtSubscription }), A = s.resolve(i.serviceLocator.PROGRESSIVE_TIMEOUT);
+    w.id = n.observable(e.id());
+    w.avatar = c.newObservableProperty(e.avatarUrl, { keepAlive: !0 });
+    w.status = c.newObservableProperty(e.status, { keepAlive: y.keepPresenceSubscription });
+    w.activity = c.newObservableProperty(e.activity, { keepAlive: y.keepActivitySubscription });
+    w.endpointType = c.newObservableProperty(e.endpointType, { keepAlive: y.keepEndpointTypeSubscription });
+    w.isAgent = x.isAgent;
+    w.agentDetails = n.computed(x.compute);
+    w.isBlocked = c.newObservableProperty(e.isBlocked);
+    w.isActive = n.observable(!1);
+    w.location = S.location;
+    w.locationText = n.computed(S.compute);
+    w.isPstn = T.isPstn;
+    w.phoneNumbers = T.phoneNumbers;
+    w.isMobile = n.computed(H);
+    w.displayName = n.computed(E.compute);
+    w.displayNameUnescaped = n.computed(function () {
+      return t.unescape(w.displayName());
     });
-    E.getPerson = function () {
+    w.lastSeen = C ? n.computed(M) : n.observable(null);
+    w.statusClassName = n.computed(O);
+    w.textDetails = n.computed(D);
+    w.displayMessage = n.computed(B);
+    w.ariaLabel = n.computed(function () {
+      var e = f.getAvailabilityText(w.status()), t = g.stripHTML(w.displayMessage());
+      return e === t ? w.displayName() + " " + e : w.displayName() + " " + e + " " + t;
+    });
+    w.getPerson = function () {
       return e;
     };
-    E.dispose = function () {
-      p.get().stop(E.id(), w);
-      E.id.dispose();
-      E.avatar.dispose();
-      E.status.dispose();
-      E.activity.dispose();
-      E.endpointType.dispose();
-      E.isBlocked.dispose();
-      E.locationText.dispose();
-      E.displayName.dispose();
-      E.agentDetails.dispose();
-      A.dispose();
+    w.dispose = function () {
+      A.stop(w.id(), b);
+      w.avatar.dispose();
+      w.status.dispose();
+      w.activity.dispose();
+      w.endpointType.dispose();
+      w.isBlocked.dispose();
+      w.locationText.dispose();
+      w.displayName.dispose();
+      w.displayNameUnescaped.dispose();
+      w.agentDetails.dispose();
+      L.dispose();
+      E.dispose();
       S.dispose();
       x.dispose();
       T.dispose();
-      C && E.lastSeen.dispose();
-      E.statusClassName.dispose();
-      E.displayMessage.dispose();
-      E.textDetails.dispose();
-      E.isMobile.dispose();
-      e.phoneNumbers.changed.off(O);
+      C && w.lastSeen.dispose();
+      w.statusClassName.dispose();
+      w.displayMessage.dispose();
+      w.textDetails.dispose();
+      w.isMobile.dispose();
     };
-    w = p.get().start(E.id(), H);
+    b = A.start(w.id(), P);
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-i18n").localization, i = e("constants/common"), s = e("services/serviceLocator"), o = e("swx-utils-common").stringUtils, u = e("swx-enums"), a = e("constants/cssClasses"), f = e("utils/common/statusMapper"), l = e("ui/modelHelpers/activityMapper"), c = e("utils/common/cafeObservable"), h = e("utils/people/lastSeenConverter"), p = e("utils/people/progressiveTimeout"), d = e("ui/viewModels/people/properties/locationText"), v = e("ui/viewModels/people/properties/displayNameText"), m = e("ui/viewModels/people/properties/agentDetails"), g = e("ui/modelHelpers/personHelper"), y = e("utils/chat/messageSanitizer");
-  return b.build = function (e, t) {
-    return new b(e, t);
-  }, b;
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-i18n").localization, i = e("swx-constants").COMMON, s = e("swx-service-locator-instance").default, o = e("swx-utils-common").stringUtils, u = e("swx-enums"), a = e("constants/cssClasses"), f = e("utils/common/statusMapper"), l = e("ui/modelHelpers/activityMapper"), c = e("utils/common/cafeObservable"), h = e("utils/people/lastSeenConverter"), p = e("ui/viewModels/people/properties/locationText"), d = e("ui/viewModels/people/properties/displayNameText"), v = e("ui/viewModels/people/properties/agentDetails"), m = e("ui/viewModels/people/properties/pstnDetails"), g = e("swx-utils-chat").messageSanitizer;
+  return y.build = function (e, t) {
+    return new y(e, t);
+  }, y;
 });

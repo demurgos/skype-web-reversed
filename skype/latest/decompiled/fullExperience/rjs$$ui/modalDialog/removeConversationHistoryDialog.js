@@ -2,67 +2,71 @@ define("ui/modalDialog/removeConversationHistoryDialog", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "swx-i18n",
   "ui/modalDialog/confirmationDialog",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "telemetry/chat/removeConversationHistoryTelemetry",
-  "text!views/chat/removeConversationHistoryDialogContent.html"
+  "text!views/chat/removeConversationHistoryDialogContent.html",
+  "ui/modelHelpers/conversationHelper",
+  "utils/common/accessibility"
 ], function (e, t) {
-  function f(e) {
-    this.text = h();
+  function c(e) {
+    this.text = d();
     this.avatar = e.avatarUrl();
     this.isGroupConversation = e.isGroupConversation();
-  }
-  function l() {
-    return s.resolve(o.serviceLocator.FEATURE_FLAGS).isFeatureOn(o.featureFlags.USE_BUSINESS_WORDING);
-  }
-  function c(e) {
-    return e + "_4b";
+    this.isAgentConversation = f.isOneToOneConversationWithAgent(e);
+    this.topic = e.topic();
   }
   function h() {
-    var e = "remove_conversation_confirmation_text";
-    return l() ? r.fetch({ key: c(e) }) : r.fetch({ key: e });
+    return s.resolve(o.serviceLocator.FEATURE_FLAGS).isFeatureOn(o.featureFlags.USE_BUSINESS_WORDING);
   }
-  function p() {
-    var e = "remove_conversation_confirmation_title";
-    return l() ? r.fetch({ key: c(e) }) : r.fetch({ key: e });
+  function p(e) {
+    return e + "_4b";
   }
   function d() {
-    var e = "action_button_delete";
-    return l() ? r.fetch({ key: c(e) }) : r.fetch({ key: e });
+    var e = "remove_conversation_confirmation_text";
+    return h() ? r.fetch({ key: p(e) }) : r.fetch({ key: e });
   }
-  var n = e("cafe/applicationInstance"), r = e("swx-i18n").localization, i = e("ui/modalDialog/confirmationDialog"), s = e("services/serviceLocator"), o = e("constants/common"), u = e("telemetry/chat/removeConversationHistoryTelemetry"), a = e("text!views/chat/removeConversationHistoryDialogContent.html");
+  function v() {
+    var e = "remove_conversation_confirmation_title";
+    return h() ? r.fetch({ key: p(e) }) : r.fetch({ key: e });
+  }
+  function m() {
+    var e = "action_button_delete";
+    return h() ? r.fetch({ key: p(e) }) : r.fetch({ key: e });
+  }
+  var n = e("swx-cafe-application-instance"), r = e("swx-i18n").localization, i = e("ui/modalDialog/confirmationDialog"), s = e("swx-service-locator-instance").default, o = e("swx-constants").COMMON, u = e("telemetry/chat/removeConversationHistoryTelemetry"), a = e("text!views/chat/removeConversationHistoryDialogContent.html"), f = e("ui/modelHelpers/conversationHelper"), l = e("utils/common/accessibility").narrator;
   t.start = function (e, t) {
-    function v() {
-      e.historyService.removeAll.enabled() && (c.started(), e.historyService.removeAll().then(function () {
-        l.conversations.remove(e).finally(function () {
-          c.completed();
+    function g() {
+      e.historyService.removeAll.enabled() && (h.started(), l.announce({ key: "accessibility_remove_conversation_confirmation" }), e.historyService.removeAll().then(function () {
+        f.conversations.remove(e).finally(function () {
+          h.completed();
           var t = {
             model: e,
             page: "swx-conversation"
           };
-          h.publish(o.events.navigation.FRAGMENT_REMOVE, t);
+          p.publish(o.events.navigation.FRAGMENT_REMOVE, t);
         });
       }));
     }
-    function m() {
-      c.canceled();
+    function y() {
+      h.canceled();
     }
-    var r, l = n.get().conversationsManager, c, h;
-    h = s.resolve(o.serviceLocator.PUBSUB);
-    c = u.build(t, e);
-    r = i.build({
-      title: p(),
+    var r, f = n.get().conversationsManager, h, p, d;
+    p = s.resolve(o.serviceLocator.PUBSUB);
+    d = s.resolve(o.serviceLocator.FEATURE_FLAGS);
+    h = u.build(t, e);
+    d.isFeatureOn(o.featureFlags.DISABLE_REMOVE_CONVERSATION_CONFIRMATION) ? g() : (r = i.build({
+      title: v(),
       content: a,
-      contentViewModel: new f(e),
+      contentViewModel: new c(e),
       avatar: e.avatarUrl(),
-      onConfirm: v,
-      onCancel: m,
-      confirmButtonTitle: d()
-    });
-    r.show();
+      onConfirm: g,
+      onCancel: y,
+      confirmButtonTitle: m()
+    }), r.show());
   };
   t.canDeleteConversation = function (e) {
     var t = s.resolve(o.serviceLocator.FEATURE_FLAGS), n = t.isFeatureOn(o.featureFlags.REMOVE_CONVERSATION_HISTORY);

@@ -2,48 +2,50 @@ define("ui/viewModels/calling/callScreenViewModel/rosterViewModel", [
   "require",
   "lodash-compat",
   "vendor/knockout",
-  "constants/common",
+  "swx-constants",
   "swx-enums",
   "browser/window",
   "utils/common/eventMixin",
-  "utils/common/async",
+  "swx-utils-common",
   "utils/common/scroll"
 ], function (e) {
   function f(e, t) {
-    function v() {
+    function d() {
       u.execute(function () {
-        d || o.dispatchEvent(r.events.callScreen.ROSTER_WIDTH_CHANGED, p.getRosterWidth(), o.DIRECTION.PARENT);
+        o.dispatchEvent(r.events.callScreen.ROSTER_WIDTH_CHANGED, p.getRosterWidth(), o.DIRECTION.PARENT);
       });
     }
-    var o = this, f, l, c, h, p, d = !1;
-    o.participants = e.participants;
-    o.isGroupConversation = e.isGroupConversation;
-    o.selfParticipant = e.selfParticipant;
-    o.isLocalVideoOn = e.isLocalVideoOn;
-    o.localAspectRatio = n.observable("");
-    o.isVisible = e.isVisible;
-    o.isLocalVideoAllowed = e.isLocalVideoAllowed;
-    o.disposed = !1;
+    function v() {
+      o.layoutItemModels().forEach(function (e) {
+        e.appendParticipantComponentToNewContainer(o.rosterParticipantsContainer);
+      });
+      d();
+    }
+    var o = this, f, l, c, h, p;
+    o.layoutItemModels = e.layoutItemModels;
+    o.selfLayoutItemModel = e.selfLayoutItemModel;
+    o.isLocalVideoOn = o.selfLayoutItemModel.isVideoActive;
+    o.conversation = e.conversation;
+    o.rosterParticipantsContainer = n.observable();
     o.init = function (e) {
       p = e;
-      p.init(v);
+      p.init(d);
       f = a.build(t);
       f.init({ horizontal: !0 });
-      l = o.participants.subscribe(v);
-      c = o.isLocalVideoOn.subscribe(v);
-      h = o.selfParticipant.audio.state.when(i.callConnectionState.Connected, v);
+      l = o.layoutItemModels.subscribe(v);
+      c = o.selfLayoutItemModel.isVideoActive.subscribe(d);
+      h = o.selfLayoutItemModel.participant.audio.state.when(i.callConnectionState.Connected, d);
     };
     o.dispose = function () {
-      d = !0;
       p.dispose();
       f.dispose();
       l.dispose();
       c.dispose();
       h.dispose();
-      s.removeEventListener(r.events.browser.RESIZE, v);
+      s.removeEventListener(r.events.browser.RESIZE, d);
     };
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("constants/common"), i = e("swx-enums"), s = e("browser/window"), o = e("utils/common/eventMixin"), u = e("utils/common/async"), a = e("utils/common/scroll");
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-constants").COMMON, i = e("swx-enums"), s = e("browser/window"), o = e("utils/common/eventMixin"), u = e("swx-utils-common").async, a = e("utils/common/scroll");
   return t.assign(f.prototype, o), {
     build: function (e, t) {
       return new f(e, t);

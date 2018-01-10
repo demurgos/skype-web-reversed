@@ -1,33 +1,36 @@
 define("jSkype/application", [
   "require",
-  "helpers/polyfills",
+  "swx-polyfill-initializer",
   "lodash-compat",
-  "constants/common",
+  "swx-constants",
   "swx-enums",
-  "jSkype/client",
+  "swx-jskype-internal-application-instance",
   "jcafe-property-model",
-  "jSkype/models/signInManager",
-  "jSkype/models/translatorService",
-  "jSkype/services/messageSearch/main",
-  "jSkype/models/marketplaceManager",
-  "jSkype/models/conversationsManager",
-  "jSkype/models/devicesManager",
-  "jSkype/models/personsAndGroupsManager",
-  "jSkype/modelHelpers/dataOrchestrator",
-  "jSkype/settings",
-  "jSkype/services/asyncMedia/main",
+  "swx-jskype-main/lib/models/signInManager",
+  "swx-jskype-main/lib/models/translatorService",
+  "swx-jskype-main/lib/services/messageSearch/main",
+  "swx-jskype-main/lib/models/marketplaceManager",
+  "swx-jskype-main/lib/models/conversationsManager",
+  "swx-jskype-main/lib/models/devicesManager",
+  "swx-jskype-main/lib/models/personsAndGroupsManager",
+  "swx-jskype-main/lib/modelHelpers/dataOrchestrator",
+  "jskype-settings-instance",
+  "experience/settings",
+  "swx-jskype-main/lib/services/asyncMedia/main",
   "jSkype/services/calling/callingInitializer",
-  "jSkype/services/keyEncryption",
-  "jSkype/services/serviceFactory",
-  "jSkype/services/webapi/constants",
-  "jSkype/services/spaces",
-  "utils/common/logTracer/api",
-  "utils/common/cache/instance",
-  "swx-utils-common"
+  "swx-jskype-main/lib/services/keyEncryption/keyEncryption",
+  "swx-jskype-main/lib/services/serviceFactory",
+  "swx-chat-service/lib/constants",
+  "swx-jskype-main/lib/services/spaces",
+  "swx-log-tracer",
+  "swx-jskype-main/lib/services/cache/instance",
+  "swx-jskype-main/lib/utils/preferences",
+  "swx-utils-common",
+  "swx-jskype-main/lib/services/preferences/flagsServiceProvider"
 ], function (e) {
-  function T(e) {
-    var T = this;
-    return e = t.defaults({}, e, { settings: {} }), d.settings = e.settings, x.remove("chat-4171"), E.configure({
+  function k(e) {
+    var k = this;
+    return e = t.defaults({}, e, { settings: {} }), d.settings = e.settings, x.set(e.localStorage), N.remove("chat-4171"), S.configure({
       logToConsole: d.isFeatureOn(n.featureFlags.CONSOLE_LOGGING),
       logToBuffer: d.isFeatureOn(n.featureFlags.ISSUE_REPORTING),
       logUnhandled: d.isFeatureOn(n.featureFlags.ISSUE_REPORTING),
@@ -37,45 +40,47 @@ define("jSkype/application", [
         telemetryManager: e.telemetryManager,
         telemetryToken: d.settings.telemetry ? d.settings.telemetry.logReportingToken : null
       }
-    }), T._standbyMode = s.property({ value: d.isFeatureOn(n.featureFlags.SUPPORT_STANDBY_MODE) }), T._telemetryManager = e.telemetryManager, T._telemetry = e.telemetry, T.signInManager = o.build(), T.personsAndGroupsManager = new h(), T.conversationsManager = new l(), T.devicesManager = new c(), T.suspended = s.boolProperty(!1), T.marketplaceManager = new f(), m.preSignInInitialize(), d.isFeatureOn(n.featureFlags.TRANSLATOR_SENDING_ENABLED) && (T.translatorService = u.build()), d.isFeatureOn(n.featureFlags.CONTENT_SEARCH) && (T._messagesSearchService = a.build()), T.signInManager.state.when(r.loginState.SignedIn, function () {
-      S.get().init(g);
+    }), k._standbyMode = s.property({ value: d.isFeatureOn(n.featureFlags.SUPPORT_STANDBY_MODE) }), k._telemetryManager = e.telemetryManager, k._telemetry = e.telemetry, k._flagsServiceProvider = C, k.signInManager = o.build(e.linkingApi, e.authContext), k.personsAndGroupsManager = new h(), k.conversationsManager = new l(), k.devicesManager = c.build(), k.suspended = s.boolProperty(!1), k.marketplaceManager = new f(), d.isFeatureOn(n.featureFlags.TRANSLATOR_SENDING_ENABLED) && (k.translatorService = u.build()), d.isFeatureOn(n.featureFlags.CONTENT_SEARCH) && (k._messagesSearchService = a.build()), k.signInManager.state.when(r.loginState.SignedIn, function () {
+      x.get().init(y.build());
+      T.init(k.personsAndGroupsManager.mePerson.preferences);
       p.initialize();
-      m.postSignInInitialize();
-      w.fetchConfig();
-    }), T.signInManager.state.when(r.loginState.SigningOut, function () {
-      S.get().destroy();
-      m.destroy();
-      T.suspended(!1);
-      T.devicesManager._reset();
-      T.conversationsManager._reset().then(function () {
-        T.personsAndGroupsManager._reset();
-        T.signInManager.state._set(r.loginState.SignedOut);
+      g.initialize(v);
+      E.initialize(v);
+      E.fetchConfig();
+    }), k.signInManager.state.when(r.loginState.SigningOut, function () {
+      x.get().destroy(!0);
+      g.destroy();
+      k.suspended(!1);
+      k.devicesManager._reset();
+      k.conversationsManager._reset().then(function () {
+        k.personsAndGroupsManager._reset();
+        k.signInManager.state._set(r.loginState.SignedOut);
       });
-    }), T.signInManager._skypeToken.changed(function (e) {
-      v.authenticate(e);
-    }), T.isEndpointActive = s.property({
+    }), k.signInManager._skypeToken.changed(function (e) {
+      m.get().authenticate(e);
+    }), k.isEndpointActive = s.property({
       value: !1,
       set: function () {
         function n() {
-          T.isEndpointActive(!1);
+          k.isEndpointActive(!1);
         }
         function r() {
-          y.getPresenceService().activateEndpoint();
+          b.getPresenceService().activateEndpoint();
           e && clearTimeout(e);
-          e = setTimeout(n, b.ACTIVATE_ENDPOINT_TIMEOUT);
+          e = setTimeout(n, w.ACTIVATE_ENDPOINT_TIMEOUT);
         }
         var e = null, i = t.debounce(r, 0, {
             leading: !0,
             trailing: !1,
-            maxWait: b.ACTIVATE_ENDPOINT_TIMEOUT - b.ACTIVATE_ENDPOINT_TOLERANCE
+            maxWait: w.ACTIVATE_ENDPOINT_TIMEOUT - w.ACTIVATE_ENDPOINT_TOLERANCE
           });
         return function (e) {
           return e && i(), e;
         };
       }()
-    }), i.set(T), T;
+    }), i.set(k), k;
   }
-  e("helpers/polyfills");
-  var t = e("lodash-compat"), n = e("constants/common"), r = e("swx-enums"), i = e("jSkype/client"), s = e("jcafe-property-model"), o = e("jSkype/models/signInManager"), u = e("jSkype/models/translatorService"), a = e("jSkype/services/messageSearch/main"), f = e("jSkype/models/marketplaceManager"), l = e("jSkype/models/conversationsManager"), c = e("jSkype/models/devicesManager"), h = e("jSkype/models/personsAndGroupsManager"), p = e("jSkype/modelHelpers/dataOrchestrator"), d = e("jSkype/settings"), v = e("jSkype/services/asyncMedia/main"), m = e("jSkype/services/calling/callingInitializer"), g = e("jSkype/services/keyEncryption"), y = e("jSkype/services/serviceFactory"), b = e("jSkype/services/webapi/constants"), w = e("jSkype/services/spaces"), E = e("utils/common/logTracer/api"), S = e("utils/common/cache/instance"), x = e("swx-utils-common").sessionStorage;
-  return T;
+  e("swx-polyfill-initializer");
+  var t = e("lodash-compat"), n = e("swx-constants").COMMON, r = e("swx-enums"), i = e("swx-jskype-internal-application-instance"), s = e("jcafe-property-model"), o = e("swx-jskype-main/lib/models/signInManager"), u = e("swx-jskype-main/lib/models/translatorService"), a = e("swx-jskype-main/lib/services/messageSearch/main"), f = e("swx-jskype-main/lib/models/marketplaceManager").default, l = e("swx-jskype-main/lib/models/conversationsManager").default, c = e("swx-jskype-main/lib/models/devicesManager"), h = e("swx-jskype-main/lib/models/personsAndGroupsManager").default, p = e("swx-jskype-main/lib/modelHelpers/dataOrchestrator"), d = e("jskype-settings-instance"), v = e("experience/settings"), m = e("swx-jskype-main/lib/services/asyncMedia/main"), g = e("jSkype/services/calling/callingInitializer"), y = e("swx-jskype-main/lib/services/keyEncryption/keyEncryption"), b = e("swx-jskype-main/lib/services/serviceFactory"), w = e("swx-chat-service/lib/constants"), E = e("swx-jskype-main/lib/services/spaces"), S = e("swx-log-tracer"), x = e("swx-jskype-main/lib/services/cache/instance"), T = e("swx-jskype-main/lib/utils/preferences"), N = e("swx-utils-common").sessionStorage, C = e("swx-jskype-main/lib/services/preferences/flagsServiceProvider");
+  return k;
 });

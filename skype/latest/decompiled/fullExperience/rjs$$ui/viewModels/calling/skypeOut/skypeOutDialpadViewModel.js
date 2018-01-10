@@ -1,10 +1,10 @@
 define("ui/viewModels/calling/skypeOut/skypeOutDialpadViewModel", [
   "require",
   "lodash-compat",
-  "constants/common",
+  "swx-constants",
   "utils/common/eventMixin",
   "utils/common/eventHelper",
-  "constants/keys"
+  "swx-constants"
 ], function (e) {
   function o() {
     function u(i, s) {
@@ -35,6 +35,6 @@ define("ui/viewModels/calling/skypeOut/skypeOutDialpadViewModel", [
       u(n.events.skypeOut.INPUT_TYPE_MOUSE, t.timeStamp);
     };
   }
-  var t = e("lodash-compat"), n = e("constants/common"), r = e("utils/common/eventMixin"), i = e("utils/common/eventHelper"), s = e("constants/keys");
+  var t = e("lodash-compat"), n = e("swx-constants").COMMON, r = e("utils/common/eventMixin"), i = e("utils/common/eventHelper"), s = e("swx-constants").KEYS;
   return t.assign(o.prototype, r), o;
 });

@@ -3,16 +3,18 @@ define("telemetry/chat/urlPreviewAction", [
   "exports",
   "module",
   "experience/settings",
-  "constants/common",
+  "swx-constants",
   "ui/telemetry/telemetryClient",
-  "telemetry/chat/telemetryEnumerator",
-  "browser/window"
+  "swx-telemetry-buckets",
+  "browser/window",
+  "services/telemetry/hashingService"
 ], function (e, t) {
-  var n = e("experience/settings"), r = e("constants/common"), i = r.telemetry.urlPreviewClicked, s = e("ui/telemetry/telemetryClient"), o = e("telemetry/chat/telemetryEnumerator"), u = e("browser/window");
+  var n = e("experience/settings"), r = e("swx-constants").COMMON, i = r.telemetry.urlPreviewClicked, s = e("ui/telemetry/telemetryClient"), o = e("swx-telemetry-buckets"), u = e("browser/window"), a = e("services/telemetry/hashingService");
   t.publishActionEvent = function (e) {
     function r() {
-      var t = a();
+      var t = f();
       return {
+        messageIdHash: a.getHash(e.contentId),
         contentType: o.getUrlContentType(e.url),
         ttc: t,
         ttcGroup: o.getMessageLifeDurationGroup(t),
@@ -20,21 +22,21 @@ define("telemetry/chat/urlPreviewAction", [
         participantCountGroup: o.getParticipantCountGroup(e.participantCount)
       };
     }
-    function a() {
-      return f(e.receivedTime, l());
+    function f() {
+      return l(e.timestamp, c());
     }
-    function f(e, t) {
+    function l(e, t) {
       return t - e;
     }
-    function l() {
+    function c() {
       return new u.Date().getTime();
     }
-    function c(e) {
+    function h(e) {
       var t = i.TYPE, r = e;
-      s.get().sendEvent(n.telemetry.uiTenantToken, t, r);
+      s.get().sendEvent(n.telemetry.chatTenantToken, t, r);
     }
     var t;
     t = r();
-    c(t);
+    h(t);
   };
 });

@@ -2,12 +2,12 @@ define("utils/common/applicationFocusManager", [
   "require",
   "exports",
   "module",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "ui/telemetry/actions/actionNames",
   "browser/dom",
   "browser/document",
-  "browser/detect"
+  "swx-browser-detect"
 ], function (e, t) {
   function m(e) {
     if (t.focusTrackingEnabled) {
@@ -25,7 +25,7 @@ define("utils/common/applicationFocusManager", [
     var t = g(e);
     t && t.removeAttribute(c);
   }
-  var n = e("services/serviceLocator"), r = e("constants/common"), i = e("ui/telemetry/actions/actionNames"), s = e("browser/dom"), o = e("browser/document"), u = e("browser/detect"), a = ".swx .chat .inputField", f = ".swx .search .inputField", l = "#swxSplashScreen", c = "data-focusManager", h = 2, p = [], d = null, v = 0;
+  var n = e("swx-service-locator-instance").default, r = e("swx-constants").COMMON, i = e("ui/telemetry/actions/actionNames"), s = e("browser/dom"), o = e("browser/document"), u = e("swx-browser-detect").default, a = ".swx .chat .inputField", f = ".swx .search .inputField", l = "#swxSplashScreen", c = "data-focusManager", h = 2, p = [], d = null, v = 0;
   return t.focusTrackingEnabled = !1, t.reset = function () {
     p.forEach(y);
     p = [];

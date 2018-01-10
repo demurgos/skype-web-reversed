@@ -1,12 +1,12 @@
 define("telemetry/chat/videoMessagePlayback", [
   "require",
   "experience/settings",
-  "constants/common",
+  "swx-constants",
   "ui/telemetry/telemetryClient"
 ], function (e) {
   function i() {
     function o(e) {
-      r.get().sendEvent(t.telemetry.uiTenantToken, i, e);
+      r.get().sendEvent(t.telemetry.chatTenantToken, i, e);
     }
     var e = this, i = n.chat.VIDEO_MESSAGE.TYPE, s = {};
     e.sendLoadedEvent = function () {
@@ -30,6 +30,6 @@ define("telemetry/chat/videoMessagePlayback", [
       o(s);
     };
   }
-  var t = e("experience/settings"), n = e("constants/common").telemetry, r = e("ui/telemetry/telemetryClient");
+  var t = e("experience/settings"), n = e("swx-constants").COMMON.telemetry, r = e("ui/telemetry/telemetryClient");
   return new i();
 });

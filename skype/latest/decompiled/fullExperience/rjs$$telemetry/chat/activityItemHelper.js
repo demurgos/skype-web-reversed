@@ -1,16 +1,17 @@
 define("telemetry/chat/activityItemHelper", [
   "require",
-  "constants/common",
+  "swx-constants",
+  "swx-encoder/lib/encoders/emoticonEncoder",
   "swx-enums"
 ], function (e) {
-  function i() {
+  function s() {
     function e(e, t) {
       return (e & t) !== 0;
     }
-    function i(e) {
+    function s(e) {
       return e.originalContent || e.content;
     }
-    function s(n, r) {
+    function o(n, r) {
       e(r, t.telemetry.messageTypes.RICHTEXT_MASK) && (e(r, t.telemetry.messageTypes.RICHTEXT_FORMAT) && n.richtext.format++, e(r, t.telemetry.messageTypes.RICHTEXT_EMOTICONS) && n.richtext.emoticons++, e(r, t.telemetry.messageTypes.RICHTEXT_ME) && n.richtext.me++, n.richtext.total++);
     }
     this.updateResult = function (n, r) {
@@ -59,7 +60,7 @@ define("telemetry/chat/activityItemHelper", [
           throw new Error("Not supported:" + r);
       }
       e(r, t.telemetry.messageTypes.FILES_MASK) && n.files.total++;
-      e(r, t.telemetry.messageTypes.RICHTEXT_MASK) && s(n, r);
+      e(r, t.telemetry.messageTypes.RICHTEXT_MASK) && o(n, r);
       e(r, t.telemetry.messageTypes.TEXT_MASK) && n.text.total++;
     };
     this.getEmptyResult = function () {
@@ -96,20 +97,20 @@ define("telemetry/chat/activityItemHelper", [
     };
     this.getTelemetryMessageType = function (e) {
       switch (e.type()) {
-      case n.activityType.VideoMessage:
+      case r.activityType.VideoMessage:
         return t.telemetry.messageTypes.MEDIA_VIDEO;
-      case n.activityType.PictureMessage:
+      case r.activityType.PictureMessage:
         return t.telemetry.messageTypes.MEDIA_PICTURE;
-      case n.activityType.CallStarted:
-      case n.activityType.CallEnded:
-      case n.activityType.CallMissed:
+      case r.activityType.CallStarted:
+      case r.activityType.CallEnded:
+      case r.activityType.CallMissed:
         return t.telemetry.messageTypes.CALLING_OTHER;
-      case n.activityType.TextMessage:
-        var r = 0, i = e.html().indexOf("raw_pre") > -1;
-        i && (r |= t.telemetry.messageTypes.RICHTEXT_FORMAT);
-        var s = e.html().indexOf("<span class=\"emoSprite\">") > -1;
-        return s && (r |= t.telemetry.messageTypes.RICHTEXT_EMOTICONS), r === 0 ? t.telemetry.messageTypes.RICHTEXT_OTHER : r;
-      case n.activityType.CONTACTS:
+      case r.activityType.TextMessage:
+        var i = 0, s = e.html().indexOf("raw_pre") > -1;
+        s && (i |= t.telemetry.messageTypes.RICHTEXT_FORMAT);
+        var o = n.build().hasEmoticons(e.html());
+        return o && (i |= t.telemetry.messageTypes.RICHTEXT_EMOTICONS), i === 0 ? t.telemetry.messageTypes.RICHTEXT_OTHER : i;
+      case r.activityType.CONTACTS:
         return t.telemetry.messageTypes.CONTACT_OTHER;
       default:
         return t.telemetry.messageTypes.OTHER_TYPES;
@@ -117,17 +118,17 @@ define("telemetry/chat/activityItemHelper", [
     };
     this.getTelemetryMessageTypeObsolete = function (e) {
       switch (e.messagetype) {
-      case r.VIDEO:
+      case i.VIDEO:
         return t.telemetry.messageTypes.MEDIA_VIDEO;
-      case r.PICTURE:
+      case i.PICTURE:
         return t.telemetry.messageTypes.MEDIA_PICTURE;
-      case r.LOCATION:
+      case i.LOCATION:
         return t.telemetry.messageTypes.MEDIA_LOCATION;
-      case r.CALL_EVENT:
+      case i.CALL_EVENT:
         return t.telemetry.messageTypes.CALLING_OTHER;
-      case r.FILE_TRANSFER:
-        var n = new RegExp(".([a-z0-9]{1,4})<", "i"), s = n.exec(i(e))[1];
-        switch (s) {
+      case i.FILE_TRANSFER:
+        var n = new RegExp(".([a-z0-9]{1,4})<", "i"), r = n.exec(s(e))[1];
+        switch (r) {
         case "png":
         case "jpg":
         case "gif":
@@ -159,14 +160,14 @@ define("telemetry/chat/activityItemHelper", [
           return t.telemetry.messageTypes.FILES_OTHER;
         }
         break;
-      case r.RICH_TEXT:
-        var o = 0, u = i(e).indexOf("raw_pre") > -1;
+      case i.RICH_TEXT:
+        var o = 0, u = s(e).indexOf("raw_pre") > -1;
         u && (o |= t.telemetry.messageTypes.RICHTEXT_FORMAT);
-        var a = i(e).indexOf("<ss") > -1;
+        var a = s(e).indexOf("<ss") > -1;
         return a && (o |= t.telemetry.messageTypes.RICHTEXT_EMOTICONS), e.skypeemoteoffset && (o |= t.telemetry.messageTypes.RICHTEXT_ME), o === 0 ? t.telemetry.messageTypes.RICHTEXT_OTHER : o;
-      case r.CONTACTS:
+      case i.CONTACTS:
         return t.telemetry.messageTypes.CONTACT_OTHER;
-      case r.TEXT:
+      case i.TEXT:
         if (e.skypeemoteoffset)
           return t.telemetry.messageTypes.TEXT_ME;
         return t.telemetry.messageTypes.TEXT_OTHER;
@@ -183,7 +184,7 @@ define("telemetry/chat/activityItemHelper", [
       return t;
     };
   }
-  var t = e("constants/common"), n = e("swx-enums"), r = {
+  var t = e("swx-constants").COMMON, n = e("swx-encoder/lib/encoders/emoticonEncoder"), r = e("swx-enums"), i = {
       VIDEO: "Event/SkypeVideoMessage",
       PICTURE: "RichText/UriObject",
       LOCATION: "RichText/Location",
@@ -193,5 +194,5 @@ define("telemetry/chat/activityItemHelper", [
       CONTACTS: "RichText/Contacts",
       TEXT: "Text"
     };
-  return new i();
+  return new s();
 });

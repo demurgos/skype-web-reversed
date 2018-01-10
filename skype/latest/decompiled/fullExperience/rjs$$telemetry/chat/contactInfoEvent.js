@@ -3,9 +3,9 @@ define("telemetry/chat/contactInfoEvent", [
   "exports",
   "module",
   "experience/settings",
-  "constants/common",
+  "swx-constants",
   "ui/telemetry/telemetryClient",
-  "telemetry/chat/telemetryEnumerator",
+  "swx-telemetry-buckets",
   "ui/modelHelpers/personHelper"
 ], function (e, t) {
   function a(e) {
@@ -32,9 +32,9 @@ define("telemetry/chat/contactInfoEvent", [
   }
   function h(e) {
     var t = i.TYPE, r = a(e);
-    s.get().sendEvent(n.telemetry.uiTenantToken, t, r);
+    s.get().sendEvent(n.telemetry.chatTenantToken, t, r);
   }
-  var n = e("experience/settings"), r = e("constants/common"), i = r.telemetry.contactInfo, s = e("ui/telemetry/telemetryClient"), o = e("telemetry/chat/telemetryEnumerator"), u = e("ui/modelHelpers/personHelper");
+  var n = e("experience/settings"), r = e("swx-constants").COMMON, i = r.telemetry.contactInfo, s = e("ui/telemetry/telemetryClient"), o = e("swx-telemetry-buckets"), u = e("ui/modelHelpers/personHelper");
   t.publishShowEvent = function (e) {
     return e.actionName = i.action.SHOW, h(e);
   };

@@ -2,8 +2,8 @@ define("utils/common/applicationReactivationManager", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
-  "constants/common",
+  "swx-cafe-application-instance",
+  "swx-constants",
   "browser/document",
   "browser/window",
   "browser/dom"
@@ -31,7 +31,7 @@ define("utils/common/applicationReactivationManager", [
   function d() {
     u && (s.clearTimeout(u), u = null);
   }
-  var n = e("cafe/applicationInstance"), r = e("constants/common"), i = e("browser/document"), s = e("browser/window"), o = e("browser/dom"), u, a = 3000;
+  var n = e("swx-cafe-application-instance"), r = e("swx-constants").COMMON, i = e("browser/document"), s = e("browser/window"), o = e("browser/dom"), u, a = 3000;
   t.init = function () {
     n.get().suspended.when(!0, c);
     n.get().suspended.when(!1, h);

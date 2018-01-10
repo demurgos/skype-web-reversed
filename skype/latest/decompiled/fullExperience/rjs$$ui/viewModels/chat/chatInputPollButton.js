@@ -2,10 +2,10 @@ define("ui/viewModels/chat/chatInputPollButton", [
   "require",
   "exports",
   "module",
-  "constants/common",
+  "swx-constants",
   "lodash-compat",
   "utils/common/eventMixin",
-  "constants/keys",
+  "swx-constants",
   "utils/common/eventHelper"
 ], function (e, t) {
   function u(e) {
@@ -18,7 +18,7 @@ define("ui/viewModels/chat/chatInputPollButton", [
       t.dispatchEvent(n.events.mediaPicker.CLOSE_PICKER, null, t.DIRECTION.PARENT);
     };
   }
-  var n = e("constants/common"), r = e("lodash-compat"), i = e("utils/common/eventMixin"), s = e("constants/keys"), o = e("utils/common/eventHelper");
+  var n = e("swx-constants").COMMON, r = e("lodash-compat"), i = e("utils/common/eventMixin"), s = e("swx-constants").KEYS, o = e("utils/common/eventHelper");
   t.build = function (e) {
     return new u(e);
   };

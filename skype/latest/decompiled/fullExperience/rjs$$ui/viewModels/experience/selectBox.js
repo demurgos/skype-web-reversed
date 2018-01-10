@@ -3,93 +3,111 @@ define("ui/viewModels/experience/selectBox", [
   "exports",
   "module",
   "lodash-compat",
-  "utils/common/async",
-  "constants/common",
+  "swx-utils-common",
+  "swx-constants",
   "browser/dom",
   "utils/common/eventHelper",
   "utils/common/eventMixin",
+  "swx-focus-handler",
   "swx-i18n",
-  "constants/keys",
+  "swx-constants",
   "vendor/knockout",
   "utils/common/scroll",
+  "utils/common/accessibility",
   "swx-utils-common"
 ], function (e, t) {
-  function p(e) {
-    function w(e) {
+  function v(e) {
+    function N() {
+      g && a.get().addFocusRequestToQueue(y, a.Priorities.High);
+    }
+    function C(e) {
       function r(t) {
-        return new RegExp("^" + e, "i").test(h.normalize(t.name));
+        return new RegExp("^" + e, "i").test(d.normalize(t.name));
       }
-      window.clearTimeout(g);
-      e === p ? m = m < u.length - 1 ? m + 1 : 0 : (m = 0, n ? u = t.selectOptions().filter(r) : (e = p + e, u = u.filter(r)));
+      window.clearTimeout(E);
+      e === v ? w = w < u.length - 1 ? w + 1 : 0 : (w = 0, n ? u = t.selectOptions().filter(r) : (e = v + e, u = u.filter(r)));
       n = !1;
-      p = e;
-      g = window.setTimeout(function () {
+      v = e;
+      E = window.setTimeout(function () {
         n = !0;
-      }, y);
+      }, S);
     }
-    function E() {
+    function k() {
       t.selectBoxOpened(!0);
-      x();
+      p.announce({ key: "accessibility_selectBox_expanded" });
+      A();
     }
-    function S() {
+    function L() {
       t.selectBoxOpened(!1);
-      T();
-      p = "";
+      p.announce({ key: "accessibility_selectBox_collapsed" });
+      O();
+      v = "";
       n = !0;
-      window.clearTimeout(g);
+      window.clearTimeout(E);
+      N();
     }
-    function x() {
+    function A() {
       r.execute(function () {
-        document.addEventListener(i.events.browser.CLICK, S);
-        window.addEventListener(i.events.browser.RESIZE, S);
+        document.addEventListener(i.events.browser.CLICK, L);
+        window.addEventListener(i.events.browser.RESIZE, L);
       });
     }
-    function T() {
-      document.removeEventListener(i.events.browser.CLICK, S);
-      window.removeEventListener(i.events.browser.RESIZE, S);
+    function O() {
+      document.removeEventListener(i.events.browser.CLICK, L);
+      window.removeEventListener(i.events.browser.RESIZE, L);
     }
-    var t = this, n = !0, u = [], p = "", d, v, m, g, y = 700, b = ".SelectBox-scrollWrapper";
+    var t = this, n = !0, u = [], v = "", m, g = e.autoFocusAfterSelection || !1, y, b, w, E, S = 700, x = ".SelectBox-header", T = ".SelectBox-scrollWrapper";
     t.selectOptions = e.selectOptions ? e.selectOptions : [];
-    t.selectedOption = e.selectedOption ? e.selectedOption : l.observable();
+    t.selectedOption = e.selectedOption ? e.selectedOption : c.observable();
     t.showArrow = e.showArrow ? e.showArrow : !0;
-    t.selectBoxOpened = l.observable(!1);
+    t.selectBoxOpened = c.observable(!1);
     t.tabindex = e.tabindex ? e.tabindex : null;
-    t.disabled = e.disabled ? e.disabled : l.observable(!1);
-    e.placeholderKey ? t.placeholder = a.fetch({ key: e.placeholderKey }) : e.placeholder ? t.placeholder = e.placeholder : t.placeholder = "";
+    t.disabled = e.disabled ? e.disabled : c.observable(!1);
+    t.selectBoxId = e.selectBoxId || null;
+    e.placeholderKey ? c.isObservable(e.placeholderKey) ? t.placeholder = c.pureComputed(function () {
+      return f.fetch({ key: e.placeholderKey() });
+    }) : t.placeholder = f.fetch({ key: e.placeholderKey }) : e.placeholder ? t.placeholder = e.placeholder : t.placeholder = "";
     t.selectValue = function (e) {
       t.selectedOption(e);
-      S();
+      L();
     };
     t.toggleSelectBox = function () {
       if (t.disabled())
         return !1;
-      t.selectBoxOpened() ? S() : E();
+      t.selectBoxOpened() ? L() : k();
     };
     t.dispose = function () {
-      d.dispose();
-      T();
+      t.placeholder.dispose && t.placeholder.dispose();
+      m.dispose();
+      O();
     };
     t.init = function (e) {
-      v = s.getElement(b, e);
-      d = c.build(v);
-      d.init();
+      y = s.getElement(x, e);
+      b = s.getElement(T, e);
+      m = h.build(b);
+      m.init();
       t.registerEvent(i.events.selectBox.TOGGLE, t.toggleSelectBox);
     };
-    t.listKeyDown = function (e, t) {
-      var n = o.getKeyCode(t);
-      return o.isNumPadKey(t) && (w(o.getNumpadKey(t)), t.stopPropagation()), o.isAlphaNumericKey(t) && (w(String.fromCharCode(n)), t.stopPropagation()), !0;
+    t.listKeyDown = function (e, n) {
+      var r = o.getKeyCode(n);
+      if (r === l.TAB && t.selectBoxOpened()) {
+        L();
+        n.stopPropagation();
+        return;
+      }
+      return o.isNumPadKey(n) && (C(o.getNumpadKey(n)), n.stopPropagation()), o.isAlphaNumericKey(n) && (C(String.fromCharCode(r)), n.stopPropagation()), !0;
     };
     t.onKeyDown = function (e, n) {
       var r = o.getKeyCode(n);
-      return (r === f.ENTER || r === f.SPACE) && t.toggleSelectBox(), !0;
+      return r === l.TAB && n.shiftKey && t.selectBoxOpened() && L(), (r === l.ENTER || r === l.SPACE) && t.toggleSelectBox(), !0;
     };
     t.onBoxClick = function (e, t) {
       t.stopPropagation();
     };
   }
-  var n = e("lodash-compat"), r = e("utils/common/async"), i = e("constants/common"), s = e("browser/dom"), o = e("utils/common/eventHelper"), u = e("utils/common/eventMixin"), a = e("swx-i18n").localization, f = e("constants/keys"), l = e("vendor/knockout"), c = e("utils/common/scroll"), h = e("swx-utils-common").stringUtils;
-  n.assign(p.prototype, u);
+  var n = e("lodash-compat"), r = e("swx-utils-common").async, i = e("swx-constants").COMMON, s = e("browser/dom"), o = e("utils/common/eventHelper"), u = e("utils/common/eventMixin"), a = e("swx-focus-handler"), f = e("swx-i18n").localization, l = e("swx-constants").KEYS, c = e("vendor/knockout"), h = e("utils/common/scroll"), p = e("utils/common/accessibility").narrator, d = e("swx-utils-common").stringUtils;
+  n.assign(v.prototype, u);
   t.build = function (e) {
-    return new p(e);
+    return new v(e);
   };
 });

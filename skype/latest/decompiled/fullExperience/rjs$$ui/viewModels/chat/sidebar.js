@@ -1,162 +1,181 @@
 define("ui/viewModels/chat/sidebar", [
   "require",
+  "lodash-compat",
   "vendor/knockout",
   "swx-i18n",
   "constants/components",
-  "constants/common",
-  "cafe/applicationInstance",
+  "swx-constants",
+  "swx-cafe-application-instance",
   "ui/telemetry/actions/actionNames",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "ui/viewModels/chat/menuItem",
   "ui/telemetry/actions/actionSources"
 ], function (e) {
-  function h() {
-    function g() {
+  function p() {
+    function b() {
       e.itemsDisabled(!1);
     }
-    function y() {
+    function w() {
       e.itemsDisabled(!0);
     }
-    function b(t) {
+    function E(t) {
       e.isNotificationsCenterActive(t);
       t && e.isSearchActive(!1);
     }
-    function w(t) {
-      var n = { source: f.search.reset.content }, r = e.userSettingsMenuItem();
-      e.items.forEach(function (e) {
+    function S(t) {
+      var n = { source: l.search.reset.content }, r = e.userSettingsMenuItem();
+      e.items().forEach(function (e) {
         e.isActive(e.page === t.page);
-        v.publish(c.search.RESET, n);
+        g.publish(h.search.RESET, n);
       });
       r.page !== t.page && r.isActive(!1);
     }
-    function E() {
+    function x() {
       e.isSearchActive(!1);
     }
-    function S(t) {
+    function T(t) {
       t !== "" && e.isSearchActive(!0);
     }
-    function x() {
+    function N() {
       var t = [];
-      return e.isNavigationMenuIconsEnabled ? (t.push(a.build(N())), d && t.push(a.build(C())), p && t.push(a.build(k())), e.isUserSettingsEnabled && t.push(a.build(L())), t.push(a.build(T()))) : e.isSidebarInAlternativeLayout ? (t = [
-        a.build(T()),
-        a.build(N())
-      ], d && t.push(a.build(C())), p && t.push(a.build(k()))) : (t = [a.build(N())], d && t.push(a.build(C())), t.push(a.build(T())), p && t.push(a.build(k()))), t.forEach(function (e, t) {
+      return e.isNavigationMenuIconsEnabled ? (t.push(f.build(k())), v && t.push(f.build(L())), d && t.push(f.build(A())), e.isUserSettingsEnabled() && t.push(f.build(O())), t.push(f.build(C()))) : e.isSidebarInAlternativeLayout ? (t = [
+        f.build(C()),
+        f.build(k())
+      ], v && t.push(f.build(L())), d && t.push(f.build(A()))) : (t = [f.build(k())], v && t.push(f.build(L())), t.push(f.build(C())), d && t.push(f.build(A()))), t.forEach(function (e, t) {
         e.ordinal = t + 1;
       }), t;
-    }
-    function T() {
-      return {
-        navigation: {
-          page: r.chat.NEW_CONVERSATION,
-          origin: l.NEW_CHAT_DUMMY
-        },
-        id: "newChat",
-        icon: "add",
-        text: n.fetch({ key: "button_text_new" }),
-        isDisabled: e.itemsDisabled
-      };
-    }
-    function N() {
-      return {
-        navigation: {
-          page: r.people.CONTACTS_PAGE,
-          origin: l.CONTACTS_PAGE
-        },
-        telemetry: {
-          uiAction: o.contacts.openPage,
-          perfMarker: i.telemetry.performanceMarks.CONTACTS.PAGE.OPENED
-        },
-        id: "contacts",
-        icon: "skypeAddressBook",
-        text: n.fetch({ key: "contactPage_text_menuLink" }),
-        isDisabled: e.itemsDisabled
-      };
     }
     function C() {
       return {
         navigation: {
-          page: r.people.DISCOVER_AGENTS_PAGE,
-          origin: l.DISCOVER_AGENTS_PAGE
+          page: i.chat.NEW_CONVERSATION,
+          origin: c.NEW_CHAT_DUMMY
         },
-        telemetry: {
-          uiAction: o.discoverAgents.openPage,
-          perfMarker: i.telemetry.performanceMarks.DISCOVER_AGENTS.PAGE.OPENED
-        },
-        id: "discoverAgents",
-        icon: "botAdd",
-        text: n.fetch({ key: "button_text_discover_agents" }),
+        id: "newChat",
+        icon: "add",
+        text: r.fetch({ key: "button_text_newChat" }),
         isDisabled: e.itemsDisabled
       };
     }
     function k() {
       return {
         navigation: {
-          page: r.calling.SKYPEOUT_PAGE,
-          origin: l.SKYPEOUT_PAGE
+          page: i.people.CONTACTS_PAGE,
+          origin: c.CONTACTS_PAGE
         },
         telemetry: {
-          uiAction: o.skypeOut.openPage,
-          perfMarker: i.telemetry.performanceMarks.SKYPEOUT.PAGE.OPENED,
-          event: {
-            name: i.telemetry.pstn.eventName.PSTN_BUTTON_CLICKED,
-            data: {}
-          }
+          uiAction: u.contacts.openPage,
+          perfMarker: s.telemetry.performanceMarks.CONTACTS.PAGE.OPENED
         },
-        id: "dialpad",
-        icon: "dialpad",
-        text: n.fetch({ key: "button_text_dialpad" }),
+        id: "contacts",
+        icon: "skypeAddressBook",
+        text: r.fetch({ key: "contactPage_text_menuLink" }),
         isDisabled: e.itemsDisabled
       };
     }
     function L() {
       return {
         navigation: {
-          page: r.userSettings.USER_SETTINGS_PAGE,
-          origin: l.SKYPEOUT_PAGE
+          page: i.people.DISCOVER_AGENTS_PAGE,
+          origin: c.DISCOVER_AGENTS_PAGE
         },
         telemetry: {
-          uiAction: o.userSettings.openPage,
-          perfMarker: i.telemetry.performanceMarks.USER_SETTINGS.PAGE.OPENED
+          uiAction: u.discoverAgents.openPage,
+          perfMarker: s.telemetry.performanceMarks.DISCOVER_AGENTS.PAGE.OPENED
         },
-        id: "userSettings",
-        icon: "settings",
-        text: n.fetch({ key: "settings_page_text_header" }),
+        id: "discoverAgents",
+        icon: "botAdd",
+        text: r.fetch({ key: "button_text_discover_agents" }),
         isDisabled: e.itemsDisabled
       };
     }
-    var e = this, h = u.resolve(i.serviceLocator.FEATURE_FLAGS), p = h.isFeatureOn(i.featureFlags.PSTN_ENABLED), d = h.isFeatureOn(i.featureFlags.AGENTS_DISCOVERABLE), v = u.resolve(i.serviceLocator.PUBSUB), m = s.get().personsAndGroupsManager.mePerson.preferences();
-    e.items = [];
-    e.itemsDisabled = t.observable(!0);
-    e.userSettingsMenuItem = t.observable();
-    e.isSearchActive = t.observable(!1);
-    e.isNotificationsCenterActive = t.observable(!1);
-    e.isNavigationMenuIconsEnabled = h.isFeatureOn(i.featureFlags.NAVIGATION_MENU_ICONS_ENABLED);
-    e.isNotificationsCenterEnabled = h.isFeatureOn(i.featureFlags.NOTIFICATIONS_CENTER);
-    e.isSidebarInAlternativeLayout = h.isFeatureOn(i.featureFlags.ALTERNATIVE_SIDEBAR_LAYOUT_ENABLED);
-    e.isUserSettingsEnabled = h.isFeatureOn(i.featureFlags.USER_SETTINGS_ENABLED) && !!m.length;
-    e.hideRecents = t.computed(function () {
+    function A() {
+      return {
+        navigation: {
+          page: i.calling.SKYPEOUT_PAGE,
+          origin: c.SKYPEOUT_PAGE
+        },
+        telemetry: {
+          uiAction: u.skypeOut.openPage,
+          perfMarker: s.telemetry.performanceMarks.SKYPEOUT.PAGE.OPENED,
+          event: {
+            name: s.telemetry.pstn.eventName.PSTN_BUTTON_CLICKED,
+            data: {}
+          }
+        },
+        id: "dialpad",
+        icon: "dialpad",
+        text: r.fetch({ key: "button_text_dialpad" }),
+        isDisabled: e.itemsDisabled
+      };
+    }
+    function O() {
+      return {
+        navigation: {
+          page: i.userSettings.USER_SETTINGS_PAGE,
+          origin: c.SKYPEOUT_PAGE
+        },
+        telemetry: {
+          uiAction: u.userSettings.openPage,
+          perfMarker: s.telemetry.performanceMarks.USER_SETTINGS.PAGE.OPENED
+        },
+        id: "userSettings",
+        icon: "settings",
+        text: r.fetch({ key: "settings_page_text_header" }),
+        isDisabled: e.itemsDisabled
+      };
+    }
+    function M() {
+      var n = t.clone(e.items()), r = m ? n.length - 2 : n.length - 1;
+      e.items.removeAll();
+      n.splice(r, 0, f.build(O()));
+      n.forEach(function (t) {
+        e.items.push(t);
+      });
+    }
+    var e = this, p = a.resolve(s.serviceLocator.FEATURE_FLAGS), d = p.isFeatureOn(s.featureFlags.PSTN_ENABLED), v = p.isFeatureOn(s.featureFlags.AGENTS_DISCOVERABLE), m = p.isFeatureOn(s.featureFlags.ALTERNATIVE_SETTINGS_POSITION), g = a.resolve(s.serviceLocator.PUBSUB), y = t.once(M);
+    e.items = n.observableArray();
+    e.itemsDisabled = n.observable(!0);
+    e.userSettingsMenuItem = n.observable();
+    e.isSearchActive = n.observable(!1);
+    e.isNotificationsCenterActive = n.observable(!1);
+    e.isNavigationMenuIconsEnabled = p.isFeatureOn(s.featureFlags.NAVIGATION_MENU_ICONS_ENABLED);
+    e.isNotificationsCenterEnabled = p.isFeatureOn(s.featureFlags.NOTIFICATIONS_CENTER);
+    e.isSidebarInAlternativeLayout = p.isFeatureOn(s.featureFlags.ALTERNATIVE_SIDEBAR_LAYOUT_ENABLED);
+    e.isUserSettingsEnabled = n.observable(!1);
+    e.hideRecents = n.computed(function () {
       return e.isSearchActive() || e.isNotificationsCenterActive();
     });
     e.init = function () {
-      v.subscribe(c.search.RESET, E);
-      v.subscribe(c.search.QUERY_CHANGED, S);
-      v.subscribe(c.navigation.NAVIGATE, w);
-      v.subscribe(c.navigation.NOTIFICATIONS_CENTER, b);
-      v.subscribe(i.apiUIEvents.SWX_TIMELINE_LOADED, g);
-      v.subscribe(i.apiUIEvents.SWX_ON_SIGN_OUT, y);
-      Array.prototype.push.apply(e.items, x());
-      e.userSettingsMenuItem(a.build(L()));
+      function n() {
+        var n = o.get().personsAndGroupsManager.mePerson.preferences(), r = p.isFeatureOn(s.featureFlags.USER_SETTINGS_ENABLED);
+        e.isUserSettingsEnabled(r && !!n.length);
+        e.isNavigationMenuIconsEnabled && e.isUserSettingsEnabled() && y();
+        t && (t.dispose(), t = null);
+      }
+      var t;
+      g.subscribe(h.search.RESET, x);
+      g.subscribe(h.search.QUERY_CHANGED, T);
+      g.subscribe(h.navigation.NAVIGATE, S);
+      g.subscribe(h.navigation.NOTIFICATIONS_CENTER, E);
+      g.subscribe(s.apiUIEvents.SWX_TIMELINE_LOADED, b);
+      g.subscribe(s.apiUIEvents.SWX_ON_SIGN_OUT, w);
+      N().forEach(function (t) {
+        e.items.push(t);
+      });
+      e.userSettingsMenuItem(f.build(O()));
+      o.get().personsAndGroupsManager.mePerson.preferences().length ? n() : t = o.get().personsAndGroupsManager.mePerson.preferences.changed(n);
     };
     e.dispose = function () {
-      v.unsubscribe(c.search.RESET, E);
-      v.unsubscribe(c.search.QUERY_CHANGED, S);
-      v.unsubscribe(c.navigation.NAVIGATE, w);
-      v.unsubscribe(c.navigation.NOTIFICATIONS_CENTER, b);
-      v.unsubscribe(i.apiUIEvents.SWX_TIMELINE_LOADED, g);
-      v.unsubscribe(i.apiUIEvents.SWX_ON_SIGN_OUT, y);
+      g.unsubscribe(h.search.RESET, x);
+      g.unsubscribe(h.search.QUERY_CHANGED, T);
+      g.unsubscribe(h.navigation.NAVIGATE, S);
+      g.unsubscribe(h.navigation.NOTIFICATIONS_CENTER, E);
+      g.unsubscribe(s.apiUIEvents.SWX_TIMELINE_LOADED, b);
+      g.unsubscribe(s.apiUIEvents.SWX_ON_SIGN_OUT, w);
       e.hideRecents.dispose();
     };
   }
-  var t = e("vendor/knockout"), n = e("swx-i18n").localization, r = e("constants/components"), i = e("constants/common"), s = e("cafe/applicationInstance"), o = e("ui/telemetry/actions/actionNames"), u = e("services/serviceLocator"), a = e("ui/viewModels/chat/menuItem"), f = e("ui/telemetry/actions/actionSources"), l = i.telemetry.historyLoadOrigin, c = i.events;
-  return h;
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-i18n").localization, i = e("constants/components"), s = e("swx-constants").COMMON, o = e("swx-cafe-application-instance"), u = e("ui/telemetry/actions/actionNames"), a = e("swx-service-locator-instance").default, f = e("ui/viewModels/chat/menuItem"), l = e("ui/telemetry/actions/actionSources"), c = s.telemetry.historyLoadOrigin, h = s.events;
+  return p;
 });

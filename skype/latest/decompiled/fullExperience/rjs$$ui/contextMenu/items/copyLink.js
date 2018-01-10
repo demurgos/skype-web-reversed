@@ -1,35 +1,39 @@
 define("ui/contextMenu/items/copyLink", [
   "require",
-  "experience/settings",
+  "utils/common/clipboard",
+  "swx-constants",
+  "swx-telemetry-buckets",
   "swx-i18n",
   "ui/contextMenu/menuItem",
-  "telemetry/chat/telemetryEnumerator",
+  "experience/settings",
   "ui/telemetry/telemetryClient",
   "browser/window"
 ], function (e) {
-  function u(e, a) {
-    function l() {
-      a.copyUrlPreviewText();
-      c();
+  function f(e, l, c) {
+    function d() {
+      t.copyText(p);
+      v();
     }
-    function c() {
-      var n = "message_urlpreview_copy_link", r = e.conversation.participantsCount(), u = new o.Date().getTime() - a.timestamp.getTime(), f = {
-          tis: u,
-          ttcGroup: i.getMessageLifeDurationGroup(u),
-          participantCount: r,
-          participantCountGroup: i.getParticipantCountGroup(r),
-          contentType: a.previews()[0].type()
+    function v() {
+      var t = "message_urlpreview_copy_link", i = e.conversation.participantsCount(), s = new a.Date().getTime() - l.timestamp.getTime(), f = {
+          tis: s,
+          ttcGroup: r.getMessageLifeDurationGroup(s),
+          participantCount: i,
+          participantCountGroup: r.getParticipantCountGroup(i),
+          contentType: l.copyLinkEnabled() ? l.previews()[0].type() : n.telemetry.NOT_AVAILABLE
         };
-      s.get().sendEvent(t.telemetry.uiTenantToken, n, f);
+      u.get().sendEvent(o.telemetry.uiTenantToken, t, f);
     }
-    if (!e || !a)
+    if (!e || !l)
       throw new Error("Parameter missing: context and message are required");
-    var f = n.fetch({ key: "chatLogmenuItem_copy_link" });
-    r.call(this, u.TYPE, f, l);
+    var h = i.fetch({ key: "chatLogmenuItem_copy_link" });
+    s.call(this, f.TYPE, h, d);
+    var p = l.copyLinkEnabled() ? l.previews()[0].originalRequest : c && c.target && c.target.href;
     this.isEnabled = function () {
-      return a.copyLinkEnabled();
+      var e = t.isCopySupportedByBrowser();
+      return e && (l.copyLinkEnabled() || !!p);
     };
   }
-  var t = e("experience/settings"), n = e("swx-i18n").localization, r = e("ui/contextMenu/menuItem"), i = e("telemetry/chat/telemetryEnumerator"), s = e("ui/telemetry/telemetryClient"), o = e("browser/window");
-  return u.prototype = Object.create(r.prototype), u.TYPE = "CopyLinkMenuItem", u;
+  var t = e("utils/common/clipboard"), n = e("swx-constants").COMMON, r = e("swx-telemetry-buckets"), i = e("swx-i18n").localization, s = e("ui/contextMenu/menuItem"), o = e("experience/settings"), u = e("ui/telemetry/telemetryClient"), a = e("browser/window");
+  return f.prototype = Object.create(s.prototype), f.TYPE = "CopyLinkMenuItem", f;
 });

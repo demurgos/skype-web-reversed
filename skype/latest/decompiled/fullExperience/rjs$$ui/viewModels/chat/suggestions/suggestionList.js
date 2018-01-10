@@ -3,10 +3,10 @@ define("ui/viewModels/chat/suggestions/suggestionList", [
   "exports",
   "module",
   "lodash-compat",
-  "constants/common",
+  "swx-constants",
   "ui/components/chat/suggestions/emoticonSuggestionEngine",
   "utils/common/eventMixin",
-  "constants/keys",
+  "swx-constants",
   "vendor/knockout",
   "telemetry/chat/suggestionSelectedEvent",
   "ui/components/chat/suggestions/mentionSuggestionEngine",
@@ -32,6 +32,7 @@ define("ui/viewModels/chat/suggestions/suggestionList", [
       var n = e.selectedIndex() + t;
       e.selectedIndex() === -1 && (n = t === -1 ? e.suggestions().length - 1 : 0);
       0 <= n && n < e.suggestions().length && e.selectedIndex(n);
+      e.dispatchEvent(o.suggestionList.ITEM_SELECTED, e.selectedIndex());
     }
     function m() {
       e.isVisible() && (t.data.resolution = t.enums.RESOLUTION.CLICKOUT, t.data.selectedIndex = e.selectedIndex(), t.publish(), e.isVisible(!1));
@@ -92,8 +93,8 @@ define("ui/viewModels/chat/suggestions/suggestionList", [
       r = n.sortBy(r, "priority");
       e.registerEvent(o.textarea.KEY_DOWN, y);
       e.registerEvent(o.textarea.INPUT, g);
-      e.isVisible.subscribe(function (e) {
-        e ? c.add("suggestionList", m) : c.remove("suggestionList");
+      e.isVisible.subscribe(function (t) {
+        t ? (c.add("suggestionList", m), e.dispatchEvent(o.suggestionList.SHOWN)) : (c.remove("suggestionList"), e.dispatchEvent(o.suggestionList.HIDDEN));
       });
     };
     e.onSuggestionClick = function (r) {
@@ -111,7 +112,7 @@ define("ui/viewModels/chat/suggestions/suggestionList", [
       e.selectedIndex(r);
     };
   }
-  var n = e("lodash-compat"), r = e("constants/common"), i = e("ui/components/chat/suggestions/emoticonSuggestionEngine"), s = e("utils/common/eventMixin"), o = r.events, u = e("constants/keys"), a = e("vendor/knockout"), f = e("telemetry/chat/suggestionSelectedEvent"), l = e("ui/components/chat/suggestions/mentionSuggestionEngine"), c = e("utils/common/outsideClickHandler"), h = 8;
+  var n = e("lodash-compat"), r = e("swx-constants").COMMON, i = e("ui/components/chat/suggestions/emoticonSuggestionEngine"), s = e("utils/common/eventMixin"), o = r.events, u = e("swx-constants").KEYS, a = e("vendor/knockout"), f = e("telemetry/chat/suggestionSelectedEvent"), l = e("ui/components/chat/suggestions/mentionSuggestionEngine"), c = e("utils/common/outsideClickHandler"), h = 8;
   n.assign(p.prototype, s);
   t.build = function () {
     return new p();

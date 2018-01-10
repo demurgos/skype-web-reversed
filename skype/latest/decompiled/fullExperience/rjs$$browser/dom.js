@@ -3,62 +3,61 @@ define("browser/dom", [
   "exports",
   "module",
   "lodash-compat",
-  "browser/document",
-  "browser/window"
+  "swx-browser-globals"
 ], function (e, t) {
-  function o(e) {
+  function s(e) {
     return Boolean(e && e.nodeType === 1);
   }
-  function u(e) {
+  function o(e) {
     return !(!e || !n.isString(e.tagName) && !n.isString(e.nodeName));
   }
-  function a(e, t) {
+  function u(e, t) {
     return n.isElement(e) ? e.tagName.toLowerCase() === t : !1;
   }
-  function f(e) {
+  function a(e) {
     return Boolean(e.offsetParent);
   }
+  function f(e, t) {
+    while (e && !w(e, t))
+      e = e.parentNode;
+    return e;
+  }
   function l(e, t) {
-    while (e && !E(e, t))
+    while (e && !c(e, t))
       e = e.parentNode;
     return e;
   }
   function c(e, t) {
-    while (e && !h(e, t))
-      e = e.parentNode;
-    return e;
-  }
-  function h(e, t) {
     var n = e.matches || e.webkitMatchesSelector || e.mozMatchesSelector || e.msMatchesSelector || e.oMatchesSelector;
     return n ? n.call(e, t) : !1;
   }
+  function h(e) {
+    return n.isString(e) ? x(r.getDocument().createElement(e)) : null;
+  }
   function p(e) {
-    return n.isString(e) ? T(r.createElement(e)) : null;
+    return n.isString(e) ? x(r.getDocument().querySelector(e)) : null;
   }
-  function d(e) {
-    return n.isString(e) ? T(r.querySelector(e)) : null;
+  function d(e, t) {
+    return t = t || r.getDocument(), n.isString(e) ? x(t.querySelector(e)) : o(e) ? x(e) : null;
   }
-  function v(e, t) {
-    return t = t || r, n.isString(e) ? T(t.querySelector(e)) : u(e) ? T(e) : null;
-  }
-  function m(e, n) {
+  function v(e, n) {
     return e ? t.getElement("#" + e, n) : null;
   }
-  function g(e, t, n) {
-    n ? S(e, t) : x(e, t);
+  function m(e, t, n) {
+    n ? E(e, t) : S(e, t);
   }
-  function y(e, t) {
-    t = t || r;
+  function g(e, t) {
+    t = t || r.getDocument();
     var n = t.querySelectorAll(e);
     return Array.prototype.slice.call(n, 0);
   }
-  function b(e, t) {
+  function y(e, t) {
     return t ? e.previousSibling : e.nextSibling;
   }
-  function w(e) {
-    return y(["[tabindex]:not([tabindex=\"\"]):not([tabindex=\"-1\"]):not([disabled])"], e);
+  function b(e) {
+    return g(["[tabindex]:not([tabindex=\"\"]):not([tabindex=\"-1\"]):not([disabled])"], e);
   }
-  function E(e, t) {
+  function w(e, t) {
     if (e.classList)
       return e.classList.contains(t);
     var n = e.className ? e.className.split(" ") : [];
@@ -67,7 +66,7 @@ define("browser/dom", [
         return !0;
     return !1;
   }
-  function S(e, t) {
+  function E(e, t) {
     if (!n.isString(t))
       return;
     if (e.classList) {
@@ -78,38 +77,38 @@ define("browser/dom", [
     r.indexOf(t) < 0 && (r += t + " ");
     e.className = r.replace(/^\s\s*/, "").replace(/\s\s*$/, "");
   }
-  function x(e, t) {
+  function S(e, t) {
     if (e.classList) {
       e.classList.remove(t);
       return;
     }
     e.className = e.className.replace(t, "").replace(/^\s\s*/, "").replace(/\s\s*$/, "");
   }
-  function T(e) {
+  function x(e) {
     return e !== null && (e.removeClass = function (t) {
-      x(e, t);
-    }, e.addClass = function (t) {
       S(e, t);
+    }, e.addClass = function (t) {
+      E(e, t);
     }, e.hasClass = function (t) {
-      return E(e, t);
+      return w(e, t);
     }, e.setClass = function (t, n) {
-      g(e, t, n);
+      m(e, t, n);
     }), e;
   }
-  function N(e, t) {
-    var n, r = i.MutationObserver || i.WebKitMutationObserver;
-    return r ? (n = new r(function (e) {
+  function T(e, t) {
+    var n, i = r.getWindow(), s = i.MutationObserver || i.WebKitMutationObserver;
+    return s ? (n = new s(function (e) {
       e && e[0] && (e[0].addedNodes && e[0].addedNodes.length || e[0].removedNodes && e[0].removedNodes.length) && t();
     }), n.observe(e, {
       childList: !0,
       subtree: !0
     })) : e.addEventListener("DOMSubtreeModified", t, !1), {
       dispose: function () {
-        r ? n.disconnect() : e.removeEventListener("DOMSubtreeModified", t);
+        s ? n.disconnect() : e.removeEventListener("DOMSubtreeModified", t);
       }
     };
   }
-  function C(e) {
+  function N(e) {
     var t = {
       offsetLeft: 0,
       offsetTop: 0
@@ -118,42 +117,42 @@ define("browser/dom", [
       t.offsetLeft += e.offsetLeft + e.clientLeft - e.scrollLeft, t.offsetTop += e.offsetTop + e.clientTop - e.scrollTop, e = e.offsetParent;
     return t;
   }
-  function k(e, t) {
+  function C(e, t) {
     var n = e;
     while (n && !n.contains(t))
       n = n.parentNode;
     return n;
   }
-  function L(e) {
+  function k(e) {
     var t = e.lastChild;
-    while (t && t.nodeType !== s)
+    while (t && t.nodeType !== i)
       t = t.previousSibling;
     return t;
   }
-  function A() {
-    return r.hidden;
+  function L() {
+    return r.getDocument().hidden;
   }
-  var n = e("lodash-compat"), r = e("browser/document"), i = e("browser/window"), s = 1;
-  t.createElement = p;
-  t.findElement = d;
-  t.isElement = o;
-  t.getElement = v;
-  t.getElementById = m;
-  t.getElements = y;
-  t.getSibling = b;
-  t.getNavigableChildren = w;
-  t.isA = a;
-  t.isVisible = f;
-  t.hasClass = E;
-  t.getParentWithClass = l;
-  t.getParentMatching = c;
-  t.addClass = S;
-  t.setClass = g;
-  t.removeClass = x;
-  t.extendObject = T;
-  t.createDomObserverSubscription = N;
-  t.getElementOffset = C;
-  t.findFirstCommonAncestor = k;
-  t.getLastChildElement = L;
-  t.isDocumentHidden = A;
+  var n = e("lodash-compat"), r = e("swx-browser-globals"), i = 1;
+  t.createElement = h;
+  t.findElement = p;
+  t.isElement = s;
+  t.getElement = d;
+  t.getElementById = v;
+  t.getElements = g;
+  t.getSibling = y;
+  t.getNavigableChildren = b;
+  t.isA = u;
+  t.isVisible = a;
+  t.hasClass = w;
+  t.getParentWithClass = f;
+  t.getParentMatching = l;
+  t.addClass = E;
+  t.setClass = m;
+  t.removeClass = S;
+  t.extendObject = x;
+  t.createDomObserverSubscription = T;
+  t.getElementOffset = N;
+  t.findFirstCommonAncestor = C;
+  t.getLastChildElement = k;
+  t.isDocumentHidden = L;
 });

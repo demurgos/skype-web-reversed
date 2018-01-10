@@ -8,9 +8,9 @@ define("ui/controls/experience/sidebar", [
   "ui/controls/experience/shareDialogController",
   "ui/viewModels/experience/sidebar",
   "utils/common/styleModeHelper",
-  "constants/common",
+  "swx-constants",
   "lodash-compat",
-  "services/serviceLocator"
+  "swx-service-locator-instance"
 ], function (e, t) {
   function p(e) {
     return e && f.has(e, "sidebarPosition") && f.isString(e.sidebarPosition) && e.sidebarPosition.toLowerCase() === a.sidebar.position.LEFT;
@@ -33,12 +33,7 @@ define("ui/controls/experience/sidebar", [
     function t() {
       var t = [
         "mouseover: expand",
-        "mouseout: collapse",
-        "webkitTransitionEnd: slideTransitionEnded",
-        "otransitionend: slideTransitionEnded",
-        "oTransitionEnd: slideTransitionEnded",
-        "msTransitionEnd: slideTransitionEnded",
-        "transitionend: slideTransitionEnded"
+        "mouseout: collapse"
       ].join(e);
       return "event:{" + t + "}";
     }
@@ -52,13 +47,18 @@ define("ui/controls/experience/sidebar", [
       ].join(e);
       return "css:{" + t + "}";
     }
+    function r() {
+      var t = ["transitionEnd: {callback: slideTransitionEnded, moreElementsToWatch: [\"aside.sideContainer\"]}"].join(e);
+      return t;
+    }
     var e = ",";
     return [
       t(),
-      n()
+      n(),
+      r()
     ].join(e);
   }
-  var n = e("vendor/knockout"), r = e("browser/dom"), i = e("text!views/experience/sidebar.html"), s = e("ui/controls/experience/shareDialogController"), o = e("ui/viewModels/experience/sidebar"), u = e("utils/common/styleModeHelper"), a = e("constants/common"), f = e("lodash-compat"), l = e("services/serviceLocator"), c = "side themeWhite", h = "inactive";
+  var n = e("vendor/knockout"), r = e("browser/dom"), i = e("text!views/experience/sidebar.html"), s = e("ui/controls/experience/shareDialogController"), o = e("ui/viewModels/experience/sidebar"), u = e("utils/common/styleModeHelper"), a = e("swx-constants").COMMON, f = e("lodash-compat"), l = e("swx-service-locator-instance").default, c = "side themeWhite", h = "inactive";
   t.name = "sidebar";
   t.render = function (e, t) {
     var o = r.createElement("div"), f = l.resolve(a.serviceLocator.FEATURE_FLAGS);

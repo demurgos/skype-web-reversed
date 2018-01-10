@@ -1,6 +1,6 @@
 define("services/telemetry/calling.instrumentation.eventTypes", [
   "require",
-  "constants/calling"
+  "swx-constants"
 ], function (e) {
   function n(e) {
     return e.isGroupConversation() ? "multiparty" : "single";
@@ -8,7 +8,7 @@ define("services/telemetry/calling.instrumentation.eventTypes", [
   function r(e) {
     return e ? "video" : "audio";
   }
-  var t = e("constants/calling");
+  var t = e("swx-constants").CALLING;
   return {
     Calling: [
       {

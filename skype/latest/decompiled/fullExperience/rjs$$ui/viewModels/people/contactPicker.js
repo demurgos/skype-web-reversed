@@ -2,136 +2,161 @@ define("ui/viewModels/people/contactPicker", [
   "require",
   "vendor/knockout",
   "usertiming",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
+  "swx-i18n",
   "experience/settings",
   "swx-enums",
   "utils/common/ko",
-  "constants/common",
-  "constants/people",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-constants",
+  "swx-service-locator-instance",
   "services/telemetry/common/afterRenderHandler",
   "ui/viewModels/people/contactListHelper",
   "ui/viewModels/people/baseContactList",
   "ui/modelHelpers/personHelper",
-  "ui/telemetry/telemetryClient"
+  "ui/telemetry/telemetryClient",
+  "utils/common/accessibility"
 ], function (e) {
-  function y() {
-    function k() {
-      return e.state() === v.STATE_SEARCH;
-    }
-    function L() {
-      return e.state() === v.STATE_DEFAULT;
-    }
-    function A() {
-      var t = e.hasSearchList() && e.contactsCount() > 0, n = e.hasDefaultList() && e.contactGroups().length > 0;
-      return t || n;
-    }
-    function O() {
-      var e, t = r.get().personsAndGroupsManager.all.persons();
-      return e = t.filter(function (e) {
-        var t = !p.isAuthorizedContact(e);
-        return t || M(e);
-      }), e;
-    }
-    function M(e) {
-      return p.isAgent(e) && typeof e.capabilities._groupChat == "function" && !e.capabilities._groupChat();
+  function w() {
+    function M() {
+      return i.state() === g.STATE_SEARCH;
     }
     function _() {
-      var t = O(), n;
-      n = x().map(function (e) {
+      return i.state() === g.STATE_DEFAULT;
+    }
+    function D() {
+      var e = i.hasSearchList() && i.contactsCount() > 0, t = i.hasDefaultList() && i.contactGroups().length > 0;
+      return e || t;
+    }
+    function P(e) {
+      var t, n = r.get().personsAndGroupsManager.all.persons();
+      return t = n.filter(function (t) {
+        var n = !d.isAuthorizedContact(t);
+        return n || d.isAgent(t) && H(t, e);
+      }), t;
+    }
+    function H(e, t) {
+      return j(e) ? B(t) && !F(e) : !0;
+    }
+    function B(e) {
+      return !!e.selfParticipant && e.selfParticipant.audio.state() === o.callConnectionState.Connected;
+    }
+    function j(e) {
+      return typeof e.capabilities._groupChat == "function" && e.capabilities._groupChat();
+    }
+    function F(e) {
+      return typeof e.capabilities._gvc == "function" && e.capabilities._gvc() && e.capabilities.audio();
+    }
+    function I(e) {
+      var t = P(e), n;
+      n = C().map(function (e) {
         return e.person;
       });
-      e.exclusionList = n.concat(t);
+      i.exclusionList = n.concat(t);
     }
-    var e = this, y = t.observable(""), x = null, T = null, N = f.resolve(u.serviceLocator.FEATURE_FLAGS), C = null;
-    h.call(e);
-    e.searchResults = t.observableArray();
-    e.selectedContacts = t.observableArray();
-    e.state = t.observable(v.STATE_DEFAULT);
-    e.hasSearchList = t.computed(k);
-    e.hasDefaultList = t.computed(L);
-    e.isVisible = t.computed(A);
-    e.css = t.computed(y);
-    e.spacesEnabled = N.isFeatureOn(u.featureFlags.SPACES);
-    e.selectedItemTextDetails = t.observable("");
-    e.init = function (n, r) {
-      return e.showJumpToConversation = n.showJumpToConversation, y(n.className), t.isObservable(n.conversation.participants) ? e.exclusionList = O() : (x = n.conversation.participants, C = x.subscribe(), x.changed(_)), e.registerEvent(m.ROSTER_QUERY_CHANGED, function (t) {
-        t && Boolean(t.query) ? e.search(t.query, E(t.selectedContacts, e.exclusionList)) : (e.state(v.STATE_DEFAULT), e.contactsCount(0));
-      }), e.registerEvent(m.ROSTER_SELECTION_REMOVED, function (t) {
-        if (t && t.person) {
-          var n = w(e.selectedContacts(), t.person.id());
-          S(n);
-          e.selectedContacts.remove(n);
-          c.deselectContactFromDefaultList(n.getPerson(), e);
+    var e, i = this, w = t.observable(""), C = null, k = null, L = l.resolve(a.serviceLocator.FEATURE_FLAGS), A = null, O = null;
+    p.call(i);
+    i.searchResults = t.observableArray();
+    i.selectedContacts = t.observableArray();
+    i.state = t.observable(g.STATE_DEFAULT);
+    i.hasSearchList = t.computed(M);
+    i.hasDefaultList = t.computed(_);
+    i.isVisible = t.computed(D);
+    i.css = t.computed(w);
+    i.spacesEnabled = L.isFeatureOn(a.featureFlags.SPACES);
+    e = i.hasSearchList.subscribe(function (e) {
+      e && m.announce({ key: "input_placeholder_typeContactName" });
+    });
+    i.init = function (e, n) {
+      return i.showJumpToConversation = e.showJumpToConversation, w(e.className), t.isObservable(e.conversation.participants) ? i.exclusionList = P(e.conversation) : (C = e.conversation.participants, A = C.subscribe(), O = I.bind(null, e.conversation), C.changed(O)), i.registerEvent(y.ROSTER_QUERY_CHANGED, function (e) {
+        e && Boolean(e.query) ? i.search(e.query, x(e.selectedContacts, i.exclusionList)) : (i.state(g.STATE_DEFAULT), i.contactsCount(0));
+      }), i.registerEvent(y.ROSTER_SELECTION_REMOVED, function (e) {
+        if (e && e.person) {
+          var t = S(i.selectedContacts(), e.person.id());
+          T(t);
+          i.selectedContacts.remove(t);
+          h.deselectContactFromDefaultList(t.getPerson(), i);
         }
-      }), h.prototype.init.call(e, n, r);
+      }), p.prototype.init.call(i, e, n);
     };
-    e.dispose = function () {
-      o.disposeAndClearArray(e.searchResults);
-      o.disposeAndClearArray(e.selectedContacts);
-      e.hasSearchList.dispose();
-      e.hasDefaultList.dispose();
-      e.isVisible.dispose();
-      e.css.dispose();
-      C !== null && (C.dispose(), C = null, x.changed.off(_), x = null);
-      h.prototype.dispose.call(e);
+    i.dispose = function () {
+      u.disposeAndClearArray(i.searchResults);
+      u.disposeAndClearArray(i.selectedContacts);
+      i.hasSearchList.dispose();
+      i.hasDefaultList.dispose();
+      i.isVisible.dispose();
+      i.css.dispose();
+      e.dispose();
+      A !== null && (A.dispose(), A = null, C.changed.off(O), O = null, C = null);
+      p.prototype.dispose.call(i);
     };
-    e.afterRender = function () {
-      function n() {
-        var t = f.resolve(u.serviceLocator.PUBSUB);
-        t.publish(u.events.search.LOCAL_SEARCH_RESULTS_RENDERED, { resultCount: e.contactsCount() });
+    i.afterRender = function () {
+      function t() {
+        var e = l.resolve(a.serviceLocator.PUBSUB);
+        e.publish(a.events.search.LOCAL_SEARCH_RESULTS_RENDERED, { resultCount: i.contactsCount() });
       }
-      var t = l(e.contactsCount(), n);
-      return e.selectedItemTextDetails(""), h.prototype.afterRender.call(e, t);
+      var e = c(i.contactsCount(), t);
+      return p.prototype.afterRender.call(i, e);
     };
-    e.search = function (t, f) {
-      var l = r.get().personsAndGroupsManager.createPersonSearchQuery(), h;
-      n.mark(g.SEARCH.LOCAL.START);
-      if (T !== null)
+    i.search = function (e, t) {
+      var l = r.get().personsAndGroupsManager.createPersonSearchQuery(), c;
+      n.mark(b.SEARCH.LOCAL.START);
+      if (k !== null)
         try {
-          T.cancel("Another search query triggered");
+          k.cancel("Another search query triggered");
         } catch (p) {
-          d.get().sendEvent(i.telemetry.uiTenantToken, u.telemetry.promiseInvalidStateException.TYPE, {
-            feature: u.telemetry.promiseInvalidStateException.feature.CONTACT_PICKER,
+          v.get().sendEvent(s.telemetry.uiTenantToken, a.telemetry.promiseInvalidStateException.TYPE, {
+            feature: a.telemetry.promiseInvalidStateException.feature.CONTACT_PICKER,
             exception: JSON.stringify(p)
           });
         }
-      return l.limit(a.searchLimit), l.sources(s.searchScope.AddressBook), l.text(t), h = l.getMore().then(function () {
-        if (h !== T)
+      return l.limit(f.searchLimit), l.sources(o.searchScope.AddressBook), l.text(e), c = l.getMore().then(function () {
+        var e, r;
+        if (c !== k)
           return;
-        var t = c.filterSearchResults(l.results(), f);
-        T = null;
-        e.state(v.STATE_SEARCH);
-        n.mark(g.SEARCH.LOCAL.END);
-        o.disposeAndClearArray(e.searchResults);
-        e.contactsCount(t.length);
-        e.searchResults(t);
-        e.dispatchEvent(m.ROSTER_QUERY_EXECUTED, { moreResultsAvailable: l.moreResultsAvailable() });
-      }), T = h, T;
+        e = h.filterSearchResults(l.results(), t);
+        k = null;
+        i.state(g.STATE_SEARCH);
+        n.mark(b.SEARCH.LOCAL.END);
+        u.disposeAndClearArray(i.searchResults);
+        i.contactsCount(e.length);
+        i.searchResults(e);
+        r = N(e.length);
+        m.announce(r);
+        i.dispatchEvent(y.ROSTER_QUERY_EXECUTED, { moreResultsAvailable: l.moreResultsAvailable() });
+      }), k = c, k;
     };
-    e.onContactSelected = function (t, n) {
-      n.preventDefault();
-      S(t);
-      t.isActive() ? b(t, e.selectedContacts()) || (e.selectedContacts.push(t), e.dispatchEvent(m.PICKER_CONTACT_SELECTED, t.getPerson()), c.selectContactFromDefaultList(t.getPerson(), e)) : (e.selectedContacts.remove(w(e.selectedContacts(), t.id())), e.dispatchEvent(m.PICKER_CONTACT_DESELECTED, t.getPerson()), c.deselectContactFromDefaultList(t.getPerson(), e));
-      e.state(v.STATE_DEFAULT);
+    i.onContactSelected = function (e, t) {
+      t.preventDefault();
+      T(e);
+      e.isActive() ? E(e, i.selectedContacts()) || (i.selectedContacts.push(e), i.dispatchEvent(y.PICKER_CONTACT_SELECTED, e.getPerson()), h.selectContactFromDefaultList(e.getPerson(), i)) : (i.selectedContacts.remove(S(i.selectedContacts(), e.id())), i.dispatchEvent(y.PICKER_CONTACT_DESELECTED, e.getPerson()), h.deselectContactFromDefaultList(e.getPerson(), i));
+      i.state(g.STATE_DEFAULT);
     };
   }
-  function b(e, t) {
-    return Boolean(w(t, e.id()));
+  function E(e, t) {
+    return Boolean(S(t, e.id()));
   }
-  function w(e, n) {
+  function S(e, n) {
     return t.utils.arrayFirst(e, function (e) {
       return e.id() === n;
     });
   }
-  function E(e, t) {
+  function x(e, t) {
     var n = e || [];
     return n.concat(t);
   }
-  function S(e) {
+  function T(e) {
     var t = e.isActive();
     e.isActive(!t);
   }
-  var t = e("vendor/knockout"), n = e("usertiming"), r = e("cafe/applicationInstance"), i = e("experience/settings"), s = e("swx-enums"), o = e("utils/common/ko"), u = e("constants/common"), a = e("constants/people"), f = e("services/serviceLocator"), l = e("services/telemetry/common/afterRenderHandler"), c = e("ui/viewModels/people/contactListHelper"), h = e("ui/viewModels/people/baseContactList"), p = e("ui/modelHelpers/personHelper"), d = e("ui/telemetry/telemetryClient"), v = a.contactPicker.states, m = u.events.roster, g = u.telemetry.performanceMarks;
-  return y.prototype = new h(), y.prototype.constructor = y, y;
+  function N(e) {
+    var t;
+    return e === 0 ? t = i.fetch({ key: "accessibility_contactPickerNoResults" }) : t = i.fetch({
+      key: "accessibility_contactPickerUpdated",
+      params: { totalSearchResults: e },
+      count: e
+    }), t;
+  }
+  var t = e("vendor/knockout"), n = e("usertiming"), r = e("swx-cafe-application-instance"), i = e("swx-i18n").localization, s = e("experience/settings"), o = e("swx-enums"), u = e("utils/common/ko"), a = e("swx-constants").COMMON, f = e("swx-constants").PEOPLE, l = e("swx-service-locator-instance").default, c = e("services/telemetry/common/afterRenderHandler"), h = e("ui/viewModels/people/contactListHelper"), p = e("ui/viewModels/people/baseContactList"), d = e("ui/modelHelpers/personHelper"), v = e("ui/telemetry/telemetryClient"), m = e("utils/common/accessibility").narrator, g = f.contactPicker.states, y = a.events.roster, b = a.telemetry.performanceMarks;
+  return w.prototype = new p(), w.prototype.constructor = w, w;
 });

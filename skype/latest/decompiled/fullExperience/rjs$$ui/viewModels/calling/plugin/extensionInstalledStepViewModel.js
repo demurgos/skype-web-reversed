@@ -3,11 +3,11 @@ define("ui/viewModels/calling/plugin/extensionInstalledStepViewModel", [
   "exports",
   "module",
   "swx-enums",
-  "cafe/applicationInstance",
-  "constants/calling",
+  "swx-cafe-application-instance",
+  "swx-constants",
   "ui/viewModels/calling/helpers/browserInstallContent"
 ], function (e, t) {
-  var n = e("swx-enums"), r = e("cafe/applicationInstance"), i = e("constants/calling"), s = e("ui/viewModels/calling/helpers/browserInstallContent"), o = function (i) {
+  var n = e("swx-enums"), r = e("swx-cafe-application-instance"), i = e("swx-constants").CALLING, s = e("ui/viewModels/calling/helpers/browserInstallContent"), o = function (i) {
       function f() {
         a.changed(c);
       }

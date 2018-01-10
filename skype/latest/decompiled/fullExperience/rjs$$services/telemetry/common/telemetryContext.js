@@ -1,6 +1,6 @@
 define("services/telemetry/common/telemetryContext", [
   "require",
-  "constants/common"
+  "swx-constants"
 ], function (e) {
   function r() {
     this.sentEmoticonsInfo = [];
@@ -16,7 +16,7 @@ define("services/telemetry/common/telemetryContext", [
     this.chatHistoryLoadResult = {};
     this.statusCode = !1;
   }
-  var t = e("constants/common"), n;
+  var t = e("swx-constants").COMMON, n;
   return r.get = function () {
     return n || (n = new r()), n;
   }, r;

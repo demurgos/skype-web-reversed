@@ -1,7 +1,7 @@
 define("ui/viewModels/chat/notificationsMenuItem", [
   "require",
-  "services/pubSub/pubSub",
-  "constants/common",
+  "swx-pubsub-instance",
+  "swx-constants",
   "swx-i18n"
 ], function (e) {
   function i(e) {
@@ -14,6 +14,6 @@ define("ui/viewModels/chat/notificationsMenuItem", [
       t.publish(n.navigation.NOTIFICATIONS_CENTER, s);
     };
   }
-  var t = e("services/pubSub/pubSub"), n = e("constants/common").events, r = e("swx-i18n").localization;
+  var t = e("swx-pubsub-instance").default, n = e("swx-constants").COMMON.events, r = e("swx-i18n").localization;
   return i;
 });

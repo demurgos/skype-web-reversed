@@ -3,7 +3,7 @@ define("ui/viewModels/chat/stickyMessage", [
   "lodash-compat",
   "vendor/knockout",
   "utils/common/eventMixin",
-  "constants/common",
+  "swx-constants",
   "swx-enums",
   "telemetry/chat/poll",
   "swx-i18n"
@@ -74,7 +74,7 @@ define("ui/viewModels/chat/stickyMessage", [
       });
     };
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("utils/common/eventMixin"), i = e("constants/common"), s = e("swx-enums"), o = e("telemetry/chat/poll"), u = e("swx-i18n").localization, a = 1800, f = 86400, l = function (e) {
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("utils/common/eventMixin"), i = e("swx-constants").COMMON, s = e("swx-enums"), o = e("telemetry/chat/poll"), u = e("swx-i18n").localization, a = 1800, f = 86400, l = function (e) {
       var n = e.meCheckedAnswerPositions(), r = t.isEmpty(n) ? -1 : n[0], i = e.pollAnswers(), s;
       return i && r >= 0 && r < i.length ? s = u.fetch({
         key: "poll_sticky_message_me_voted",

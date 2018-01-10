@@ -1,8 +1,8 @@
 define("bindings/ko.businessAwareL10n", [
   "require",
   "vendor/knockout",
-  "constants/common",
-  "services/serviceLocator"
+  "swx-constants",
+  "swx-service-locator-instance"
 ], function (e) {
   function i() {
     t.bindingHandlers.businessAwareL10n = {
@@ -21,6 +21,6 @@ define("bindings/ko.businessAwareL10n", [
   function s() {
     return r.resolve(n.serviceLocator.FEATURE_FLAGS).isFeatureOn(n.featureFlags.USE_BUSINESS_WORDING);
   }
-  var t = e("vendor/knockout"), n = e("constants/common"), r = e("services/serviceLocator");
+  var t = e("vendor/knockout"), n = e("swx-constants").COMMON, r = e("swx-service-locator-instance").default;
   return { register: i };
 });

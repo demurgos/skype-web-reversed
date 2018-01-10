@@ -34,7 +34,8 @@ define("services/cqf/cqfSettings", [
         o().then(function (n) {
           t = !0;
           e(a(n));
-        }, function () {
+        }).catch(function () {
+          t = !1;
           e(u());
         });
       });

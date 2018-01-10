@@ -5,6 +5,7 @@ define("ui/viewModels/buttons/toggle", [], function () {
     this.labelledById = e.labelledById;
     this.onClick = e.click || function () {
     };
+    this.disabled = e.disabled;
   }
   return e.build = function (t) {
     return new e(t);

@@ -2,11 +2,11 @@ define("ui/viewModels/chat/translator/translationItem", [
   "require",
   "exports",
   "module",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "swx-i18n",
   "vendor/knockout",
-  "utils/chat/messageSanitizer",
+  "swx-utils-chat",
   "telemetry/translator/translatorTelemetry",
   "ui/modelHelpers/personHelper",
   "utils/chat/translatorHelper"
@@ -86,7 +86,7 @@ define("ui/viewModels/chat/translator/translationItem", [
       w && w.dispose();
     };
   }
-  var n = e("services/serviceLocator"), r = e("constants/common"), i = e("swx-i18n").localization, s = e("vendor/knockout"), o = e("utils/chat/messageSanitizer"), u = r.telemetry.translator, a = e("telemetry/translator/translatorTelemetry"), f = e("ui/modelHelpers/personHelper"), l = e("utils/chat/translatorHelper");
+  var n = e("swx-service-locator-instance").default, r = e("swx-constants").COMMON, i = e("swx-i18n").localization, s = e("vendor/knockout"), o = e("swx-utils-chat").messageSanitizer, u = r.telemetry.translator, a = e("telemetry/translator/translatorTelemetry"), f = e("ui/modelHelpers/personHelper"), l = e("utils/chat/translatorHelper");
   t.build = function (e, t) {
     return new c(e, t);
   };

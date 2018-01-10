@@ -1,11 +1,11 @@
 define("experience/api/calling", [
   "require",
   "vendor/knockout",
-  "cafe/applicationInstance",
-  "constants/calling",
-  "services/pubSub/pubSub",
+  "swx-cafe-application-instance",
+  "swx-constants",
+  "swx-pubsub-instance",
   "ui/viewModels/calling/helpers/callingFacade",
-  "constants/common",
+  "swx-constants",
   "constants/components",
   "swx-enums"
 ], function (e) {
@@ -46,6 +46,6 @@ define("experience/api/calling", [
       })
     };
   }
-  var t = e("vendor/knockout"), n = e("cafe/applicationInstance"), r = e("constants/calling"), i = e("services/pubSub/pubSub"), s = e("ui/viewModels/calling/helpers/callingFacade"), o = e("constants/common"), u = e("constants/components"), a = e("swx-enums"), f, l = t.observable(!1), c = t.observable(!1);
+  var t = e("vendor/knockout"), n = e("swx-cafe-application-instance"), r = e("swx-constants").CALLING, i = e("swx-pubsub-instance").default, s = e("ui/viewModels/calling/helpers/callingFacade"), o = e("swx-constants").COMMON, u = e("constants/components"), a = e("swx-enums"), f, l = t.observable(!1), c = t.observable(!1);
   return f = { buildApi: g }, f;
 });

@@ -3,50 +3,52 @@ define("telemetry/chat/urlPreviewShow", [
   "exports",
   "module",
   "experience/settings",
-  "constants/common",
+  "swx-constants",
   "ui/telemetry/telemetryClient",
-  "telemetry/chat/telemetryEnumerator"
+  "swx-telemetry-buckets",
+  "services/telemetry/hashingService"
 ], function (e, t) {
-  function u(e) {
-    function f() {
+  function a(e) {
+    function l() {
       return {
+        messageIdHash: u.getHash(e.contentId),
         urlCount: e.urlCount,
         hasThumbnail: !1,
         urlPosition: e.urlPosition,
         contentType: o.getUrlContentType(e.url),
-        result: a,
-        ttl: a,
-        ttlGroup: a,
-        participantCount: e.participantCount,
-        participantCountGroup: o.getParticipantCountGroup(e.participantCount)
+        result: f,
+        ttl: f,
+        ttlGroup: f,
+        participantCount: e.participantsCount,
+        participantCountGroup: o.getParticipantCountGroup(e.participantsCount)
       };
     }
-    function l() {
-      t.data.ttl = c(u, h());
+    function c() {
+      t.data.ttl = h(a, p());
       t.data.ttlGroup = o.getSecondsDurationGroup(t.data.ttl);
       var e = i.TYPE, r = t.data;
-      s.get().sendEvent(n.telemetry.uiTenantToken, e, r);
+      s.get().sendEvent(n.telemetry.chatTenantToken, e, r);
     }
-    function c(e, t) {
+    function h(e, t) {
       return t - e;
     }
-    function h() {
+    function p() {
       return new Date().getTime();
     }
-    var t = this, u = h(), a = r.telemetry.NOT_AVAILABLE;
-    t.data = f();
+    var t = this, a = p(), f = r.telemetry.NOT_AVAILABLE;
+    t.data = l();
     t.error = function (e) {
       e && (t.data.result = e);
-      l();
+      c();
     };
     t.succeeded = function (e, n) {
       t.data.hasThumbnail = n;
       t.data.result = e;
-      l();
+      c();
     };
   }
-  var n = e("experience/settings"), r = e("constants/common"), i = r.telemetry.urlPreviewShown, s = e("ui/telemetry/telemetryClient"), o = e("telemetry/chat/telemetryEnumerator");
+  var n = e("experience/settings"), r = e("swx-constants").COMMON, i = r.telemetry.urlPreviewShown, s = e("ui/telemetry/telemetryClient"), o = e("swx-telemetry-buckets"), u = e("services/telemetry/hashingService");
   t.build = function (e) {
-    return new u(e);
+    return new a(e);
   };
 });

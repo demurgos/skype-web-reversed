@@ -6,11 +6,11 @@ define("ui/viewModels/chat/messageMediaTypesHandlers", [
   "utils/common/cafeObservable",
   "swx-i18n",
   "vendor/knockout",
-  "services/pubSub/pubSub",
-  "services/pes/configSync",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "browser/dom",
-  "telemetry/chat/videoMessagePlayback"
+  "telemetry/chat/videoMessagePlayback",
+  "telemetry/chat/audioMessagePlayback"
 ], function (e, t) {
   function h() {
   }
@@ -89,7 +89,7 @@ define("ui/viewModels/chat/messageMediaTypesHandlers", [
   }
   function v(e, t) {
     function r() {
-      var t = f.createElement("img");
+      var t = a.createElement("img");
       e.onBeforeExpanded();
       t.addEventListener("load", function (t) {
         e.isLoaded(!0);
@@ -117,52 +117,69 @@ define("ui/viewModels/chat/messageMediaTypesHandlers", [
     e.content = s.observable(n);
     e.play = function () {
       e.isPlaying(!0);
-      l.sendFirstPlayAction();
+      f.sendFirstPlayAction();
     };
     e.model.isExpired.get().then(function (t) {
-      t ? e.hasExpired(!0) : e.isRendered ? r() : e.registerEvent(a.events.message.RENDERED, r);
+      t ? e.hasExpired(!0) : e.isRendered ? r() : e.registerEvent(u.events.message.RENDERED, r);
     });
   }
   function m(e, t) {
-    function f(e) {
-      var t, n;
-      e.mojiUrl().indexOf("?") !== -1 ? t = e.mojiUrl().replace(/\?.*$/, "?" + u.latestToken) : t = e.mojiUrl() + "?" + u.latestToken;
-      e.mojiThumbnailUrl().indexOf("?") !== -1 ? n = e.mojiThumbnailUrl().replace(/\?.*$/, "?" + u.latestToken) : n = e.mojiThumbnailUrl() + "?" + u.latestToken;
-      e.model.mojiUrl(t);
-      e.model.thumbnailUrl(n);
+    var n;
+    t ? n = i.fetch({
+      key: "media_audiosharing_group",
+      params: { senderName: e.model.sender.displayName() }
+    }) : n = i.fetch({ key: "media_audiosharing_one" });
+    e.mediaUrl = e.model.mediaUrl();
+    e.isLoaded = s.observable(!0);
+    e.isPlaying = s.observable(!1);
+    e.hasExpired = s.observable(!1);
+    e.hasFailed = s.observable(!1);
+    e.content = s.observable(n);
+    e.voiceMessage = s.observable(i.fetch({ key: "media_voice_message" }));
+    e.play = function () {
+      e.isPlaying(!0);
+      l.sendFirstPlayAction();
+    };
+    e.model.isExpired.get().then(function (t) {
+      t && e.hasExpired(!0);
+    });
+  }
+  function g(e, t) {
+    function a(e, t) {
+      var n, r;
+      n = t._mojiURL;
+      r = t._thumbnailURL;
+      e.mojiUrl(n);
+      e.mojiThumbnailUrl(r);
     }
-    function l(t) {
-      t.fallbackUsed && (f(e), o.subscribe(a.events.personalExpression.CDN_TOKEN_UPDATED, function () {
-        f(e);
-      }));
+    function f(t) {
+      a(e, t);
       e.mojiTitle(t.description);
       e.mojiLinkName(t.auxiliaryText);
       e.mojiLinkUrl(t.auxiliaryUrl);
       e.mojiCopyright(t.copyright);
       e.typeClasses("moji keyframe");
+      e.mojiErrorText(null);
     }
-    var n;
-    t ? n = i.fetch({
+    function l() {
+      e.typeClasses("moji mojifailed");
+      e.mojiErrorText(i.fetch({ key: "pes_moji_error_text" }));
+    }
+    function c() {
+      return r.fetchMetadata(e.model.mojiUrl()).then(f, l);
+    }
+    var n, r = o.resolve(u.serviceLocator.PES_CONFIG_SERVICE);
+    return t ? n = i.fetch({
       key: "media_mojisharing_group",
       params: { senderName: e.model.sender.displayName() }
-    }) : n = i.fetch({ key: "media_mojisharing_one" });
-    e.typeClasses = s.observable("mojiloading");
-    e.mojiThumbnailUrl = r.newObservableProperty(e.model.thumbnailUrl);
-    e.mojiUrl = r.newObservableProperty(e.model.mojiUrl);
-    e.isSticker = s.observable(!0);
-    e.isMoji = s.observable(!0);
-    e.mojiTitle = s.observable("");
-    e.mojiLinkName = s.observable("");
-    e.mojiLinkUrl = s.observable("");
-    e.mojiCopyright = s.observable("");
-    e.isMojiPlaying = s.observable(!1);
-    e.isMojiPlayed = s.observable(!1);
-    e.model.mojiMetaData.get().then(l);
-    e.stopMojiPlay = function (e, t) {
+    }) : n = i.fetch({ key: "media_mojisharing_one" }), e.typeClasses = s.observable("mojiloading"), e.mojiThumbnailUrl = s.observable(), e.mojiUrl = s.observable(), e.isSticker = s.observable(!0), e.isMoji = s.observable(!0), e.mojiTitle = s.observable(""), e.mojiLinkName = s.observable(""), e.mojiLinkUrl = s.observable(""), e.mojiCopyright = s.observable(""), e.mojiErrorText = s.observable(), e.isMojiPlaying = s.observable(!1), e.isMojiPlayed = s.observable(!1), r.on(u.events.personalExpression.CONFIG_INITIALIZED, c), e.autoDisposer.registerDisposable({
+      dispose: function () {
+        r.off(u.events.personalExpression.CONFIG_INITIALIZED, c);
+      }
+    }), e.stopMojiPlay = function (e, t) {
       var n = t.target, r = n.previousElementSibling;
       r.pause();
-    };
-    e.playMoji = function (t, n) {
+    }, e.playMoji = function (t, n) {
       function s() {
         e.isMojiPlayed(!0);
         e.isMojiPlaying(!1);
@@ -178,16 +195,15 @@ define("ui/viewModels/chat/messageMediaTypesHandlers", [
       i.play();
       i.addEventListener("ended", s, !1);
       i.addEventListener("pause", s, !1);
-    };
-    e.i18n = function (e) {
+    }, e.i18n = function (e) {
       return i.fetch({ key: e });
-    };
-    e.content = s.observable(n);
+    }, e.content = s.observable(n), c();
   }
-  var n = e("swx-enums"), r = e("utils/common/cafeObservable"), i = e("swx-i18n").localization, s = e("vendor/knockout"), o = e("services/pubSub/pubSub"), u = e("services/pes/configSync"), a = e("constants/common"), f = e("browser/dom"), l = e("telemetry/chat/videoMessagePlayback"), c = {};
+  var n = e("swx-enums"), r = e("utils/common/cafeObservable"), i = e("swx-i18n").localization, s = e("vendor/knockout"), o = e("swx-service-locator-instance").default, u = e("swx-constants").COMMON, a = e("browser/dom"), f = e("telemetry/chat/videoMessagePlayback"), l = e("telemetry/chat/audioMessagePlayback"), c = {};
   c[n.activityType.VideoMessage] = v;
+  c[n.activityType.AudioMessage] = m;
   c[n.activityType.PictureMessage] = p;
-  c[n.activityType.MojiMessage] = m;
+  c[n.activityType.MojiMessage] = g;
   c[n.activityType.FileTransfer] = d;
   t.fetch = function (e) {
     return c[e] || h;

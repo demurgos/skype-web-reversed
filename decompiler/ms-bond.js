@@ -410,7 +410,7 @@ function nsToModuleDescriptors (namespaces, options) {
   var ids = _.map(namespaces, function(ns) {return ns.id});
   var uIds = _.uniq(ids);
   if (ids.length !== uIds.length) {
-    throw new Error("Non-unique ids");
+    console.warn("Non-unique ids");
   }
   var branchEnds = _.filter(namespaces, function(ns) {return ns.type === "branchEnd"});
   return _.map(branchEnds, function(branchEndNS) {return getBranchEndModule(branchEndNS, options);});

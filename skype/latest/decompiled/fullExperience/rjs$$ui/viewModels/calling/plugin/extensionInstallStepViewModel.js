@@ -5,14 +5,14 @@ define("ui/viewModels/calling/plugin/extensionInstallStepViewModel", [
   "browser/chrome",
   "browser/document",
   "experience/settings",
-  "constants/calling",
+  "swx-constants",
   "ui/viewModels/calling/plugin/extensionInstallHelper",
   "ui/viewModels/calling/helpers/browserInstallContent",
   "ui/telemetry/actions/actionNames",
-  "constants/common",
-  "services/serviceLocator"
+  "swx-constants",
+  "swx-service-locator-instance"
 ], function (e, t) {
-  var n = e("browser/chrome"), r = e("browser/document"), i = e("experience/settings"), s = e("constants/calling"), o = e("ui/viewModels/calling/plugin/extensionInstallHelper"), u = e("ui/viewModels/calling/helpers/browserInstallContent"), a = e("ui/telemetry/actions/actionNames"), f = e("constants/common"), l = e("services/serviceLocator"), c = function (s) {
+  var n = e("browser/chrome"), r = e("browser/document"), i = e("experience/settings"), s = e("swx-constants").CALLING, o = e("ui/viewModels/calling/plugin/extensionInstallHelper"), u = e("ui/viewModels/calling/helpers/browserInstallContent"), a = e("ui/telemetry/actions/actionNames"), f = e("swx-constants").COMMON, l = e("swx-service-locator-instance").default, c = function (s) {
       function p() {
         m();
         s.next();

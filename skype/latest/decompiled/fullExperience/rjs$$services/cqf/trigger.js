@@ -17,7 +17,9 @@ define("services/cqf/trigger", [
           var t = n.utilities.stringToBytes(e), r = n.sha256.computeHash(t), i = n.utilities.bytesToInt32(r);
           return i >>> 0;
         }
-        if (e.duration < t.minimumCallLength)
+        if (!e.callId || e.callEscalated)
+          i();
+        else if (e.duration < t.minimumCallLength)
           i();
         else {
           var u = s(e), a = o(e.callId), f = a % 100;

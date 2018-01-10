@@ -3,17 +3,17 @@ define("ui/viewModels/chat/messageSearchItem", [
   "lodash-compat",
   "vendor/knockout",
   "swx-i18n",
-  "constants/common",
-  "utils/chat/messageSanitizer",
-  "utils/chat/dateTime",
-  "cafe/applicationInstance",
-  "services/pubSub/pubSub",
+  "swx-constants",
+  "swx-utils-chat",
+  "swx-utils-chat",
+  "swx-cafe-application-instance",
+  "swx-pubsub-instance",
   "services/telemetry/logging/perf/main",
   "ui/viewModels/chat/conversationTile",
   "ui/modelHelpers/personHelper",
   "swx-enums"
 ], function (e) {
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-i18n").localization, i = e("constants/common"), s = e("utils/chat/messageSanitizer"), o = e("utils/chat/dateTime"), u = e("cafe/applicationInstance"), a = e("services/pubSub/pubSub"), f = e("services/telemetry/logging/perf/main"), l = e("ui/viewModels/chat/conversationTile"), c = e("ui/modelHelpers/personHelper"), h = e("swx-enums"), p = i.events.navigation;
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-i18n").localization, i = e("swx-constants").COMMON, s = e("swx-utils-chat").messageSanitizer, o = e("swx-utils-chat").dateTime, u = e("swx-cafe-application-instance"), a = e("swx-pubsub-instance").default, f = e("services/telemetry/logging/perf/main"), l = e("ui/viewModels/chat/conversationTile"), c = e("ui/modelHelpers/personHelper"), h = e("swx-enums"), p = i.events.navigation;
   return function () {
     function g(e) {
       function s() {

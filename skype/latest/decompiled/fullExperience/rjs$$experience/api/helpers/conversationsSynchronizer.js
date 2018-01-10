@@ -2,9 +2,9 @@ define("experience/api/helpers/conversationsSynchronizer", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance"
+  "swx-cafe-application-instance"
 ], function (e, t) {
-  var n = e("cafe/applicationInstance");
+  var n = e("swx-cafe-application-instance");
   t.sync = function () {
     function r(e) {
       var t = n.get().conversationsManager;

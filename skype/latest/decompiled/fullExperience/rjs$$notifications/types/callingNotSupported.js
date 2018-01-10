@@ -1,8 +1,8 @@
 define("notifications/types/callingNotSupported", [
   "require",
   "notifications/common/notification",
-  "constants/common",
-  "utils/people/userDataProcessor",
+  "swx-constants",
+  "swx-utils-people",
   "constants/calling.resources",
   "swx-i18n"
 ], function (e) {
@@ -17,6 +17,6 @@ define("notifications/types/callingNotSupported", [
     var a = new t(n.notifications.WARNING);
     return a.title(u), a;
   }
-  var t = e("notifications/common/notification"), n = e("constants/common"), r = e("utils/people/userDataProcessor"), i = e("constants/calling.resources").notifications.incomingCall, s = e("swx-i18n").localization;
+  var t = e("notifications/common/notification"), n = e("swx-constants").COMMON, r = e("swx-utils-people").userDataProcessor, i = e("constants/calling.resources").notifications.incomingCall, s = e("swx-i18n").localization;
   return { build: u };
 });

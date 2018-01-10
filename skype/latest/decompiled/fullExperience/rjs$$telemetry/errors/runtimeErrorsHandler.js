@@ -4,9 +4,9 @@ define("telemetry/errors/runtimeErrorsHandler", [
   "module",
   "browser/window",
   "vendor/knockout",
-  "constants/common",
+  "swx-constants",
   "experience/settings",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "ui/telemetry/telemetryClient"
 ], function (e, t) {
   function a(e) {
@@ -32,7 +32,7 @@ define("telemetry/errors/runtimeErrorsHandler", [
       };
     u.get().sendEvent(s.telemetry.uiTenantToken, t, n);
   }
-  var n = e("browser/window"), r = e("vendor/knockout"), i = e("constants/common"), s = e("experience/settings"), o = e("services/serviceLocator"), u = e("ui/telemetry/telemetryClient");
+  var n = e("browser/window"), r = e("vendor/knockout"), i = e("swx-constants").COMMON, s = e("experience/settings"), o = e("swx-service-locator-instance").default, u = e("ui/telemetry/telemetryClient");
   t.DEFAULT_SCRIPT_ERROR_MESSAGE = "Script error";
   t.init = function () {
     var e = o.resolve(i.serviceLocator.FEATURE_FLAGS);

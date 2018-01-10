@@ -1,57 +1,61 @@
 define("ui/viewModels/people/baseList", [
   "require",
+  "lodash-compat",
   "vendor/knockout",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "experience/settings",
   "swx-i18n",
-  "services/serviceLocator",
-  "constants/common",
-  "constants/people",
-  "swx-enums",
+  "swx-service-locator-instance",
+  "swx-constants",
+  "swx-constants",
   "ui/viewModels/people/contactBuilder",
-  "services/telemetry/common/afterRenderHandler",
-  "ui/telemetry/actions/actionNames",
   "ui/telemetry/telemetryClient",
+  "ui/telemetry/people/contactSearch",
   "utils/common/statusMapper"
 ], function (e) {
-  function v(e) {
-    this.listSource = t.observable(e);
-    this.contacts = t.observableArray();
-    this.emptyListText = i.fetch({ key: "message_text_emptySearchResults" });
-    this.showEmptyListText = t.observable(!1);
-    this.listHasContacts = t.computed(function () {
+  function d(e) {
+    this.activeSearchPromise = null;
+    this.listSource = n.observable(e);
+    this.contacts = n.observableArray();
+    this.emptyListText = s.fetch({ key: "message_text_emptySearchResults" });
+    this.showEmptyListText = n.observable(!1);
+    this.showListTitle = n.observable(!1);
+    this.listHasContacts = n.computed(function () {
       return this.contacts().length > 0;
     }, this);
-    this.isLocal = e === a.searchScope.AddressBook;
-    this.isLocal ? (this.listClass = t.observable(u.contactList.className.LOCAL), this.listTitle = t.observable(i.fetch({ key: "message_text_contactTitleLocal" })), this.showListTitle = t.observable(!0), this.events = {
-      results: d.LOCAL_SEARCH_RESULTS,
-      rendered: d.LOCAL_SEARCH_RESULTS_RENDERED
-    }, this.historyLoadOrigin = o.telemetry.historyLoadOrigin.CONTACT_SEARCH, this.searchItemI18nKey = "accessibility_searchItem_oneToOne") : (this.listClass = t.observable(u.contactList.className.DIRECTORY), this.listTitle = t.observable(i.fetch({ key: "message_text_contactTitleDirectory" })), this.showListTitle = t.observable(!1), this.events = {
-      results: d.DIRECTORY_SEARCH_RESULTS,
-      rendered: d.DIRECTORY_SEARCH_RESULTS_RENDERED
-    }, this.historyLoadOrigin = o.telemetry.historyLoadOrigin.DIRECTORY_SEARCH, this.searchItemI18nKey = "accessibility_searchItem_directoryList");
+    this.listRole = n.computed(function () {
+      return this.contacts().length > 0 ? "menubar" : "group";
+    }, this);
   }
-  function m() {
-    return s.resolve(o.serviceLocator.PUBSUB);
+  function v() {
+    return o.resolve(u.serviceLocator.PUBSUB);
   }
-  function g() {
-    return s.resolve(o.serviceLocator.ACTION_TELEMETRY);
+  function m(e) {
+    if (e)
+      try {
+        e.cancel("Another search query triggered");
+      } catch (t) {
+        l.get().sendEvent(i.telemetry.uiTenantToken, u.telemetry.promiseInvalidStateException.TYPE, {
+          feature: u.telemetry.promiseInvalidStateException.feature.PEOPLE_SEARCH,
+          exception: JSON.stringify(t)
+        });
+      }
   }
-  var t = e("vendor/knockout"), n = e("cafe/applicationInstance"), r = e("experience/settings"), i = e("swx-i18n").localization, s = e("services/serviceLocator"), o = e("constants/common"), u = e("constants/people"), a = e("swx-enums"), f = e("ui/viewModels/people/contactBuilder"), l = e("services/telemetry/common/afterRenderHandler"), c = e("ui/telemetry/actions/actionNames"), h = e("ui/telemetry/telemetryClient"), p = e("utils/common/statusMapper"), d = o.events.search;
-  return v.prototype.init = function () {
-    m().subscribe(d.QUERY_CHANGED, this.search);
-  }, v.prototype.dispose = function () {
-    m().unsubscribe(d.QUERY_CHANGED, this.search);
-  }, v.prototype.reset = function () {
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-cafe-application-instance"), i = e("experience/settings"), s = e("swx-i18n").localization, o = e("swx-service-locator-instance").default, u = e("swx-constants").COMMON, a = e("swx-constants").PEOPLE, f = e("ui/viewModels/people/contactBuilder"), l = e("ui/telemetry/telemetryClient"), c = e("ui/telemetry/people/contactSearch"), h = e("utils/common/statusMapper"), p = u.events.search;
+  return d.prototype.init = function () {
+    v().subscribe(p.QUERY_CHANGED, this.search);
+  }, d.prototype.dispose = function () {
+    v().unsubscribe(p.QUERY_CHANGED, this.search);
+  }, d.prototype.reset = function () {
     this.showListTitle(!1);
     this.showEmptyListText(!1);
     this.contacts([]);
-  }, v.prototype.search = function (t) {
-    function v() {
-      if (l.activeSearchPromise !== a)
+  }, d.prototype.search = function (t, n) {
+    function u() {
+      if (o.activeSearchPromise !== s)
         return;
-      y();
-      l.contacts(i.results().map(function (e) {
+      h();
+      o.contacts(i.results().map(function (e) {
         return f.build(e.result, {
           keepPresenceSubscription: !1,
           keepLastSeenAtSubscription: !1,
@@ -59,44 +63,39 @@ define("ui/viewModels/people/baseList", [
           keepEndpointTypeSubscription: !1
         });
       }));
-      m().publish(d.QUERY_EXECUTED, { moreResultsAvailable: i.moreResultsAvailable() });
+      v().publish(p.QUERY_EXECUTED, { moreResultsAvailable: i.moreResultsAvailable() });
     }
-    function y() {
-      if (l.activeSearchPromise !== a)
+    function l(e) {
+      if (e && e.message === "Canceled")
         return;
-      var e = s.getTraceableAction(c.search.started);
-      e.markBeforeRender();
-      e.addEventData({
-        source: l.listSource(),
-        results: i.results().length
+      if (o.activeSearchPromise !== s)
+        return;
+      c.onContactSearchEnd({
+        success: !1,
+        searchScope: o.listSource()
       });
-      l.activeSearchPromise = null;
-      l.totalSearchResults = i.results().length;
-      m().publish(l.events.results, l.totalSearchResults);
-      l.showListTitle(!0);
-      l.showEmptyListText(!i.results().length);
+      h();
     }
-    var i, s, a, l = this;
+    function h() {
+      o.activeSearchPromise = null;
+      o.totalSearchResults = i.results().length;
+      o.latestSearchQueryResults = i.results();
+      v().publish(n.results, o.totalSearchResults);
+      o.showListTitle(!0);
+      o.showEmptyListText(!i.results().length);
+    }
+    var i, s, o = this;
     if (!t)
       return;
-    if (l.activeSearchPromise)
-      try {
-        l.activeSearchPromise.cancel("Another search query triggered");
-      } catch (p) {
-        h.get().sendEvent(r.telemetry.uiTenantToken, o.telemetry.promiseInvalidStateException.TYPE, {
-          feature: o.telemetry.promiseInvalidStateException.feature.PEOPLE_SEARCH,
-          exception: JSON.stringify(p)
-        });
-      }
-    return s = g(), s.recordAction(c.search.started, { queryLength: t.length }), s.createTraceableAction(c.search.started).startTrace(), i = n.get().personsAndGroupsManager.createPersonSearchQuery(), i.sources(l.listSource()), i.text(t), i.limit(u.searchLimit), a = i.getMore().then(v, y), this.activeSearchPromise = a, this.activeSearchPromise;
-  }, v.prototype.sendOpenConversationEvent = function (t) {
-    m().publish(o.events.navigation.OPEN_CONVERSATION, {
+    return this.showEmptyListText(!1), m(o.activeSearchPromise), i = r.get().personsAndGroupsManager.createPersonSearchQuery(), i.sources(o.listSource()), i.text(t), i.limit(a.searchLimit), s = i.getMore().then(u, l), this.activeSearchPromise = s, s;
+  }, d.prototype.sendOpenConversationEvent = function (t) {
+    v().publish(u.events.navigation.OPEN_CONVERSATION, {
       model: t,
       origin: this.historyLoadOrigin
     });
-  }, v.prototype.getSearchItemDetails = function (t, n) {
-    var r = p.getAvailabilityText(t.status());
-    return i.fetch({
+  }, d.prototype.getSearchItemDetails = function (t, n) {
+    var r = h.getAvailabilityText(t.status());
+    return s.fetch({
       key: this.searchItemI18nKey,
       params: {
         contactName: t.displayName(),
@@ -106,13 +105,12 @@ define("ui/viewModels/people/baseList", [
         totalResults: this.totalSearchResults
       }
     });
-  }, v.prototype.afterRender = function () {
-    var t = this;
-    return l(t.contacts().length, function () {
-      var e = g().getTraceableAction(c.search.started);
-      e.markAfterRender();
-      e.endTrace();
-      m().publish(t.events.rendered, { resultCount: t.contacts().length });
-    });
-  }, v;
+  }, d.prototype.indexOfSelectedContactInSearchResults = function (n) {
+    var r;
+    if (!n || !t.isArray(this.latestSearchQueryResults))
+      return;
+    return r = t.findIndex(this.latestSearchQueryResults, function (e) {
+      return e.result.id() === n.id();
+    }), r !== -1 ? r + 1 : undefined;
+  }, d;
 });

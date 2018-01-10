@@ -4,10 +4,10 @@ define("telemetry/chat/splashScreenEvent", [
   "module",
   "usertiming",
   "experience/settings",
-  "constants/common",
-  "telemetry/chat/telemetryEnumerator",
+  "swx-constants",
+  "swx-telemetry-buckets",
   "ui/telemetry/telemetryClient",
-  "utils/chat/dateTime"
+  "swx-utils-chat"
 ], function (e, t) {
   function c() {
     function p() {
@@ -44,10 +44,10 @@ define("telemetry/chat/splashScreenEvent", [
       h.timeToContentGroup = s.getSecondsDurationGroupFromMs(h.timeToContent);
       h.timelineTTL = d();
       h.timelineTTLGroup = s.getSecondsDurationGroupFromMs(h.timelineTTL);
-      o.get().sendEvent(r.telemetry.uiTenantToken, t, h);
+      o.get().sendEvent(r.telemetry.chatTenantToken, t, h);
     };
   }
-  var n = e("usertiming"), r = e("experience/settings"), i = e("constants/common"), s = e("telemetry/chat/telemetryEnumerator"), o = e("ui/telemetry/telemetryClient"), u = e("utils/chat/dateTime"), a = i.telemetry.performanceMarks, f = i.telemetry.measurements, l = i.telemetry.NOT_AVAILABLE;
+  var n = e("usertiming"), r = e("experience/settings"), i = e("swx-constants").COMMON, s = e("swx-telemetry-buckets"), o = e("ui/telemetry/telemetryClient"), u = e("swx-utils-chat").dateTime, a = i.telemetry.performanceMarks, f = i.telemetry.measurements, l = i.telemetry.NOT_AVAILABLE;
   t.build = function () {
     return new c();
   };

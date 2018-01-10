@@ -3,12 +3,12 @@ define("ui/viewModels/calling/skypeOut/countryPickerViewModel", [
   "exports",
   "module",
   "lodash-compat",
-  "constants/common",
+  "swx-constants",
   "utils/common/eventMixin",
   "vendor/knockout",
   "swx-i18n",
   "utils/common/localStorage",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "experience/settings",
   "swx-utils-common",
   "browser/window"
@@ -32,13 +32,13 @@ define("ui/viewModels/calling/skypeOut/countryPickerViewModel", [
     }
     function S(e) {
       var n;
-      t.selectedCountry(null);
       for (n = 0; n < e.length; n++)
         if (e[n].name === m.name && e[n].value === m.value && e[n].description === m.description) {
           t.selectedCountry(e[n]);
           m = e[n];
           return;
         }
+      t.selectedCountry(null);
     }
     function x(e) {
       function a() {
@@ -103,7 +103,7 @@ define("ui/viewModels/calling/skypeOut/countryPickerViewModel", [
       v.unsubscribe(r.events.navigation.FRAGMENT_LOADED, C);
     };
   }
-  var n = e("lodash-compat"), r = e("constants/common"), i = e("utils/common/eventMixin"), s = e("vendor/knockout"), o = e("swx-i18n").localization, u = e("utils/common/localStorage"), a = e("services/serviceLocator"), f = e("experience/settings"), l = e("swx-utils-common").stringUtils, c = e("browser/window");
+  var n = e("lodash-compat"), r = e("swx-constants").COMMON, i = e("utils/common/eventMixin"), s = e("vendor/knockout"), o = e("swx-i18n").localization, u = e("utils/common/localStorage"), a = e("swx-service-locator-instance").default, f = e("experience/settings"), l = e("swx-utils-common").stringUtils, c = e("browser/window");
   n.assign(h.prototype, i);
   t.build = function (e) {
     return new h(e);

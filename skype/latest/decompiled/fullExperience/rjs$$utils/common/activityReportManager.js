@@ -2,8 +2,8 @@ define("utils/common/activityReportManager", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
-  "constants/common",
+  "swx-cafe-application-instance",
+  "swx-constants",
   "browser/document",
   "browser/window",
   "browser/dom"
@@ -62,9 +62,10 @@ define("utils/common/activityReportManager", [
     d();
     g();
   }
-  var n = e("cafe/applicationInstance"), r = e("constants/common"), i = e("browser/document"), s = e("browser/window"), o = e("browser/dom"), u, a, f = 3000;
+  var n = e("swx-cafe-application-instance"), r = e("swx-constants").COMMON, i = e("browser/document"), s = e("browser/window"), o = e("browser/dom"), u, a, f = 3000;
   t.init = function () {
     var e = n.get().personsAndGroupsManager.mePerson.active;
+    o.isDocumentHidden() && e(!1);
     e.when(!0, x);
     e.when(!1, S);
   };

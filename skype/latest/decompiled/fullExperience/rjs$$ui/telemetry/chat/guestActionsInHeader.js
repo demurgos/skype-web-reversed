@@ -2,9 +2,9 @@ define("ui/telemetry/chat/guestActionsInHeader", [
   "require",
   "exports",
   "module",
-  "constants/common",
+  "swx-constants",
   "experience/settings",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "usertiming",
   "ui/telemetry/telemetryClient",
   "ui/modelHelpers/personHelper"
@@ -49,7 +49,7 @@ define("ui/telemetry/chat/guestActionsInHeader", [
       t(e);
     }, e;
   }
-  var n = e("constants/common"), r = e("experience/settings"), i = e("cafe/applicationInstance"), s = e("usertiming"), o = e("ui/telemetry/telemetryClient"), u = e("ui/modelHelpers/personHelper"), a = n.telemetry.guestActionsInHeader, f = n.telemetry.performanceMarks, l = n.telemetry.measurements, c;
+  var n = e("swx-constants").COMMON, r = e("experience/settings"), i = e("swx-cafe-application-instance"), s = e("usertiming"), o = e("ui/telemetry/telemetryClient"), u = e("ui/modelHelpers/personHelper"), a = n.telemetry.guestActionsInHeader, f = n.telemetry.performanceMarks, l = n.telemetry.measurements, c;
   t.get = function () {
     return c || (c = new h()), c;
   };

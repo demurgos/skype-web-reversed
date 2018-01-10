@@ -1,12 +1,12 @@
 define("telemetry/chat/timelineLoad", [
   "require",
   "usertiming",
-  "browser/detect",
-  "constants/common",
+  "swx-browser-detect",
+  "swx-constants",
   "experience/settings",
   "services/telemetry/common/analyticsInfo",
   "services/telemetry/common/telemetryContext",
-  "telemetry/chat/telemetryEnumerator",
+  "swx-telemetry-buckets",
   "telemetry/utils/telemetryUtils",
   "ui/telemetry/telemetryClient"
 ], function (e) {
@@ -68,6 +68,6 @@ define("telemetry/chat/timelineLoad", [
       f.get().sendEvent(i.telemetry.uiTenantToken, b, w);
     };
   }
-  var t = e("usertiming"), n = e("browser/detect"), r = e("constants/common"), i = e("experience/settings"), s = e("services/telemetry/common/analyticsInfo"), o = e("services/telemetry/common/telemetryContext"), u = e("telemetry/chat/telemetryEnumerator"), a = e("telemetry/utils/telemetryUtils"), f = e("ui/telemetry/telemetryClient"), l = r.telemetry.timelineLoadEvent, c = r.telemetry.performanceMarks, h = r.telemetry.measurements;
+  var t = e("usertiming"), n = e("swx-browser-detect").default, r = e("swx-constants").COMMON, i = e("experience/settings"), s = e("services/telemetry/common/analyticsInfo"), o = e("services/telemetry/common/telemetryContext"), u = e("swx-telemetry-buckets"), a = e("telemetry/utils/telemetryUtils"), f = e("ui/telemetry/telemetryClient"), l = r.telemetry.timelineLoadEvent, c = r.telemetry.performanceMarks, h = r.telemetry.measurements;
   return p;
 });

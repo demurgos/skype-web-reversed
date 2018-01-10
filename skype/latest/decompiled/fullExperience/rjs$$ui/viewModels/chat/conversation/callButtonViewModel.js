@@ -2,165 +2,199 @@ define("ui/viewModels/chat/conversation/callButtonViewModel", [
   "require",
   "exports",
   "module",
+  "lodash-compat",
   "vendor/knockout",
+  "utils/common/eventMixin",
   "swx-enums",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "swx-i18n",
-  "constants/common",
-  "constants/calling",
+  "swx-constants",
+  "swx-constants",
   "ui/modelHelpers/personHelper",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "utils/common/cafeObservable",
   "ui/modelHelpers/conversationHelper",
+  "swx-utils-chat",
   "ui/viewModels/calling/helpers/callingFacade",
-  "ui/controls/calling/sounds",
   "ui/telemetry/actions/actionNames",
   "ui/telemetry/chat/guestActionsInHeader",
   "ui/viewModels/chat/conversationActivity",
-  "ui/modelObservers/agentAuthorizationObserver"
+  "ui/modelObservers/agentAuthorizationObserver",
+  "ui/modelObservers/calling/activeCallObserver"
 ], function (e, t) {
-  var n = e("vendor/knockout"), r = e("swx-enums"), i = e("cafe/applicationInstance"), s = e("swx-i18n").localization, o = e("constants/common"), u = e("constants/calling"), a = e("ui/modelHelpers/personHelper"), f = e("services/serviceLocator"), l = e("utils/common/cafeObservable"), c = e("ui/modelHelpers/conversationHelper"), h = e("ui/viewModels/calling/helpers/callingFacade"), p = e("ui/controls/calling/sounds"), d = e("ui/telemetry/actions/actionNames"), v = e("ui/telemetry/chat/guestActionsInHeader"), m = e("ui/viewModels/chat/conversationActivity"), g = e("ui/modelObservers/agentAuthorizationObserver"), y = function (e) {
-      function A(t) {
-        O();
-        i.get().conversationsManager.conversations.add(e);
-        h.placeCall(e, t, "startCallButton");
-        p.playOnce(p.KEYS.CALL_DIALING);
+  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("utils/common/eventMixin"), s = e("swx-enums"), o = e("swx-cafe-application-instance"), u = e("swx-i18n").localization, a = e("swx-constants").COMMON, f = e("swx-constants").CALLING, l = e("ui/modelHelpers/personHelper"), c = e("swx-service-locator-instance").default, h = e("utils/common/cafeObservable"), p = e("ui/modelHelpers/conversationHelper"), d = e("swx-utils-chat").conversation, v = e("ui/viewModels/calling/helpers/callingFacade"), m = e("ui/telemetry/actions/actionNames"), g = e("ui/telemetry/chat/guestActionsInHeader"), y = e("ui/viewModels/chat/conversationActivity"), b = e("ui/modelObservers/agentAuthorizationObserver"), w = e("ui/modelObservers/calling/activeCallObserver"), E = function (e) {
+      function _(n) {
+        D();
+        o.get().conversationsManager.conversations.add(e);
+        t.dispatchEvent(a.events.actions.callMade, {}, t.DIRECTION.PARENT);
+        v.placeCall(e, n, "startCallButton");
       }
-      function O() {
-        if (!e.isGroupConversation() && y.isFeatureOn(o.featureFlags.PSTN_ENABLED)) {
+      function D() {
+        if (!e.isGroupConversation() && n.isFeatureOn(a.featureFlags.PSTN_ENABLED)) {
           var t = e.participants(0);
           t.audio.endpoint(t.person.id());
         }
       }
-      function M() {
+      function P() {
         return {
           participantsCount: t.conversationModel.participants.size(),
           userMessagesCount: t.conversationModel.historyService.activityItems().filter(function (e) {
-            return e.type() === r.activityType.TextMessage && a.isMePerson(e.sender);
+            return e.type() === s.activityType.TextMessage && l.isMePerson(e.sender);
           }).length,
           totalMessagesCount: t.conversationModel.historyService.activityItems().length
         };
       }
-      function _() {
+      function H() {
         var e = !1, n = t.conversationModel.participants().length, r;
         for (var i = 0; i < n && !e; i++)
-          r = t.conversationModel.participants()[i].person, r.capabilities.audio.get(), e = !r.isBlocked() && r.capabilities.audio();
+          r = t.conversationModel.participants()[i].person, e = !r.isBlocked() && r.capabilities.audio();
         t.hasAudioCapability(n === 0 || e);
       }
-      function D() {
+      function B() {
         var e = !1, n = t.conversationModel.participants().length, r;
         for (var i = 0; i < n && !e; i++)
-          r = t.conversationModel.participants()[i].person, r.capabilities.video.get(), e = !r.isBlocked() && r.capabilities.video();
+          r = t.conversationModel.participants()[i].person, e = !r.isBlocked() && r.capabilities.video();
         t.hasVideoCapability(n === 0 || e);
       }
-      function P() {
-        t.isOneToOneConversation() ? (C = t.participantPerson(), C.capabilities.audio.changed(_)) : _();
-      }
-      function H() {
-        t.isOneToOneConversation() ? (k = t.participantPerson(), k.capabilities.video.changed(D)) : D();
-      }
-      function B() {
-        t.isOneToOneConversation() && (N = t.participantPerson(), N.isBlocked.changed(_), N.isBlocked.changed(D));
-      }
       function j() {
-        C && C.capabilities.audio.changed.off(_);
-        k && k.capabilities.video.changed.off(D);
+        L = [];
+        t.conversationModel.participants().forEach(function (e) {
+          var t = e.person, n = t.capabilities.audio.subscribe(), r = {
+              person: t,
+              subscription: n
+            };
+          t.capabilities.audio.get();
+          t.capabilities.audio.changed(H);
+          L.push(r);
+        });
       }
       function F() {
-        N && (N.isBlocked.changed.off(_), N.isBlocked.changed.off(D));
+        A = [];
+        t.conversationModel.participants().forEach(function (e) {
+          var t = e.person, n = t.capabilities.video.subscribe(), r = {
+              person: t,
+              subscription: n
+            };
+          t.capabilities.video.get();
+          t.capabilities.video.changed(B);
+          A.push(r);
+        });
       }
       function I() {
-        j();
-        F();
-        P();
-        H();
-        B();
+        L && (L.forEach(function (e) {
+          e.person.capabilities.audio.changed.off(H);
+          e.subscription.dispose();
+        }), L = undefined);
       }
       function q() {
-        var e = f.resolve(o.serviceLocator.FEATURE_FLAGS);
-        return e.isFeatureOn(u.FEATURE_FLAGS.CALLING);
+        A && (A.forEach(function (e) {
+          e.person.capabilities.video.changed.off(B);
+          e.subscription.dispose();
+        }), A = undefined);
       }
       function R() {
-        return t.callingDisabled() ? !0 : !t.hasAudioCapability();
+        t.isOneToOneConversation() && (k = t.participantPerson(), k.isBlocked.changed(H), k.isBlocked.changed(B));
       }
       function U() {
-        return t.videoCallingDisabled() ? !0 : !t.hasVideoCapability();
+        k && (k.isBlocked.changed.off(H), k.isBlocked.changed.off(B));
       }
       function z() {
-        b(c.isPstnOnlyConversation(e));
+        I();
+        q();
+        U();
+        j();
+        F();
+        R();
+        d.isGuestHostConversation(e.conversationId) && M(e.participants.size());
       }
-      var t = this, y = f.resolve(o.serviceLocator.FEATURE_FLAGS), b = n.observable(c.isPstnOnlyConversation(e)), w = y.isFeatureOn(o.featureFlags.CALLING), E = m.build(e), S = n.observable(!e.videoService.start.enabled()), x = g.build(e), T, N, C, k, L;
+      function W() {
+        var e = c.resolve(a.serviceLocator.FEATURE_FLAGS);
+        return e.isFeatureOn(f.FEATURE_FLAGS.CALLING);
+      }
+      function X() {
+        return N.isCallActive() ? !0 : t.callingDisabled() ? !0 : $() ? !0 : !t.hasAudioCapability();
+      }
+      function V() {
+        return N.isCallActive() ? !0 : t.videoCallingDisabled() ? !0 : $() ? !0 : !t.hasVideoCapability();
+      }
+      function $() {
+        return d.isGuestHostConversation(e.conversationId) && M() < 1;
+      }
+      function J() {
+        i(p.isPstnOnlyConversation(e));
+      }
+      var t = this, n = c.resolve(a.serviceLocator.FEATURE_FLAGS), i = r.observable(p.isPstnOnlyConversation(e)), E = n.isFeatureOn(a.featureFlags.CALLING), S = y.build(e), x = r.observable(!e.videoService.start.enabled()), T = b.build(e), N = w.build(), C, k, L, A, O, M = r.observable(0);
       t.conversationModel = e;
-      t.participants = l.newObservableCollection(e.participants);
-      t.isOneToOneConversation = n.computed(function () {
+      t.participants = h.newObservableCollection(e.participants);
+      t.isOneToOneConversation = r.computed(function () {
         return t.participants().length === 1;
       });
-      t.participantPerson = n.computed(function () {
+      t.participantPerson = r.computed(function () {
         if (t.isOneToOneConversation())
           return t.participants()[0].person;
       });
-      t.callingDisabled = n.computed(function () {
-        return !w || E.isCallingDisabled() || x.isConversationWithUnauthorizedAgent();
+      t.callingDisabled = r.computed(function () {
+        return !E || S.isCallingDisabled() || T.isConversationWithUnauthorizedAgent();
       });
-      t.videoCallingDisabled = n.computed(function () {
-        return !w || E.isVideoCallingDisabled() || x.isConversationWithUnauthorizedAgent();
+      t.videoCallingDisabled = r.computed(function () {
+        return !E || S.isVideoCallingDisabled() || T.isConversationWithUnauthorizedAgent();
       });
-      t.hasAudioCapability = n.observable(!0);
-      t.hasVideoCapability = n.observable(!0);
-      t.conversationModel.participants.changed(I);
-      t.isAudioDisabled = n.computed(R);
-      t.isVideoDisabled = n.computed(U);
-      T = e.participants.observe(z);
-      L = e.videoService.start.enabled.changed(function () {
-        S(!e.videoService.start.enabled());
+      t.hasAudioCapability = r.observable(!0);
+      t.hasVideoCapability = r.observable(!0);
+      t.conversationModel.participants.changed(z);
+      t.isAudioDisabled = r.computed(X);
+      t.isVideoDisabled = r.computed(V);
+      C = e.participants.observe(J);
+      O = e.videoService.start.enabled.changed(function () {
+        x(!e.videoService.start.enabled());
       });
-      t.callingDisabledTooltip = n.computed(function () {
-        var e = i.get().personsAndGroupsManager.mePerson.capabilities.audio;
-        return e() ? "" : q() ? e.reason === r.callingNotSupportedReasons.BrowserNotSupported ? s.fetch({ key: "message_text_callingNotSupportedBrowser" }) : e.reason === r.callingNotSupportedReasons.OSNotSupported ? s.fetch({ key: "message_text_callingNotSupportedOS" }) : "" : s.fetch({ key: "message_text_callingIsDisabled" });
+      t.callingDisabledTooltip = r.computed(function () {
+        var e = o.get().personsAndGroupsManager.mePerson.capabilities.audio;
+        return e() ? "" : W() ? e.reason === s.callingNotSupportedReasons.BrowserNotSupported ? u.fetch({ key: "message_text_callingNotSupportedBrowser" }) : e.reason === s.callingNotSupportedReasons.OSNotSupported ? u.fetch({ key: "message_text_callingNotSupportedOS" }) : "" : u.fetch({ key: "message_text_callingIsDisabled" });
       });
-      t.buttonVideoTitle = n.pureComputed(function () {
+      t.buttonVideoTitle = r.pureComputed(function () {
         if (!t.hasVideoCapability())
-          return s.fetch({
+          return u.fetch({
             key: "videoCallDisabled_tooltip",
             params: { agentName: t.getDisabledConversationName() }
           });
         var e = t.callingDisabledTooltip();
-        return e === "" && (e = s.fetch({ key: "startVideoCall_tooltip" })), e;
+        return e === "" && (e = u.fetch({ key: "startVideoCall_tooltip" })), e;
       });
-      t.buttonVideoAriaLabel = n.pureComputed(function () {
+      t.buttonVideoAriaLabel = r.pureComputed(function () {
         var e = t.callingDisabledTooltip();
-        return e === "" && (e = s.fetch({ key: "accessibility_startVideoCall_ariaLabel" })), e;
+        return e === "" && (e = u.fetch({ key: "accessibility_startVideoCall_ariaLabel" })), e;
       });
-      t.buttonCallTitle = n.pureComputed(function () {
+      t.buttonCallTitle = r.pureComputed(function () {
         if (!t.hasAudioCapability())
-          return s.fetch({
+          return u.fetch({
             key: "callDisabled_tooltip",
             params: { agentName: t.getDisabledConversationName() }
           });
         var e = t.callingDisabledTooltip();
-        return e === "" && (t.conversationModel.isGroupConversation() ? e = s.fetch({ key: "startGroupCall_tooltip" }) : e = s.fetch({ key: "startCall_tooltip" })), e;
+        return e === "" && (t.conversationModel.isGroupConversation() ? e = u.fetch({ key: "startGroupCall_tooltip" }) : e = u.fetch({ key: "startCall_tooltip" })), e;
       });
-      t.buttonCallAriaLabel = n.pureComputed(function () {
+      t.buttonCallAriaLabel = r.pureComputed(function () {
         var e = t.callingDisabledTooltip();
-        return e === "" && (t.conversationModel.isGroupConversation() ? e = s.fetch({ key: "accessibility_startGroupCall_ariaLabel" }) : e = s.fetch({ key: "accessibility_startCall_ariaLabel" })), e;
+        return e === "" && (t.conversationModel.isGroupConversation() ? e = u.fetch({ key: "accessibility_startGroupCall_ariaLabel" }) : e = u.fetch({ key: "accessibility_startCall_ariaLabel" })), e;
       });
       t.startCallWithAudio = function () {
-        var e = f.resolve(o.serviceLocator.ACTION_TELEMETRY);
-        e.recordAction(d.audioVideo.audioCall);
-        v.get().onMediaButtonClicked(M());
-        A(!1);
+        var e = c.resolve(a.serviceLocator.ACTION_TELEMETRY);
+        e.recordAction(m.audioVideo.audioCall);
+        g.get().onMediaButtonClicked(P());
+        _(!1);
       };
       t.startCallWithVideo = function () {
-        var e = f.resolve(o.serviceLocator.ACTION_TELEMETRY);
-        e.recordAction(d.audioVideo.videoCall);
-        v.get().onMediaButtonClicked(M());
-        A(!0);
+        var e = c.resolve(a.serviceLocator.ACTION_TELEMETRY);
+        e.recordAction(m.audioVideo.videoCall);
+        g.get().onMediaButtonClicked(P());
+        _(!0);
       };
       t.joinCall = function () {
-        var e = f.resolve(o.serviceLocator.ACTION_TELEMETRY);
-        e.recordAction(d.audioVideo.joinCall);
-        v.get().onMediaButtonClicked(M());
-        A(!1);
+        var e = c.resolve(a.serviceLocator.ACTION_TELEMETRY);
+        e.recordAction(m.audioVideo.joinCall);
+        g.get().onMediaButtonClicked(P());
+        _(!1);
       };
       t.getDisabledConversationName = function () {
         var e = t.participantPerson();
@@ -177,16 +211,19 @@ define("ui/viewModels/chat/conversation/callButtonViewModel", [
         t.isOneToOneConversation.dispose();
         t.callingDisabled.dispose();
         t.videoCallingDisabled.dispose();
-        E.dispose();
-        T && T.dispose();
-        j();
-        F();
-        t.conversationModel.participants.changed.off(I);
-        L.dispose();
-        x.dispose();
+        S.dispose();
+        C && C.dispose();
+        I();
+        q();
+        U();
+        t.conversationModel.participants.changed.off(z);
+        O.dispose();
+        T.dispose();
+        N.dispose();
       };
     };
+  n.assign(E.prototype, i);
   t.build = function (e) {
-    return new y(e);
+    return new E(e);
   };
 });

@@ -12,12 +12,12 @@
   function r(e) {
     e.bindingHandlers.l10n = {
       update: function (t, r, i, s, o) {
-        var u = e.utils.unwrapObservable(r()), a = u.params, f, l;
-        for (l in a)
-          a.hasOwnProperty(l) && typeof a[l] == "function" && (a[l] = e.utils.unwrapObservable(a[l]()));
-        f = n.fetch(u);
+        var u = e.utils.unwrapObservable(r()), a = u.params;
+        for (var f in a)
+          a.hasOwnProperty(f) && typeof a[f] == "function" && (a[f] = e.utils.unwrapObservable(a[f]()));
+        var l = n.fetch(u);
         e.bindingHandlers.html.update(t, function () {
-          return f;
+          return l;
         }, i, s, o);
       }
     };

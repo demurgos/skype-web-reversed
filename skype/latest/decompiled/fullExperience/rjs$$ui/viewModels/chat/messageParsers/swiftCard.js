@@ -4,35 +4,39 @@ define("ui/viewModels/chat/messageParsers/swiftCard", [
   "module",
   "lodash-compat",
   "vendor/knockout",
-  "ui/viewModels/chat/messageParsers/skypeSwiftProcessor"
+  "ui/viewModels/chat/messageParsers/skypeSwiftProcessor",
+  "swx-utils-chat"
 ], function (e, t) {
-  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("ui/viewModels/chat/messageParsers/skypeSwiftProcessor");
-  t.parse = function (e, t, s) {
-    if (!/^<swiftcard/i.test(t._originalContent))
+  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("ui/viewModels/chat/messageParsers/skypeSwiftProcessor"), s = e("swx-utils-chat").messageSanitizer;
+  t.parse = function (e, t, o) {
+    var u = /^<swiftcard/i.test(t._originalContent) ? t._originalContent : t.html();
+    if (!/^<swiftcard/i.test(u))
       return;
-    var o = new DOMParser(), u = o.parseFromString(t._originalContent, "text/xml"), a, f, l, c, h;
-    a = n.find(u.childNodes, function (e) {
+    var a = new DOMParser(), f = a.parseFromString(u, "text/xml"), l, c, h, p, d;
+    l = n.find(f.childNodes, function (e) {
       return e.nodeName.toLocaleLowerCase() === "swiftcard";
     });
-    if (!a)
+    if (!l)
       return;
-    f = n.find(a.attributes, function (e) {
+    c = n.find(l.attributes, function (e) {
       return e.nodeName.toLocaleLowerCase() === "swift";
     });
-    if (!f)
-      return r.observable(a.textContent);
+    if (!c)
+      return r.observable(s.getMessageSanitizedContent(l.textContent));
     try {
-      h = decodeURIComponent(f.textContent);
-    } catch (p) {
-      if (p.message !== "URI malformed")
-        return r.observable(a.textContent);
-      h = f.textContent;
+      d = decodeURIComponent(c.textContent);
+    } catch (v) {
+      if (v.message !== "URI malformed")
+        return r.observable(s.getMessageSanitizedContent(l.textContent));
+      d = c.textContent;
     }
     try {
-      l = JSON.parse(h);
-    } catch (p) {
-      return r.observable(a.textContent);
+      h = JSON.parse(d);
+    } catch (v) {
+      return r.observable(s.getMessageSanitizedContent(l.textContent));
     }
-    return c = i.build(s), e.isDisjoined = !0, e.customMessageClasses = "swiftCard", e.contentTemplate = "skypeSwiftCardMessageContentTemplate", e.swiftCard = c.process(l), r.observable(a.textContent);
+    p = i.build(o, e);
+    var m = p.process(h, t.sender);
+    return e.isDisjoined = !0, e.contentTemplate = "swiftCardMessageContentTemplate", e.swift = m, e.customMessageClasses = "swiftCard " + (m.isSupported() ? m.type.toLowerCase() : "unsupported") + (m.isValid() ? "" : " invalid"), n.isUndefined(m.cards) || (e.customMessageClasses += m.cards.length === 1 ? " single" : "", e.customMessageClasses += m.cards.length === 2 ? " double" : ""), r.observable(s.getMessageSanitizedContent(l.textContent));
   };
 });

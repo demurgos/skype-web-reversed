@@ -1,8 +1,9 @@
 define("ui/viewModels/people/discoverAgentsPage", [
   "require",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "usertiming",
-  "constants/common",
+  "swx-constants",
+  "ui/viewModels/chat/navigationHelper",
   "constants/components",
   "browser/dom",
   "ui/telemetry/actions/actionNames",
@@ -10,7 +11,7 @@ define("ui/viewModels/people/discoverAgentsPage", [
   "ui/telemetry/telemetryClient",
   "services/telemetry/common/afterRenderHandler",
   "ui/viewModels/people/baseContactList",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "ui/telemetry/actions/actionSources",
   "ui/viewModels/people/contactListHelper",
   "constants/cssClasses",
@@ -18,90 +19,90 @@ define("ui/viewModels/people/discoverAgentsPage", [
   "vendor/knockout",
   "ui/contextMenu/items/all",
   "ui/contextMenu/contextMenu",
-  "services/pubSub/pubSub",
-  "utils/common/async"
+  "swx-pubsub-instance",
+  "swx-focus-handler"
 ], function (e) {
-  function L() {
-    var e = this;
-    c.call(e);
+  function A() {
+    var e = this, t = p.resolve(r.serviceLocator.FEATURE_FLAGS);
+    h.call(e);
+    e.templateName = "contactList-agents";
+    e.agentsDiscoverable = t.isFeatureOn(r.featureFlags.AGENTS_DISCOVERABLE);
     e.menuItems = [];
-    e.searchInProgress = g.observable(!1);
-    e.hasResults = g.computed(function () {
+    e.searchInProgress = y.observable(!1);
+    e.hasResults = y.computed(function () {
       return !e.searchInProgress() && !!e.contactGroups().length;
     });
-    e.hasZeroResults = g.computed(function () {
+    e.hasZeroResults = y.computed(function () {
       return !e.searchInProgress() && e.contactGroups().length === 0;
     });
   }
-  function A(e) {
-    var t = h.resolve(r.serviceLocator.ACTION_TELEMETRY);
+  function O(e) {
+    var t = p.resolve(r.serviceLocator.ACTION_TELEMETRY);
     t.recordAction(e);
   }
-  function O(e) {
-    var t, n = M();
+  function M(e) {
+    var t, n = _();
     n.ttc && n.ttr && (t = {
       name: r.telemetry.agents.name.DISCOVER_AGENTS_PAGE_PERFORMANCE,
       timeToComplete: n.ttc.duration.toString(),
       timeToRender: n.ttr.duration.toString(),
       contactsCount: e.toString()
-    }, f.get().sendEvent(a.telemetry.uiTenantToken, r.telemetry.agents.type.AGENTS, t));
-    D();
-  }
-  function M() {
-    return {
-      ttc: n.getEntriesByName(N.TTC)[0],
-      ttr: n.getEntriesByName(N.TTR)[0]
-    };
+    }, l.get().sendEvent(f.telemetry.uiTenantToken, r.telemetry.agents.type.AGENTS, t));
+    P();
   }
   function _() {
-    return n.getEntriesByName(T.OPENED).length > 0;
+    return {
+      ttc: n.getEntriesByName(C.TTC)[0],
+      ttr: n.getEntriesByName(C.TTR)[0]
+    };
   }
   function D() {
-    n.clearMarks(T.OPENED);
-    n.clearMarks(T.INITIALIZED);
-    n.clearMarks(T.RENDERED);
-    n.clearMeasures(N.TTC);
-    n.clearMeasures(N.TTR);
+    return n.getEntriesByName(N.OPENED).length > 0;
   }
-  function P(e) {
-    E.execute(function () {
-      e.focus();
-    });
-    w.subscribe(i.FRAGMENT_LOADED, H);
+  function P() {
+    n.clearMarks(N.OPENED);
+    n.clearMarks(N.INITIALIZED);
+    n.clearMarks(N.RENDERED);
+    n.clearMeasures(C.TTC);
+    n.clearMeasures(C.TTR);
   }
   function H(e) {
-    e === s.people.DISCOVER_AGENTS_PAGE && S.focus();
+    S.get().addFocusRequestToQueue(e);
+    E.subscribe(s.FRAGMENT_LOADED, B);
   }
-  var t = e("cafe/applicationInstance"), n = e("usertiming"), r = e("constants/common"), i = r.events.navigation, s = e("constants/components"), o = e("browser/dom"), u = e("ui/telemetry/actions/actionNames"), a = e("experience/settings"), f = e("ui/telemetry/telemetryClient"), l = e("services/telemetry/common/afterRenderHandler"), c = e("ui/viewModels/people/baseContactList"), h = e("services/serviceLocator"), p = e("ui/telemetry/actions/actionSources"), d = e("ui/viewModels/people/contactListHelper"), v = e("constants/cssClasses"), m = e("swx-enums"), g = e("vendor/knockout"), y = e("ui/contextMenu/items/all"), b = e("ui/contextMenu/contextMenu"), w = e("services/pubSub/pubSub"), E = e("utils/common/async"), S = null, x = r.telemetry, T = x.performanceMarks.DISCOVER_AGENTS.PAGE, N = x.measurements.DISCOVER_AGENTS.PAGE, C = r.telemetry.historyLoadOrigin.DISCOVER_AGENTS_PAGE, k = { source: p.discoverAgentsPage.agent };
-  return L.prototype = new c(), L.prototype.constructor = L, L.prototype.init = function (e, t) {
+  function B(e) {
+    e === o.people.DISCOVER_AGENTS_PAGE && S.get().addFocusRequestToQueue(x);
+  }
+  var t = e("swx-cafe-application-instance"), n = e("usertiming"), r = e("swx-constants").COMMON, i = e("ui/viewModels/chat/navigationHelper"), s = r.events.navigation, o = e("constants/components"), u = e("browser/dom"), a = e("ui/telemetry/actions/actionNames"), f = e("experience/settings"), l = e("ui/telemetry/telemetryClient"), c = e("services/telemetry/common/afterRenderHandler"), h = e("ui/viewModels/people/baseContactList"), p = e("swx-service-locator-instance").default, d = e("ui/telemetry/actions/actionSources"), v = e("ui/viewModels/people/contactListHelper"), m = e("constants/cssClasses"), g = e("swx-enums"), y = e("vendor/knockout"), b = e("ui/contextMenu/items/all"), w = e("ui/contextMenu/contextMenu"), E = e("swx-pubsub-instance").default, S = e("swx-focus-handler"), x = null, T = r.telemetry, N = T.performanceMarks.DISCOVER_AGENTS.PAGE, C = T.measurements.DISCOVER_AGENTS.PAGE, k = r.telemetry.historyLoadOrigin.DISCOVER_AGENTS_PAGE, L = { source: d.discoverAgentsPage.agent };
+  return A.prototype = new h(), A.prototype.constructor = A, A.prototype.init = function (e, t) {
     var r;
-    return S = o.getElement("." + v.discoverAgents.PAGE, t), _() && (n.mark(T.INITIALIZED), n.measure(N.TTC, T.OPENED, T.INITIALIZED)), r = c.prototype.init.call(this, e, S), P(S), r;
-  }, L.prototype.dispose = function () {
-    S = null;
+    return this.agentsDiscoverable ? (x = u.getElement("." + m.discoverAgents.PAGE, t), D() && (n.mark(N.INITIALIZED), n.measure(C.TTC, N.OPENED, N.INITIALIZED)), r = h.prototype.init.call(this, e, x), H(x), r) : (i.navigateToContactsPage(), Promise.resolve());
+  }, A.prototype.dispose = function () {
+    x = null;
     this.hasResults.dispose();
     this.hasZeroResults.dispose();
-    w.unsubscribe(i.FRAGMENT_LOADED, H);
-    c.prototype.dispose.call(this);
-  }, L.prototype.afterRender = function () {
+    E.unsubscribe(s.FRAGMENT_LOADED, B);
+    h.prototype.dispose.call(this);
+  }, A.prototype.afterRender = function () {
     function r() {
-      _() && (n.mark(T.RENDERED), n.measure(N.TTR, T.OPENED, T.RENDERED), O(e.contactsCount()));
+      D() && (n.mark(N.RENDERED), n.measure(C.TTR, N.OPENED, N.RENDERED), M(e.contactsCount()));
     }
-    var e = this, t = l(e.contactGroups().length, r);
-    return c.prototype.afterRender.call(this, t);
-  }, L.prototype.openConversation = function (e, t) {
+    var e = this, t = c(e.contactGroups().length, r);
+    return h.prototype.afterRender.call(this, t);
+  }, A.prototype.openConversation = function (e, t) {
     var n = {
-      origin: C,
+      origin: k,
       target: { expandProfile: !0 },
-      telemetryContext: k
+      telemetryContext: L
     };
-    A(u.discoverAgents.openConversation);
-    c.prototype.openConversation.call(this, e, t, n);
-  }, L.prototype.showContextMenu = function (e, t) {
-    var n = [new y.ViewPersonProfileMenuItem(e.getPerson(), C, k)];
-    b.show(n, t, k);
-  }, L.prototype.shouldPersonBeIncluded = function (e, t) {
-    return !d.personExistsInCollection(e, t);
-  }, L.prototype.populate = function (e) {
+    O(a.discoverAgents.openConversation);
+    h.prototype.openConversation.call(this, e, t, n);
+  }, A.prototype.showContextMenu = function (e, t) {
+    var n = [new b.ViewPersonProfileMenuItem(e.getPerson(), k, L)];
+    w.show(n, t, L);
+  }, A.prototype.shouldPersonBeIncluded = function (e, t) {
+    return !v.personExistsInCollection(e, t);
+  }, A.prototype.populate = function (e) {
     function a() {
       n.exclusionList = o();
       u.then(f);
@@ -113,7 +114,7 @@ define("ui/viewModels/people/discoverAgentsPage", [
       n.populateGroups(t, e);
       n.searchInProgress(!1);
     }
-    var n = this, i = t.get().personsAndGroupsManager.createPersonSearchQuery(), s = h.resolve(r.serviceLocator.SUBSCRIPTION_PROVIDER), o = s.getPersonsObservable(), u;
-    return n.searchInProgress(!0), n.exclusionList = o(), i.sources(m.searchScope.Agent), u = i.getMore(), u.then(f), n.subscriptions.persons = o.subscribe(a, null, "arrayChange"), u;
-  }, L;
+    var n = this, i = t.get().personsAndGroupsManager.createPersonSearchQuery(), s = p.resolve(r.serviceLocator.SUBSCRIPTION_PROVIDER), o = s.getPersonsObservable(), u;
+    return n.searchInProgress(!0), n.exclusionList = o(), i.sources(g.searchScope.Agent), u = i.getMore(), u.then(f), n.subscriptions.persons = o.subscribe(a, null, "arrayChange"), u;
+  }, A;
 });

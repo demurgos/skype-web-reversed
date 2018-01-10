@@ -1,25 +1,26 @@
 define("jsviews/chat/pollDesigner", [
   "require",
-  "browser/dom"
+  "browser/dom",
+  "swx-focus-handler"
 ], function (e) {
-  function i(e) {
-    var i = t.getElement(".poll-designer-content", e), s = t.getElement("textarea", e);
+  function s(e) {
+    var s = t.getElement(".poll-designer-content", e), o = t.getElement("textarea", e);
     this.scrollToBottom = function () {
-      i.scrollTop = i.scrollHeight - i.clientHeight;
+      s.scrollTop = s.scrollHeight - s.clientHeight;
     };
     this.focusPollQuestion = function () {
-      s.focus();
+      n.get().addFocusRequestToQueue(o);
     };
     this.initPollQuestion = function () {
-      s.style.height = r + "px";
+      o.style.height = i + "px";
     };
     this.updatePollQuestion = function () {
       var e;
-      s.style.height = "auto";
-      e = Math.max(r, Math.min(s.scrollHeight, n));
-      s.style.height = e + "px";
+      o.style.height = "auto";
+      e = Math.max(i, Math.min(o.scrollHeight, r));
+      o.style.height = e + "px";
     };
   }
-  var t = e("browser/dom"), n = 150, r = 19;
-  return i;
+  var t = e("browser/dom"), n = e("swx-focus-handler"), r = 150, i = 19;
+  return s;
 });

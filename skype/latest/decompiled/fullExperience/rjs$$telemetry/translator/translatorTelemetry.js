@@ -9,7 +9,7 @@ define("telemetry/translator/translatorTelemetry", [
     var e = this;
     e.send = function (e, t) {
       var i = t || {};
-      r.get().sendEvent(n.telemetry.uiTenantToken, e, i);
+      r.get().sendEvent(n.telemetry.chatTenantToken, e, i);
     };
   }
   var n = e("experience/settings"), r = e("ui/telemetry/telemetryClient");

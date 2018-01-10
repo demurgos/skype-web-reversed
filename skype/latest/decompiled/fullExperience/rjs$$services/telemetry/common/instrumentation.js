@@ -1,7 +1,7 @@
 define("services/telemetry/common/instrumentation", [
   "require",
   "lodash-compat",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "swx-enums"
 ], function (e) {
   function i(e) {
@@ -40,7 +40,7 @@ define("services/telemetry/common/instrumentation", [
   function a() {
     return n.get().personsAndGroupsManager && n.get().personsAndGroupsManager.mePerson ? n.get().personsAndGroupsManager.mePerson.id() : "unknown";
   }
-  var t = e("lodash-compat"), n = e("cafe/applicationInstance"), r = e("swx-enums");
+  var t = e("lodash-compat"), n = e("swx-cafe-application-instance"), r = e("swx-enums");
   return {
     create: function (e) {
       return i(e);

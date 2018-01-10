@@ -3,9 +3,9 @@ define("ui/calling/invalidNumberRedirector", [
   "exports",
   "module",
   "swx-enums",
-  "constants/common",
+  "swx-constants",
   "constants/components",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "browser/window"
 ], function (e, t) {
   function u() {
@@ -29,7 +29,7 @@ define("ui/calling/invalidNumberRedirector", [
       a();
     };
   }
-  var n = e("swx-enums"), r = e("constants/common"), i = e("constants/components"), s = e("services/serviceLocator"), o = e("browser/window");
+  var n = e("swx-enums"), r = e("swx-constants").COMMON, i = e("constants/components"), s = e("swx-service-locator-instance").default, o = e("browser/window");
   t.build = function () {
     return new u();
   };

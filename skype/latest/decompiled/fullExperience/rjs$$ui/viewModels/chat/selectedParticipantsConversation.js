@@ -1,12 +1,12 @@
 define("ui/viewModels/chat/selectedParticipantsConversation", [
   "require",
   "vendor/knockout",
-  "cafe/applicationInstance",
-  "services/pubSub/pubSub",
-  "constants/common",
+  "swx-cafe-application-instance",
+  "swx-pubsub-instance",
+  "swx-constants",
   "ui/telemetry/telemetryClient",
   "experience/settings",
-  "constants/common"
+  "swx-constants"
 ], function (e) {
   function a() {
     function l(t) {
@@ -68,6 +68,6 @@ define("ui/viewModels/chat/selectedParticipantsConversation", [
       r.publish(u.navigation.OPEN_CONVERSATION, { model: e });
     };
   }
-  var t = e("vendor/knockout"), n = e("cafe/applicationInstance"), r = e("services/pubSub/pubSub"), i = e("constants/common"), s = e("ui/telemetry/telemetryClient"), o = e("experience/settings"), u = e("constants/common").events;
+  var t = e("vendor/knockout"), n = e("swx-cafe-application-instance"), r = e("swx-pubsub-instance").default, i = e("swx-constants").COMMON, s = e("ui/telemetry/telemetryClient"), o = e("experience/settings"), u = e("swx-constants").COMMON.events;
   return a;
 });

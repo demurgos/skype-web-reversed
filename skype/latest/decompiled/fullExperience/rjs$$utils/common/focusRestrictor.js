@@ -14,10 +14,11 @@ define("utils/common/focusRestrictor", [
         t && (o = Array.prototype.concat.call(o, Array.prototype.slice.call(t.querySelectorAll(u))));
       });
       n.difference(s, o).forEach(function (t) {
-        e.contains(t) || (i[Object.keys(i).length] = {
+        var n = t.getAttribute("tabindex"), r = "-100";
+        !e.contains(t) && n !== r && (i[Object.keys(i).length] = {
           element: t,
-          tabIndex: t.getAttribute("tabindex")
-        }, t.setAttribute("tabindex", -100));
+          tabIndex: n
+        }, t.setAttribute("tabindex", r));
       });
     };
     r.restore = function () {

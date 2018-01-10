@@ -1,37 +1,38 @@
 define("services/g11n/init", [
   "require",
   "swx-utils-common",
-  "constants/common",
-  "services/g11n/globalization",
+  "swx-constants",
+  "swx-g11n",
+  "services/g11n/default",
   "services/i18n/cultureInfo"
 ], function (e) {
-  function s(e, t) {
+  function o(e, t) {
     e.locale = e.locale || {};
     e.locale.g11n = t;
   }
-  function o(e, o, u) {
+  function u(e, i, u) {
     function c() {
       var e = l[a];
       if (e.lang === n.i18n.EMBEDDED_LOCALE) {
-        s(u, e.lang);
+        o(u, e.lang);
         return;
       }
       return new Promise(function (n, r) {
         t.loadScript(e.url, n, r);
       }).then(function () {
-        s(u, e.lang);
+        o(u, e.lang);
       }).catch(function () {
         a++;
         if (a >= l.length)
-          throw new Error("All attempts failed to load g11n settings for:" + o);
+          throw new Error("All attempts failed to load g11n settings for:" + i);
         return c();
       });
     }
-    var a = 0, f = i.getLocale(o), l = [{
-          lang: o,
-          url: e + "/" + o + "/settings.js"
+    var a = 0, f = s.getLocale(i), l = [{
+          lang: i,
+          url: e + "/" + i + "/settings.js"
         }];
-    return f !== o && l.push({
+    return f !== i && l.push({
       lang: f,
       url: e + "/" + f + "/settings.js"
     }), l.push({
@@ -41,14 +42,14 @@ define("services/g11n/init", [
       r.init(e);
     }, c();
   }
-  function u(e) {
+  function a(e) {
     var t = e.initParams.locale;
     if (t !== n.i18n.EMBEDDED_LOCALE) {
       var r = e.appBaseUrl + "/resources/g11n";
-      return o(r, t, e);
+      return u(r, t, e);
     }
-    s(e, t);
+    o(e, t);
   }
-  var t = e("swx-utils-common").loader, n = e("constants/common"), r = e("services/g11n/globalization"), i = e("services/i18n/cultureInfo");
-  return { init: u };
+  var t = e("swx-utils-common").loader, n = e("swx-constants").COMMON, r = e("swx-g11n").globalization, i = e("services/g11n/default"), s = e("services/i18n/cultureInfo");
+  return r.init(i), { init: a };
 });

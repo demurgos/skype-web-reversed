@@ -3,9 +3,9 @@ define("jSkype/root", [
   "exports",
   "module",
   "jSkype/application",
-  "jSkype/settings"
+  "jskype-settings-instance"
 ], function (e, t) {
-  var n = e("jSkype/application"), r = e("jSkype/settings");
+  var n = e("jSkype/application"), r = e("jskype-settings-instance");
   t.Application = n;
   t.version = r.version;
 });

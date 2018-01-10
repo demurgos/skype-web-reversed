@@ -10,50 +10,50 @@
 }(function (e, t) {
   function a(e, t) {
     t || (t = u);
-    var s, a = null, f = "";
-    for (s in o)
-      o[s].languages.indexOf(t) !== -1 && (a = s);
-    switch (a) {
+    var s = null, a = "";
+    for (var f in o)
+      o[f].languages.indexOf(t) !== -1 && (s = f);
+    switch (s) {
     case "group0":
-      f = e === 1 ? n : r;
+      a = e === 1 ? n : r;
       break;
     case "group1":
-      f = e === 1 ? n : i;
+      a = e === 1 ? n : i;
       break;
     case "group2":
-      f = e > 1 ? i : n;
+      a = e > 1 ? i : n;
       break;
     case "group3":
-      f = e % 10 === 1 && e % 100 !== 11 ? n : e === 0 ? r : i;
+      a = e % 10 === 1 && e % 100 !== 11 ? n : e === 0 ? r : i;
       break;
     case "group4":
-      f = e === 1 || e === 11 ? n : e === 2 || e === 12 ? r : i;
+      a = e === 1 || e === 11 ? n : e === 2 || e === 12 ? r : i;
       break;
     case "group5":
-      f = e === 1 ? n : e === 0 || e % 100 > 0 && e % 100 < 20 ? r : i;
+      a = e === 1 ? n : e === 0 || e % 100 > 0 && e % 100 < 20 ? r : i;
       break;
     case "group6":
-      f = e % 10 === 1 && e % 100 !== 11 ? n : e % 10 >= 2 && (e % 100 < 10 || e % 100 >= 20) ? i : r;
+      a = e % 10 === 1 && e % 100 !== 11 ? n : e % 10 >= 2 && (e % 100 < 10 || e % 100 >= 20) ? i : r;
       break;
     case "group7":
-      f = e % 10 === 1 && e % 100 !== 11 ? n : e % 10 >= 2 && e % 10 <= 4 && (e % 100 < 10 || e % 100 >= 20) ? r : i;
+      a = e % 10 === 1 && e % 100 !== 11 ? n : e % 10 >= 2 && e % 10 <= 4 && (e % 100 < 10 || e % 100 >= 20) ? r : i;
       break;
     case "group8":
-      f = e === 1 ? n : e >= 2 && e <= 4 ? r : i;
+      a = e === 1 ? n : e >= 2 && e <= 4 ? r : i;
       break;
     case "group9":
-      f = e === 1 ? n : e % 10 >= 2 && e % 10 <= 4 && (e % 100 < 10 || e % 100 >= 20) ? r : i;
+      a = e === 1 ? n : e % 10 >= 2 && e % 10 <= 4 && (e % 100 < 10 || e % 100 >= 20) ? r : i;
       break;
     case "group11":
-      f = e === 1 ? n : e >= 2 && e <= 10 ? r : i;
+      a = e === 1 ? n : e >= 2 && e <= 10 ? r : i;
       break;
     case "group12":
-      f = e === 1 ? n : e === 2 ? r : i;
+      a = e === 1 ? n : e === 2 ? r : i;
       break;
     default:
-      f = "";
+      a = "";
     }
-    return f;
+    return a;
   }
   function f(e) {
     u = e;

@@ -5,6 +5,7 @@ define("ui/viewModels/calling/plugin/pluginInstallViewModel", [
   "ui/viewModels/calling/plugin/downloadStepViewModel",
   "ui/viewModels/calling/plugin/startStepViewModel",
   "ui/viewModels/calling/plugin/closeStepViewModel",
+  "ui/viewModels/calling/plugin/firefoxUnableToCallStepViewModel",
   "ui/viewModels/calling/plugin/extensionInstallStepViewModel",
   "ui/viewModels/calling/plugin/extensionInstallFailedStepViewModel",
   "ui/viewModels/calling/plugin/extensionInstalledStepViewModel",
@@ -13,203 +14,212 @@ define("ui/viewModels/calling/plugin/pluginInstallViewModel", [
   "ui/telemetry/telemetryClient",
   "browser/document",
   "swx-utils-common",
-  "swx-enums",
   "vendor/knockout",
-  "constants/extension",
-  "constants/calling",
+  "swx-constants",
   "experience/settings",
   "swx-utils-common",
-  "browser/detect",
+  "swx-browser-detect",
   "ui/modalDialog/modalDialog",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "browser/window"
 ], function (e, t) {
-  var n = e("ui/viewModels/calling/plugin/downloadStepViewModel"), r = e("ui/viewModels/calling/plugin/startStepViewModel"), i = e("ui/viewModels/calling/plugin/closeStepViewModel"), s = e("ui/viewModels/calling/plugin/extensionInstallStepViewModel"), o = e("ui/viewModels/calling/plugin/extensionInstallFailedStepViewModel"), u = e("ui/viewModels/calling/plugin/extensionInstalledStepViewModel"), a = e("ui/viewModels/calling/plugin/unblockStepViewModel"), f = e("ui/viewModels/calling/plugin/callbackStepViewModel"), l = e("ui/telemetry/telemetryClient"), c = e("browser/document"), h = e("swx-utils-common").guid, p = e("swx-enums"), d = e("vendor/knockout"), v = e("constants/extension"), m = e("constants/calling"), g = e("experience/settings"), y = e("swx-utils-common").stopwatch, b = e("browser/detect"), w = e("ui/modalDialog/modalDialog"), E = e("cafe/applicationInstance"), S = e("browser/window"), x = 4000, T = function (t, T) {
-      function F(e) {
-        return e && e.selfParticipant.audio.state.reason === p.callDisconnectionReason.OutOfBrowserCall ? p.callDisconnectionReason.OutOfBrowserCall : m.NA;
-      }
-      function I() {
-        var e = C.isBrowserDefaultToBlockPlugin, t = C.isInBrowserPluginSupported, n = C.browserName === b.BROWSERS.EDGE, r = C.browserName === b.BROWSERS.CHROME, i = Boolean(c.querySelector(v.META_SELECTOR));
-        H && P && (t || n) && R();
-        r && !t && !i && (U(), z(), W());
-        X({ isUnblockStepIncluded: e });
-        e && V();
-        P && $();
-        q();
-      }
+  var n = e("ui/viewModels/calling/plugin/downloadStepViewModel"), r = e("ui/viewModels/calling/plugin/startStepViewModel"), i = e("ui/viewModels/calling/plugin/closeStepViewModel"), s = e("ui/viewModels/calling/plugin/firefoxUnableToCallStepViewModel"), o = e("ui/viewModels/calling/plugin/extensionInstallStepViewModel"), u = e("ui/viewModels/calling/plugin/extensionInstallFailedStepViewModel"), a = e("ui/viewModels/calling/plugin/extensionInstalledStepViewModel"), f = e("ui/viewModels/calling/plugin/unblockStepViewModel"), l = e("ui/viewModels/calling/plugin/callbackStepViewModel"), c = e("ui/telemetry/telemetryClient"), h = e("browser/document"), p = e("swx-utils-common").guid, d = e("vendor/knockout"), v = e("swx-constants"), m = e("experience/settings"), g = e("swx-utils-common").stopwatch, y = e("swx-browser-detect").default, b = e("ui/modalDialog/modalDialog"), w = e("swx-cafe-application-instance"), E = e("browser/window"), S = 4000, x = v.CALLING, T = v.OUT_OF_BROWSER, N = function (t, v) {
       function q() {
-        var e = {
-          onPluginInstallEnded: tt,
-          next: K,
-          close: J
-        };
-        _ = i.build(e);
+        var e = s.build({
+          close: Q,
+          conversation: H
+        });
+        N.activeStep(e);
+        b.show("closeCallingSetup", e.label, "");
+        e.show();
       }
       function R() {
-        var e = {
-          onPluginInstallEnded: tt,
-          next: G,
-          close: Q,
-          conversation: P
-        };
-        A.push(r.build(e));
+        var e = k.isBrowserDefaultToBlockPlugin, t = k.isInBrowserPluginSupported, n = k.browserName === y.BROWSERS.CHROME, r = Boolean(h.querySelector(T.shellAppMetaSelector)), i = v.onlyUnblock;
+        B && H && !i && z();
+        n && !t && !r && !i && (W(), X(), V());
+        i || $({ isUnblockStepIncluded: e });
+        e && J();
+        H && K();
+        U();
       }
       function U() {
         var e = {
-          isFirefox: k,
-          onPluginInstallEnded: tt,
-          next: Y,
-          nextOnFailed: G,
-          close: Q,
-          conversation: P
+          onPluginInstallEnded: rt,
+          next: G,
+          close: Q
         };
-        A.push(s.build(e));
+        D = i.build(e);
       }
       function z() {
         var e = {
-          isFirefox: k,
-          onPluginInstallEnded: tt,
-          next: G,
-          close: Q,
-          conversation: P
+          onPluginInstallEnded: rt,
+          next: Z,
+          close: Y,
+          conversation: H
         };
-        A.push(o.build(e));
+        O.push(r.build(e));
       }
       function W() {
         var e = {
-          isFirefox: k,
-          onPluginInstallEnded: tt,
-          next: G,
-          close: Q,
-          conversation: P
+          isFirefox: L,
+          onPluginInstallEnded: rt,
+          next: et,
+          nextOnFailed: Z,
+          close: Y,
+          conversation: H
         };
-        A.push(u.build(e));
+        O.push(o.build(e));
       }
-      function X(e) {
-        var t;
-        e = e || {};
-        t = {
-          onPluginInstallEnded: tt,
-          next: P || e.isUnblockStepIncluded ? G : J,
-          close: Q,
-          conversation: P,
-          suppressEndedEvent: e.isUnblockStepIncluded
+      function X() {
+        var e = {
+          isFirefox: L,
+          onPluginInstallEnded: rt,
+          next: Z,
+          close: Y,
+          conversation: H
         };
-        A.push(n.build(t));
+        O.push(u.build(e));
       }
       function V() {
         var e = {
-          isFirefox: k,
-          onPluginInstallEnded: tt,
-          next: P ? G : J,
-          close: Q,
-          conversation: P
+          isFirefox: L,
+          onPluginInstallEnded: rt,
+          next: Z,
+          close: Y,
+          conversation: H
         };
-        A.push(a.build(e));
+        O.push(a.build(e));
       }
-      function $() {
-        var e = {
-          onPluginInstallEnded: tt,
-          next: J,
-          close: J,
-          conversation: P,
-          isVideo: T.isVideo
+      function $(e) {
+        var t;
+        e = e || {};
+        t = {
+          onPluginInstallEnded: rt,
+          next: H || e.isUnblockStepIncluded ? Z : Q,
+          close: Y,
+          conversation: H,
+          suppressEndedEvent: e.isUnblockStepIncluded
         };
-        A.push(f.build(e));
+        O.push(n.build(t));
       }
       function J() {
-        st();
-        w.hide();
+        var e = {
+          isFirefox: L,
+          onPluginInstallEnded: rt,
+          next: H ? Z : Q,
+          close: Y,
+          conversation: H
+        };
+        O.push(f.build(e));
       }
       function K() {
-        O = M;
-        Z("next");
+        var e = {
+          onPluginInstallEnded: rt,
+          next: Q,
+          close: Q,
+          conversation: H,
+          isVideo: v.isVideo,
+          isOutgoing: B
+        };
+        O.push(l.build(e));
       }
       function Q() {
-        M = O;
-        O = A.length - 1;
-        et(_, "next");
+        ut();
+        b.hide();
       }
       function G() {
-        M = O;
-        O++;
-        Z("next");
+        M = _;
+        tt("next");
       }
       function Y() {
-        M = O;
-        O += 2;
-        Z("next");
+        _ = M;
+        M = O.length - 1;
+        nt(D, "next");
       }
-      function Z(e) {
-        if (O >= A.length) {
-          J();
+      function Z() {
+        _ = M;
+        M++;
+        tt("next");
+      }
+      function et() {
+        _ = M;
+        M += 2;
+        tt("next");
+      }
+      function tt(e) {
+        if (M >= O.length) {
+          Q();
           return;
         }
-        var t = A[O];
-        et(t, e);
+        var t = O[M];
+        nt(t, e);
       }
-      function et(e, t) {
+      function nt(e, t) {
         N.activeStep(e);
-        w.show(e.id, e.label, t);
+        b.show(e.id, e.label, t);
         e.show && e.show();
       }
-      function tt(e, t, n) {
-        rt(e, t, n);
-        T.done && T.done(e, t);
-      }
-      function nt() {
-        var e = {
-          name: m.TELEMETRY_EVENTS.PLUGIN_INSTALL_STARTED,
-          plugin_install_context_id: L,
-          source: t,
-          installationReason: D,
-          success: m.NA,
-          exitMethod: m.NA,
-          durationInMs: m.NA,
-          closeScreen: m.NA
-        };
-        l.get().sendEvent(g.telemetry.uiTenantToken, "PluginInstall", e);
-      }
       function rt(e, t, n) {
-        var r = {
-          name: m.TELEMETRY_EVENTS.PLUGIN_INSTALL_ENDED,
-          plugin_install_context_id: L,
-          source: m.NA,
-          installationReason: D,
-          success: t.toString(),
-          exitMethod: e,
-          durationInMs: B.duration().toString(10),
-          closeScreen: n || A[M].id
-        };
-        l.get().sendEvent(g.telemetry.uiTenantToken, "PluginInstall", r);
+        st(e, t, n);
+        v.done && v.done(e, t);
       }
       function it() {
-        T.conversation ? j = S.setInterval(function () {
-          T.conversation.videoService.start.enabled.get();
-          T.conversation.audioService.start.enabled.get();
-        }, x) : j = S.setInterval(function () {
-          E.get().devicesManager.checkMediaCapabilities();
-        }, x);
+        var e = {
+          name: x.TELEMETRY_EVENTS.PLUGIN_INSTALL_STARTED,
+          plugin_install_context_id: A,
+          source: t,
+          installationReason: P,
+          success: x.NA,
+          exitMethod: x.NA,
+          durationInMs: x.NA,
+          closeScreen: x.NA
+        };
+        c.get().sendEvent(m.telemetry.uiTenantToken, "PluginInstall", e);
       }
-      function st() {
-        S.clearInterval(j);
+      function st(e, t, n) {
+        var r = {
+          name: x.TELEMETRY_EVENTS.PLUGIN_INSTALL_ENDED,
+          plugin_install_context_id: A,
+          source: x.NA,
+          installationReason: P,
+          success: t.toString(),
+          exitMethod: e,
+          durationInMs: j.duration().toString(10),
+          closeScreen: n || O[_].id
+        };
+        c.get().sendEvent(m.telemetry.uiTenantToken, "PluginInstall", r);
+      }
+      function ot() {
+        var e = C.devicesManager.mediaCapabilities;
+        e.isPluginInstalled ? F = E.setInterval(function () {
+          e.isPluginInstalled.get();
+        }, S) : F = E.setInterval(function () {
+          C.devicesManager.checkMediaCapabilities();
+        }, S);
+      }
+      function ut() {
+        E.clearInterval(F);
       }
       if (typeof t != "string")
         throw new Error("source param is mandatory");
-      T = T || {};
-      var N = this, C = b.getBrowserInfo(), k = C.browserName === b.BROWSERS.FIREFOX, L = h.create(), A = [], O = 0, M = 0, _, D, P = T.conversation, H = T.isOutgoing, B, j;
-      D = F(P);
+      v = v || {};
+      var N = this, C = w.get(), k = y.getBrowserInfo(), L = k.browserName === y.BROWSERS.FIREFOX, A = p.create(), O = [], M = 0, _ = 0, D, P = x.NA, H = v.conversation, B = v.isOutgoing, j, F, I = 51;
+      this.firefoxUnableToCall = d.observable(L && k.browserMajorVersion > I);
       this.activeStep = d.observable();
       this.start = function () {
-        B = y.build();
-        I();
-        O = 0;
-        Z("");
+        if (N.firefoxUnableToCall()) {
+          q();
+          return;
+        }
+        j = g.build();
+        R();
+        M = 0;
+        tt("");
+        ot();
         it();
-        nt();
       };
     };
   t.build = function (e, t) {
-    return new T(e, t);
+    return new N(e, t);
   };
 });

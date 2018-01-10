@@ -6,6 +6,7 @@ define("ui/telemetry/actions/actionSources", {
     addressBook: "addressBookSearchItem",
     skypeDirectory: "skypeDirectorySearchItem"
   },
+  callScreen: { participantMenu: "callScreenParticipantMenu" },
   contactsPage: { contact: "contactsPageContact" },
   discoverAgentsPage: { agent: "discoverAgentsPageAgent" },
   contextMenuItem: {
@@ -15,7 +16,13 @@ define("ui/telemetry/actions/actionSources", {
     removeMessage: "removeMessageMenuItem",
     startPSTNCall: "startPSTNCallMenuItem",
     unblock: "unblockContactMenuItem",
-    videoCall: "videoCallMenuItem"
+    addContactToFavorites: "addContactToFavoritesMenuItem",
+    removeContactFromFavorites: "removeContactFromFavoritesMenuItem",
+    videoCall: "videoCallMenuItem",
+    quoteMessage: "quoteMessageMenuItem",
+    copyMessage: "copyMessageMenuItem",
+    copySelection: "copySelectionMenuItem",
+    copySelectionText: "copySelectionTextMenuItem"
   },
   contactProfile: "contactProfile",
   search: {
@@ -24,7 +31,9 @@ define("ui/telemetry/actions/actionSources", {
       content: "experienceContent",
       openConversation: "openConversation",
       escapeKey: "escapeKey",
-      emptyQuery: "emptyQuery"
+      emptyQuery: "emptyQuery",
+      queryChanged: "queryChanged",
+      directoryActivated: "directoryActivated"
     }
   },
   conversation: {
@@ -42,5 +51,6 @@ define("ui/telemetry/actions/actionSources", {
   me: {
     area: "me_area",
     avatar: "me_avatarFilePicker"
-  }
+  },
+  selectionCopyKeyboard: "selectionCopyKeyboard"
 });

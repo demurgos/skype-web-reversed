@@ -1,6 +1,6 @@
 define("notifications/modelObservers/contactRequestObserver", [
   "require",
-  "constants/common",
+  "swx-constants",
   "swx-enums",
   "notifications/factory",
   "notifications/common/notificationHub"
@@ -40,7 +40,7 @@ define("notifications/modelObservers/contactRequestObserver", [
       t.conversationsManager.conversations.added(e);
     };
   }
-  var t = e("constants/common"), n = e("swx-enums"), r = e("notifications/factory"), i = e("notifications/common/notificationHub");
+  var t = e("swx-constants").COMMON, n = e("swx-enums"), r = e("notifications/factory"), i = e("notifications/common/notificationHub");
   return {
     build: function () {
       return new s();

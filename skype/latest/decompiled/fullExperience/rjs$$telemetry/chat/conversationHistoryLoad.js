@@ -1,15 +1,16 @@
 define("telemetry/chat/conversationHistoryLoad", [
   "require",
-  "constants/common",
+  "swx-constants",
+  "experience/settings",
   "services/telemetry/skypeData",
   "services/telemetry/common/telemetryContext",
   "telemetry/utils/telemetryUtils",
-  "telemetry/chat/telemetryEnumerator",
+  "swx-telemetry-buckets",
   "telemetry/chat/activityItemHelper"
 ], function (e) {
-  function a(e) {
-    var a = this;
-    a._context = {
+  function f(e) {
+    var f = this;
+    f._context = {
       timer: null,
       startTime: null,
       syncEndTime: null,
@@ -24,45 +25,45 @@ define("telemetry/chat/conversationHistoryLoad", [
     };
     (function () {
       var n = e.historyService.activityItems(), r = n[n.length - 1];
-      a._context.isUnread = !1;
+      f._context.isUnread = !1;
       if (!r)
         return;
-      a._context.isUnread = !r.isRead();
-      a._context.timeInStale = 0;
-      if (a._context.isUnread) {
+      f._context.isUnread = !r.isRead();
+      f._context.timeInStale = 0;
+      if (f._context.isUnread) {
         var i = +new Date();
-        a._context.timeInStale = (i - r.timestamp()) / 1000;
+        f._context.timeInStale = (i - r.timestamp()) / 1000;
       }
     }());
-    a.start = function () {
-      a._context.startTime = new Date().getTime();
-      a._context.timer = setTimeout(a.publish, a._context.SYNC_TIMEOUT);
+    f.start = function () {
+      f._context.startTime = new Date().getTime();
+      f._context.timer = setTimeout(f.publish, f._context.SYNC_TIMEOUT);
     };
-    a.registerSync = function () {
-      a._context.timer || (a._context.pageNumber++, a.start());
-      a._context.syncEndTime = new Date().getTime();
-      a._context.renderEndTime = a._context.syncEndTime;
+    f.registerSync = function () {
+      f._context.timer || (f._context.pageNumber++, f.start());
+      f._context.syncEndTime = new Date().getTime();
+      f._context.renderEndTime = f._context.syncEndTime;
     };
-    a.registerRender = function () {
-      a._context.renderEndTime = new Date().getTime();
+    f.registerRender = function () {
+      f._context.renderEndTime = new Date().getTime();
     };
-    a.registerError = function () {
-      a._context.hasError = !0;
-      a._context.syncEndTime = new Date().getTime();
-      a.publish();
+    f.registerError = function () {
+      f._context.hasError = !0;
+      f._context.syncEndTime = new Date().getTime();
+      f.publish();
     };
-    a.dispose = function () {
-      a._context.conversationLoaded = null;
+    f.dispose = function () {
+      f._context.conversationLoaded = null;
     };
-    a.publish = function () {
-      a._context.timer && (clearTimeout(a._context.timer), a._context.timer = null);
-      var f = o.processConversation(e), l = r.get(), c = u.TYPE, h, p = l.chatHistoryLoadResult[e.conversationId];
-      return f.participantsCount = e.participants().length, f.participantsCountGroup = s.getParticipantCountGroup(e.participants().length), f.isFavorite = !!e._isFavorited && e._isFavorited(), f.ttl = a._context.syncEndTime - a._context.startTime, f.ttlDurationGroup = s.getSecondsDurationGroupFromMs(f.ttl), f.tis = a._context.timeInStale, f.isUnread = a._context.isUnread, f.pageNumber = a._context.pageNumber, f.responseCode = p, a._context.hasError ? f.ttr = t.telemetry.NOT_AVAILABLE : f.ttr = a._context.renderEndTime - a._context.startTime, f.ttrDurationGroup = s.getSecondsDurationGroupFromMs(f.ttr), f.origin = l.historyLoadOrigin, f.originDescription = i.getOriginDescription(l.historyLoadOrigin, t.telemetry.historyLoadOrigin), f.t404 = l.isChatHistoryLoad404, f.isError = s.isError(p), h = {
-        type: c,
-        data: f
-      }, n.push(h), a.dispose(), f;
+    f.publish = function () {
+      f._context.timer && (clearTimeout(f._context.timer), f._context.timer = null);
+      var l = u.processConversation(e), c = i.get(), h = a.TYPE, p, d = c.chatHistoryLoadResult[e.conversationId];
+      return l.participantsCount = e.participants().length, l.participantsCountGroup = o.getParticipantCountGroup(e.participants().length), l.isFavorite = !!e._isFavorited && e._isFavorited(), l.ttl = f._context.syncEndTime - f._context.startTime, l.ttlDurationGroup = o.getSecondsDurationGroupFromMs(l.ttl), l.tis = f._context.timeInStale, l.isUnread = f._context.isUnread, l.pageNumber = f._context.pageNumber, l.responseCode = d, f._context.hasError ? l.ttr = t.telemetry.NOT_AVAILABLE : l.ttr = f._context.renderEndTime - f._context.startTime, l.ttrDurationGroup = o.getSecondsDurationGroupFromMs(l.ttr), l.origin = c.historyLoadOrigin, l.originDescription = s.getOriginDescription(c.historyLoadOrigin, t.telemetry.historyLoadOrigin), l.t404 = c.isChatHistoryLoad404, l.isError = o.isError(d), p = {
+        type: h,
+        data: l
+      }, r.push(p, n.telemetry.uiTenantToken), f.dispose(), l;
     };
   }
-  var t = e("constants/common"), n = e("services/telemetry/skypeData"), r = e("services/telemetry/common/telemetryContext"), i = e("telemetry/utils/telemetryUtils"), s = e("telemetry/chat/telemetryEnumerator"), o = e("telemetry/chat/activityItemHelper"), u = t.telemetry.conversationHistoryLoadEvent;
-  return a;
+  var t = e("swx-constants").COMMON, n = e("experience/settings"), r = e("services/telemetry/skypeData"), i = e("services/telemetry/common/telemetryContext"), s = e("telemetry/utils/telemetryUtils"), o = e("swx-telemetry-buckets"), u = e("telemetry/chat/activityItemHelper"), a = t.telemetry.conversationHistoryLoadEvent;
+  return f;
 });

@@ -1,7 +1,6 @@
 define("constants/components", {
   calling: {
     CALL_SCREEN: "swx-call-screen",
-    PARTICIPANT: "swx-call-participant",
     ROSTER: "swx-call-roster",
     CALL_ANIMATION: "swx-call-animation",
     END_CALL: "swx-end-call",
@@ -16,7 +15,12 @@ define("constants/components", {
     SKYPEOUT_DIALPAD: "swx-dialpad",
     SKYPEOUT_COUNTRY_PICKER: "swx-countrypicker",
     CQF: "swx-cqf",
-    CQF_QUESTION: "swx-cqf-question"
+    CQF_STAR_RATING: "swx-star-rating",
+    CQF_QUESTION: "swx-cqf-question",
+    SCREEN_SHARING_PREVIEW: "swx-screen-sharing-preview",
+    UNANSWERED_CALL: "swx-unanswered-call",
+    CALL_SCREEN_MODAL: "swx-call-screen-modal",
+    ADD_PARTICIPANTS: "swx-add-participants"
   },
   chat: {
     CHAT_LOG: "swx-chat-log",
@@ -67,13 +71,19 @@ define("constants/components", {
     START_CONVERSATION_OVERLAY: "swx-start-conversation-overlay",
     SUGGESTION_LIST: "swx-suggestion-list",
     VIDEO_PLAYER: "swx-video-player",
+    AUDIO_PLAYER: "swx-audio-player",
+    GIFPLAYER: "swx-gif-player",
     HEART_TOAST: "swx-heart-toast",
     USER_LIST_POPUP: "swx-user-list-popup",
     TRANSLATOR_SETTINGS: "swx-translator-settings",
     TRANSLATOR_LANGUAGE_PICKER: "swx-translator-language-picker",
     MORE_ACTIONS_BUTTON: "swx-more-actions-button",
     HEART: "swx-heart",
-    MESSAGES_SEARCH: "swx-messages-search"
+    NARRATOR: "swx-narrator",
+    MESSAGES_SEARCH: "swx-messages-search",
+    MUTE_CONVERSATION_SETTING_ITEM: "swx-mute-conversation-setting-item",
+    MESSAGE_DESTINATION_PICKER: "swx-message-destination-picker",
+    SMS_PRICE: "swx-sms-price"
   },
   experience: {
     BUTTON: "swx-button",
@@ -82,7 +92,9 @@ define("constants/components", {
     LOADING_ANIMATION: "swx-loading-animation",
     RADIO_BUTTON: "swx-radio-button",
     SELECT_BOX: "swx-select-box",
-    TOGGLE_BUTTON: "swx-toggle-button"
+    TOGGLE_BUTTON: "swx-toggle-button",
+    AVATAR_FILE_PICKER: "swx-avatar-file-picker",
+    EDUCATIONAL_CAROUSEL: "swx-edu-carousel"
   },
   people: {
     AVATAR: "swx-avatar",
@@ -106,12 +118,14 @@ define("constants/components", {
   },
   me: {
     AREA: "swx-me-area",
-    AVATAR_FILE_PICKER: "swx-me-avatar-file-picker",
-    PRESENCE_POPUP: "swx-me-presence-popup"
+    PRESENCE_POPUP: "swx-me-presence-popup",
+    MOOD_MESSAGE: "swx-me-mood-message"
   },
   userSettings: {
     USER_SETTINGS_PAGE: "swx-user-settings-page",
     SHORT_CIRCUIT: "swx-short-circuit",
-    ABOUT: "swx-about"
-  }
+    ABOUT: "swx-about",
+    AUDIO_VIDEO_SETTINGS_PANE: "swx-audio-video-settings-pane"
+  },
+  notifications: { NOTIFICATION_BOX: "swx-notification-box" }
 });

@@ -3,12 +3,12 @@ define("ui/viewModels/calling/plugin/closeStepViewModel", [
   "exports",
   "module",
   "ui/viewModels/calling/helpers/browserInstallContent",
-  "constants/calling",
+  "swx-constants",
   "ui/telemetry/actions/actionNames",
-  "constants/common",
-  "services/serviceLocator"
+  "swx-constants",
+  "swx-service-locator-instance"
 ], function (e, t) {
-  var n = e("ui/viewModels/calling/helpers/browserInstallContent"), r = e("constants/calling"), i = e("ui/telemetry/actions/actionNames"), s = e("constants/common"), o = e("services/serviceLocator"), u = function (u) {
+  var n = e("ui/viewModels/calling/helpers/browserInstallContent"), r = e("swx-constants").CALLING, i = e("ui/telemetry/actions/actionNames"), s = e("swx-constants").COMMON, o = e("swx-service-locator-instance").default, u = function (u) {
       var a = u.next, f = u.close, l = n.getInstallResources();
       this.id = t.STEP_ID;
       this.closeScreenImageUrl = l.images.closeScreen;

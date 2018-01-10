@@ -1,22 +1,42 @@
 define("ui/viewModels/chat/conversationProcessor", [
   "require",
-  "utils/chat/dateTime",
-  "constants/common"
+  "lodash-compat",
+  "swx-utils-chat",
+  "swx-constants"
 ], function (e) {
-  var t = e("utils/chat/dateTime"), n = e("constants/common"), r = 300000, i = function (e) {
-      return t.getMidnight(e);
-    }, s = function (e, t) {
-      return t === undefined ? !0 : e !== t;
+  var t = e("lodash-compat"), n = e("swx-utils-chat").dateTime, r = e("swx-constants").COMMON, i = 300000, s = function (e) {
+      return n.getMidnight(e);
     }, o = function (e, t) {
-      return i(t) !== i(e);
-    }, u = function (e, t, n) {
-      var i = e > t, s = e - n;
-      return i && s >= r;
+      return t === undefined ? !0 : e !== t;
+    }, u = function (e, t) {
+      return s(t) !== s(e);
+    }, a = function (e, t, n) {
+      var r = e > t, s = e - n;
+      return r && s >= i;
+    }, f = function (e) {
+      if (e && e.isMeCommandMessage)
+        return !1;
+      if (e && t.isFunction(e.group))
+        switch (e.group()) {
+        case r.activityItemGroups.TEXT:
+        case r.activityItemGroups.MEDIA:
+        case r.activityItemGroups.CONTACT_INFO:
+        case r.activityItemGroups.POLL:
+        case r.activityItemGroups.TRANSCRIPT:
+        case r.activityItemGroups.CALL:
+        case r.activityItemGroups.PSTN:
+          return !0;
+        }
+      return !1;
+    }, l = function (e) {
+      return !!(e && e.messageDeliveryStatusEnabled && e.deliveryFailed());
+    }, c = function (e) {
+      return !!e && !!(e.playerId || t.isFunction(e.group) && e.group() === r.activityItemGroups.MEDIA);
     };
   return function () {
-    this.processMessage = function (e, r) {
-      var a = e.group() === n.activityItemGroups.TEXT, f = e.group() === n.activityItemGroups.MEDIA, l = e.group() === n.activityItemGroups.CONTACT_INFO, c = e.group() === n.activityItemGroups.CALL, h = e.group() === n.activityItemGroups.POLL, p = e.group() === n.activityItemGroups.PSTN, d = e.group() === n.activityItemGroups.PARTICIPANT, v = a || f || l || h, m = v || c || p, g = c || f || p, y = e.author && e.author.id(), b = s(r.previousAuthor, y), w = r.midnight || i(new Date().getTime()), E = o(r.previousTimestamp, e.timestamp), S = e.playerId || f, x = g || b || E || S || u(e.timestamp, w, r.lastShowedTimestamp), T = !e.isMyself, N = v && (b || !!r.suppressedLastAuthor), C = m && (x || !!r.suppressedLastTimestamp), k = t.formatTimestamp(e.timestamp, w), L = r.previousMessage && C && !N && !r.previousMessage.showTimestamp() || d;
-      return e.isFirstMessage(e.isDisjoined || r.previousIsDisjoined || N), e.isLastMessage(!0), e.showAuthorInfo(T && e.isFirstMessage()), e.showTimestamp(C), e.setTimestamp(k), C && (r.lastShowedTimestamp = e.timestamp), r.previousIsLastMessage && r.previousIsLastMessage(e.isFirstMessage()), r.previousMessage && r.previousMessage.isLastMessageInBubble(L), r.previousAuthor = y, r.previousTimestamp = e.timestamp, r.suppressedLastAuthor = !v, r.suppressedLastTimestamp = !m || f, r.midnight = w, r.previousIsLastMessage = e.isLastMessage, r.previousIsDisjoined = e.isDisjoined, r.previousMessage = e, r;
+    this.processMessage = function (e, t) {
+      var i = e.group() === r.activityItemGroups.TEXT, h = e.group() === r.activityItemGroups.MEDIA, p = e.group() === r.activityItemGroups.CONTACT_INFO, d = e.group() === r.activityItemGroups.CALL, v = e.group() === r.activityItemGroups.POLL, m = e.group() === r.activityItemGroups.PSTN, g = e.group() === r.activityItemGroups.PARTICIPANT, y = e.group() === r.activityItemGroups.TRANSCRIPT, b = i || h || p || v || y, w = f(e), E = d || h || m, S = e.author && e.author.id(), x = o(t.previousAuthor, S), T = t.midnight || s(new Date().getTime()), N = u(t.previousTimestamp, e.timestamp), C = E || x || N || c(e) || a(e.timestamp, T, t.lastShowedTimestamp), k = x || N || g || c(t.previousMessage), L = !e.isMyself, A = b && (x || !!t.suppressedLastAuthor), O = w && (C || !!t.suppressedLastTimestamp), M = n.formatTimestamp(e.timestamp, T), _ = n.formatTimestampLong(e.timestamp, T), D = n.formatTimestampForceLong(e.timestamp), P = t.previousMessage && O && !A && !t.previousMessage.showTimestamp() || g, H = f(t.previousMessage) && k && !l(t.previousMessage);
+      return e.isFirstMessage(b && (e.isDisjoined || t.previousIsDisjoined || A)), e.isLastMessage(!0), e.showAuthorInfo(L && e.isFirstMessage()), e.showTimestamp(O), e.setTimestamp(M), e.showBottomTimestamp(w && !l(e)), e.setBottomTimestamp(_), e.setLongTimestamp(D), O && (t.lastShowedTimestamp = e.timestamp), t.previousMessage && (t.previousMessage.isLastMessageInBubble(P), t.previousMessage.showBottomTimestamp(H)), t.previousAuthor = S, t.previousTimestamp = e.timestamp, t.suppressedLastAuthor = !b, t.suppressedLastTimestamp = !w || h, t.midnight = T, t.previousIsDisjoined = e.isDisjoined, t.previousMessage = e, t;
     };
     this.processMyLastMessageIfAny = function (e) {
       var t;
@@ -25,6 +45,7 @@ define("ui/viewModels/chat/conversationProcessor", [
       for (t = e.length - 1; t >= 0; t--)
         if (e[t].isMyself) {
           e[t].isMyLastMessageInChat(!0);
+          e[t].showBottomTimestamp(!e[t].messageDeliveryStatusEnabled && e[t].showBottomTimestamp());
           return;
         }
     };

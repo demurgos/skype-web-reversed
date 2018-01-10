@@ -25,9 +25,12 @@ define("constants/cssClasses", [
     AVATAR_PRESENCE: "Avatar--presence",
     AVATAR_GROUP: "Avatar--group",
     AVATAR_SELECTED: "Avatar--selected",
+    AVATAR_USE_DEFAULT: "Avatar--defaultAvatar",
     AVATAR_AGENT: "Avatar--agent",
     AVATAR_PSTN: "Avatar--pstn",
-    AVATAR_SIZE: "Avatar--size"
+    AVATAR_SIZE: "Avatar--size",
+    AVATAR_ABSOLUTE: "Avatar--absolute",
+    AVATAR_FULL_SIZE: "Avatar--fullSize"
   };
   t.avatarDeprecated = {
     GROUP_AVATAR: "group",

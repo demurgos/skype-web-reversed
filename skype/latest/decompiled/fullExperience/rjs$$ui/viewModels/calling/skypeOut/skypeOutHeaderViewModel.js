@@ -5,23 +5,26 @@ define("ui/viewModels/calling/skypeOut/skypeOutHeaderViewModel", [
   "lodash-compat",
   "ui/telemetry/actions/actionNames",
   "ui/telemetry/actions/actionSources",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "ui/viewModels/calling/helpers/callingFacade",
-  "constants/common",
-  "constants/people",
+  "swx-constants",
+  "swx-constants",
   "swx-enums",
   "utils/common/eventHelper",
   "utils/common/eventMixin",
   "utils/common/localStorage",
-  "constants/keys",
+  "swx-constants",
   "vendor/knockout",
   "telemetry/calling/pstn/pstn",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "swx-utils-common",
-  "ui/controls/calling/sounds",
-  "constants/common"
+  "swx-constants"
 ], function (e, t) {
-  function S() {
+  function E() {
+    function N() {
+      var t = e.skypeOutInput();
+      return t = t.replace(/\D/g, ""), t.length >= 10 && t.length <= 15;
+    }
     function C() {
       e.hasFocus(!0);
     }
@@ -29,35 +32,35 @@ define("ui/viewModels/calling/skypeOut/skypeOutHeaderViewModel", [
       e.hasFocus(!1);
     }
     function L(e) {
-      T = e;
+      x = e;
     }
     function A(e) {
       t.selectionStart = e;
       t.selectionEnd = e;
     }
     function O(e) {
-      e && (T = null);
+      e && (x = null);
     }
     function M(t) {
-      if (t === N)
+      if (t === T)
         return;
-      E.test(t) ? (N = t, _(t) || e.dispatchEvent(u.events.skypeOut.INPUT_CHANGED, e.skypeOutInput(), e.DIRECTION.CHILD)) : (e.skypeOutInput(N), O(!0));
+      w.test(t) ? (T = t, _(t) || e.dispatchEvent(u.events.skypeOut.INPUT_CHANGED, e.skypeOutInput(), e.DIRECTION.CHILD)) : (e.skypeOutInput(T), O(!0));
     }
     function _(t) {
       var n, r;
       return n = t.substr(0, 2), n === "00" ? (r = "+" + t.substr(2), e.skypeOutInput(r), e.hasFocus() ? A(1) : L(1), !0) : !1;
     }
     function D() {
-      return T !== null;
+      return x !== null;
     }
     function P() {
       D() || C();
     }
-    var e = this, t, n = m.resolve(u.serviceLocator.PUBSUB), a = m.resolve(u.serviceLocator.MODEL_UI_OBSERVER).conversationsCallStateObserver, c, S, x, T = null, N = "";
+    var e = this, t, n = m.resolve(u.serviceLocator.PUBSUB), a = m.resolve(u.serviceLocator.MODEL_UI_OBSERVER).conversationsCallStateObserver, c, E, S, x = null, T = "";
     e.hasFocus = d.observable(!0);
     e.skypeOutInput = d.observable("");
     e.isCallButtonDisabled = d.computed(function () {
-      return a.activeCalls().length > 0 || e.skypeOutInput().length < 3;
+      return a.activeCalls().length > 0 || !N();
     });
     e.selectedCountry = d.observable();
     e.init = function (r) {
@@ -65,18 +68,13 @@ define("ui/viewModels/calling/skypeOut/skypeOutHeaderViewModel", [
       e.registerEvent(u.events.skypeOut.DIAL_BUTTON_CLICKED, e.insertAtCursor);
       n.subscribe(u.events.navigation.FRAGMENT_LOADED, C);
       c = e.skypeOutInput.subscribe(M);
-      S = e.selectedCountry.subscribe(P);
-      x = e.hasFocus.subscribe(O);
+      E = e.selectedCountry.subscribe(P);
+      S = e.hasFocus.subscribe(O);
     };
     e.insertAtCursor = function (n) {
-      var r, i, s, o, u;
-      i = D() ? T : t.selectionStart;
-      s = D() ? T : t.selectionEnd;
-      r = i;
-      o = e.skypeOutInput();
-      u = g.inject(o, n.text, i, s);
+      var r = D() ? x : t.selectionStart, i = D() ? x : t.selectionEnd, s = e.skypeOutInput(), o = g.inject(s, n.text, r, i);
       L(r + n.text.length);
-      e.skypeOutInput(u);
+      e.skypeOutInput(o);
     };
     e.onKeyDown = function (t, n) {
       var r = l.getKeyCode(n);
@@ -93,26 +91,39 @@ define("ui/viewModels/calling/skypeOut/skypeOutHeaderViewModel", [
       return !0;
     };
     e.callPSTN = function () {
-      function l() {
-        return y.playOnce(y.KEYS.CALL_DIALING), o.placeCall(n, !1, u.telemetry.historyLoadOrigin.SKYPEOUT_PAGE, !0);
+      function c() {
+        return o.placeCall(n, !1, u.telemetry.historyLoadOrigin.SKYPEOUT_PAGE, !0);
       }
-      function c(e) {
+      function p(e) {
         var t = n.participants(0), r = t.person.phoneNumbers(0) ? t.person.phoneNumbers(0).telUri() : e;
         t.audio.endpoint && t.audio.endpoint(r);
       }
-      function p() {
+      function d() {
         var e = m.resolve(u.serviceLocator.ACTION_TELEMETRY), t = {
             source: i.skypeOutPage.skypeOutHeader,
             phoneNumberType: f.phoneType.Other
           };
         e.recordAction(r.audioVideo.pstnCall, t);
       }
-      function d() {
-        p();
-        v.initiatingPSTNCall(b.entryPoint.SKYPE_OUT_PAGE);
+      function g() {
+        d();
+        v.initiatingPSTNCall(y.entryPoint.SKYPE_OUT_PAGE);
       }
-      var t, n, a = e.skypeOutInput().replace(/\s+/g, "");
-      return a.charAt(0) !== "+" ? (e.dispatchEvent(u.events.selectBox.TOGGLE, e.DIRECTION.CHILD), Promise.reject()) : (a = "+" + a.replace(/\D+/g, ""), d(), t = s.get().conversationsManager, n = t.getConversationByUri(w + a), !n.audioService.start.enabled() && n.audioService.start.enabled.reason !== f.callingNotSupportedReasons.PluginNotInstalled ? Promise.reject(Error("Audio service disabled: " + n.audioService.start.enabled.reason)) : (c(a), h.set(u.storageKeys.RECENT_COUNTRY, JSON.stringify(e.selectedCountry())), l()));
+      function w() {
+        return !n.audioService.start.enabled() && n.audioService.start.enabled.reason !== f.callingNotSupportedReasons.PluginNotInstalled ? Promise.reject(Error("Audio service disabled: " + n.audioService.start.enabled.reason)) : (p(l), h.set(u.storageKeys.RECENT_COUNTRY, JSON.stringify(e.selectedCountry())), c());
+      }
+      function E() {
+        function r() {
+          var r = e.results().length, i = r ? e.results(0).result : undefined;
+          if (!i)
+            return;
+          return n = t.getConversation(i), w();
+        }
+        var e = s.get().personsAndGroupsManager.createPersonSearchQuery();
+        return e.sources(f.searchScope.All), e.text(l), e.getMore().then(r);
+      }
+      var t, n, a, l = e.skypeOutInput().replace(/\s+/g, "");
+      return l.charAt(0) !== "+" ? (e.dispatchEvent(u.events.selectBox.TOGGLE, e.DIRECTION.CHILD), Promise.reject()) : (l = "+" + l.replace(/\D+/g, ""), g(), t = s.get().conversationsManager, a = m.resolve(u.serviceLocator.FEATURE_FLAGS).isFeatureOn(u.featureFlags.USE_BUSINESS_WORDING), a ? E() : (n = t.getConversationByUri(b + l), w()));
     };
     e.resetSkypeOutInput = function () {
       e.skypeOutInput("");
@@ -121,17 +132,17 @@ define("ui/viewModels/calling/skypeOut/skypeOutHeaderViewModel", [
       n.unsubscribe(u.events.navigation.FRAGMENT_LOADED, C);
       e.isCallButtonDisabled.dispose();
       c.dispose();
+      E.dispose();
       S.dispose();
-      x.dispose();
     };
     e.resetSkypeOutInputViaKey = function (t, n) {
       var r = l.getKeyCode(n);
       return r === p.ENTER && (e.resetSkypeOutInput(), e.hasFocus(!0), n.stopPropagation()), !0;
     };
   }
-  var n = e("lodash-compat"), r = e("ui/telemetry/actions/actionNames"), i = e("ui/telemetry/actions/actionSources"), s = e("cafe/applicationInstance"), o = e("ui/viewModels/calling/helpers/callingFacade"), u = e("constants/common"), a = e("constants/people"), f = e("swx-enums"), l = e("utils/common/eventHelper"), c = e("utils/common/eventMixin"), h = e("utils/common/localStorage"), p = e("constants/keys"), d = e("vendor/knockout"), v = e("telemetry/calling/pstn/pstn"), m = e("services/serviceLocator"), g = e("swx-utils-common").stringUtils, y = e("ui/controls/calling/sounds"), b = e("constants/common").telemetry.pstn, w = a.contactTypes.PSTN + ":", E = /^(\+?[\s\d\-]*$)/;
-  n.assign(S.prototype, c);
+  var n = e("lodash-compat"), r = e("ui/telemetry/actions/actionNames"), i = e("ui/telemetry/actions/actionSources"), s = e("swx-cafe-application-instance"), o = e("ui/viewModels/calling/helpers/callingFacade"), u = e("swx-constants").COMMON, a = e("swx-constants").PEOPLE, f = e("swx-enums"), l = e("utils/common/eventHelper"), c = e("utils/common/eventMixin"), h = e("utils/common/localStorage"), p = e("swx-constants").KEYS, d = e("vendor/knockout"), v = e("telemetry/calling/pstn/pstn"), m = e("swx-service-locator-instance").default, g = e("swx-utils-common").stringUtils, y = e("swx-constants").COMMON.telemetry.pstn, b = a.contactTypes.PSTN + ":", w = /^(\+?[\s\d\-\(\)\.)]*$)/;
+  n.assign(E.prototype, c);
   t.build = function () {
-    return new S();
+    return new E();
   };
 });

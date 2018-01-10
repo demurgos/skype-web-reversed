@@ -7,10 +7,10 @@ define("ui/viewModels/commerce/subscriptionEntitlement", [
   "swx-i18n",
   "swx-enums",
   "experience/settings",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "telemetry/calling/pstn/pstn",
   "utils/common/cafeObservable",
-  "constants/common"
+  "swx-constants"
 ], function (e, t) {
   function c() {
     function h() {
@@ -44,7 +44,7 @@ define("ui/viewModels/commerce/subscriptionEntitlement", [
       return a.addingSubscription(l.entryPoint.SKYPE_OUT_PAGE), !0;
     };
   }
-  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("swx-i18n").localization, s = e("swx-enums"), o = e("experience/settings"), u = e("cafe/applicationInstance"), a = e("telemetry/calling/pstn/pstn"), f = e("utils/common/cafeObservable"), l = e("constants/common").telemetry.pstn;
+  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("swx-i18n").localization, s = e("swx-enums"), o = e("experience/settings"), u = e("swx-cafe-application-instance"), a = e("telemetry/calling/pstn/pstn"), f = e("utils/common/cafeObservable"), l = e("swx-constants").COMMON.telemetry.pstn;
   c.prototype.dispose = function () {
     this.subscriptionsText.dispose();
   };

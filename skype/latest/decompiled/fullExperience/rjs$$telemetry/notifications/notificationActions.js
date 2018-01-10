@@ -4,7 +4,7 @@ define("telemetry/notifications/notificationActions", [
   "module",
   "ui/telemetry/telemetryClient",
   "experience/settings",
-  "constants/common"
+  "swx-constants"
 ], function (e, t) {
   function s() {
     function e(e) {
@@ -15,7 +15,7 @@ define("telemetry/notifications/notificationActions", [
     }
     return { send: e };
   }
-  var n = e("ui/telemetry/telemetryClient"), r = e("experience/settings"), i = e("constants/common");
+  var n = e("ui/telemetry/telemetryClient"), r = e("experience/settings"), i = e("swx-constants").COMMON;
   t.build = function () {
     return new s();
   };

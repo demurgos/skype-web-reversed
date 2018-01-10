@@ -1,149 +1,147 @@
 define("services/pes/configSync", [
   "require",
   "lodash-compat",
-  "reqwest",
-  "browser/window",
-  "cafe/applicationInstance",
-  "swx-enums",
-  "constants/common",
-  "experience/settings",
+  "swx-cafe-application-instance",
   "services/ecs/configLoader",
   "services/pes/configProcessor",
-  "services/pes/constants",
+  "swx-constants",
   "services/i18n/cultureInfo",
-  "services/pubSub/pubSub",
-  "services/serviceLocator",
-  "utils/chat/pesUtils"
+  "swx-enums",
+  "services/pes/constants",
+  "utils/chat/pesUtils",
+  "swx-pubsub-instance",
+  "reqwest",
+  "swx-service-locator-instance",
+  "experience/settings",
+  "browser/window"
 ], function (e) {
   function v() {
-    function y() {
+    function g() {
       function t() {
         return new Promise(function (e) {
-          v = r.setTimeout(e, u.pesCDNAuthentication.cdnTokenTtlMs);
+          v = d.setTimeout(e, p.pesCDNAuthentication.cdnTokenTtlMs);
         }).then(function () {
-          return Promise.resolve(i.get().signInManager._skypeToken());
-        }).then(b).then(E).then(t);
+          return n.get().signInManager._skypeToken();
+        }).then(y).then(w).then(t);
       }
-      m.isFeatureOn(o.featureFlags.PES_CDN_AUTH_ENABLED) && u.pesCDNAuthentication.cdnTokenTtlMs > 0 && (t().catch(function (e) {
-      }).then(t), i.get().signInManager.state.when(s.loginState.SignedOut, function () {
+      m.isFeatureOn(s.featureFlags.PES_CDN_AUTH_ENABLED) && p.pesCDNAuthentication.cdnTokenTtlMs > 0 && (t().catch(function (e) {
+      }).then(t), n.get().signInManager.state.when(u.loginState.SignedOut, function () {
         e.dispose();
       }));
     }
-    function b(t) {
-      var r = "https://" + u.pesCDNAuthentication.skypeServiceHost + u.pesCDNAuthentication.tokenSourceEndpoint, i = {
+    function y(t) {
+      var n = "https://" + p.pesCDNAuthentication.skypeServiceHost + p.pesCDNAuthentication.tokenSourceEndpoint, r = {
           headers: { Authorization: "skype_token " + t },
-          url: r,
+          url: n,
           dataType: "json",
           crossOrigin: !0
         };
-      return Promise.resolve(n.compat(i)).catch(function () {
+      return Promise.resolve(c.compat(r)).catch(function () {
         return { token: "dummy_token" };
       }).then(function (t) {
-        return e.latestToken = t.token, h.publish(o.events.personalExpression.CDN_TOKEN_UPDATED, t.token), t.token;
+        var n = h.resolve(s.serviceLocator.PES_CONFIG_SERVICE);
+        return e.latestToken = t.token, n.cdnTokenUpdated(t.token), l.publish(s.events.personalExpression.CDN_TOKEN_UPDATED, t.token), t.token;
       });
     }
-    function w(e) {
+    function b(e) {
       var t;
-      return t = "https://" + u.pesCDNAuthentication.cdnServiceHost + u.pesCDNAuthentication.cookieSourceEndpoint + "?vdms_skype_token=" + e, {
+      return t = "https://" + p.pesCDNAuthentication.cdnServiceHost + p.pesCDNAuthentication.cookieSourceEndpoint + "?vdms_skype_token=" + e, {
         url: t,
         dataType: "json",
         crossOrigin: !0,
         withCredentials: !0
       };
     }
-    function E(e) {
-      var t = w(e);
-      return Promise.resolve(n.compat(t)).catch(function () {
-      }).then(function () {
+    function w(e) {
+      var t = b(e);
+      return Promise.resolve(c.compat(t)).catch(function () {
         return !0;
       });
     }
-    var e = this, v = 0, m, g;
+    var e = this, v = 0, m;
     e.latestToken = "";
     e.init = function () {
-      function r() {
-        var e;
-        if (u.pesConfigUrl)
-          e = Promise.resolve({ pes_config: u.pesConfigUrl });
-        else {
-          var t = i.get().personsAndGroupsManager.mePerson;
-          e = Promise.resolve(a.loadConfig(s.ecsClientNames.Skype, u.ecsPesKey, t.id()));
-        }
-        return e;
+      function d() {
+        var e, t;
+        return p.pesConfigUrl ? t = Promise.resolve({ pes_config: p.pesConfigUrl }) : (e = n.get().personsAndGroupsManager.mePerson, t = e.id.get().then(function (e) {
+          return r.loadConfig(u.ecsClientNames.Skype, p.ecsPesKey, e);
+        })), t;
       }
-      function h(r) {
-        if (m.isFeatureOn(o.featureFlags.PES_CDN_AUTH_ENABLED) && m.isFeatureOn(o.featureFlags.PES_CDN_AUTH_URL_FALLBACK_ENABLED)) {
-          var i, s, a = t.find(r.items, function (e) {
-              return e.type === l.itemTypes.moji.id;
+      function v(n) {
+        if (m.isFeatureOn(s.featureFlags.PES_CDN_AUTH_ENABLED) && m.isFeatureOn(s.featureFlags.PES_CDN_AUTH_URL_FALLBACK_ENABLED)) {
+          var r, o, u = t.find(n.items, function (e) {
+              return e.type === a.itemTypes.moji.id;
             });
-          if (a)
-            return s = r.itemsRoot + "/" + a.id + "/views/meta.default", i = {
+          if (u)
+            return o = n.itemsRoot + "/" + u.id + "/views/meta.default", r = {
               dataType: "json",
               withCredentials: !0,
-              url: d.rewriteUrls(s, u.pesCDNAuthentication.rewriteRules),
+              url: f.rewriteUrls(o, p.pesCDNAuthentication.rewriteRules),
               crossOrigin: !0
-            }, Promise.resolve(n.compat(i)).then(function () {
-              g.init(r);
-              var e = f.prefetch(g.getConfiguration());
-              f.register(e);
+            }, Promise.resolve(c.compat(r)).then(function () {
+              l.init(n);
+              var e = i.prefetch(l.getConfiguration());
+              i.register(e);
             }).catch(function () {
-              r._requiresCDNUrlAuthentication = !0;
-              r._cdnToken = e.latestToken;
-              g.init(r);
-              var t = f.prefetch(g.getConfiguration());
-              f.register(t);
+              e._requiresCDNUrlAuthentication = !0;
+              n._requiresCDNUrlAuthentication = !0;
+              n._cdnToken = e.latestToken;
+              l.init(n);
+              var t = i.prefetch(l.getConfiguration());
+              i.register(t);
             });
         } else {
-          g.init(r);
-          var c = f.prefetch(g.getConfiguration());
-          f.register(c);
+          l.init(n);
+          var h = i.prefetch(l.getConfiguration());
+          i.register(h);
         }
       }
-      function v(e) {
-        throw new Error("Error while retrieving the pes configuration data");
+      function y(e) {
+        throw e;
       }
       function b(t) {
-        var n = new Promise(function (t) {
-          i.get().signInManager.state.once(s.loginState.SignedIn, t);
-        }).then(e.fetchConfiguration.bind(null, t.pes_config)).then(h).then(y).catch(v);
-        return { configurationLoaded: n };
+        var r = new Promise(function (t) {
+          n.get().signInManager.state.once(u.loginState.SignedIn, t);
+        }).then(e.fetchConfiguration.bind(null, t.pes_config)).then(v).then(g).catch(y);
+        return { configurationLoaded: r };
       }
-      return m = p.resolve(o.serviceLocator.FEATURE_FLAGS), u.locale = u.locale || {}, u.initParams = u.initParams || {}, u.locale.pes = c.getPesLocale(u.initParams.locale), g = p.resolve(o.serviceLocator.PES_CONFIG_SERVICE), r().then(b).catch(v);
+      var l;
+      return m = h.resolve(s.serviceLocator.FEATURE_FLAGS), p.locale = p.locale || {}, p.initParams = p.initParams || {}, p.locale.pes = o.getPesLocale(p.initParams.locale), l = h.resolve(s.serviceLocator.PES_CONFIG_SERVICE), d().then(b).catch(y);
     };
     e.fetchConfiguration = function (r) {
-      function s() {
+      function i() {
         var e, t = Promise.resolve();
-        return m.isFeatureOn(o.featureFlags.PES_CDN_AUTH_ENABLED) && (e = i.get().signInManager._skypeToken(), t = Promise.resolve(e).then(b).then(E)), t;
+        return m.isFeatureOn(s.featureFlags.PES_CDN_AUTH_ENABLED) && (e = n.get().signInManager._skypeToken(), t = Promise.resolve(e).then(y).then(w)), t;
       }
-      function a(r, i) {
-        var s, a = t.extend(i || {}, {
+      function o(n, r) {
+        var i, o = t.extend(r || {}, {
             dataType: "json",
             crossOrigin: !0
           });
-        return m.isFeatureOn(o.featureFlags.PES_CDN_AUTH_ENABLED) && (r = d.rewriteUrls(r, u.pesCDNAuthentication.rewriteRules), a.withCredentials = !0), a.url = r, s = Promise.resolve(n.compat(a)), m.isFeatureOn(o.featureFlags.PES_CDN_AUTH_ENABLED) && (s = s.catch(function () {
-          var s = t.extend(i || {}, {
+        return m.isFeatureOn(s.featureFlags.PES_CDN_AUTH_ENABLED) && (n = f.rewriteUrls(n, p.pesCDNAuthentication.rewriteRules), o.withCredentials = !0), o.url = n, i = Promise.resolve(c.compat(o)), m.isFeatureOn(s.featureFlags.PES_CDN_AUTH_ENABLED) && (i = i.catch(function () {
+          var i = t.extend(r || {}, {
             dataType: "json",
             crossOrigin: !0
           });
-          return s.url = r + "?" + e.latestToken, Promise.resolve(n.compat(s));
-        })), s;
+          return i.url = n + "?" + e.latestToken, Promise.resolve(c.compat(i));
+        })), i;
       }
-      function f() {
+      function u() {
         throw new Error("no pes configuration service endpoint");
       }
-      function l() {
-        return r.replace("/default", "/" + u.locale.pes);
+      function a() {
+        return r.replace("/default", "/" + p.locale.pes);
       }
-      return s().then(function () {
-        return a(l());
+      return i().then(function () {
+        return o(a());
       }).catch(function () {
-        return a(r);
-      }).catch(f);
+        return o(r);
+      }).catch(u);
     };
     e.dispose = function () {
-      v && r.clearTimeout(v);
+      v && d.clearTimeout(v);
     };
   }
-  var t = e("lodash-compat"), n = e("reqwest"), r = e("browser/window"), i = e("cafe/applicationInstance"), s = e("swx-enums"), o = e("constants/common"), u = e("experience/settings"), a = e("services/ecs/configLoader"), f = e("services/pes/configProcessor"), l = e("services/pes/constants"), c = e("services/i18n/cultureInfo"), h = e("services/pubSub/pubSub"), p = e("services/serviceLocator"), d = e("utils/chat/pesUtils");
+  var t = e("lodash-compat"), n = e("swx-cafe-application-instance"), r = e("services/ecs/configLoader"), i = e("services/pes/configProcessor"), s = e("swx-constants").COMMON, o = e("services/i18n/cultureInfo"), u = e("swx-enums"), a = e("services/pes/constants"), f = e("utils/chat/pesUtils"), l = e("swx-pubsub-instance").default, c = e("reqwest"), h = e("swx-service-locator-instance").default, p = e("experience/settings"), d = e("browser/window");
   return new v();
 });

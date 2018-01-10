@@ -10,6 +10,7 @@ define("utils/common/elementQueryHelper", [
           "680px",
           "600px",
           "420px",
+          "320px",
           "305px"
         ],
         "max-height": [

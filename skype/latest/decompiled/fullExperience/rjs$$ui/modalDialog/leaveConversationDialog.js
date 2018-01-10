@@ -4,45 +4,47 @@ define("ui/modalDialog/leaveConversationDialog", [
   "module",
   "swx-i18n",
   "ui/modalDialog/confirmationDialog",
-  "constants/common",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-service-locator-instance",
   "telemetry/chat/leaveConversationTelemetry",
-  "utils/chat/messageSanitizer",
+  "swx-utils-chat",
+  "ui/modelHelpers/conversationHelper",
   "text!views/chat/leaveConversationDialogContent.html"
 ], function (e, t) {
-  function f(e) {
+  function l(e) {
     function t() {
       var e = "leave_conversation_confirmation_text";
-      return h() ? n.fetch({ key: p(e) }) : n.fetch({ key: e });
+      return p() ? n.fetch({ key: d(e) }) : n.fetch({ key: e });
     }
     this.text = t();
     this.avatar = e.avatarUrl();
     this.isGroupConversation = e.isGroupConversation();
-  }
-  function l(e) {
-    return e || i.telemetry.NOT_AVAILABLE;
+    this.isAgentConversation = a.isOneToOneConversationWithAgent(e);
   }
   function c(e) {
+    return e || i.telemetry.NOT_AVAILABLE;
+  }
+  function h(e) {
     var t = "leave_conversation_confirmation_title", r = n.fetch({ key: "conversation_header_topic_untitled_conversation" }), i = e.topic() ? u.getSanitizedTopic(e.topic()) : r;
-    return h() ? n.fetch({ key: p(t) }) : n.fetch({
+    return p() ? n.fetch({ key: d(t) }) : n.fetch({
       key: t,
       params: { topic: i }
     });
   }
-  function h() {
+  function p() {
     return s.resolve(i.serviceLocator.FEATURE_FLAGS).isFeatureOn(i.featureFlags.USE_BUSINESS_WORDING);
   }
-  function p(e) {
+  function d(e) {
     return e + "_4b";
   }
-  var n = e("swx-i18n").localization, r = e("ui/modalDialog/confirmationDialog"), i = e("constants/common"), s = e("services/serviceLocator"), o = e("telemetry/chat/leaveConversationTelemetry"), u = e("utils/chat/messageSanitizer"), a = e("text!views/chat/leaveConversationDialogContent.html");
+  var n = e("swx-i18n").localization, r = e("ui/modalDialog/confirmationDialog"), i = e("swx-constants").COMMON, s = e("swx-service-locator-instance").default, o = e("telemetry/chat/leaveConversationTelemetry"), u = e("swx-utils-chat").messageSanitizer, a = e("ui/modelHelpers/conversationHelper"), f = e("text!views/chat/leaveConversationDialogContent.html");
   t.start = function (e, t) {
     var i, s;
-    i = o.build(l(t), e);
+    i = o.build(c(t), e);
     s = {
-      title: c(e),
-      content: a,
-      contentViewModel: new f(e),
+      title: h(e),
+      content: f,
+      contentViewModel: new l(e),
       confirmButtonTitle: n.fetch({ key: "action_button_leave" }),
       onConfirm: function () {
         e.leave.enabled() && (i.started(), e.leave().finally(function () {

@@ -5,58 +5,67 @@ define("utils/common/styleModeHelper", [
   "lodash-compat",
   "browser/window",
   "vendor/knockout",
-  "constants/common",
+  "swx-constants",
   "experience/settings"
 ], function (e, t) {
-  function l() {
-    function p() {
+  function c() {
+    function v() {
       var e = 0;
-      return l.length === 0 ? r.innerWidth : (l.forEach(function (t) {
+      return c.length === 0 ? r.innerWidth : (c.forEach(function (t) {
         e += t.offsetWidth;
       }), e);
     }
-    function d() {
-      var t = p();
-      e.currentMode(v(t));
+    function m() {
+      var t = v();
+      e.currentMode(g(t));
     }
-    function v(e) {
+    function g(e) {
       return e <= u.breakpoint.MEDIUM ? u.NARROW : e > u.breakpoint.MEDIUM && e <= u.breakpoint.WIDE ? u.MEDIUM : u.WIDE;
     }
-    function m() {
-      var e = n.find(f, function (e) {
+    function y() {
+      var e = b(f);
+      return e && (h = e), !!e;
+    }
+    function b(e) {
+      return n.find(e, function (e) {
         return o.biAppName.toLowerCase().indexOf(e.toLowerCase()) > -1;
       });
-      return e && (c = e), !!e;
     }
-    var e = this, t = 500, a = n.debounce(d, t), l = [], c, h = m();
-    e.currentMode = i.observable(v(p()));
-    h || r.addEventListener(s.events.browser.RESIZE, a);
+    var e = this, t = 500, a = n.debounce(m, t), c = [], h, p = y(), d = !!b(l);
+    e.currentMode = i.observable(g(v()));
+    p || r.addEventListener(s.events.browser.RESIZE, a);
     e.addContainer = function (t) {
-      l.push(t);
-      e.currentMode(v(p()));
+      c.push(t);
+      e.currentMode(g(v()));
     };
     e.appIsVisible = function () {
-      return l.length > 0 && p() > 0;
+      return c.length > 0 && v() > 0;
     };
     e.isIntegratedProperty = function () {
-      return h;
+      return p;
+    };
+    e.isConsumerIntegrated = function () {
+      return d;
     };
     e.host = function () {
-      return c;
+      return h;
     };
     e.dispose = function () {
-      h || r.removeEventListener(s.events.browser.RESIZE, a);
-      l = [];
+      p || r.removeEventListener(s.events.browser.RESIZE, a);
+      c = [];
     };
   }
-  var n = e("lodash-compat"), r = e("browser/window"), i = e("vendor/knockout"), s = e("constants/common"), o = e("experience/settings"), u = s.styleMode, a = null, f = {
+  var n = e("lodash-compat"), r = e("browser/window"), i = e("vendor/knockout"), s = e("swx-constants").COMMON, o = e("experience/settings"), u = s.styleMode, a = null, f = {
       kahuna: "kahuna",
       owa: "outlook",
       o365: "o365",
       wac: "wac"
+    }, l = {
+      kahuna: "kahuna",
+      owa: "outlook"
     };
   t.get = function () {
-    return a === null && (a = new l()), a;
+    return a === null && (a = new c()), a;
   };
   t.dispose = function () {
     a !== null && (a.dispose(), a = null);

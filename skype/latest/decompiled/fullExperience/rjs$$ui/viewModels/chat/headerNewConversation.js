@@ -5,9 +5,9 @@ define("ui/viewModels/chat/headerNewConversation", [
   "utils/common/eventMixin",
   "swx-i18n",
   "ui/modelHelpers/conversationHelper",
-  "services/serviceLocator",
-  "constants/common",
-  "constants/keys",
+  "swx-service-locator-instance",
+  "swx-constants",
+  "swx-constants",
   "utils/common/eventHelper",
   "ui/telemetry/actions/actionSources"
 ], function (e) {
@@ -72,6 +72,6 @@ define("ui/viewModels/chat/headerNewConversation", [
       return n === a.ESCAPE && (e.cancel(), t.stopPropagation()), !0;
     };
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("utils/common/eventMixin"), i = e("swx-i18n").localization, s = e("ui/modelHelpers/conversationHelper"), o = e("services/serviceLocator"), u = e("constants/common"), a = e("constants/keys"), f = e("utils/common/eventHelper"), l = e("ui/telemetry/actions/actionSources"), c = u.events;
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("utils/common/eventMixin"), i = e("swx-i18n").localization, s = e("ui/modelHelpers/conversationHelper"), o = e("swx-service-locator-instance").default, u = e("swx-constants").COMMON, a = e("swx-constants").KEYS, f = e("utils/common/eventHelper"), l = e("ui/telemetry/actions/actionSources"), c = u.events;
   return t.assign(h.prototype, r), h;
 });

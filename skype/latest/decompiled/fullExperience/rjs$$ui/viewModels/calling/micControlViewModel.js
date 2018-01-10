@@ -4,11 +4,11 @@ define("ui/viewModels/calling/micControlViewModel", [
   "vendor/knockout",
   "utils/common/cafeObservable",
   "swx-i18n",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "utils/common/eventHelper",
   "ui/telemetry/actions/actionNames",
-  "constants/common",
-  "services/serviceLocator"
+  "swx-constants",
+  "swx-service-locator-instance"
 ], function (e) {
   function l(e, l) {
     function v() {
@@ -39,7 +39,7 @@ define("ui/viewModels/calling/micControlViewModel", [
       p.dispose();
     };
   }
-  var t = e("ui/viewModels/calling/baseCallControlViewModel"), n = e("vendor/knockout"), r = e("utils/common/cafeObservable"), i = e("swx-i18n").localization, s = e("cafe/applicationInstance"), o = e("utils/common/eventHelper"), u = e("ui/telemetry/actions/actionNames"), a = e("constants/common"), f = e("services/serviceLocator");
+  var t = e("ui/viewModels/calling/baseCallControlViewModel"), n = e("vendor/knockout"), r = e("utils/common/cafeObservable"), i = e("swx-i18n").localization, s = e("swx-cafe-application-instance"), o = e("utils/common/eventHelper"), u = e("ui/telemetry/actions/actionNames"), a = e("swx-constants").COMMON, f = e("swx-service-locator-instance").default;
   return l.prototype = Object.create(t.prototype), l.prototype.constructor = l, {
     build: function (e, t) {
       return new l(e, t);

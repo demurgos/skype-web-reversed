@@ -3,14 +3,14 @@ define("experience/api/me", [
   "exports",
   "module",
   "vendor/knockout",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "swx-enums",
   "ui/modelHelpers/personHelper",
   "utils/common/cafeObservable",
   "ui/telemetry/actions/actionNames",
   "ui/telemetry/actions/actionTelemetryApi"
 ], function (e, t) {
-  var n = e("vendor/knockout"), r = e("cafe/applicationInstance"), i = e("swx-enums"), s = e("ui/modelHelpers/personHelper"), o = e("utils/common/cafeObservable"), u = e("ui/telemetry/actions/actionNames"), a = e("ui/telemetry/actions/actionTelemetryApi"), f = n.observable(!1);
+  var n = e("vendor/knockout"), r = e("swx-cafe-application-instance"), i = e("swx-enums"), s = e("ui/modelHelpers/personHelper"), o = e("utils/common/cafeObservable"), u = e("ui/telemetry/actions/actionNames"), a = e("ui/telemetry/actions/actionTelemetryApi"), f = n.observable(!1);
   t.isExpanded = f;
   t.expose = function () {
     function v() {
@@ -44,6 +44,10 @@ define("experience/api/me", [
       status: n.computed(c),
       resetStatus: g,
       mood: o.newObservableProperty(e.activity),
+      note: {
+        type: o.newObservableProperty(e.note.type),
+        text: o.newObservableProperty(e.note.text)
+      },
       numberOfNonAgentContacts: n.computed({ read: v }),
       isExpanded: f
     };

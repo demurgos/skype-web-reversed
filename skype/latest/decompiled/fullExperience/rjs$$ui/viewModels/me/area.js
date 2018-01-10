@@ -4,133 +4,164 @@ define("ui/viewModels/me/area", [
   "module",
   "ui/telemetry/actions/actionNames",
   "ui/telemetry/actions/actionSources",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "utils/common/cafeObservable",
   "swx-enums",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "utils/common/statusMapper",
-  "constants/common",
+  "swx-constants",
   "swx-i18n",
   "vendor/knockout",
   "experience/settings",
   "experience/api/calling",
   "browser/window",
-  "browser/document",
   "experience/api/authentication",
   "utils/common/eventHelper",
   "utils/common/eventMixin",
   "lodash-compat",
   "browser/dom",
   "experience/api/me",
-  "ui/contextMenu/contextMenu"
+  "ui/contextMenu/contextMenu",
+  "swx-utils-chat",
+  "swx-focus-handler",
+  "telemetry/calling/pstn/pstn",
+  "swx-constants"
 ], function (e, t) {
-  function T(e, t, y) {
-    var T = this, N = i.get().personsAndGroupsManager.mePerson, C = u.resolve(f.serviceLocator.FEATURE_FLAGS), k = p.buildApi(), L = { source: r.me.area }, A = b.now(), O = u.resolve(f.serviceLocator.ACTION_TELEMETRY), M = w.getElement(".Me-displayName", t), D = b.once(function (e, t) {
+  function k(e, t, g) {
+    var k = this, L = i.get().personsAndGroupsManager.mePerson, A = L.account, O = p.buildApi(), M = { source: r.me.area }, D = y.now(), P = u.resolve(f.serviceLocator.ACTION_TELEMETRY), H = b.getElement(".Me-displayName", t), B = {
+        expand: 1,
+        collapse: 2
+      }, j = y.once(function (e, t) {
         var i;
-        e && (i = b.now() - A);
-        O.recordAction(n.me.presenceLoaded, {
+        e && (i = y.now() - D);
+        P.recordAction(n.me.presenceLoaded, {
           source: r.me.area,
           mePresenceLoadTime: i,
           meStatus: t,
           meStatusLoaded: e
         });
-      }), P = function () {
+      }), F = function () {
         if (i.get().signInManager.state() !== o.loginState.SignedIn)
           return;
-        var e = N.status(), t = e === o.onlineStatus.Online;
-        D(!0, e);
-        T.notificationAvailabilityText(l.fetch({ key: t ? "me_notificationsOn" : "me_notificationsOff" }));
-        T.availabilityToggleAriaLabel(l.fetch({ key: t ? "accessibility_me_availabilityOnAriaLabel" : "accessibility_me_availabilityOffAriaLabel" }));
-        T.online(t);
-        T.availability(a.getAvailabilityText(e));
-        T.avatarStatusClassName(a.getStatusIconClass(e));
-      }, H = function () {
-        i.get().signInManager.state() === o.loginState.SignedIn && T.displayName(N.displayName());
-      }, B = function (e) {
-        g.isDeactivation(e) && T.collapse(null, e);
-      }, j = function (e) {
-        return e.type === "click" || e.type === "keypress" && g.isActivation(e);
+        var e = L.status(), t = e === o.onlineStatus.Online;
+        j(!0, e);
+        k.notificationAvailabilityText(l.fetch({ key: a.isNotificationOn(e) ? "me_notificationsOn" : "me_notificationsOff" }));
+        k.online(t);
+        k.availability(a.getMeAvailabilityText(e));
+        k.avatarStatusClassName(a.getStatusIconClass(e));
+        L.activity() || k.activityMessage(a.getMeAvailabilityText(e));
+      }, I = function () {
+        var e = L.activity().replace(/class="emoticon extraLarge"/g, "class=\"emoticon\"");
+        k.activityMessage(e ? e : k.availability());
+      }, q = function () {
+        i.get().signInManager.state() === o.loginState.SignedIn && k.displayName(L.displayName());
+      }, R = function () {
+        i.get().signInManager.state() === o.loginState.SignedIn && k.id(L.id());
+      }, U = function () {
+        i.get().signInManager.state() === o.loginState.SignedIn && (A._balance() > 0 ? k.displayBalance(A.displayBalance()) : k.displayBalance(""));
+      }, z = function (e) {
+        return e.target.className.indexOf("collapse") > -1 ? B.collapse : B.expand;
+      }, W = function (e) {
+        return e.type === "click" || e.type === "keypress" && m.isActivation(e);
       };
     setTimeout(function () {
-      D(!1);
-    }, x);
-    T.displayName = c.observable(N.displayName());
-    T.avatarUrl = s.newObservableProperty(N.avatarUrl);
-    T.isExpanded = E.isExpanded;
-    T.linkTabIndex = c.computed(function () {
-      return E.isExpanded() ? -1 : 0;
+      j(!1);
+    }, C);
+    k.id = c.observable(L.id());
+    k.displayName = c.observable(L.displayName());
+    k.displayNameUnescaped = c.computed(function () {
+      return y.unescape(k.displayName());
     });
-    T.accountLinkValue = h.meProfileUrl;
-    T.notificationAvailabilityText = c.observable(l.fetch({ key: "me_notificationsOff" }));
-    T.availabilityToggleAriaLabel = c.observable(l.fetch({ key: "accessibility_me_availabilityOffAriaLabel" }));
-    T.online = c.observable(!1);
-    T.isFocused = c.observable(!1);
-    T.availability = c.observable(l.fetch({ key: "me_pendingPresence" }));
-    T.avatarStatusClassName = c.observable(o.onlineStatus.Unknown.toLowerCase());
-    N.status.changed(P);
-    N.displayName.changed(H);
-    T.threeStatePresenceControlEnabled = C.isFeatureOn(f.featureFlags.NEW_SELF_PRESENCE);
-    T.toggleStatus = function () {
-      var e = N.status(), t = T.online() ? o.onlineStatus.Hidden : o.onlineStatus.Online;
-      N.status(t);
-      O.recordAction(n.me.presenceChanged, {
-        source: r.me.area,
-        pickerVersion: "twoState",
-        oldStatus: e,
-        newStatus: t,
-        meExpanded: !1
+    k.activityMessage = c.observable();
+    k.activityMessageTitle = c.computed(function () {
+      return S.stripHTML(k.activityMessage());
+    });
+    k.displayBalance = c.observable();
+    L.id.get().then(function () {
+      A.entitlements.get().then(function () {
+        A._balance() > 0 && k.displayBalance(A.displayBalance());
       });
+    });
+    k.purchaseCreditUrl = h.commerce.purchaseCreditUrl;
+    k.avatarUrl = s.newObservableProperty(L.avatarUrl);
+    k.isExpanded = w.isExpanded;
+    k.linkTabIndex = c.computed(function () {
+      return w.isExpanded() ? -1 : 0;
+    });
+    k.accountLinkValue = h.meProfileUrl;
+    k.notificationAvailabilityText = c.observable(l.fetch({ key: "me_notificationsOff" }));
+    k.online = c.observable(!1);
+    k.isFocused = c.observable(!1);
+    k.availability = c.observable(l.fetch({ key: "me_pendingPresence" }));
+    k.avatarStatusClassName = c.observable(o.onlineStatus.Unknown.toLowerCase());
+    k.changePresenceAriaLabel = c.computed(function () {
+      return l.fetch({
+        key: "accessibility_me_changePresenceStatusAriaLabel",
+        params: { currentStatus: k.availability() }
+      });
+    });
+    L.status.changed(F);
+    L.activity.changed(I);
+    L.displayName.changed(q);
+    L.id.changed(R);
+    A.displayBalance.changed(U);
+    k.triggerPresencePopup = function (e, t, n) {
+      return W(n) && (E.hide(n), n.preventDefault(), k.dispatchEvent(f.events.me.PRESENCE_POPUP_SHOW, e, k.DIRECTION.CHILD)), !0;
     };
-    T.triggerPresencePopup = function (e, t, n) {
-      return j(n) && (S.hide(n), n.preventDefault(), T.dispatchEvent(f.events.me.PRESENCE_POPUP_SHOW, e, T.DIRECTION.CHILD)), !0;
+    k.isPluginInstalled = O.isPluginInstalled;
+    k.collapse = function () {
+      g.restore();
+      k.isExpanded(!1);
+      P.recordAction(n.me.collapsed, M);
+      x.get().addFocusRequestToQueue(H);
     };
-    T.isPluginInstalled = k.isPluginInstalled;
-    T.collapse = function (e, t) {
-      y.restore();
-      T.isExpanded(!1);
-      O.recordAction(n.me.collapsed, L);
-      M.focus();
-      t.stopPropagation();
-      v.removeEventListener("keydown", B);
+    k.expand = function () {
+      g.restrict();
+      k.isExpanded(!0);
+      k.isFocused(!0);
+      P.recordAction(n.me.expanded, M);
     };
-    T.expand = function () {
-      y.restrict();
-      T.isExpanded(!0);
-      T.isFocused(!0);
-      v.addEventListener("keydown", B);
-      O.recordAction(n.me.expanded, L);
+    k.addCreditTelemetry = function () {
+      return T.addingCredit(N.CREDIT_DISPLAY), !0;
     };
-    T.toggleMeSize = function (e, t) {
-      if (j(t)) {
-        if (T.isExpanded() && t.target === t.currentTarget)
-          return T.collapse(e, t), !0;
-        T.isExpanded() || T.expand();
+    k.toggleMeSize = function (e, t) {
+      if (t.srcElement && t.srcElement.id === "meDisplayBalance")
+        return !0;
+      if (W(t)) {
+        var n = z(t);
+        n === B.collapse && k.isExpanded() ? k.collapse() : n === B.expand && !k.isExpanded() && k.expand();
+        t.preventDefault();
+        t.stopPropagation();
       }
       return !0;
     };
-    T.installPlugin = function () {
-      k.startPluginInstall();
-      O.recordAction(n.me.installPluginLinkClicked, L);
+    k.installPlugin = function () {
+      O.startPluginInstall();
+      P.recordAction(n.me.installPluginLinkClicked, M);
     };
-    T.meAccountLinkClicked = function (e, t, r) {
+    k.meAccountLinkClicked = function (e, t, r) {
       d.open(e, "_blank");
-      O.recordAction(n.me.accountLinkClicked, L);
+      P.recordAction(n.me.accountLinkClicked, M);
       r.preventDefault();
     };
-    T.meSignOut = function () {
-      m.signOut();
-      O.recordAction(n.me.signOutClicked, L);
+    k.meSignOut = function () {
+      v.signOut();
+      P.recordAction(n.me.signOutClicked, M);
     };
-    T.dispose = function () {
-      T.avatarUrl.dispose();
-      T.linkTabIndex.dispose();
-      N.status.changed.off(P);
-      N.displayName.changed.off(H);
+    k.dispose = function () {
+      k.avatarUrl.dispose();
+      k.linkTabIndex.dispose();
+      k.changePresenceAriaLabel.dispose();
+      L.status.changed.off(F);
+      L.activity.changed.off(I);
+      L.id.changed.off(R);
+      L.displayName.changed.off(q);
+      A.displayBalance.changed.off(U);
     };
   }
-  var n = e("ui/telemetry/actions/actionNames"), r = e("ui/telemetry/actions/actionSources"), i = e("cafe/applicationInstance"), s = e("utils/common/cafeObservable"), o = e("swx-enums"), u = e("services/serviceLocator"), a = e("utils/common/statusMapper"), f = e("constants/common"), l = e("swx-i18n").localization, c = e("vendor/knockout"), h = e("experience/settings"), p = e("experience/api/calling"), d = e("browser/window"), v = e("browser/document"), m = e("experience/api/authentication"), g = e("utils/common/eventHelper"), y = e("utils/common/eventMixin"), b = e("lodash-compat"), w = e("browser/dom"), E = e("experience/api/me"), S = e("ui/contextMenu/contextMenu"), x = 60000;
-  b.assign(T.prototype, y);
+  var n = e("ui/telemetry/actions/actionNames"), r = e("ui/telemetry/actions/actionSources"), i = e("swx-cafe-application-instance"), s = e("utils/common/cafeObservable"), o = e("swx-enums"), u = e("swx-service-locator-instance").default, a = e("utils/common/statusMapper"), f = e("swx-constants").COMMON, l = e("swx-i18n").localization, c = e("vendor/knockout"), h = e("experience/settings"), p = e("experience/api/calling"), d = e("browser/window"), v = e("experience/api/authentication"), m = e("utils/common/eventHelper"), g = e("utils/common/eventMixin"), y = e("lodash-compat"), b = e("browser/dom"), w = e("experience/api/me"), E = e("ui/contextMenu/contextMenu"), S = e("swx-utils-chat").messageSanitizer, x = e("swx-focus-handler"), T = e("telemetry/calling/pstn/pstn"), N = e("swx-constants").COMMON.telemetry.meArea, C = 60000;
+  y.assign(k.prototype, g);
   t.build = function (e, t, n) {
-    return new T(e, t, n);
+    return new k(e, t, n);
   };
 });

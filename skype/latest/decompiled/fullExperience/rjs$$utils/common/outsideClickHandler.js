@@ -5,9 +5,9 @@ define("utils/common/outsideClickHandler", [
   "lodash-compat",
   "browser/dom",
   "browser/document",
-  "constants/common",
+  "swx-constants",
   "constants/cssClasses",
-  "constants/keys"
+  "swx-constants"
 ], function (e, t) {
   function f(e) {
     function t(t) {
@@ -35,7 +35,7 @@ define("utils/common/outsideClickHandler", [
       return t.name === e;
     });
   }
-  var n = e("lodash-compat"), r = e("browser/dom"), i = e("browser/document"), s = e("constants/common"), o = e("constants/cssClasses"), u = e("constants/keys"), a = null;
+  var n = e("lodash-compat"), r = e("browser/dom"), i = e("browser/document"), s = e("swx-constants").COMMON, o = e("constants/cssClasses"), u = e("swx-constants").KEYS, a = null;
   t.add = function (e, t) {
     if (!e)
       throw new Error("className is mandatory");

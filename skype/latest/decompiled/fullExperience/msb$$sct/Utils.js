@@ -1,46 +1,53 @@
 module.exports = function () {
-  function e() {
+  function t() {
   }
-  return e.IsSafari = function () {
-    return e._isSafari === null && e._DetectBrowser(), e._isSafari;
-  }, e.ajax = function (t) {
-    var n = e._createConnection();
-    if (t.headers) {
-      var r = "qsp=true";
-      for (var i in t.headers)
-        r += "&", r += encodeURIComponent(i), r += "=", r += encodeURIComponent(t.headers[i]);
-      t.url.indexOf("?") < 0 ? t.url += "?" : t.url += "&";
-      t.url += r;
+  return t.IsSafari = function () {
+    if (t._isSafari === null)
+      if (typeof navigator != "undefined" && navigator.userAgent) {
+        var e = navigator.userAgent.toLowerCase();
+        e.indexOf("safari") >= 0 && e.indexOf("chrome") < 0 ? t._isSafari = !0 : t._isSafari = !1;
+      } else
+        t._isSafari = !1;
+    return t._isSafari;
+  }, t.IsReactNative = function () {
+    return t._isReactNative === null && (typeof navigator != "undefined" && navigator.product ? t._isReactNative = navigator.product === "ReactNative" : t._isReactNative = !1), t._isReactNative;
+  }, t.IsUint8ArrSupported = function () {
+    return !e.Utils.IsSafari() && typeof Uint8Array != "undefined" && !e.Utils.IsReactNative();
+  }, t.ajax = function (e, n) {
+    var r = t._createConnection();
+    if (e.headers) {
+      var i = "qsp=true";
+      for (var s in e.headers)
+        i += "&", i += encodeURIComponent(s), i += "=", i += encodeURIComponent(e.headers[s]);
+      e.url.indexOf("?") < 0 ? e.url += "?" : e.url += "&";
+      e.url += i;
     }
-    n.open(t.type, t.url);
-    t.complete && (n.onload = function () {
-      typeof n.status == "undefined" && (n.status = 200);
-      t.complete(n);
-    }, n.ontimeout = function () {
-      typeof n.status == "undefined" && (n.status = 500);
-      t.complete(n);
-    }, n.onerror = function () {
-      t.complete(n);
+    r.open(e.type, e.url, !n);
+    e.complete && (r.onload = function () {
+      typeof r.status == "undefined" && (r.status = 200);
+      e.complete(r);
+    }, r.ontimeout = function () {
+      typeof r.status == "undefined" && (r.status = 500);
+      e.complete(r);
+    }, r.onerror = function () {
+      e.complete(r);
     });
-    n.send(t.data);
-  }, e.keys = function (e) {
+    r.send(e.data);
+  }, t.keys = function (e) {
     if (Object.keys)
       return Object.keys(e);
     var t = [];
     for (var n in e)
       e.hasOwnProperty(n) && t.push(n);
     return t;
-  }, e.IsUsingXDomainRequest = function () {
-    if (e._usingXDomainRequest == null) {
-      var t = new XMLHttpRequest();
-      typeof t.withCredentials == "undefined" && typeof XDomainRequest != "undefined" ? e._usingXDomainRequest = !0 : e._usingXDomainRequest = !1;
+  }, t.IsUsingXDomainRequest = function () {
+    if (t._usingXDomainRequest == null) {
+      var e = new XMLHttpRequest();
+      typeof e.withCredentials == "undefined" && typeof XDomainRequest != "undefined" ? t._usingXDomainRequest = !0 : t._usingXDomainRequest = !1;
     }
-    return e._usingXDomainRequest;
-  }, e._createConnection = function () {
-    var t = new XMLHttpRequest();
-    return e.IsUsingXDomainRequest() ? new XDomainRequest() : t;
-  }, e._DetectBrowser = function () {
-    var t = navigator.userAgent.toLowerCase();
-    t.indexOf("safari") >= 0 && t.indexOf("chrome") < 0 ? e._isSafari = !0 : e._isSafari = !1;
-  }, e._isSafari = null, e._usingXDomainRequest = null, e;
+    return t._usingXDomainRequest;
+  }, t._createConnection = function () {
+    var e = new XMLHttpRequest();
+    return t.IsUsingXDomainRequest() ? new XDomainRequest() : e;
+  }, t._isSafari = null, t._isReactNative = null, t._usingXDomainRequest = null, t;
 }()

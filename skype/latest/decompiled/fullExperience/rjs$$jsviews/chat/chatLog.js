@@ -2,63 +2,69 @@ define("jsviews/chat/chatLog", [
   "require",
   "browser/dom",
   "lodash-compat",
-  "utils/chat/conversationCache",
-  "constants/common",
+  "swx-utils-chat",
+  "swx-constants",
   "utils/common/scroll"
 ], function (e) {
-  function g(e, g) {
-    function A(e) {
-      var n = document.getSelection().toString().length > 0, r;
-      if (n)
-        return;
+  function v(e, v) {
+    function L(e) {
+      var n = document.getSelection().toString(), r;
       r = t.getParentWithClass(e.target, o);
-      r && (y.onContextMenu(r.getAttribute("data-id"), e), e.preventDefault());
+      if (!r)
+        return;
+      if (n && n.length > 0) {
+        var i = m.onContextMenu(r.getAttribute("data-id"), e, n);
+        i && e.preventDefault();
+        return;
+      }
+      m.onContextMenu(r.getAttribute("data-id"), e);
+      e.preventDefault();
     }
-    function O(e) {
+    function A(e) {
       t.addClass(e, h);
       setTimeout(function () {
         e && t.removeClass(e, h);
       }, a);
     }
-    function M(e) {
+    function O(e) {
       var n = e.length === 1;
       Array.prototype.forEach.call(e, function (e) {
-        n && D(e) && O(e);
+        n && M(e) && A(e);
         t.removeClass(e, p);
       });
     }
-    function D(e) {
-      return b.lastElementChild === e && b.childElementCount > 1;
+    function M(e) {
+      return g.lastElementChild === e && g.childElementCount > 1;
+    }
+    function D() {
+      return !y || y.scrollHeight - y.scrollTop - e.clientHeight < l;
     }
     function P() {
-      return !w || w.scrollHeight - w.scrollTop - e.clientHeight < l;
+      return !!y && y.scrollTop < c;
     }
     function H() {
-      return !!w && w.scrollTop < c;
-    }
-    function B() {
-      if (!w)
+      if (!y)
         return;
-      L = !0;
-      x.scrollHeight = w.scrollHeight;
-      x.scrollBottom = x.scrollHeight - w.scrollTop;
+      C = !0;
+      E.scrollHeight = y.scrollHeight;
+      E.scrollBottom = E.scrollHeight - y.scrollTop;
     }
-    function j(t) {
-      if (!w) {
-        E.scrollTop = E.scrollHeight - e.clientHeight;
-        S.scrollTop = E.scrollHeight - e.clientHeight;
-        L = !1;
+    function B(t) {
+      if (!y) {
+        b.scrollTop = b.scrollHeight - e.clientHeight;
+        w.scrollTop = b.scrollHeight - e.clientHeight;
+        C = !1;
         return;
       }
-      var n = w.scrollHeight, r = n === x.scrollHeight || t, i = r ? x.scrollBottom : 0;
-      w.scrollTop = n - i;
-      L = !1;
+      var n = y.scrollHeight, r = n === E.scrollHeight || t, i = r ? E.scrollBottom : 0;
+      y.scrollTop = n - i;
+      C = !1;
     }
-    function F() {
-      X();
-      N.resize();
+    function j() {
+      W();
+      x.resize();
     }
-    function q(e, t, n) {
+    function I(e, t, n) {
       if (!e || !n || !t)
         return;
       if (t.children.length < 2)
@@ -73,139 +79,165 @@ define("jsviews/chat/chatLog", [
             return e;
           o = Array.prototype.indexOf.call(i, e);
         }
-        a = R(o, u);
+        a = q(o, u);
         if (f === a)
           break;
         f = a;
         e = i[a];
       }
     }
-    function R(e, t) {
+    function q(e, t) {
       return e + (t - e >> 1);
     }
-    function U(e, t) {
-      var n = e.getBoundingClientRect();
-      return n.top <= t.bottom && n.bottom >= t.top;
+    function R(e, t) {
+      var n = e.getBoundingClientRect(), r = n.height / 2;
+      return n.top + r <= t.bottom && n.bottom - r >= t.top;
     }
-    function z(e, t, n) {
-      function o(e) {
-        if (e && e.nodeType === 1) {
-          var t;
-          return s < 10 ? (t = !0, s++) : (t = U(e, r), s = 0), t ? (i.push(e), !1) : !0;
-        }
+    function U(e, t, n) {
+      function s(e) {
+        if (e && e.nodeType === 1)
+          return R(e, r) ? (i.push(e), !1) : !0;
       }
       var r = n.getBoundingClientRect(), i = [];
       i.push(e);
-      var s = 0, u = e.nextSibling;
-      while (u) {
-        if (o(u))
+      var o = e.nextSibling;
+      while (o) {
+        if (s(o))
           break;
-        u = u.nextSibling;
+        o = o.nextSibling;
       }
-      u = e.previousSibling;
-      s = 0;
-      while (u) {
-        if (o(u))
+      o = e.previousSibling;
+      while (o) {
+        if (s(o))
           break;
-        u = u.previousSibling;
+        o = o.previousSibling;
       }
       return i;
     }
-    function W() {
-      var e = I.slice(), n = q(b.lastElementChild, b, S);
-      n && (I = z(n, b, S));
+    function z() {
+      var e = F.slice(), n = I(g.lastElementChild, g, w);
+      n && (F = U(n, g, w));
       for (var r = 0; r < e.length; r++)
-        I.indexOf(e[r]) < 0 && t.setClass(e[r], u, !1);
-      I.forEach(function (e) {
+        F.indexOf(e[r]) < 0 && t.setClass(e[r], u, !1);
+      F.forEach(function (e) {
         t.setClass(e, u, !0);
       });
-      y.onMessageVisibilityChange(I);
+      m.onMessageVisibilityChange(F);
     }
-    function X() {
-      clearTimeout(C);
-      C = setTimeout(W, v);
+    function W(e) {
+      clearTimeout(T);
+      T = setTimeout(z, e);
     }
-    function V(e) {
-      return P() ? !0 : H() ? !n.find(e, function (e) {
+    function X(e) {
+      return D() ? !0 : P() ? !n.find(e, function (e) {
         return e.className.indexOf(d) > -1;
       }) : !1;
     }
-    var y = null, b, w, E, S, x = null, T, N, C = null, k, L = !1, I = [];
+    function V(e, t, n, r) {
+      var i = n === "scrollLeft" ? k.scrollLeft : k.scrollTop, s = e - i, o = s / t * 10;
+      window.setTimeout(function () {
+        var s = i + o;
+        n === "scrollLeft" ? k.scrollLeft = s : k.scrollTop = s;
+        t -= 10;
+        if (s === e || t <= 0) {
+          r && r();
+          return;
+        }
+        V(e, t, n, r);
+      }, 10);
+    }
+    var m = null, g, y, b, w, E = null, S, x, T = null, N, C = !1, k, F = [];
     this.init = function (n, o) {
-      y = n;
-      b = t.getElement(".messageHistory", e);
-      x = r.forModel(o);
-      b.addEventListener("contextmenu", A);
-      E = t.getElement(".scroller", e);
-      S = t.getElement(".scrollable", e);
-      window.addEventListener(i.events.browser.RESIZE, F);
-      T = s.build(e);
-      T.init();
-      N = new g(e);
+      m = n;
+      g = t.getElement(".messageHistory", e);
+      E = r.forModel(o);
+      g.addEventListener("contextmenu", L);
+      b = t.getElement(".scroller", e);
+      w = t.getElement(".scrollable", e);
+      window.addEventListener(i.events.browser.RESIZE, j);
+      k = e.querySelector("#chatlog-suggestedActionsArea");
+      S = s.build(e);
+      S.init();
+      x = new v(e);
     };
     this.dispose = function () {
-      b.removeEventListener("contextmenu", A);
-      window.removeEventListener(i.events.browser.RESIZE, F);
-      y = null;
-      x = null;
-      T.dispose();
-      N.dispose();
-      clearTimeout(C);
+      g.removeEventListener("contextmenu", L);
+      window.removeEventListener(i.events.browser.RESIZE, j);
+      m = null;
+      E = null;
+      S.dispose();
+      x.dispose();
+      clearTimeout(T);
     };
     this.showNewMessages = function () {
-      var e = b.querySelectorAll("." + o + "." + p), t = V(e), n = P();
-      t && B();
-      M(e);
-      t && j(!n);
-      T.update();
-      X();
+      var e = g.querySelectorAll("." + o + "." + p), t = X(e), n = D();
+      t && H();
+      O(e);
+      t && B(!n);
+      S.update();
+      W();
     };
     this.scrollToMessage = function (e) {
-      T.scrollToElement(e.elementInfo.element);
+      S.scrollToElement(e.elementInfo.element);
     };
     this.restoreScrollPosition = function () {
-      j(!k);
-      T.update();
+      B(!N);
+      S.update();
     };
     this.storeScrollPosition = function () {
-      k = P();
-      B();
+      N = D();
+      H();
     };
     this.isScrolledToTop = function () {
-      return H();
+      return P();
     };
-    this.isScrolledCloseToBottom = function () {
-      return !w || w.scrollHeight - w.scrollTop - e.clientHeight < m;
+    this.isScrolledToBottom = function () {
+      return D();
+    };
+    this.scrollSuggestedArea = function (e, t) {
+      if (!k)
+        return;
+      var n = e === "left" ? k.scrollLeft - k.clientWidth : k.scrollLeft + k.clientWidth;
+      V(n, 250, "scrollLeft", t);
+    };
+    this.getArrowsPositions = function () {
+      if (!k)
+        return null;
+      var e = k.scrollLeft === 0 ? !1 : !0, t = k.scrollLeft === k.scrollWidth - k.clientWidth ? !1 : !0;
+      return {
+        left: e,
+        right: t
+      };
     };
     this.isScrollable = function () {
-      return e.clientHeight < b.clientHeight + f;
+      return e.clientHeight < g.clientHeight + f;
     };
     this.isScrollPositionStored = function () {
-      return L;
+      return C;
     };
     this.isVisible = function () {
-      return b.offsetHeight > 0;
+      return g.offsetHeight > 0;
     };
     this.isMessageVisible = function (e) {
-      var t = n.find(I, function (t) {
+      var t = n.find(F, function (t) {
         return e === t.attributes["data-id"].value;
       });
       return !!t;
     };
     this.onShow = function () {
-      j();
-    };
-    this.onHide = function () {
       B();
     };
-    this.onScroll = function (e) {
-      w = w || e.target;
-      X();
+    this.onHide = function () {
+      H();
+    };
+    this.onScroll = function (e, t) {
+      y = y || e.target;
+      W(t);
     }.bind(this);
     this._setScroller = function (e) {
-      w = e;
+      y = e;
     };
   }
-  var t = e("browser/dom"), n = e("lodash-compat"), r = e("utils/chat/conversationCache"), i = e("constants/common"), s = e("utils/common/scroll"), o = "message", u = "swx-in-viewport", a = 800, f = 60, l = 150, c = 100, h = "animate", p = "loading", d = "unread", v = 300, m = 60;
-  return g;
+  var t = e("browser/dom"), n = e("lodash-compat"), r = e("swx-utils-chat").conversationCache, i = e("swx-constants").COMMON, s = e("utils/common/scroll"), o = "message", u = "swx-in-viewport", a = 800, f = 60, l = 150, c = 100, h = "animate", p = "loading", d = "unread";
+  return v;
 });

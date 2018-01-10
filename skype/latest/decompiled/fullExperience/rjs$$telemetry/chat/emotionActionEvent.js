@@ -2,9 +2,9 @@ define("telemetry/chat/emotionActionEvent", [
   "require",
   "exports",
   "module",
-  "constants/common",
+  "swx-constants",
   "experience/settings",
-  "telemetry/chat/telemetryEnumerator",
+  "swx-telemetry-buckets",
   "ui/telemetry/telemetryClient"
 ], function (e, t) {
   function o() {
@@ -17,7 +17,7 @@ define("telemetry/chat/emotionActionEvent", [
       }
     };
     e.publish = function () {
-      s.get().sendEvent(r.telemetry.uiTenantToken, t, e.data);
+      s.get().sendEvent(r.telemetry.chatTenantToken, t, e.data);
       e.init();
     };
     e.init = function () {
@@ -46,7 +46,7 @@ define("telemetry/chat/emotionActionEvent", [
     };
     e.init();
   }
-  var n = e("constants/common"), r = e("experience/settings"), i = e("telemetry/chat/telemetryEnumerator"), s = e("ui/telemetry/telemetryClient");
+  var n = e("swx-constants").COMMON, r = e("experience/settings"), i = e("swx-telemetry-buckets"), s = e("ui/telemetry/telemetryClient");
   t.build = function () {
     return new o();
   };

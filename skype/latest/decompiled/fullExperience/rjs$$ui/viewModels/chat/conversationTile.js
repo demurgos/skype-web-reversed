@@ -2,12 +2,12 @@ define("ui/viewModels/chat/conversationTile", [
   "require",
   "vendor/knockout",
   "ui/viewModels/people/contactBuilder",
-  "utils/chat/messageSanitizer",
+  "swx-utils-chat",
   "utils/common/cafeObservable",
-  "constants/common",
+  "swx-constants",
   "swx-enums",
   "swx-i18n",
-  "services/serviceLocator"
+  "swx-service-locator-instance"
 ], function (e) {
   function f(e, f) {
     function h() {
@@ -86,7 +86,7 @@ define("ui/viewModels/chat/conversationTile", [
     };
     l.isGroup() || v();
   }
-  var t = e("vendor/knockout"), n = e("ui/viewModels/people/contactBuilder"), r = e("utils/chat/messageSanitizer"), i = e("utils/common/cafeObservable"), s = e("constants/common"), o = e("swx-enums"), u = e("swx-i18n").localization, a = e("services/serviceLocator");
+  var t = e("vendor/knockout"), n = e("ui/viewModels/people/contactBuilder"), r = e("swx-utils-chat").messageSanitizer, i = e("utils/common/cafeObservable"), s = e("swx-constants").COMMON, o = e("swx-enums"), u = e("swx-i18n").localization, a = e("swx-service-locator-instance").default;
   return {
     build: function (e, t) {
       return t = t || {}, new f(e, t);

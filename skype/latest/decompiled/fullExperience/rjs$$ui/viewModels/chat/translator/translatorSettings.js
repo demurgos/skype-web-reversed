@@ -2,7 +2,7 @@ define("ui/viewModels/chat/translator/translatorSettings", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "browser/dom",
   "browser/document",
   "swx-i18n",
@@ -10,7 +10,7 @@ define("ui/viewModels/chat/translator/translatorSettings", [
   "utils/common/eventHelper",
   "utils/common/cafeObservable",
   "experience/settings",
-  "constants/common",
+  "swx-constants",
   "telemetry/translator/translatorTelemetry",
   "utils/common/outsideClickHandler"
 ], function (e, t) {
@@ -156,7 +156,7 @@ define("ui/viewModels/chat/translator/translatorSettings", [
       E.dispose();
     };
   }
-  var n = e("cafe/applicationInstance"), r = e("browser/dom"), i = e("browser/document"), s = e("swx-i18n").localization, o = e("vendor/knockout"), u = e("utils/common/eventHelper"), a = e("utils/common/cafeObservable"), f = e("experience/settings"), l = e("constants/common"), c = l.telemetry.translator, h = e("telemetry/translator/translatorTelemetry"), p = e("utils/common/outsideClickHandler");
+  var n = e("swx-cafe-application-instance"), r = e("browser/dom"), i = e("browser/document"), s = e("swx-i18n").localization, o = e("vendor/knockout"), u = e("utils/common/eventHelper"), a = e("utils/common/cafeObservable"), f = e("experience/settings"), l = e("swx-constants").COMMON, c = l.telemetry.translator, h = e("telemetry/translator/translatorTelemetry"), p = e("utils/common/outsideClickHandler");
   t.build = function (e) {
     return new d(e);
   };

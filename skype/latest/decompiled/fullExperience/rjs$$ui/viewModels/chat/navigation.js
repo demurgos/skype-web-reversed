@@ -2,187 +2,191 @@ define("ui/viewModels/chat/navigation", [
   "require",
   "lodash-compat",
   "vendor/knockout",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "swx-enums",
-  "constants/common",
+  "swx-constants",
   "constants/components",
-  "services/pubSub/pubSub",
-  "services/serviceLocator",
+  "swx-pubsub-instance",
+  "swx-service-locator-instance",
   "services/telemetry/common/telemetryContext",
   "ui/viewModels/chat/navigationHelper",
   "utils/common/eventMixin",
-  "ui/viewModels/chat/fragment"
+  "ui/viewModels/chat/fragment",
+  "experience/settings"
 ], function (e) {
-  function y(e) {
-    return g.indexOf(e) !== -1;
-  }
   function b(e) {
-    return e === o.chat.NEW_CONVERSATION || e === o.userSettings.USER_SETTINGS_PAGE;
+    return y.indexOf(e) !== -1;
   }
   function w(e) {
-    function x(e) {
+    return e === o.chat.NEW_CONVERSATION || e === o.userSettings.USER_SETTINGS_PAGE;
+  }
+  function E(e) {
+    function T(e) {
       return t.fragments().filter(e)[0];
     }
-    function T() {
+    function N() {
       clearTimeout(t._cacheLimitOverflowCheckTimer);
-      t._cacheLimitOverflowCheckTimer = setTimeout(L, m);
+      t._cacheLimitOverflowCheckTimer = setTimeout(A, g);
     }
-    function N(e) {
+    function C(e) {
       var t = e.options.model;
       return !t || t.selfParticipant && t.selfParticipant.audio.state() === i.callConnectionState.Disconnected;
     }
-    function C() {
-      return x(function (e) {
-        return e.hidden() && N(e);
+    function k() {
+      return T(function (e) {
+        return e.hidden() && C(e);
       });
     }
-    function k(e) {
+    function L(e) {
       t.fragments.remove(e);
       e.dispose();
     }
-    function L() {
-      if (t.fragments().length <= v)
-        return;
-      var e = C();
-      e && k(e);
-      T();
-    }
     function A() {
-      return x(function (e) {
+      if (t.fragments().length <= m)
+        return;
+      var e = k();
+      e && L(e);
+      N();
+    }
+    function O() {
+      return T(function (e) {
         return !e.hidden();
       });
     }
-    function O(e) {
-      var t = A();
-      t && t !== e && (t.setVisible(!1), b(t.name) && k(t));
-      e.setVisible(!0);
-      P(e);
-    }
     function M(e) {
-      O(e.fragment);
+      var t = O();
+      t && t !== e && (t.setVisible(!1), w(t.name) && L(t));
+      e.setVisible(!0);
+      H(e);
     }
     function _(e) {
+      M(e.fragment);
+    }
+    function D(e) {
       var n = new h(e);
       return n.setContext(t), t.fragments.push(n), n;
     }
-    function D(e) {
-      var t = A(), n = B(e);
-      n && k(n);
-      if (E === e || E && E.model && e && e.model && E.model === e.model)
-        E = null;
-      t && t === n && q();
-    }
     function P(e) {
-      E = w ? w.options : null;
-      w = e;
-      S.currentPlaceModel(e.options.model);
-      S.currentPlaceName(e.name);
-      g.historyLoadOrigin = e.options.origin;
-      u.publish(p.FRAGMENT_LOADED, e.name);
+      var t = O(), n = j(e);
+      n && L(n);
+      if (S === e || S && S.model && e && e.model && S.model === e.model)
+        S = null;
+      t && t === n && R();
     }
-    function H(e, t) {
+    function H(e) {
+      S = E ? E.options : null;
+      E = e;
+      x.currentPlaceModel(e.options.model);
+      x.currentPlaceName(e.name);
+      y.historyLoadOrigin = e.options.origin;
+      u.publish(d.FRAGMENT_LOADED, e.name);
+    }
+    function B(e, t) {
       return t && t.name === e.page && t.options.model === e.model;
     }
-    function B(e) {
-      return x(function (t) {
-        return H(e, t);
+    function j(e) {
+      return T(function (t) {
+        return B(e, t);
       });
     }
-    function j(e) {
-      var t = B(e);
-      t ? (t.options = e, O(t)) : (t = _(e), y(e.page) && O(t));
-      T();
-    }
     function F(e) {
-      var t = B(e);
+      var t = j(e);
+      t ? (t.options = e, M(t)) : (t = D(e), b(e.page) && M(t));
+      N();
+    }
+    function I(e) {
+      var t = j(e);
       t.options = e;
       t.setVisible(!0);
     }
-    function I(t) {
+    function q(t) {
       if (!t || !t.page)
         throw new TypeError("You need to specify where you navigate !");
       if (!t.contentElementId || t.contentElementId === e) {
-        if (H(t, w)) {
-          F(t);
+        if (B(t, E)) {
+          I(t);
           return;
         }
-        j(t);
+        if (p.API.version === 2 && t.origin === s.telemetry.historyLoadOrigin.CALLING)
+          return;
+        F(t);
       }
     }
-    function q() {
+    function R() {
       var e = c.conversationsManager.conversations().length, t = c.signInManager.state() === i.loginState.SignedIn, n;
       if (!t)
         return;
-      E && e ? u.publish(p.NAVIGATE, E) : e ? (n = {
+      S && e ? u.publish(d.NAVIGATE, S) : e ? (n = {
         page: o.chat.CONVERSATION,
         model: c.conversationsManager.conversations()[0]
-      }, u.publish(p.NAVIGATE, n)) : l.navigateToContactsPage();
+      }, u.publish(d.NAVIGATE, n)) : l.navigateToContactsPage();
     }
-    function R(t) {
+    function U(t) {
       if (!t.contentElementId || t.contentElementId === e)
-        t.page = o.chat.CONVERSATION, u.publish(p.NAVIGATE, t);
+        t.page = o.chat.CONVERSATION, u.publish(d.NAVIGATE, t);
     }
-    function U() {
+    function z() {
       t.shrinkContent(!1);
       t.expandContent(!0);
     }
-    function z() {
+    function W() {
       t.expandContent(!1);
       t.shrinkContent(!0);
     }
-    function W() {
+    function X() {
       [].concat(t.fragments()).forEach(function (e) {
-        e.hidden() && N(e) && k(e);
+        e.hidden() && C(e) && L(e);
       });
     }
-    var t = this, c = r.get(), g, w, E, S;
+    var t = this, c = r.get(), y, E, S, x;
     this.expandContent = n.observable(!1);
     this.shrinkContent = n.observable(!0);
     this.fragments = n.observableArray();
     this.isInBackground = n.observable(!1);
     this.dispose = function () {
-      u.unsubscribe(p.OPEN_CONVERSATION, R);
-      u.unsubscribe(p.NAVIGATE, I);
-      u.unsubscribe(d.SIDEBAR_STATE_CHANGED, this.isInBackground);
-      u.unsubscribe(p.NAVIGATE_TO_PREVIOUS_PAGE, q);
-      u.unsubscribe(d.SHOW_SIDEBAR, z);
-      u.unsubscribe(d.HIDE_SIDEBAR, U);
-      u.unsubscribe(p.FRAGMENT_REMOVE, D);
-      u.unsubscribe(p.FRAGMENT_REMOVE_ALL_HIDDEN, W);
+      u.unsubscribe(d.OPEN_CONVERSATION, U);
+      u.unsubscribe(d.NAVIGATE, q);
+      u.unsubscribe(v.SIDEBAR_STATE_CHANGED, this.isInBackground);
+      u.unsubscribe(d.NAVIGATE_TO_PREVIOUS_PAGE, R);
+      u.unsubscribe(v.SHOW_SIDEBAR, W);
+      u.unsubscribe(v.HIDE_SIDEBAR, z);
+      u.unsubscribe(d.FRAGMENT_REMOVE, P);
+      u.unsubscribe(d.FRAGMENT_REMOVE_ALL_HIDDEN, X);
     };
     this.handleUserAction = function () {
       return c.isEndpointActive && c.isEndpointActive.set(!0), !0;
     };
     this.init = function () {
-      u.subscribe(p.OPEN_CONVERSATION, R);
-      u.subscribe(p.NAVIGATE, I);
-      u.subscribe(d.SIDEBAR_STATE_CHANGED, this.isInBackground);
-      u.subscribe(p.NAVIGATE_TO_PREVIOUS_PAGE, q);
-      u.subscribe(d.SHOW_SIDEBAR, z);
-      u.subscribe(d.HIDE_SIDEBAR, U);
-      u.subscribe(p.FRAGMENT_REMOVE, D);
-      u.subscribe(p.FRAGMENT_REMOVE_ALL_HIDDEN, W);
-      this.registerEvent(p.COMPONENT_RENDERED, M);
-      g = f.get();
-      S = a.resolve(s.serviceLocator.NAVIGATION_CONTEXT);
+      var n = p.API.version === 2;
+      u.subscribe(d.OPEN_CONVERSATION, U);
+      u.subscribe(d.NAVIGATE, q);
+      u.subscribe(v.SIDEBAR_STATE_CHANGED, this.isInBackground);
+      u.subscribe(d.NAVIGATE_TO_PREVIOUS_PAGE, R);
+      u.subscribe(v.SHOW_SIDEBAR, W);
+      n || u.subscribe(v.HIDE_SIDEBAR, z);
+      u.subscribe(d.FRAGMENT_REMOVE, P);
+      u.subscribe(d.FRAGMENT_REMOVE_ALL_HIDDEN, X);
+      this.registerEvent(d.COMPONENT_RENDERED, _);
+      y = f.get();
+      x = a.resolve(s.serviceLocator.NAVIGATION_CONTEXT);
       u.publish(s.apiUIEvents.SWX_CONTENT_LOADED, { contentElementId: e });
       c.signInManager.state.when(i.loginState.SignedOut, function () {
         t.fragments.removeAll();
-        S.reset();
-        w = undefined;
+        x.reset();
         E = undefined;
+        S = undefined;
       });
     };
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("cafe/applicationInstance"), i = e("swx-enums"), s = e("constants/common"), o = e("constants/components"), u = e("services/pubSub/pubSub"), a = e("services/serviceLocator"), f = e("services/telemetry/common/telemetryContext"), l = e("ui/viewModels/chat/navigationHelper"), c = e("utils/common/eventMixin"), h = e("ui/viewModels/chat/fragment"), p = s.events.navigation, d = s.events.narrowMode, v = 1, m = 20000, g = [
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-cafe-application-instance"), i = e("swx-enums"), s = e("swx-constants").COMMON, o = e("constants/components"), u = e("swx-pubsub-instance").default, a = e("swx-service-locator-instance").default, f = e("services/telemetry/common/telemetryContext"), l = e("ui/viewModels/chat/navigationHelper"), c = e("utils/common/eventMixin"), h = e("ui/viewModels/chat/fragment"), p = e("experience/settings"), d = s.events.navigation, v = s.events.narrowMode, m = 1, g = 20000, y = [
       o.people.CONTACTS_PAGE,
       o.people.DISCOVER_AGENTS_PAGE,
       o.calling.SKYPEOUT_PAGE,
       o.userSettings.USER_SETTINGS_PAGE
     ];
-  return t.assign(w.prototype, c), {
+  return t.assign(E.prototype, c), {
     build: function (e) {
-      return new w(e);
+      return new E(e);
     }
   };
 });

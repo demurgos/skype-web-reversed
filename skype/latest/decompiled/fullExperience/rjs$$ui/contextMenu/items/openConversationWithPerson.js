@@ -2,9 +2,9 @@ define("ui/contextMenu/items/openConversationWithPerson", [
   "require",
   "swx-i18n",
   "ui/contextMenu/menuItem",
-  "services/serviceLocator",
-  "constants/common",
-  "cafe/applicationInstance"
+  "swx-service-locator-instance",
+  "swx-constants",
+  "swx-cafe-application-instance"
 ], function (e) {
   function o(e, u) {
     function l() {
@@ -18,6 +18,6 @@ define("ui/contextMenu/items/openConversationWithPerson", [
     var a = this, f = t.fetch({ key: "label_text_headerMenuInstantMessage" });
     n.call(a, o.TYPE, f, l);
   }
-  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("services/serviceLocator"), i = e("constants/common"), s = e("cafe/applicationInstance");
+  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("swx-service-locator-instance").default, i = e("swx-constants").COMMON, s = e("swx-cafe-application-instance");
   return o.prototype = Object.create(n.prototype), o.TYPE = "OpenConversationWithPersonMenuItem", o;
 });

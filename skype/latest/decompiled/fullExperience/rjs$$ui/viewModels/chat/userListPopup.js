@@ -3,8 +3,8 @@ define("ui/viewModels/chat/userListPopup", [
   "exports",
   "module",
   "utils/common/eventMixin",
-  "constants/common",
-  "utils/common/async",
+  "swx-constants",
+  "swx-utils-common",
   "browser/document",
   "browser/dom",
   "vendor/knockout",
@@ -57,7 +57,7 @@ define("ui/viewModels/chat/userListPopup", [
       n.userListPopupCss.dispose();
     };
   }
-  var n = e("utils/common/eventMixin"), r = e("constants/common"), i = e("utils/common/async"), s = e("browser/document"), o = e("browser/dom"), u = e("vendor/knockout"), a = e("lodash-compat"), f = e("utils/common/scroll"), l = e("utils/common/outsideClickHandler");
+  var n = e("utils/common/eventMixin"), r = e("swx-constants").COMMON, i = e("swx-utils-common").async, s = e("browser/document"), o = e("browser/dom"), u = e("vendor/knockout"), a = e("lodash-compat"), f = e("utils/common/scroll"), l = e("utils/common/outsideClickHandler");
   t.build = function (e, t) {
     return new c(e, t);
   };

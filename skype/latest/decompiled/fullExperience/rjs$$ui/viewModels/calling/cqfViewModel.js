@@ -1,19 +1,19 @@
 define("ui/viewModels/calling/cqfViewModel", [
   "require",
   "lodash-compat",
-  "constants/calling",
+  "swx-constants",
   "ui/calling/telemetry/cqfActions",
-  "browser/document",
   "utils/common/eventMixin",
   "swx-i18n",
   "vendor/knockout",
   "services/cqf/questionnaire",
   "utils/common/scroll",
   "experience/settings",
-  "browser/window"
+  "browser/window",
+  "utils/common/accessibility"
 ], function (e) {
   function h() {
-    function y() {
+    function p() {
       function t(e) {
         return e.category === "q" || e.category === "qe";
       }
@@ -23,113 +23,95 @@ define("ui/viewModels/calling/cqfViewModel", [
       function r(e) {
         return e.category === "vq" || e.category === "vqe";
       }
-      a.forEach(function (i) {
-        i.checked = u.observable(!1);
-        i.comment = u.observable();
+      u.forEach(function (i) {
+        i.checked = o.observable(!1);
+        i.comment = o.observable();
         i.qid && (e.callData.questionaryId = i.qid);
         t(i) && e.audioQuestions.push(i);
         n(i) && e.isPSTN && e.audioQuestions.push(i);
         r(i) && e.isVideoCall && e.videoQuestions.push(i);
       });
     }
+    function d() {
+      i = l.setTimeout(e.close, f.cqf.inactivityTimeout);
+    }
+    function v() {
+      i && (l.clearTimeout(i), i = null);
+    }
+    function m() {
+      e.selectedStar() === -1 ? e.close() : e.submitWithoutTokens();
+    }
+    function g() {
+      e.callData.score = e.selectedStar();
+    }
+    function y() {
+      e.callData.tokensSelected = [];
+      e.callData.othersSelected = [];
+      e.audioQuestions.concat(e.videoQuestions).forEach(function (t) {
+        t.checked() && e.callData.tokensSelected.push({ token: t.token });
+        t.comment() && t.comment().trim().length > 0 && e.callData.othersSelected.push({
+          token: t.token,
+          value: t.comment()
+        });
+      });
+    }
     function b() {
-      s = c.setTimeout(e.close, l.cqf.inactivityTimeout);
+      c.announce(s.fetch({ key: "cqf_thanks_title" }));
+      e.currentStep(n.CQF.STEPS.THANKS);
+      l.setTimeout(function () {
+        e.dispatchEvent(n.EVENTS.CQF_SCREEN_CLOSE, e.DIRECTION.PARENT);
+      }, n.CQF.THANKS_TIMEOUT);
     }
-    function w() {
-      s && (c.clearTimeout(s), s = null);
-    }
-    function E() {
-      var e = i.querySelector(".CallQualityFeedback-starRating .selected");
-      if (e)
-        return e;
-    }
-    function S(e) {
-      e.firstElementChild.classList.remove(m);
-      e.firstElementChild.classList.add(v);
-    }
-    function x(e) {
-      e.firstElementChild.classList.remove(v);
-      e.firstElementChild.classList.add(m);
-    }
-    function T(e) {
-      var t = e.previousElementSibling;
-      while (t && t.classList.contains(p))
-        S(t), t = t.previousElementSibling;
-    }
-    function N() {
-      var e = E();
-      C();
-      e && (S(e), T(e));
-    }
-    function C() {
-      var e;
-      for (e = 0; e < h.length; ++e)
-        x(h[e]);
-    }
-    function k() {
-      w();
-      r.get().cancel(e.callData);
-      e.selectedStar(0);
-    }
-    var e = this, t, s, h = i.querySelectorAll(".CallQualityFeedback-starRating .btn"), p = "btn", d = "selected", v = "favouriteOn", m = "favouriteOff";
-    e.currentStep = u.observable(1);
-    e.selectedStar = u.observable(-1);
-    e.canBeSubmitted = u.observable(!1);
+    var e = this, t, i;
+    e.currentStep = o.observable(n.CQF.STEPS.INTRO);
+    e.selectedStar = o.observable(-1);
+    e.canBeSubmitted = o.observable(!1);
     e.audioQuestions = [];
     e.videoQuestions = [];
-    e.activitySubscriptions = [];
-    var g = e.selectedStar.subscribe(function () {
+    var h = e.selectedStar.subscribe(function () {
       e.canBeSubmitted(!0);
-      w();
+      v();
     });
     e.init = function (r, i) {
       e.isVideoCall = r.callData.isVideo;
       e.isPSTN = r.callData.isPSTN;
       e.callData = r.callData;
-      e.questionsTitle = u.computed(function () {
-        return e.isVideoCall ? o.fetch({ key: "cqf_video_title" }) : o.fetch({ key: "cqf_audio_title" });
+      e.questionsTitle = o.computed(function () {
+        return e.isVideoCall ? s.fetch({ key: "cqf_video_title" }) : s.fetch({ key: "cqf_audio_title" });
       });
-      t = f.build(i);
+      t = a.build(i);
       t.init();
-      y();
-      b();
-      e.registerEvent(n.EVENTS.CQF_CANCEL, k);
-    };
-    e.starMouseoverHandler = function (e, t) {
-      var n = t.currentTarget;
-      S(n);
-      T(n);
-    };
-    e.starMouseoutHandler = function () {
-      N();
-    };
-    e.starClickHandler = function (t, n) {
-      var r = n.currentTarget, i = E();
-      i && i.classList.remove(d);
-      e.selectedStar(parseInt(r.getAttribute("data-value")));
-      r.classList.add(d);
-      N();
+      p();
+      d();
+      e.registerEvent(n.EVENTS.CQF_CANCEL, m);
     };
     e.close = function () {
-      k();
+      v();
+      r.get().cancel(e.callData);
+      e.selectedStar(0);
       e.dispatchEvent(n.EVENTS.CQF_SCREEN_CLOSE, e.DIRECTION.PARENT);
     };
+    e.handleStarRating = function () {
+      e.selectedStar() === 4 ? e.submitWithoutTokens() : e.currentStep(n.CQF.STEPS.QUESTIONNAIRE);
+    };
+    e.submitWithoutTokens = function () {
+      g();
+      r.get().submit(e.callData);
+      b();
+    };
     e.submit = function () {
-      e.selectedStar() === 4 || e.currentStep() === 2 ? (e.callData.score = e.selectedStar(), e.callData.tokensSelected = [], e.callData.othersSelected = [], e.audioQuestions.concat(e.videoQuestions).forEach(function (t) {
-        t.checked() && e.callData.tokensSelected.push({ token: t.token });
-        t.comment() && t.comment().trim().length > 1 && e.callData.othersSelected.push({
-          token: t.token,
-          value: t.comment()
-        });
-      }), r.get().submit(e.callData), e.dispatchEvent(n.EVENTS.CQF_SCREEN_CLOSE, e.DIRECTION.PARENT)) : e.currentStep(2);
+      g();
+      y();
+      r.get().submit(e.callData);
+      b();
     };
     e.dispose = function () {
       t.dispose();
-      g.dispose();
+      h.dispose();
     };
   }
-  var t = e("lodash-compat"), n = e("constants/calling"), r = e("ui/calling/telemetry/cqfActions"), i = e("browser/document"), s = e("utils/common/eventMixin"), o = e("swx-i18n").localization, u = e("vendor/knockout"), a = e("services/cqf/questionnaire"), f = e("utils/common/scroll"), l = e("experience/settings"), c = e("browser/window");
-  return t.assign(h.prototype, s), {
+  var t = e("lodash-compat"), n = e("swx-constants").CALLING, r = e("ui/calling/telemetry/cqfActions"), i = e("utils/common/eventMixin"), s = e("swx-i18n").localization, o = e("vendor/knockout"), u = e("services/cqf/questionnaire"), a = e("utils/common/scroll"), f = e("experience/settings"), l = e("browser/window"), c = e("utils/common/accessibility").narrator;
+  return t.assign(h.prototype, i), {
     build: function () {
       return new h();
     }

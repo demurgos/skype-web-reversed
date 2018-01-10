@@ -3,7 +3,7 @@ define("ui/contextMenu/items/editMessage", [
   "swx-i18n",
   "ui/contextMenu/menuItem",
   "swx-enums",
-  "constants/common"
+  "swx-constants"
 ], function (e) {
   function s(e, o) {
     function a() {
@@ -14,10 +14,10 @@ define("ui/contextMenu/items/editMessage", [
     var u = t.fetch({ key: "chatLogmenuItem_text_edit" });
     n.call(this, s.TYPE, u, a);
     this.isEnabled = function () {
-      var e = o.status() === r.activityStatus.Succeeded, t = o.html && o.html.set.enabled() && o.text && o.type() !== r.activityType.SystemMessage;
-      return !!e && !!t;
+      var e = o.status() === r.activityStatus.Succeeded, t = o.html && o.html.set.enabled() && o.text && o.type() !== r.activityType.SystemMessage, n = o._isSMS && o._isSMS();
+      return !!e && !!t && !n;
     };
   }
-  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("swx-enums"), i = e("constants/common").events;
+  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("swx-enums"), i = e("swx-constants").COMMON.events;
   return s.prototype = Object.create(n.prototype), s.TYPE = "EditMessageMenuItem", s;
 });

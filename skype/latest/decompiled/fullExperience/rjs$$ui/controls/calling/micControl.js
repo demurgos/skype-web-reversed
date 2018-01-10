@@ -2,10 +2,10 @@ define("ui/controls/calling/micControl", [
   "require",
   "text!views/calling/muteButton.html",
   "vendor/knockout",
-  "constants/calling",
+  "swx-constants",
   "ui/viewModels/calling/micControlViewModel"
 ], function (e) {
-  var t = e("text!views/calling/muteButton.html"), n = e("vendor/knockout"), r = e("constants/calling"), i = e("ui/viewModels/calling/micControlViewModel");
+  var t = e("text!views/calling/muteButton.html"), n = e("vendor/knockout"), r = e("swx-constants").CALLING, i = e("ui/viewModels/calling/micControlViewModel");
   return {
     name: r.CONTROLS.MUTE_CONTROL,
     render: function (e, r) {

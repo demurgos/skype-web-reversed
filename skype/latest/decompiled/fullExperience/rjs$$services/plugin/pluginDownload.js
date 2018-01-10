@@ -1,7 +1,7 @@
 define("services/plugin/pluginDownload", [
   "require",
   "browser/dom",
-  "browser/detect",
+  "swx-browser-detect",
   "experience/settings"
 ], function (e) {
   function i() {
@@ -20,6 +20,6 @@ define("services/plugin/pluginDownload", [
     n.style.left = "0";
     document.body.appendChild(n);
   }
-  var t = e("browser/dom"), n = e("browser/detect"), r = e("experience/settings");
+  var t = e("browser/dom"), n = e("swx-browser-detect").default, r = e("experience/settings");
   return { downloadPlatformSpecificInstaller: i };
 });

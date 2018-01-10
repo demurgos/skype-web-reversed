@@ -5,11 +5,11 @@ define("ui/viewModels/calling/plugin/extensionInstallFailedStepViewModel", [
   "browser/document",
   "browser/window",
   "experience/settings",
-  "constants/calling",
+  "swx-constants",
   "ui/viewModels/calling/plugin/extensionInstallHelper",
   "ui/viewModels/calling/helpers/browserInstallContent"
 ], function (e, t) {
-  var n = e("browser/document"), r = e("browser/window"), i = e("experience/settings"), s = e("constants/calling"), o = e("ui/viewModels/calling/plugin/extensionInstallHelper"), u = e("ui/viewModels/calling/helpers/browserInstallContent"), a = function (s) {
+  var n = e("browser/document"), r = e("browser/window"), i = e("experience/settings"), s = e("swx-constants").CALLING, o = e("ui/viewModels/calling/plugin/extensionInstallHelper"), u = e("ui/viewModels/calling/helpers/browserInstallContent"), a = function (s) {
       function c() {
         var e = n.querySelector("head"), t = f.buildContentScriptElement();
         t.onload = h;

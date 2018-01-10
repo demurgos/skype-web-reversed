@@ -2,14 +2,14 @@ define("experience/api/contact", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "swx-enums",
-  "constants/common",
+  "swx-constants",
   "ui/telemetry/actions/actionNames",
   "utils/common/cafeObservable",
-  "services/serviceLocator"
+  "swx-service-locator-instance"
 ], function (e, t) {
-  var n = e("cafe/applicationInstance"), r = e("swx-enums"), i = e("constants/common"), s = e("ui/telemetry/actions/actionNames"), o = e("utils/common/cafeObservable"), u = e("services/serviceLocator");
+  var n = e("swx-cafe-application-instance"), r = e("swx-enums"), i = e("swx-constants").COMMON, s = e("ui/telemetry/actions/actionNames"), o = e("utils/common/cafeObservable"), u = e("swx-service-locator-instance").default;
   t.getByUri = function (e) {
     function p() {
       var e = c.results().length, t = e ? c.results(0).result : undefined;

@@ -2,7 +2,7 @@ define("ui/viewModels/chat/fragment", [
   "require",
   "lodash-compat",
   "vendor/knockout",
-  "constants/common",
+  "swx-constants",
   "utils/common/eventMixin"
 ], function (e) {
   function s(e) {
@@ -20,6 +20,6 @@ define("ui/viewModels/chat/fragment", [
     };
     this.registerEvent(r.COMPONENT_RENDERED, i);
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("constants/common").events.navigation, i = e("utils/common/eventMixin");
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-constants").COMMON.events.navigation, i = e("utils/common/eventMixin");
   return t.assign(s.prototype, i), s;
 });

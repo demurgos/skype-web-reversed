@@ -1,51 +1,56 @@
 define("jsviews/chat/textarea", [
   "require",
-  "browser/dom"
+  "browser/dom",
+  "swx-focus-handler"
 ], function (e) {
-  function s(e, s) {
-    function a() {
+  function u(e, u) {
+    function h() {
       try {
-        var e = u.placeholder, t = window.getComputedStyle(u), n = document.createElement("canvas").getContext("2d");
+        var e = l.placeholder, t = window.getComputedStyle(l), n = document.createElement("canvas").getContext("2d");
         return n.font = t.fontSize + " " + t.fontFamily, n.measureText(e).width > parseInt(t.width) ? 2 * parseInt(t.lineHeight) : parseInt(t.lineHeight);
       } catch (r) {
         return 0;
       }
     }
-    var o = this, u = t.getElement("textarea", e);
-    s = t.getElement(s);
-    o.updateSizing = function () {
-      var e;
-      u.style.height = "30px";
-      e = u.value === "" ? a() : u.scrollHeight;
-      e = Math.max(r, Math.min(e, i));
-      u.style.height = e + "px";
+    var a = this, f = e, l = t.getElement("textarea", e), c = t.getElementById("chatInputContainer", e);
+    u = t.getElement(u);
+    a.updateSizing = function () {
+      var e, n, r = t.getElementById("quoteContainer", f), u = c && c.scrollTop;
+      l.style.height = i + "px";
+      e = l.value === "" ? h() : l.scrollHeight;
+      e = Math.max(i, e);
+      l.style.height = e + "px";
+      if (!c)
+        return;
+      n = e + o + (r ? r.scrollHeight : 0);
+      n < s ? c.style.height = n + "px" : (c.style.height = s + "px", c.scrollTop = u);
     };
-    o.setCaretToEnd = function () {
-      u.focus();
-      if (typeof u.selectionStart == "number") {
-        u.selectionStart = u.selectionEnd = u.value.length;
+    a.setCaretToEnd = function () {
+      n.get().addFocusRequestToQueue(l);
+      if (typeof l.selectionStart == "number") {
+        l.selectionStart = l.selectionEnd = l.value.length;
         return;
       }
-      if (typeof u.createTextRange != "undefined") {
-        var e = u.createTextRange();
+      if (typeof l.createTextRange != "undefined") {
+        var e = l.createTextRange();
         e.collapse(!1);
         e.select();
       }
     };
-    o.getSelectionStart = function () {
-      return u.selectionStart;
+    a.getSelectionStart = function () {
+      return l.selectionStart;
     };
-    o.getSelectionEnd = function () {
-      return u.selectionEnd;
+    a.getSelectionEnd = function () {
+      return l.selectionEnd;
     };
-    o.setCursorAt = function (e) {
-      u.selectionStart = e;
-      u.selectionEnd = e;
+    a.setCursorAt = function (e) {
+      l.selectionStart = e;
+      l.selectionEnd = e;
     };
-    o.editing = function (e) {
-      e ? s.addClass(n) : s.removeClass(n);
+    a.editing = function (e) {
+      e ? u.addClass(r) : u.removeClass(r);
     };
   }
-  var t = e("browser/dom"), n = "EDITING", r = 30, i = 180;
-  return s;
+  var t = e("browser/dom"), n = e("swx-focus-handler"), r = "EDITING", i = 30, s = 180, o = 9;
+  return u;
 });

@@ -1,7 +1,7 @@
 define("services/telemetry/common/analyticsInfo", [
   "require",
-  "cafe/applicationInstance",
-  "constants/common",
+  "swx-cafe-application-instance",
+  "swx-constants",
   "lodash-compat"
 ], function (e) {
   function o(e) {
@@ -43,7 +43,7 @@ define("services/telemetry/common/analyticsInfo", [
       return s ? (e = r.thread30Count === 0, e ? n.telemetry.persona.CLASSIC_IM : n.telemetry.persona.POWER_IM) : o ? n.telemetry.persona.NEWBEE : n.telemetry.persona.RETURNING;
     }, i;
   }
-  var t = e("cafe/applicationInstance"), n = e("constants/common"), r = e("lodash-compat"), i, s = n.telemetry.NOT_AVAILABLE;
+  var t = e("swx-cafe-application-instance"), n = e("swx-constants").COMMON, r = e("lodash-compat"), i, s = n.telemetry.NOT_AVAILABLE;
   return u.get = function () {
     return i || (i = new u()), i;
   }, u;

@@ -5,76 +5,77 @@ define("ui/viewModels/chat/conversationActivity", [
   "vendor/knockout",
   "swx-enums",
   "browser/window",
-  "constants/common",
-  "constants/calling",
-  "services/serviceLocator"
+  "ui/modelObservers/calling/activeCallObserver"
 ], function (e, t) {
-  function a(e) {
-    function h(e) {
+  function o(e) {
+    function c(e) {
       t.isOnCall(e === r.callConnectionState.Connected);
     }
-    function p() {
-      var n = !!e.activeModalities.audio(), i = e.selfParticipant.audio.state() === r.callConnectionState.Disconnected || e.selfParticipant.audio.state() === r.callConnectionState.Notified, a = e.isGroupConversation(), f = u.resolve(s.serviceLocator.FEATURE_FLAGS), l = f.isFeatureOn(o.FEATURE_FLAGS.CALLING);
-      t.canJoinCall(a && n && i && l);
+    function h() {
+      var n = !!e.activeModalities.audio(), i = e.selfParticipant.audio.state() === r.callConnectionState.Disconnected || e.selfParticipant.audio.state() === r.callConnectionState.Notified, s = e.isGroupConversation();
+      l.isCallActive() ? t.canJoinCall(!1) : t.canJoinCall(s && n && i);
     }
-    function d(e) {
+    function p(e) {
+      c(e);
       h(e);
-      p(e);
       switch (e) {
       case r.callConnectionState.Connected:
-        g();
+        m();
         break;
       case r.callConnectionState.Disconnected:
-        y();
+        g();
       }
     }
-    function v(e, n) {
+    function d(e, n) {
       var i = !e, s = n !== r.callingNotSupportedReasons.PluginNotInstalled;
       t.isCallingDisabled(i && s);
     }
-    function m(e, n) {
+    function v(e, n) {
       var i = !e, s = n !== r.callingNotSupportedReasons.PluginNotInstalled;
       t.isVideoCallingDisabled(i && s);
     }
+    function m() {
+      o || (t.callDuration(f), u = e.audioService.callConnected(), o = i.setInterval(y, a));
+    }
     function g() {
-      t.callDuration(c);
-      f = e.audioService.callConnected();
-      a = i.setInterval(b, l);
+      o && (i.clearInterval(o), o = null, t.callDuration(f));
     }
     function y() {
-      a && i.clearInterval(a);
-      t.callDuration(c);
-    }
-    function b() {
-      var e = new Date(), n = e - f;
+      var e = new Date(), n = e - u;
       t.callDuration(n);
     }
-    function w() {
+    function b() {
       return t.isCallingDisabled() || !t.canJoinCall();
     }
-    var t = this, a, f, l = 1000, c = -1;
-    t.callDuration = n.observable(c);
+    function w() {
+      return t.isVideoCallingDisabled() || !t.canJoinCall();
+    }
+    var t = this, o, u, a = 1000, f = -1, l = s.build();
+    t.callDuration = n.observable(f);
     t.isOnCall = n.observable(!1);
     t.isCallingDisabled = n.observable(!0);
     t.isVideoCallingDisabled = n.observable(!0);
     t.canJoinCall = n.observable(!1);
-    t.isJoinCallDisabled = n.computed(w);
-    e.selfParticipant.audio.state.changed(d);
-    e.activeModalities.audio.changed(p);
-    e.audioService.start.enabled.changed(v);
-    e.videoService.start.enabled.changed(m);
+    t.isJoinCallDisabled = n.computed(b);
+    t.isJoinCallWithVideoDisabled = n.computed(w);
+    e.selfParticipant.audio.state.changed(p);
+    e.activeModalities.audio.changed(h);
+    e.audioService.start.enabled.changed(d);
+    e.videoService.start.enabled.changed(v);
     t.dispose = function () {
+      l.dispose();
       t.isJoinCallDisabled.dispose();
-      e.selfParticipant.audio.state.changed.off(d);
-      e.activeModalities.audio.changed.off(p);
-      e.audioService.start.enabled.changed.off(v);
-      e.videoService.start.enabled.changed.off(m);
-      a && i.clearInterval(a);
+      t.isJoinCallWithVideoDisabled.dispose();
+      e.selfParticipant.audio.state.changed.off(p);
+      e.activeModalities.audio.changed.off(h);
+      e.audioService.start.enabled.changed.off(d);
+      e.videoService.start.enabled.changed.off(v);
+      o && (i.clearInterval(o), o = null);
     };
   }
-  var n = e("vendor/knockout"), r = e("swx-enums"), i = e("browser/window"), s = e("constants/common"), o = e("constants/calling"), u = e("services/serviceLocator");
-  t.classFunction = a;
+  var n = e("vendor/knockout"), r = e("swx-enums"), i = e("browser/window"), s = e("ui/modelObservers/calling/activeCallObserver");
+  t.classFunction = o;
   t.build = function (e) {
-    return new a(e);
+    return new o(e);
   };
 });

@@ -2,13 +2,13 @@ define("ui/contextMenu/items/callSkype", [
   "require",
   "ui/contextMenu/items/baseCallingMenuItem",
   "swx-i18n",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "ui/telemetry/actions/actionNames",
   "ui/telemetry/actions/actionSources",
   "constants/cssClasses",
   "ui/modelHelpers/personHelper",
-  "cafe/applicationInstance"
+  "swx-cafe-application-instance"
 ], function (e) {
   function l(e, c, h) {
     var p, d, v = this;
@@ -35,6 +35,6 @@ define("ui/contextMenu/items/callSkype", [
       return s.audioVideo.audioCall;
     };
   }
-  var t = e("ui/contextMenu/items/baseCallingMenuItem"), n = e("swx-i18n").localization, r = e("services/serviceLocator"), i = e("constants/common"), s = e("ui/telemetry/actions/actionNames"), o = e("ui/telemetry/actions/actionSources"), u = e("constants/cssClasses"), a = e("ui/modelHelpers/personHelper"), f = e("cafe/applicationInstance");
+  var t = e("ui/contextMenu/items/baseCallingMenuItem"), n = e("swx-i18n").localization, r = e("swx-service-locator-instance").default, i = e("swx-constants").COMMON, s = e("ui/telemetry/actions/actionNames"), o = e("ui/telemetry/actions/actionSources"), u = e("constants/cssClasses"), a = e("ui/modelHelpers/personHelper"), f = e("swx-cafe-application-instance");
   return l.prototype = Object.create(t.prototype), l.TYPE = "CallSkypeMenuItem", l;
 });

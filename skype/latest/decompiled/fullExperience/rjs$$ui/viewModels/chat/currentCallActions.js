@@ -1,19 +1,22 @@
 define("ui/viewModels/chat/currentCallActions", [
   "require",
   "lodash-compat",
+  "utils/common/cafeObservable",
   "utils/common/eventMixin",
   "ui/viewModels/chat/conversationActivity"
 ], function (e) {
-  function i(e) {
-    var t = this, n = e.conversationModel, i;
-    i = r.build(n);
-    t.conversation = n;
-    t.isOnCall = i.isOnCall;
-    t.canJoinCall = i.canJoinCall;
+  function s(e) {
+    var t = this, r = e.conversationModel, s;
+    s = i.build(r);
+    t.conversation = r;
+    t.isOnCall = s.isOnCall;
+    t.canJoinCall = s.canJoinCall;
+    t.canJoinWithVideo = n.newObservableProperty(r.videoService.start.enabled);
     t.dispose = function () {
-      i.dispose();
+      t.canJoinWithVideo.dispose();
+      s.dispose();
     };
   }
-  var t = e("lodash-compat"), n = e("utils/common/eventMixin"), r = e("ui/viewModels/chat/conversationActivity");
-  return t.assign(i.prototype, n), i;
+  var t = e("lodash-compat"), n = e("utils/common/cafeObservable"), r = e("utils/common/eventMixin"), i = e("ui/viewModels/chat/conversationActivity");
+  return t.assign(s.prototype, r), s;
 });

@@ -3,13 +3,13 @@ define("ui/modalDialog/downloadFileConfirmationDialog", [
   "exports",
   "module",
   "vendor/knockout",
-  "constants/common",
+  "swx-constants",
   "experience/settings",
   "swx-i18n",
   "ui/modalDialog/confirmationDialog",
   "text!views/chat/downloadFileConfirmationDialog.html",
   "swx-flags-service-api",
-  "cafe/applicationInstance"
+  "swx-cafe-application-instance"
 ], function (e, t) {
   function l(e, t, r) {
     var i = r ? "file_transfer_download_safe_file_dialog_text" : "file_transfer_download_unsafe_file_dialog_text";
@@ -23,7 +23,7 @@ define("ui/modalDialog/downloadFileConfirmationDialog", [
     });
     this.stopShowingAgain = n.observable(!1);
   }
-  var n = e("vendor/knockout"), r = e("constants/common"), i = e("experience/settings"), s = e("swx-i18n").localization, o = e("ui/modalDialog/confirmationDialog"), u = e("text!views/chat/downloadFileConfirmationDialog.html"), a = e("swx-flags-service-api"), f = e("cafe/applicationInstance");
+  var n = e("vendor/knockout"), r = e("swx-constants").COMMON, i = e("experience/settings"), s = e("swx-i18n").localization, o = e("ui/modalDialog/confirmationDialog"), u = e("text!views/chat/downloadFileConfirmationDialog.html"), a = e("swx-flags-service-api"), f = e("swx-cafe-application-instance");
   t.start = function (e, t, n, c) {
     function v() {
       n && n();

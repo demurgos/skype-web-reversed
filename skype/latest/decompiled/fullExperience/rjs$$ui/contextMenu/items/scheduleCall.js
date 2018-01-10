@@ -4,8 +4,8 @@ define("ui/contextMenu/items/scheduleCall", [
   "module",
   "swx-i18n",
   "ui/contextMenu/menuItem",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "constants/cssClasses",
   "ui/telemetry/actions/actionNames",
   "ui/modalDialog/modalDialog",
@@ -40,7 +40,7 @@ define("ui/contextMenu/items/scheduleCall", [
       d && d.hide();
     };
   }
-  var n = e("swx-i18n").localization, r = e("ui/contextMenu/menuItem"), i = e("services/serviceLocator"), s = e("constants/common"), o = e("constants/cssClasses"), u = e("ui/telemetry/actions/actionNames"), a = e("ui/modalDialog/modalDialog"), f = e("ui/viewModels/chat/scheduleCallModal"), l = e("text!views/chat/scheduleCallModal.html"), c = e("ui/educationBubbles/educationBubble"), h = e("ui/educationBubbles/educationBubbleInfo");
+  var n = e("swx-i18n").localization, r = e("ui/contextMenu/menuItem"), i = e("swx-service-locator-instance").default, s = e("swx-constants").COMMON, o = e("constants/cssClasses"), u = e("ui/telemetry/actions/actionNames"), a = e("ui/modalDialog/modalDialog"), f = e("ui/viewModels/chat/scheduleCallModal"), l = e("text!views/chat/scheduleCallModal.html"), c = e("ui/educationBubbles/educationBubble"), h = e("ui/educationBubbles/educationBubbleInfo");
   p.prototype = Object.create(r.prototype);
   t.TYPE = "ScheduleCallMenuItem";
   t.build = function (e) {

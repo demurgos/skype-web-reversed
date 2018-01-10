@@ -1,42 +1,50 @@
 define("ui/players/ytPlayer", [
   "require",
-  "constants/common",
+  "swx-constants",
   "experience/settings",
   "browser/window",
   "browser/document",
+  "swx-log-tracer",
   "telemetry/chat/youtubeShowEvent",
   "telemetry/chat/youtubeActionEvent",
-  "services/pubSub/pubSub"
+  "swx-pubsub-instance"
 ], function (e) {
-  function a() {
-    function l() {
-      e.testContext.removePlayer(this.playerId);
+  function f() {
+    function c() {
+      try {
+        e.testContext.removePlayer(this.playerId);
+      } catch (t) {
+        s.error("Error in disposing the Player: ");
+        s.error(t);
+      }
     }
-    function c(t) {
+    function h(t) {
       e.testContext.players[t] && (e.testContext.players[t].destroy(), delete e.testContext.players[t]);
       e.testContext.previewItems[t] && delete e.testContext.previewItems[t];
     }
-    function h(e) {
+    function p(e) {
       return e.B ? e.B.currentTime : e.F ? e.F.currentTime : e.getCurrentTime ? e.getCurrentTime() : 0;
     }
-    function p(e) {
+    function d(e) {
       return e.H && e.H.duration ? e.H.duration : e.F && e.F.duration ? e.F.duration : e.getDuration ? e.getDuration() : 0;
     }
-    function d(e, t, n, r) {
-      var i = p(n);
+    function v(e, t, n, r) {
+      var i = d(n);
       return t /= 1000, t = t > i ? i : t, {
         type: e,
         duration: t,
-        startTime: h(n),
-        participantsCount: v(r),
+        startTime: p(n),
+        participantsCount: m(r),
         videoLength: i
       };
     }
-    function v(e) {
+    function m(e) {
       return e && e.conversation ? e.conversation.participantsCount() : t.telemetry.NOT_AVAILABLE;
     }
-    function m(n) {
+    function g(n) {
       n.previews().forEach(function (n) {
+        if (!r || !r.YT || !r.YT.Player)
+          return;
         if (n.type() !== t.urlPreviewType.YT || !n.playerId)
           return;
         if (e.testContext.players[n.playerId])
@@ -50,73 +58,116 @@ define("ui/players/ytPlayer", [
         });
       });
     }
-    function g(t, n) {
+    function y(t, n) {
       var r = "yt_" + t + "_" + n;
       return e.randomIdEnabled ? r + "_" + Math.random().toString(36).substring(7) : r;
     }
-    function y(e) {
+    function b(e) {
       return e.protocol + "//" + e.hostname + (e.port ? ":" + e.port : "");
     }
-    function b(e, t) {
-      var i = "https://www.youtube.com/embed/" + e + "?showinfo=0&enablejsapi=1&modestbranding=1&disablekb=1&rel=0&iv_load_policy=3" + "&hl=" + n.initParams.locale + "&" + "&origin=" + y(r.location);
+    function w(e, t) {
+      var i = "https://www.youtube.com/embed/" + e + "?showinfo=0&enablejsapi=1&modestbranding=1&disablekb=1&rel=0&iv_load_policy=3" + "&hl=" + n.initParams.locale + "&" + "&origin=" + b(r.location);
       return t && (i += "&autoplay=true"), i;
     }
-    function w(e) {
+    function E(e) {
       return e.target.id || e.target.getIframe().id;
     }
-    var e = this, a, f = 10000;
+    var e = this, f, l = 10000;
     e.testContext = {
       players: {},
       previewItems: {},
       onPlayerReady: function (t) {
-        var n = w(t), r = e.testContext.previewItems[n], i = e.testContext.players[n];
-        if (i.toDestroy) {
-          c(n);
-          return;
+        try {
+          var n = E(t), r = e.testContext.previewItems[n], i = e.testContext.players[n];
+          if (i.toDestroy) {
+            h(n);
+            return;
+          }
+          i.renderedAndReady = !0;
+          if (!r)
+            return;
+          o.publish(r, t.target, d(t.target), m(r));
+        } catch (u) {
+          s.error("Error in onPlayerReady: ");
+          s.error(u);
         }
-        i.renderedAndReady = !0;
-        if (!r)
-          return;
-        s.publish(r, t.target, p(t.target), v(r));
       },
       onPlayerStateChange: function (t) {
-        var n = new r.Date().getTime(), i = w(t), s = e.testContext.previewItems[i], u = e.testContext.players[i];
-        switch (t.data) {
-        case r.YT.PlayerState.BUFFERING:
-        case r.YT.PlayerState.CUED:
-        case r.YT.PlayerState.UNSTARTED:
-          return;
-        case r.YT.PlayerState.PLAYING:
-          s.lastActionTimestamp = n, o.publish(s, u, d(e.actionType.PLAYING, 0, u, s), n);
-          break;
-        case r.YT.PlayerState.PAUSED:
-          s.lastActionTimestamp = s.lastActionTimestamp || n, o.publish(s, u, d(e.actionType.PAUSED, n - s.lastActionTimestamp, u, s), {
-            type: e.actionType.PAUSED,
-            duration: n - s.lastActionTimestamp,
-            participantsCount: v(s),
-            videoLength: p(u)
-          }, n), s.lastActionTimestamp = null;
-          break;
-        case r.YT.PlayerState.ENDED:
-          s.lastActionTimestamp = s.lastActionTimestamp || n, o.publish(s, u, d(e.actionType.ENDED, n - s.lastActionTimestamp, u, s), n), s.lastActionTimestamp = null;
+        try {
+          var n = new r.Date().getTime(), i = E(t), o = e.testContext.previewItems[i], a = e.testContext.players[i];
+          switch (t.data) {
+          case r.YT.PlayerState.BUFFERING:
+          case r.YT.PlayerState.CUED:
+          case r.YT.PlayerState.UNSTARTED:
+            return;
+          case r.YT.PlayerState.PLAYING:
+            o.lastActionTimestamp = n, u.publish(o, a, v(e.actionType.PLAYING, 0, a, o), n);
+            break;
+          case r.YT.PlayerState.PAUSED:
+            o.lastActionTimestamp = o.lastActionTimestamp || n, u.publish(o, a, v(e.actionType.PAUSED, n - o.lastActionTimestamp, a, o), {
+              type: e.actionType.PAUSED,
+              duration: n - o.lastActionTimestamp,
+              participantsCount: m(o),
+              videoLength: d(a)
+            }, n), o.lastActionTimestamp = null;
+            break;
+          case r.YT.PlayerState.ENDED:
+            o.lastActionTimestamp = o.lastActionTimestamp || n, u.publish(o, a, v(e.actionType.ENDED, n - o.lastActionTimestamp, a, o), n), o.lastActionTimestamp = null;
+          }
+        } catch (f) {
+          s.error("Error in onPlayerStateChange: ");
+          s.error(f);
         }
       },
       removePlayer: function (n) {
-        var i = e.testContext.players[n];
-        if (!i)
-          return;
-        i.renderedAndReady ? c(n) : (r.setTimeout(c.bind(null, n), f), i.toDestroy = !0);
+        try {
+          var i = e.testContext.players[n];
+          if (!i)
+            return;
+          i.renderedAndReady ? h(n) : (r.setTimeout(h.bind(null, n), l), i.toDestroy = !0);
+        } catch (o) {
+          s.error("Error in removePlayer: ");
+          s.error(o);
+        }
       },
       onFullscreenChangedHandler: function (n) {
-        var i, s;
-        n.target.id && n.target.id.substring(0, 7) === "yt_msg_" ? (a && (s = e.testContext.players[a] || {}, s.inFullScreenMode = !1), a = w(n), i = e.testContext.previewItems[a], s = e.testContext.players[a], s.inFullScreenMode = !0, u.publish(t.events.videoPlayer.FULLSCREEN_ON, i ? i.messageId : null), o.publish(i, s, {
-          type: e.actionType.FULLSCREEN,
-          duration: h(s),
-          participantsCount: v(i),
-          videoLength: p(s)
-        }, new r.Date().getTime())) : (i = e.testContext.previewItems[a], s = e.testContext.players[a], u.publish(t.events.videoPlayer.FULLSCREEN_OFF, i ? i.messageId : null), s && (s.inFullScreenMode = !1, a = null));
+        function l() {
+          i && a.publish(t.events.videoPlayer.FULLSCREEN_OFF, i.messageId);
+        }
+        var i, o;
+        if (n.target.id && n.target.id.substring(0, 7) === "yt_msg_") {
+          f && (s.error("[YOUTUBE] Trying to go to fullscreen twice! Message in a fullscreen: " + f), o = e.testContext.players[f] || {}, o.inFullScreenMode = !1);
+          try {
+            f = E(n);
+            i = e.testContext.previewItems[f];
+            o = e.testContext.players[f];
+            o.inFullScreenMode = !0;
+            a.publish(t.events.videoPlayer.FULLSCREEN_ON, i ? i.messageId : null);
+            u.publish(i, o, {
+              type: e.actionType.FULLSCREEN,
+              duration: p(o),
+              participantsCount: m(i),
+              videoLength: d(o)
+            }, new r.Date().getTime());
+          } catch (c) {
+            s.error("Error in onFullscreenChangedHandler: ");
+            s.error(c);
+          }
+        } else {
+          try {
+            i = e.testContext.previewItems[f];
+            o = e.testContext.players[f];
+            l();
+          } catch (c) {
+            s.error("Error in onFullscreenChangedHandler: ");
+            s.error(c);
+          }
+          o && (o.inFullScreenMode = !1, f = null);
+        }
       },
       onPlayerError: function (e) {
+        s.error("[YT ERROR]");
+        s.error(e);
       }
     };
     e.actionType = {
@@ -125,33 +176,32 @@ define("ui/players/ytPlayer", [
       FULLSCREEN: "fullscreen",
       ENDED: "end"
     };
-    e.render = function (i, s, o, u) {
-      var a = i.originalRequest, f = /(?:youtube.com|youtu.be)\/(watch)?(\?v=|v\/|embed\/)?(?:.*)([\w-]{11})(?:.*)?/.exec(a);
-      if (f) {
-        var c = f[3], h = !!u;
+    e.render = function (i, o, u, a) {
+      var f = i.originalRequest, l = /(?:youtube.com|youtu.be)\/(watch)?((?:.*)v=|v\/|embed\/)?([\w-]{11})/.exec(f);
+      if (l) {
+        var h = l[3], p = !!a;
         i.originalSize(!0);
-        i.typeClasses.youtube(!0);
         i.target("");
-        i.youtubeId = c;
-        i.youtubeUri = b(c, h);
-        i.playerId = g(s.contentId, c);
-        i.messageId = s.model.key();
-        i.contentId = s.contentId;
-        i.isMyself = s.isMyself;
-        i.messageTimestamp = s.timestamp;
+        i.youtubeId = h;
+        i.youtubeUri = w(h, p);
+        i.playerId = y(o.contentId, h);
+        i.messageId = o.model.key();
+        i.contentId = o.contentId;
+        i.isMyself = o.isMyself;
+        i.messageTimestamp = o.timestamp;
         i.lastActionTimestamp = null;
         i.ytPlayer(!0);
         i.type(t.urlPreviewType.YT);
-        i.dispose = l.bind(i);
-        i.conversation = o;
+        i.dispose = c.bind(i);
+        i.conversation = u;
         e.testContext.previewItems[i.playerId] = i;
-        r.setTimeout(m.bind(null, s), n.youtubeWrapDelay);
+        r.setTimeout(g.bind(null, o), n.youtubeWrapDelay);
       } else
-        i.target("_blank");
-      return !!f;
+        i.target("_blank"), s.error("Unmatched yt link: " + f);
+      return !!l;
     };
     e.parseYTLinks = function (e) {
-      var t = e.match(/(?:https?:\/\/|\/\/)?(?:www\.|m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+?&v=))([\w-]{11})/gi);
+      var t = e.match(/(?:https?:\/\/|\/\/)?(?:www\.|m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+?&v=))([\w-]{11})(?:[^\s.]*)/gi);
       return t ? t : [];
     };
     e.isYT = function (t) {
@@ -159,8 +209,10 @@ define("ui/players/ytPlayer", [
     };
     e.handleClick = function (t) {
       var n = e.testContext.players[t.playerId];
-      if (!n)
+      if (!n) {
+        s.error("Unable to find a player for " + t.playerId);
         return;
+      }
       n.getPlayerState() === r.YT.PlayerState.PLAYING ? n.pauseVideo() : n.playVideo();
     };
     e.randomIdEnabled = !0;
@@ -171,6 +223,6 @@ define("ui/players/ytPlayer", [
       i.addEventListener("MSFullscreenChange", e.testContext.onFullscreenChangedHandler);
     };
   }
-  var t = e("constants/common"), n = e("experience/settings"), r = e("browser/window"), i = e("browser/document"), s = e("telemetry/chat/youtubeShowEvent"), o = e("telemetry/chat/youtubeActionEvent"), u = e("services/pubSub/pubSub");
-  return new a();
+  var t = e("swx-constants").COMMON, n = e("experience/settings"), r = e("browser/window"), i = e("browser/document"), s = e("swx-log-tracer").getLogger(), o = e("telemetry/chat/youtubeShowEvent"), u = e("telemetry/chat/youtubeActionEvent"), a = e("swx-pubsub-instance").default;
+  return new f();
 });

@@ -3,10 +3,10 @@ define("ui/viewModels/commerce/creditBalance", [
   "exports",
   "module",
   "utils/common/cafeObservable",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "experience/settings",
   "telemetry/calling/pstn/pstn",
-  "constants/common"
+  "swx-constants"
 ], function (e, t) {
   function u() {
     var e = this, t = r.get().personsAndGroupsManager.mePerson.account;
@@ -16,7 +16,7 @@ define("ui/viewModels/commerce/creditBalance", [
       return s.addingCredit(o.entryPoint.SKYPE_OUT_PAGE), !0;
     };
   }
-  var n = e("utils/common/cafeObservable"), r = e("cafe/applicationInstance"), i = e("experience/settings"), s = e("telemetry/calling/pstn/pstn"), o = e("constants/common").telemetry.pstn;
+  var n = e("utils/common/cafeObservable"), r = e("swx-cafe-application-instance"), i = e("experience/settings"), s = e("telemetry/calling/pstn/pstn"), o = e("swx-constants").COMMON.telemetry.pstn;
   u.prototype.dispose = function () {
     this.displayBalance.dispose();
   };

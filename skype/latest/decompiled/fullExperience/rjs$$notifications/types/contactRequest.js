@@ -1,9 +1,9 @@
 define("notifications/types/contactRequest", [
   "require",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "notifications/common/notification",
-  "services/pubSub/pubSub",
-  "constants/common",
+  "swx-pubsub-instance",
+  "swx-constants",
   "swx-enums"
 ], function (e) {
   function o(e) {
@@ -34,6 +34,6 @@ define("notifications/types/contactRequest", [
       open: h
     }, a = new n(f, l, c), a.description(u.greeting()), a.title(u.sender.title()), a;
   }
-  var t = e("cafe/applicationInstance"), n = e("notifications/common/notification"), r = e("services/pubSub/pubSub"), i = e("constants/common"), s = e("swx-enums");
+  var t = e("swx-cafe-application-instance"), n = e("notifications/common/notification"), r = e("swx-pubsub-instance").default, i = e("swx-constants").COMMON, s = e("swx-enums");
   return { build: o };
 });

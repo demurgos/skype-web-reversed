@@ -1,132 +1,158 @@
 define("ui/viewModels/chat/message", [
   "require",
   "lodash-compat",
-  "ui/telemetry/actions/actionNames",
   "ui/telemetry/actions/actionSources",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
+  "swx-focus-handler",
   "text!views/people/blockContactModal.html",
   "ui/viewModels/people/blockContactModal",
   "utils/common/cafeObservable",
   "constants/components",
-  "constants/common",
+  "swx-constants",
   "ui/viewModels/people/contactBuilder",
   "telemetry/chat/contactInfoEvent",
   "ui/contactInfoMessage/contactInfoMessage",
   "ui/viewModels/people/contactName",
   "constants/contentTemplates",
+  "swx-encoder/lib/encoders/emoticonEncoder",
+  "ui/viewModels/calling/helpers/callingFacade",
   "swx-enums",
   "utils/common/eventMixin",
   "ui/viewModels/chat/hearts",
   "swx-i18n",
   "vendor/knockout",
   "ui/viewModels/chat/messageMediaTypesHandlers",
-  "utils/chat/messageSanitizer",
+  "swx-utils-chat",
+  "swx-ui-navigation",
   "utils/chat/message",
   "ui/modalDialog/modalDialog",
   "ui/modelHelpers/personHelper",
   "ui/viewModels/chat/pollAvatars",
   "telemetry/chat/poll",
   "telemetry/calling/pstn/pstn",
-  "services/pubSub/pubSub",
-  "services/serviceLocator",
+  "swx-pubsub-instance",
+  "swx-service-locator-instance",
   "utils/common/styleModeHelper",
   "ui/viewModels/chat/messageParsers/swiftCard",
   "ui/viewModels/chat/translator/translationItem",
   "utils/chat/translatorHelper",
+  "utils/common/disposableMixin",
   "ui/urlPreview/urlPreview",
   "telemetry/chat/urlPreviewAction",
   "ui/players/ytPlayer",
-  "experience/settings"
+  "ui/modelHelpers/personActionsHelper",
+  "swx-utils-chat",
+  "utils/chat/quoteMessageUtils",
+  "telemetry/chat/quoteMessageEvent",
+  "utils/common/clipboard"
 ], function (e) {
-  function q(e) {
-    function G(e) {
-      return d.templates[e] || d.templates[v.activityType.TextMessage];
+  function $(e) {
+    function ct(e) {
+      return d.templates[e] || d.templates[g.activityType.TextMessage];
     }
-    function Y() {
-      var e = {}, n = m.isRead(), r = m.group() === f.activityItemGroups.TEXT || m.group() === f.activityItemGroups.MEDIA || m.group() === f.activityItemGroups.CONTACT_INFO || m.group() === f.activityItemGroups.POLL, i;
-      return e.me = m.isMyself && r, e.their = !e.me, e.first = m.isFirstMessage(), e.last = m.isLastMessage(), e.read = n, e.edited = m.isEdited, e.unread = !n, e.showTimestamp = m.showTimestamp, e.sticker = m.isSticker(), e.spacesWelcomeMessage = U, e.deliveryFailed = m.deliveryFailed, e.hearts = m.heartsVM.canHeart() || m.heartsVM.heartsEnabled(), e.urlPreview = m.isUrlPreview(), e.mojiItem = m.isMoji(), e.integrated = m.isIntegrated, e.picture = m.isPicture(), e.copyLink = m.copyLinkEnabled(), e.lastInBubble = m.isLastMessageInBubble(), t.forIn(f.activityItemGroups, function (t) {
+    function ht() {
+      var e = {}, n = y.isRead(), r = y.group() === f.activityItemGroups.TEXT || y.group() === f.activityItemGroups.MEDIA || y.group() === f.activityItemGroups.CONTACT_INFO || y.group() === f.activityItemGroups.POLL || y.group() === f.activityItemGroups.TRANSCRIPT, i;
+      return e.me = y.isMyself && r, e.their = !e.me, e.first = y.isFirstMessage(), e.last = y.isLastMessage(), e.edited = y.isEdited, e.showTimestamp = y.showTimestamp, e.showBottomTimestamp = y.showBottomTimestamp, e.sticker = y.isSticker(), e.spacesWelcomeMessage = Q, e.deliveryFailed = y.deliveryFailed, e.hearts = y.heartsVM.canHeart() || y.heartsVM.heartsEnabled(), e.urlPreview = y.isUrlPreview(), e.mojiItem = y.isMoji(), e.integrated = y.isIntegrated, e.picture = y.isPicture(), e.copyLink = y.copyLinkEnabled(), e.lastInBubble = y.isLastMessageInBubble(), e.sms = y.isSMS, e.meCommandMessage = y.isMeCommandMessage, y.isMeCommandMessage && (e.edited = !1), ft && (e.read = n, e.unread = !n), t.forIn(f.activityItemGroups, function (t) {
         i = t && t.toLowerCase();
         i && (e[i] = !1);
-      }), m.group() === f.activityItemGroups.PSTN ? e[f.activityItemGroups.CALL] = !0 : e[m.group()] = !0, m.group() === f.activityItemGroups.CONTACT_REQUEST && Z(e), m.group() === f.activityItemGroups.CUSTOM && (e.participant = !0), t.trim(t.reduce(e, function (e, t, n) {
-        return w.unwrap(t) ? e + " " + n : e;
-      }, m.customMessageClasses || ""));
+      }), y.group() === f.activityItemGroups.PSTN ? e[f.activityItemGroups.CALL] = !0 : e[y.group()] = !0, y.group() === f.activityItemGroups.CONTACT_REQUEST && pt(e), y.group() === f.activityItemGroups.CUSTOM && (e.participant = !0), t.trim(t.reduce(e, function (e, t, n) {
+        return S.unwrap(t) ? e + " " + n : e;
+      }, y.customMessageClasses || ""));
     }
-    function Z(e) {
+    function pt(e) {
       function n() {
         return t.includes([
-          v.activityType.ContactRequestIncoming,
-          v.activityType.ContactRequestOutgoing,
-          v.activityType.ContactRequestOutgoingAgent,
-          v.activityType.SuggestedContact,
-          v.activityType.UnblockContact
-        ], m.model.type());
+          g.activityType.ContactRequestIncoming,
+          g.activityType.ContactRequestOutgoing,
+          g.activityType.ContactRequestOutgoingAgent,
+          g.activityType.SuggestedContact,
+          g.activityType.UnblockContact
+        ], y.model.type());
       }
       function r() {
         return t.includes([
-          v.activityType.ContactRequestOutgoingResend,
-          v.activityType.ContactRequestIsNowContact,
-          v.activityType.ContactRequestIncomingInviteFree
-        ], m.model.type());
+          g.activityType.ContactRequestOutgoingResend,
+          g.activityType.ContactRequestIsNowContact,
+          g.activityType.ContactRequestIncomingInviteFree
+        ], y.model.type());
       }
       e.contactMessage = n();
       e.their = !e.me && !n();
       e.participant = r();
     }
-    function et(e) {
-      var t = e.type() === v.activityType.ParticipantJoined, n = e.persons();
-      return !z || !t ? !1 : (U = n.indexOf(q.personsAndGroupsManager.mePerson) >= 0, U);
+    function dt(e) {
+      var t = e.type() === g.activityType.ParticipantJoined, n = e.persons();
+      return !G || !t ? !1 : (Q = n.indexOf($.personsAndGroupsManager.mePerson) >= 0, Q);
     }
-    function tt(e) {
-      function s(t) {
+    function vt(e) {
+      function o(t) {
         return e.author !== t;
       }
-      function o(e) {
+      function a(e) {
         return new p(e);
       }
-      function a(e) {
-        return !N.isMePerson(e);
+      function l(e) {
+        return !L.isMePerson(e);
       }
-      var t = u.newObservableProperty(e.context), n = e.persons().filter(s), r;
-      e.reason && (r = e.reason());
-      m.participantsWithoutAuthor = n.map(o);
-      if (et(e)) {
-        var i = u.newObservableProperty(R.selfParticipant.role);
-        m.participantsWithoutMyself = n.filter(a).map(o);
-        m.contentTemplate(G(f.customActivityItemTemplates.SPACES_WELCOME_MESSAGE));
-        m.spaceLink = u.newObservableProperty(R.uri);
-        m.isJoiningEnabled = u.newObservableProperty(R.isJoiningEnabled);
-        m.conversation = R;
-        m.showSpacesCTA = w.computed(function () {
-          return i() === v.participantRole.Leader;
+      function c() {
+        var e;
+        return !J || !J.participants() ? e : (J.participants().forEach(function (n) {
+          if (L.isAgent(n.person)) {
+            var r = u.newObservableProperty(n.person.displayName), i = t.escape(r()), s = E.fetch({
+                key: "message_text_joiningConversationWithBots",
+                params: { botName: i }
+              }), o = E.fetch({
+                key: "message_text_joiningConversationWithBotsV2",
+                params: { botName: i }
+              });
+            e ? e += "\n" : e = "";
+            ut.push({ subscription: r });
+            lt ? e += o + C.getBotDisclosureMessage(n.person.id(), i, J) : e += s;
+          }
+        }), e);
+      }
+      var n = u.newObservableProperty(e.context), r = e.persons().filter(o), i;
+      e.reason && (i = e.reason());
+      y.participantsWithoutAuthor = r.map(a);
+      if (dt(e)) {
+        var s = u.newObservableProperty(J.selfParticipant.role);
+        y.participantsWithoutMyself = r.filter(l).map(a);
+        y.contentTemplate(ct(f.customActivityItemTemplates.SPACES_WELCOME_MESSAGE));
+        y.spaceLink = u.newObservableProperty(J.uri);
+        y.isJoiningEnabled = u.newObservableProperty(J.isJoiningEnabled);
+        y.conversation = J;
+        y.showSpacesCTA = S.computed(function () {
+          return s() === g.participantRole.Leader && !z.isGuestHostConversation(J.conversationId);
         });
-        m.welcomeMessage = w.computed(function () {
-          return b.fetch({ key: m.isJoiningEnabled() ? "spaces_welcomeMessage" : "spaces_welcomeMessageWithoutLink" });
+        y.welcomeMessage = S.computed(function () {
+          return E.fetch({ key: y.isJoiningEnabled() ? "spaces_welcomeMessage" : "spaces_welcomeMessageWithoutLink" });
         });
-        m.editTopicAction = function () {
-          m.dispatchEvent(g.conversation.OPEN_PROFILE, { editTopic: !0 }, m.DIRECTION.PARENT);
+        y.agentsMessageContent = S.computed(c);
+        y.editTopicAction = function () {
+          y.dispatchEvent(b.conversation.OPEN_PROFILE, { editTopic: !0 }, y.DIRECTION.PARENT);
         };
-        m.settingsAction = function () {
-          m.dispatchEvent(g.conversation.OPEN_PROFILE, { editTopic: !1 }, m.DIRECTION.PARENT);
+        y.settingsAction = function () {
+          y.dispatchEvent(b.conversation.OPEN_PROFILE, { editTopic: !1 }, y.DIRECTION.PARENT);
         };
-        m.othersAddedMessageContent = w.computed(function () {
-          if (m.participantsWithoutMyself.length > 0)
-            return x.getMessageFromParticipantActivityItem(e.type(), m.author, m.participantsWithoutMyself, t, r, R);
+        y.othersAddedMessageContent = S.computed(function () {
+          if (y.participantsWithoutMyself.length > 0)
+            return C.getMessageFromParticipantActivityItem(e.type(), y.author, y.participantsWithoutMyself, n, i, J);
         });
       }
-      return w.computed(function () {
-        return x.getMessageFromParticipantActivityItem(e.type(), m.author, m.participantsWithoutAuthor, t, r, R);
+      return S.computed(function () {
+        return C.getMessageFromParticipantActivityItem(e.type(), y.author, y.participantsWithoutAuthor, n, i, J);
       });
     }
-    function nt(e) {
-      e.sender && (m.author = l.build(e.sender), m.isMyself = N.isMePerson(e.sender), m.displayname = w.observable(m.isMyself ? "me" : m.author), m.renderAuthorInfo(!m.isMyself), m.showAuthorInfo(!m.isMyself), m.openConversationLabel = w.pureComputed(function () {
-        return b.fetch({
+    function mt(e) {
+      e.sender && (y.author = l.build(e.sender), y.isMyself = L.isMePerson(e.sender), y.displayname = S.observable(y.isMyself ? "me" : y.author), y.renderAuthorInfo(!y.isMyself), y.showAuthorInfo(!y.isMyself), y.openConversationLabel = S.pureComputed(function () {
+        return E.fetch({
           key: "label_text_openConversation",
           params: { displayName: e.sender.displayName() }
         });
       }));
-      m.direction = e.direction && e.direction();
+      y.direction = e.direction && e.direction();
     }
-    function rt(e, t) {
+    function gt(e, t) {
       if (t.translation) {
         var n = {
           key: t.translation.key,
@@ -136,240 +162,300 @@ define("ui/viewModels/chat/message", [
         e.translations.add(n);
       }
     }
-    function it(e, n) {
-      switch (m.group()) {
+    function yt(e, n) {
+      switch (y.group()) {
       case f.activityItemGroups.PARTICIPANT:
-        m.author = l.build(e.author), m.content = tt(e);
+        y.author = l.build(e.author), y.content = vt(e);
         break;
       case f.activityItemGroups.CALL:
-        var r = x.getMessageFromCallActivityItem(e, n);
-        nt(e), m.content = w.observable(r.text), m.liveSessionDuration = r.duration, m.callAction = r.callAction, m.typeClasses = {
+        var r = C.getMessageFromCallActivityItem(e, n);
+        mt(e), y.content = S.observable(r.text), y.liveSessionDuration = r.duration, y.callAction = r.callAction, y.typeClasses = {
           liveSessionText: !0,
           "fontSize-h4": !0
         };
         break;
       case f.activityItemGroups.NGC_UPGRADE:
-        m.content = w.observable(x.getMessageFromNgcUpgradeActivityItem(e));
+        y.content = S.observable(C.getMessageFromNgcUpgradeActivityItem(e));
         break;
       case f.activityItemGroups.PLUGIN_FREE:
-        m.content = w.observable(x.getMessageFromPluginFreeActivityItem(e));
+        y.content = S.observable(C.getMessageFromPluginFreeActivityItem(e));
         break;
       case f.activityItemGroups.PSTN:
-        m.content = w.observable(x.getMessageFromPstnActivityItem(e)), e.type() === v.activityType.PstnInvalidNumber && !e.isGroup() ? (m.linkContent = b.fetch({ key: "pstn_invalid_number_return_link" }), m.linkVisible = !0) : (m.linkContent = "", m.linkVisible = !1), nt(e), m.callAction = "callError", m.typeClasses = {
+        y.content = S.observable(C.getMessageFromPstnActivityItem(e)), e.type() === g.activityType.PstnInvalidNumber && !e.isGroup() ? (y.linkContent = E.fetch({ key: "pstn_invalid_number_return_link" }), y.linkVisible = !0) : (y.linkContent = "", y.linkVisible = !1), mt(e), y.callAction = "callError", y.typeClasses = {
           liveSessionText: !0,
           "fontSize-h4": !0
         };
         break;
       case f.activityItemGroups.TEXT:
         var i, s;
-        nt(e), i = u.newObservableProperty(e.html), $.isFeatureOn(f.featureFlags.SWIFT_CARD_RENDERING) && (s = _.parse(m, e, R)), typeof s != "undefined" ? m.content = s : m.content = w.computed(function () {
-          var n = i(), r = W || !n.trim().length, s = $.isFeatureOn(f.featureFlags.URL_PREVIEWS), o = s && q.personsAndGroupsManager.mePerson.preferences(f.userSettings.preferences.URL_PREVIEWS).value(), u = $.isFeatureOn(f.featureFlags.YOUTUBE_PLAYER_ENABLED), a = u && q.personsAndGroupsManager.mePerson.preferences(f.userSettings.preferences.YOUTUBE_PLAYER).value(), l = R._translatorSettings && R._translatorSettings.isEnabled, c = e.direction && e.direction() === f.chat.messageType.INCOMING, h = !V && K && l && c && !e.isDeleted();
-          return r ? (n = t.escape(e.text()), n = S.encodeLinkTextRepresentation(n), n = S.encodeEmoticonsTextRepresentation(n)) : $.isFeatureOn(f.featureFlags.ENABLE_RAW_EMOTICONS_RENDERING) && (n = S.encodeEmoticonsRawRepresentation(n)), X && (a && u || o && s) && w.ignoreDependencies(function () {
-            H.render(n, m, R, a && u, o && s);
-          }), h && P.requestTranslation(n, e.direction(), R, rt.bind(null, e)), m.isSticker(I.test(n)), n;
-        }), m.isEdited = u.newObservableProperty(e.isEdited), m.isDeleted = u.newObservableProperty(e.isDeleted), st();
+        mt(e), i = u.newObservableProperty(e.html), tt.isFeatureOn(f.featureFlags.SWIFT_CARD_RENDERING) && (s = H.parse(y, e, J)), typeof s != "undefined" ? y.content = s : y.content = S.computed(function () {
+          var t = i(), n = Y || !t.trim().length, r = tt.isFeatureOn(f.featureFlags.URL_PREVIEWS), s = tt.isFeatureOn(f.featureFlags.YOUTUBE_PLAYER_ENABLED), o = J._translatorSettings && J._translatorSettings.isEnabled, u = e.direction && e.direction() === f.chat.messageType.INCOMING, a = !et && rt && o && u && !e.isDeleted();
+          n ? t = T.transform(e.text(), "text/typed", "text/html") : tt.isFeatureOn(f.featureFlags.ENABLE_RAW_EMOTICONS_RENDERING) && (t = T.encodeEmoticonsRawRepresentation(t));
+          if (y.isMeCommandMessage) {
+            var l;
+            try {
+              return l = new RegExp("^" + y.model.sender.displayName() + " "), t.replace(l, "<b>" + y.model.sender.displayName() + "</b> ");
+            } catch (c) {
+              return t;
+            }
+          }
+          return Z && (s || r) && S.ignoreDependencies(function () {
+            I.render(t, y, J, s, r);
+          }), a && j.requestTranslation(t, e.direction(), J, gt.bind(null, e)), y.isSticker(st.hasLargeEmoticon(t)), t;
+        }), y.isEdited = u.newObservableProperty(e.isEdited), y.isDeleted = u.newObservableProperty(e.isDeleted), bt();
         break;
       case f.activityItemGroups.MEDIA:
-        var o = E.fetch(e.type());
-        nt(e), o(m, n);
+        var o = x.fetch(e.type());
+        mt(e), o(y, n);
         break;
       case f.activityItemGroups.CONTACT_REQUEST:
-        m.author = l.build(e.sender), m.content = w.computed(function () {
-          return x.getMessageFromContactRequestActivityItem(e.type(), m.author.getPerson());
-        }), m.actionInProgress = w.observable(!1), e.type() === v.activityType.ContactRequestIncoming && (m.greeting = u.newObservableProperty(e.greeting));
+        y.author = l.build(e.sender), y.content = S.computed(function () {
+          return C.getMessageFromContactRequestActivityItem(e.type(), y.author.getPerson());
+        }), y.actionInProgress = S.observable(!1), e.type() === g.activityType.ContactRequestIncoming && (y.greeting = u.newObservableProperty(e.greeting)), y.isBusinessContactMgmtEnabled && (e.type() === g.activityType.ContactRequestOutgoing || e.type() === g.activityType.ContactRequestIsNowContact) && e.isRead(!0);
         break;
       case f.activityItemGroups.POLL:
-        nt(e), m.pollAvatarsVM = C.build(e, function (e) {
-          m.dispatchEvent(g.userListPopup.POPUP_TOGGLE, e);
-        }), m.isEdited = u.newObservableProperty(e.isEdited), m.isDeleted = u.newObservableProperty(e.isDeleted), m.content = w.observable(b.fetch({
+        mt(e), y.pollAvatarsVM = A.build(e, function (e) {
+          y.dispatchEvent(b.userListPopup.POPUP_TOGGLE, e);
+        }), y.isEdited = u.newObservableProperty(e.isEdited), y.isDeleted = u.newObservableProperty(e.isDeleted), y.content = S.observable(E.fetch({
           key: "poll_message_question_header",
           params: { pollQuestion: e.pollQuestion() }
-        })), m.pollQuestion = u.newObservableProperty(e.pollQuestion), m.pollAnswers = u.newObservableCollection(e.pollAnswers), m.answerSent = u.newObservableProperty(e.meVoted), m.checkedAnswer = w.observable(), m.checkedAnswerSubscription = e.meCheckedAnswerPositions.changed(function () {
-          m.checkedAnswer(t.isEmpty(e.meCheckedAnswerPositions()) ? -1 : e.meCheckedAnswerPositions()[0]);
-        }), m.peopleVotedText = w.observable(), m.peopleVotedNumSubscription = e.peopleVotedNum.changed(function (e) {
-          m.peopleVotedText(b.fetch({
+        })), y.pollQuestion = u.newObservableProperty(e.pollQuestion), y.pollAnswers = u.newObservableCollection(e.pollAnswers), y.answerSent = u.newObservableProperty(e.meVoted), y.checkedAnswer = S.observable(), y.checkedAnswerSubscription = e.meCheckedAnswerPositions.changed(function () {
+          y.checkedAnswer(t.isEmpty(e.meCheckedAnswerPositions()) ? -1 : e.meCheckedAnswerPositions()[0]);
+        }), y.peopleVotedText = S.observable(), y.peopleVotedNumSubscription = e.peopleVotedNum.changed(function (e) {
+          y.peopleVotedText(E.fetch({
             key: "poll_message_people_voted",
             params: { count: e }
           }));
-        }), m.onAnswerClick = function (t) {
-          return e.meVoted() ? m.checkedAnswer(e.meCheckedAnswerPositions()[0]) : (k.activityVote(m.model), m.model.addAnswer(t)), !0;
+        }), y.onAnswerClick = function (t) {
+          return e.meVoted() ? y.checkedAnswer(e.meCheckedAnswerPositions()[0]) : (O.activityVote(y.model), y.model.addAnswer(t)), !0;
         };
         break;
       case f.activityItemGroups.CONTACT_INFO:
-        nt(e), h.render(e, m, R);
+        mt(e), h.render(e, y, J);
         break;
       case f.activityItemGroups.TRANSACTION:
         var a = "Unsupported transaction message";
-        nt(e), m.content = w.observable(a), m.group(f.activityItemGroups.TEXT);
+        mt(e), y.content = S.observable(a), y.group(f.activityItemGroups.TEXT);
         break;
+      case f.activityItemGroups.SYSTEM:
       case f.activityItemGroups.CUSTOM:
-        m.content = w.observable(e.text());
+        y.content = S.observable(e.text());
+        break;
+      case f.activityItemGroups.TRANSCRIPT:
+        y.content = S.observable(e.text()), y.author = e.author(), y.isMyself = e.isMyself(), y.renderAuthorInfo(!y.isMyself), y.showAuthorInfo(!y.isMyself);
       }
     }
-    function st() {
-      Q && Q.dispose();
-      Q = m.isDeleted.subscribe(function (e) {
+    function bt() {
+      it && it.dispose();
+      it = y.isDeleted.subscribe(function (e) {
         if (!e)
           return;
-        Q.dispose();
-        Q = null;
-        m.group(f.activityItemGroups.TEXT);
-        m.contentTemplate("textMessageContentTemplate");
-        m.isUrlPreview(!1);
-        m.previews && (vt(m.previews()), m.previews([]));
+        it.dispose();
+        it = null;
+        y.group(f.activityItemGroups.TEXT);
+        y.contentTemplate("textMessageContentTemplate");
+        y.isUrlPreview(!1);
+        y.previews && (_t(y.previews()), y.previews([]));
       });
     }
-    function ot() {
-      m.showSpacesCTA && m.showSpacesCTA.dispose();
-      m.welcomeMessage && m.welcomeMessage.dispose();
-      m.othersAddedMessageContent && m.othersAddedMessageContent.dispose();
-      m.participantsWithoutMyself && t.forEach(m.participantsWithoutMyself, function (e) {
+    function wt() {
+      y.showSpacesCTA && y.showSpacesCTA.dispose();
+      y.welcomeMessage && y.welcomeMessage.dispose();
+      y.othersAddedMessageContent && y.othersAddedMessageContent.dispose();
+      y.participantsWithoutMyself && t.forEach(y.participantsWithoutMyself, function (e) {
         e.dispose();
       });
     }
-    function ut() {
-      ot();
-      m.participantsWithoutAuthor && t.forEach(m.participantsWithoutAuthor, function (e) {
+    function Et() {
+      wt();
+      y.participantsWithoutAuthor && t.forEach(y.participantsWithoutAuthor, function (e) {
         e.dispose();
       });
     }
-    function at() {
-      m.messageDeliveryStatusEnabled && m.model.status.changed.off(ft);
+    function St() {
+      y.messageDeliveryStatusEnabled && y.model.status.changed.off(xt);
     }
-    function ft(e) {
-      var t = m.model.type() === v.activityType.ParticipantJoinFailed, n = "iconfont ";
-      m.deliveryFailed(!1);
+    function xt(e) {
+      var t = y.model.type() === g.activityType.ParticipantJoinFailed, n = "iconfont ";
+      y.deliveryFailed(!1);
       switch (e) {
-      case v.activityStatus.Failed:
-        m.deliveryFailed(!t), m.statusText(b.fetch({ key: "message_failed_status" })), n += "warning";
+      case g.activityStatus.Failed:
+        y.deliveryFailed(!t), y.statusText(E.fetch({ key: "message_failed_status" })), n += "warning";
         break;
-      case v.activityStatus.Succeeded:
-        m.statusText(b.fetch({ key: "message_sent_status" })), n += "presenceOnlineStroke";
+      case g.activityStatus.Succeeded:
+        y.statusText(E.fetch({ key: "message_sent_status" })), n += "presenceOnlineStroke";
         break;
-      case v.activityStatus.Pending:
-        m.statusText(b.fetch({ key: "message_sending_status" })), n += "presenceStroke";
+      case g.activityStatus.Pending:
+        y.statusText(E.fetch({ key: "message_sending_status" })), n += "presenceStroke";
         break;
       default:
-        m.statusText("");
+        y.statusText("");
       }
-      m.deliveryStatusIconCssClass(n);
+      y.deliveryStatusIconCssClass(n);
     }
-    function lt(e) {
+    function Tt(e) {
+      if (J.selfParticipant.isAnonymous() || L.isGuest(e))
+        return !1;
       var t;
-      t = q.conversationsManager.getConversation(e);
-      q.conversationsManager.conversations.add(t);
-      A.publish(g.navigation.OPEN_CONVERSATION, {
+      t = $.conversationsManager.getConversation(e);
+      $.conversationsManager.conversations.add(t);
+      _.publish(b.navigation.OPEN_CONVERSATION, {
         model: t,
         origin: f.telemetry.historyLoadOrigin.AUTHOR_SWITCH
       });
     }
-    function ct(e) {
-      if (!m.contacts || m.isMyself)
+    function Nt(e) {
+      if (!y.contacts || y.isMyself)
         return;
-      h.handleContactAdded(e.id(), m);
+      h.handleContactAdded(e.id(), y);
     }
-    function ht(e) {
+    function Ct(e) {
       var t;
-      return m.model.contacts().some(function (n) {
+      return y.model.contacts().some(function (n) {
         n.id() === e && (t = n);
       }), t;
     }
-    function pt(e) {
-      e ? m.model.status.changed(ft) : at();
+    function kt(e) {
+      e ? y.model.status.changed(xt) : St();
     }
-    function dt() {
-      m.actionInProgress(!1);
+    function Lt() {
+      y.actionInProgress(!1);
     }
-    function vt(e) {
+    function At(e) {
+      e && e.giphyExpression ? y.giphyMetadata("/giphy " + e.giphyExpression) : y.giphyMetadata(!1);
+    }
+    function Ot() {
+      var e = D.resolve(f.serviceLocator.FEATURE_FLAGS).isFeatureOn(f.featureFlags.LOW_FOCUS_IMPORTANCE_CONTACT_REQUEST);
+      return e ? i.Priorities.Low : i.Priorities.High;
+    }
+    function Mt() {
+      K && K();
+    }
+    function _t(e) {
       e.forEach(function (e) {
         t.isFunction(e.dispose) && (e.ytPlayer(!1), e.dispose.call(e));
       });
     }
-    var m = this, q = i.get(), R, U = !1, z, W, X = !e || !e.noUrlPreview, V = e && e.noTranslationItem, $ = O.resolve(f.serviceLocator.FEATURE_FLAGS), J = q.translatorService, K = J && q.translatorService.state() === f.translatorServiceState.Authenticated, Q;
+    var y = this, $ = r.get(), J, K, Q = !1, G, Y, Z = !e || !e.noUrlPreview, et = e && e.noTranslationItem, tt = D.resolve(f.serviceLocator.FEATURE_FLAGS), nt = $.translatorService, rt = nt && $.translatorService.state() === f.translatorServiceState.Authenticated, it, st = v.build(), ot = t.assign({}, F), ut = S.observableArray(), at = D.resolve(f.serviceLocator.FEATURE_FLAGS), ft = at.isFeatureOn(f.featureFlags.MARK_READ_MESSAGES_V2_ENABLED), lt;
+    this.autoDisposer = ot;
     this.init = function (e, t) {
-      var n = O.resolve(f.serviceLocator.FEATURE_FLAGS), r = e.key();
-      z = n.isFeatureOn(f.featureFlags.SPACES);
-      W = n.isFeatureOn(f.featureFlags.MESSAGE_ENFORCE_TEXT_FORMAT);
-      R = t;
-      m.isEdited = w.observable(!1);
-      m.messageDeliveryIndicatorEnabledSW4B = n.isFeatureOn(f.featureFlags.SHOW_MESSAGE_DELIVERY_INDICATOR_SW4B);
-      m.messageDeliveryStatusEnabled = n.isFeatureOn(f.featureFlags.SHOW_MESSAGE_DELIVERY_STATUS) && e.type() !== v.activityType.SystemMessage;
-      m.isDeleted = w.observable(!1);
-      m.isMyself = !1;
-      m.clientmessageid = r;
-      m.contentId = r ? "msg_" + r : null;
-      m.timestamp = e.timestamp();
-      m.setTimestamp = w.observable("00:00");
-      m.showTimestamp = w.observable(!0);
-      m.isRead = u.newObservableProperty(e.isRead);
-      m.isFirstMessage = w.observable(!1);
-      m.isLastMessage = w.observable(!1);
-      m.isLastMessageInBubble = w.observable(!1);
-      m.model = e;
-      m.group = w.observable(x.getActivityItemGroup(e.type()));
-      m.isGroupConversation = R.isGroupConversation();
-      m.renderAuthorInfo = w.observable(!1);
-      m.showAuthorInfo = w.observable(!1);
-      m.liveSessionDuration = !1;
-      m.isCallActivityItem = w.computed(function () {
-        return m.group() === f.activityItemGroups.CALL || m.group() === f.activityItemGroups.PSTN;
+      var n = D.resolve(f.serviceLocator.FEATURE_FLAGS), r = e.key();
+      G = n.isFeatureOn(f.featureFlags.SPACES);
+      Y = n.isFeatureOn(f.featureFlags.MESSAGE_ENFORCE_TEXT_FORMAT);
+      lt = tt.isFeatureOn(f.featureFlags.BOT_MESSAGES_MODE_V2_ENABLED);
+      J = t;
+      y.isEdited = S.observable(!1);
+      y.messageDeliveryIndicatorEnabledSW4B = n.isFeatureOn(f.featureFlags.SHOW_MESSAGE_DELIVERY_INDICATOR_SW4B);
+      y.messageDeliveryStatusEnabled = n.isFeatureOn(f.featureFlags.SHOW_MESSAGE_DELIVERY_STATUS) && e.type() !== g.activityType.SystemMessage;
+      y.timestampsInNarrowModeEnabled = n.isFeatureOn(f.featureFlags.SHOW_TIMESTAMPS_IN_NARROW_MODE);
+      y.disableOpenConversationWithAuthor = n.isFeatureOn(f.featureFlags.DISABLE_OPEN_CONVERSATION_WITH_AUTHOR);
+      y.isDeleted = S.observable(!1);
+      y.isMyself = !1;
+      y.clientmessageid = r;
+      y.contentId = r ? "msg_" + r : null;
+      y.timestamp = e.timestamp();
+      y.setTimestamp = S.observable("00:00");
+      y.setBottomTimestamp = S.observable("00:00");
+      y.setLongTimestamp = S.observable("00:00");
+      y.showTimestamp = S.observable(!0);
+      y.showBottomTimestamp = S.observable(!1);
+      y.isRead = u.newObservableProperty(e.isRead);
+      y.isFirstMessage = S.observable(!1);
+      y.isLastMessage = S.observable(!1);
+      y.isLastMessageInBubble = S.observable(!1);
+      y.model = e;
+      y.group = S.observable(C.getActivityItemGroup(e.type()));
+      y.isGroupConversation = J.isGroupConversation();
+      y.conversationId = t.conversationId;
+      y.renderAuthorInfo = S.observable(!1);
+      y.showAuthorInfo = S.observable(!1);
+      y.liveSessionDuration = !1;
+      y.isCallActivityItem = S.computed(function () {
+        return y.group() === f.activityItemGroups.CALL || y.group() === f.activityItemGroups.PSTN;
       });
-      m.isSticker = w.observable();
-      m.isMoji = w.observable(!1);
-      m.isPicture = w.observable(!1);
-      m.isUrlPreview = w.observable(!1);
-      m.deliveryFailed = w.observable(!1);
-      m.deliveryFailedMessage = b.fetch({ key: "message_not_delivered_text" });
-      m.statusText = w.observable();
-      m.deliveryStatusIconCssClass = w.observable();
-      m.isMyLastMessageInChat = w.observable(!1);
-      m.isIntegrated = M.get().isIntegratedProperty();
-      m.copyLinkEnabled = w.observable(!1);
-      m.copyActive = w.observable(!1);
-      m.heartsVM = y.build(m, R, function (e) {
-        m.dispatchEvent(g.userListPopup.POPUP_TOGGLE, e);
+      y.isSticker = S.observable();
+      y.isMoji = S.observable(!1);
+      y.isPicture = S.observable(!1);
+      y.isUrlPreview = S.observable(!1);
+      y.deliveryFailed = S.observable(!1);
+      y.deliveryFailedMessage = S.computed(function () {
+        return y.deliveryFailed() ? E.fetch({ key: "message_not_delivered_text" }) : "";
       });
-      m.heartsVM.init();
-      m.contentTemplate = w.observable(G(e.type()));
-      m.typeClasses = {};
-      it(e, R.isGroupConversation());
-      m.cssClass = w.computed(Y, this);
-      m.messageDeliveryIndicatorEnabledSW4B && m.model.status.changed(ft);
-      m.messageDeliveryStatusEnabled && m.isMyLastMessageInChat.subscribe(pt);
-      q.personsAndGroupsManager.all.persons.added(ct);
-      V || (m.translationItem = D.build(m, R), m.translationItem.init());
-      m.forwardEvent(g.videoPlayer.FULLSCREEN_ON, m.DIRECTION.PARENT, null, m.DIRECTION.CHILD);
-      m.forwardEvent(g.videoPlayer.FULLSCREEN_OFF, m.DIRECTION.PARENT, null, m.DIRECTION.CHILD);
+      y.statusText = S.observable();
+      y.deliveryStatusIconCssClass = S.observable();
+      y.isMyLastMessageInChat = S.observable(!1);
+      y.isIntegrated = P.get().isIntegratedProperty();
+      y.copyLinkEnabled = S.observable(!1);
+      y.giphyMetadata = S.observable(!1);
+      y.isGif = S.observable(!1);
+      y.isSMS = e._isSMS ? e._isSMS() : !1;
+      y.smsStatus = y.isSMS ? u.newObservableProperty(e._smsInfo().status) : {};
+      y.suggestedActions = S.observableArray([]);
+      y.heartsVM = w.build(y, J, function (e) {
+        y.dispatchEvent(b.userListPopup.POPUP_TOGGLE, e);
+      });
+      y.heartsVM.init();
+      y.contentTemplate = S.observable(ct(e.type()));
+      y.focusImportance = Ot();
+      y.typeClasses = {};
+      y.isMeCommandMessage = !!e._skypeemoteoffset;
+      yt(e, J.isGroupConversation());
+      y.cssClass = S.computed(ht, this);
+      y.showGiphyMetadata = S.computed(function () {
+        return y.isGif() && !y.isDeleted() && y.giphyMetadata();
+      });
+      y.focusHandlerCallback = function (e) {
+        K = e;
+      };
+      y.messageDeliveryIndicatorEnabledSW4B && y.model.status.changed(xt);
+      y.messageDeliveryStatusEnabled && y.isMyLastMessageInChat.subscribe(kt);
+      $.personsAndGroupsManager.all.persons.added(Nt);
+      et || (y.translationItem = B.build(y, J), y.translationItem.init());
+      y.model._activityData && y.model._activityData.changed(At);
+      y.isCopySelectionAsQuoteEnabled = tt.isFeatureOn(f.featureFlags.COPY_SELECTION_AS_QUOTE_KEYBOARD) && V.isCopySupportedByBrowser();
+      y.forwardEvent(b.videoPlayer.FULLSCREEN_ON, y.DIRECTION.PARENT, null, y.DIRECTION.CHILD);
+      y.forwardEvent(b.videoPlayer.FULLSCREEN_OFF, y.DIRECTION.PARENT, null, y.DIRECTION.CHILD);
+      y.registerEvent(b.navigation.FRAGMENT_SHOW, Mt);
+    };
+    y.onCopy = function (e) {
+      var t = e.model, r = document.getSelection().toString(), i = W.copySelectionAsQuote(t, r, $.conversationsManager), s = n.selectionCopyKeyboard;
+      X.publish(t, s, i);
     };
     this.dispose = function () {
-      Q && Q.dispose();
-      m.content && m.content.dispose && m.content.dispose();
-      m.cssClass && m.cssClass.dispose();
-      m.author && m.author.dispose();
-      m.isCallActivityItem && m.isCallActivityItem.dispose();
-      m.checkedAnswerSubscription && m.checkedAnswerSubscription.dispose && m.checkedAnswerSubscription.dispose();
-      m.peopleVotedNumSubscription && m.peopleVotedNumSubscription.dispose && m.peopleVotedNumSubscription.dispose();
-      ut();
-      m.model && (m.messageDeliveryIndicatorEnabledSW4B || m.messageDeliveryStatusEnabled) && m.model.status.changed.off(ft);
-      m.heartsVM && m.heartsVM.dispose();
-      q.personsAndGroupsManager.all.persons.added.off(ct);
-      m.translationItem && m.translationItem.dispose();
-      m.previews && (vt(m.previews()), m.previews([]));
+      it && it.dispose();
+      y.content && y.content.dispose && y.content.dispose();
+      y.deliveryFailedMessage && y.deliveryFailedMessage.dispose();
+      y.cssClass && y.cssClass.dispose();
+      y.author && y.author.dispose && y.author.dispose();
+      y.isCallActivityItem && y.isCallActivityItem.dispose();
+      y.checkedAnswerSubscription && y.checkedAnswerSubscription.dispose && y.checkedAnswerSubscription.dispose();
+      y.peopleVotedNumSubscription && y.peopleVotedNumSubscription.dispose && y.peopleVotedNumSubscription.dispose();
+      y.isSMS && y.model._smsInfo && y.model._smsInfo().dispose();
+      Et();
+      y.model && (y.messageDeliveryIndicatorEnabledSW4B || y.messageDeliveryStatusEnabled) && y.model.status.changed.off(xt);
+      y.showGiphyMetadata && y.showGiphyMetadata.dispose();
+      y.heartsVM && y.heartsVM.dispose();
+      $.personsAndGroupsManager.all.persons.added.off(Nt);
+      y.model && y.model._activityData && y.model._activityData.changed.off(At);
+      y.translationItem && y.translationItem.dispose();
+      y.previews && (_t(y.previews()), y.previews([]));
+      ot.dispose && ot.dispose();
+      ut().length && ut().forEach(function (e) {
+        e.subscription.dispose();
+      });
     };
     this.onRendered = function () {
-      m.isRendered = !0;
-      m.dispatchEvent(g.message.RENDERED);
+      y.isRendered = !0;
+      y.dispatchEvent(b.message.RENDERED);
     };
     this.onBeforeExpanded = function () {
-      m.dispatchEvent(g.message.BEFORE_EXPANDED);
+      y.dispatchEvent(b.message.BEFORE_EXPANDED);
     };
     this.onAfterExpanded = function () {
-      m.dispatchEvent(g.message.AFTER_EXPANDED);
+      y.dispatchEvent(b.message.AFTER_EXPANDED);
     };
     this.openConversationWithAuthor = function () {
-      if (R.selfParticipant.isAnonymous() || N.isGuest(m.model.sender))
-        return !1;
-      lt(m.model.sender);
+      Tt(y.model.sender);
     };
     this.navigateToDialPad = function () {
       function e() {
@@ -378,105 +464,82 @@ define("ui/viewModels/chat/message", [
           origin: f.telemetry.historyLoadOrigin.SKYPEOUT_PAGE
         };
       }
-      A.publish(f.events.navigation.NAVIGATE, e());
+      _.publish(f.events.navigation.NAVIGATE, e());
     };
+    this.isBusinessContactMgmtEnabled = tt.isFeatureOn(f.featureFlags.ENABLE_BUSINESS_CONTACT_MANAGEMENT);
     this.sendContactRequest = function () {
-      function o(e, t, n) {
-        function i(r) {
-          r.name() === F.defaultBusinessContactsGroup && (q.personsAndGroupsManager.all.groups.added.off(i), u(r, e, t, n));
-        }
-        var r;
-        r = q.personsAndGroupsManager.createGroup();
-        r.name.set(F.defaultBusinessContactsGroup);
-        q.personsAndGroupsManager.all.groups.add(r).then(function () {
-          q.personsAndGroupsManager.all.groups.added(i);
-        }, n);
-      }
-      function u(e, t, n, r) {
-        e.persons.add(t.id()).then(function () {
-          R.historyService.removeCustomActivityItem(v.activityType.ContactRequestOutgoing);
-          R.historyService.removeCustomActivityItem(v.activityType.ContactRequestIsNowContact);
-          R.historyService.addCustomActivityItem(v.activityType.ContactRequestIsNowContact, { sender: t });
-          n();
-        }, r);
-      }
-      function a() {
-        r === v.activityType.ContactRequestOutgoing && i.recordAction(n.contacts.contactRequestSent, { isResend: !1 });
-        r === v.activityType.ContactRequestOutgoingAgent && i.recordAction(n.contacts.contactRequestSent, { isResend: !1 });
-        r === v.activityType.ContactRequestOutgoingResend && i.recordAction(n.contacts.contactRequestSent, { isResend: !0 });
-        r === v.activityType.SuggestedContact && i.recordAction(n.contacts.contactRequestSuggestedSent);
-      }
-      var e, t = m.model.sender, r = m.model.type(), i = O.resolve(f.serviceLocator.ACTION_TELEMETRY), s;
-      return m.actionInProgress(!0), q.conversationsManager.conversations.add(R), $.isFeatureOn(f.featureFlags.ENABLE_BUSINESS_CONTACT_MANAGEMENT) ? e = new Promise(function (e, n) {
-        q.personsAndGroupsManager.all.groups.get().then(function (r) {
-          s = r.filter(function (e) {
-            return e.name() === F.defaultBusinessContactsGroup;
-          });
-          s.length > 0 ? u(s[0], t, e, n) : o(t, e, n);
-        }, n);
-      }) : e = q.personsAndGroupsManager.all.persons.add(t, t.id(), undefined, r), a(), e.then(dt, dt), e;
+      var e, t = { source: n.conversation.messageItem }, r = y.model.sender, i = y.model.type();
+      return y.actionInProgress(!0), $.conversationsManager.conversations.add(J), e = U.addPerson(r, i, J, t), e.then(Lt, Lt), y.dispatchEvent(b.message.ADD_CONTACT, { source: n.conversation.messageItem }, y.DIRECTION.PARENT), e;
     };
     this.acceptContactRequest = function () {
-      var e, t = m.model.sender, r = O.resolve(f.serviceLocator.ACTION_TELEMETRY);
-      return m.actionInProgress(!0), e = q.personsAndGroupsManager.all.persons.add(t, t.id(), undefined, v.activityType.ContactRequestIncoming), r.recordAction(n.contacts.contactRequestAccepted), e.then(dt, dt), e;
+      var e, t = { source: n.conversation.messageItem }, r = y.model.sender;
+      return y.actionInProgress(!0), e = U.addPerson(r, g.activityType.ContactRequestIncoming, J, t, Lt, Lt), e;
     };
     this.declineContactRequest = function () {
-      var e, t = O.resolve(f.serviceLocator.ACTION_TELEMETRY);
-      return m.actionInProgress(!0), e = q.conversationsManager.conversations.remove(R, v.activityType.ContactRequestIncoming), t.recordAction(n.contacts.contactRequestDeclined), e.then(dt, dt), e;
+      var e, t = { source: n.conversation.messageItem }, r = y.model.sender;
+      return y.actionInProgress(!0), e = U.declinePerson(r, J, t, Lt, Lt), e;
     };
     this.blockContactRequest = function () {
-      var e = { source: r.contactRequestIncomingActivityItem }, t = new o(m.author.getPerson(), e), n = b.fetch({ key: "modal_blockContact_text_aria_label" });
-      return T.build(o.ELEMENT_ID, t, s), T.show(o.ELEMENT_ID, n), Promise.resolve();
+      var e = { source: n.contactRequestIncomingActivityItem }, t = new o(y.author.getPerson(), e), r = E.fetch({ key: "modal_blockContact_text_aria_label" });
+      return k.build(o.ELEMENT_ID, t, s), k.show(o.ELEMENT_ID, r), Promise.resolve();
     };
     this.unblockContact = function () {
-      var e, t = m.model.sender, i = O.resolve(f.serviceLocator.ACTION_TELEMETRY);
-      return m.actionInProgress(!0), i.recordAction(n.contacts.contactUnblocked, { source: r.unblockActivityItem }), t.isBlocked.set.enabled() ? e = t.isBlocked.set(!1) : e = Promise.resolve(), e.then(dt, dt), e;
+      var e, t = { source: n.contactRequestIncomingActivityItem }, r = y.model.sender;
+      return y.actionInProgress(!0), e = U.unblockPerson(r, t, Lt, Lt), e;
     };
     this.openUrlPreview = function (e, t) {
       function n() {
-        if (!$.isFeatureOn(f.featureFlags.URL_PREVIEW_LOAD_YOUTUBE_PLAYER))
+        if (!tt.isFeatureOn(f.featureFlags.URL_PREVIEW_LOAD_YOUTUBE_PLAYER))
           return !1;
-        var n = t || w.utils.arrayFirst(m.previews(), function (t) {
+        var n = t || S.utils.arrayFirst(y.previews(), function (t) {
           return t.url() === e;
         });
         return n && n.type() === f.urlPreviewType.YT && !n.restrictions ? n : null;
       }
       var r = n(), i = {
           url: e,
-          timestamp: m.timestamp,
-          participantCount: R.participantsCount()
+          timestamp: y.timestamp,
+          participantCount: J.participantsCount(),
+          contentId: y.contentId
         };
-      return B.publishActionEvent(i), r && j.render(r, m, R, e) ? !1 : !0;
+      q.publishActionEvent(i);
+      if (r && R.render(r, y, J, e))
+        return !1;
+      var s = window.open();
+      return s.opener = null, s.location = e, !1;
     };
     this.isPSTNContactMessage = function (e) {
-      var t = ht(e);
-      return N.isPstn(t);
+      var t = Ct(e);
+      return L.isPstn(t);
     };
     this.contactHasFullName = function (e) {
-      var t = ht(e);
-      return t.displayName() !== e || N.isPstn(t);
+      var t = Ct(e);
+      return t.displayName() !== e || L.isPstn(t);
     };
     this.isMePersonContactMessage = function (e) {
-      return N.isMePersonId(e);
+      return L.isMePersonId(e);
     };
     this.openConversationWithUser = function (e) {
-      var t = ht(e);
-      lt(t);
+      var t = Ct(e);
+      Tt(t);
       c.publishActionEvent({
         person: t,
-        participantsCount: R.participantsCount(),
-        timeInStale: m.timestamp.getTime()
+        participantsCount: J.participantsCount(),
+        timeInStale: y.timestamp.getTime()
       });
     };
     this.addCreditTelemetry = function (e, t) {
       var n = f.telemetry.pstn;
-      return t.target.className === n.cssClasses.ADD_CREDIT ? L.addingCredit(n.entryPoint.NO_CREDIT_CALL_END) : t.target.className === n.cssClasses.ADD_SUBSCRIPTION && L.addingSubscription(n.entryPoint.NO_SUBSCRIPTION_CALL_END), !0;
+      return t.target.className === n.cssClasses.ADD_CREDIT ? M.addingCredit(n.entryPoint.NO_CREDIT_CALL_END) : t.target.className === n.cssClasses.ADD_SUBSCRIPTION && M.addingSubscription(n.entryPoint.NO_SUBSCRIPTION_CALL_END), !0;
     };
     this.activateFirstLink = function (e, t) {
       var n = e.elementInfo.element.querySelector(".content a");
       n && t.target.tagName !== "A" && (n.click(), t.preventDefault(), t.stopPropagation());
     };
+    this.messageClicked = function (e, t) {
+      t.target && t.target.href && (N.navigate(t.target.href, m), t.preventDefault(), t.stopPropagation());
+    };
   }
-  var t = e("lodash-compat"), n = e("ui/telemetry/actions/actionNames"), r = e("ui/telemetry/actions/actionSources"), i = e("cafe/applicationInstance"), s = e("text!views/people/blockContactModal.html"), o = e("ui/viewModels/people/blockContactModal"), u = e("utils/common/cafeObservable"), a = e("constants/components"), f = e("constants/common"), l = e("ui/viewModels/people/contactBuilder"), c = e("telemetry/chat/contactInfoEvent"), h = e("ui/contactInfoMessage/contactInfoMessage"), p = e("ui/viewModels/people/contactName"), d = e("constants/contentTemplates"), v = e("swx-enums"), m = e("utils/common/eventMixin"), g = f.events, y = e("ui/viewModels/chat/hearts"), b = e("swx-i18n").localization, w = e("vendor/knockout"), E = e("ui/viewModels/chat/messageMediaTypesHandlers"), S = e("utils/chat/messageSanitizer"), x = e("utils/chat/message"), T = e("ui/modalDialog/modalDialog"), N = e("ui/modelHelpers/personHelper"), C = e("ui/viewModels/chat/pollAvatars"), k = e("telemetry/chat/poll"), L = e("telemetry/calling/pstn/pstn"), A = e("services/pubSub/pubSub"), O = e("services/serviceLocator"), M = e("utils/common/styleModeHelper"), _ = e("ui/viewModels/chat/messageParsers/swiftCard"), D = e("ui/viewModels/chat/translator/translationItem"), P = e("utils/chat/translatorHelper"), H = e("ui/urlPreview/urlPreview"), B = e("telemetry/chat/urlPreviewAction"), j = e("ui/players/ytPlayer"), F = e("experience/settings"), I = /<span class="emoticon\s?\w*\s?(animated)?\s+\w*large"><span class="emoSprite">.*<\/span><\/span>/i;
-  return t.assign(q.prototype, m), q;
+  var t = e("lodash-compat"), n = e("ui/telemetry/actions/actionSources"), r = e("swx-cafe-application-instance"), i = e("swx-focus-handler"), s = e("text!views/people/blockContactModal.html"), o = e("ui/viewModels/people/blockContactModal"), u = e("utils/common/cafeObservable"), a = e("constants/components"), f = e("swx-constants").COMMON, l = e("ui/viewModels/people/contactBuilder"), c = e("telemetry/chat/contactInfoEvent"), h = e("ui/contactInfoMessage/contactInfoMessage"), p = e("ui/viewModels/people/contactName"), d = e("constants/contentTemplates"), v = e("swx-encoder/lib/encoders/emoticonEncoder"), m = e("ui/viewModels/calling/helpers/callingFacade"), g = e("swx-enums"), y = e("utils/common/eventMixin"), b = f.events, w = e("ui/viewModels/chat/hearts"), E = e("swx-i18n").localization, S = e("vendor/knockout"), x = e("ui/viewModels/chat/messageMediaTypesHandlers"), T = e("swx-utils-chat").messageSanitizer, N = e("swx-ui-navigation"), C = e("utils/chat/message"), k = e("ui/modalDialog/modalDialog"), L = e("ui/modelHelpers/personHelper"), A = e("ui/viewModels/chat/pollAvatars"), O = e("telemetry/chat/poll"), M = e("telemetry/calling/pstn/pstn"), _ = e("swx-pubsub-instance").default, D = e("swx-service-locator-instance").default, P = e("utils/common/styleModeHelper"), H = e("ui/viewModels/chat/messageParsers/swiftCard"), B = e("ui/viewModels/chat/translator/translationItem"), j = e("utils/chat/translatorHelper"), F = e("utils/common/disposableMixin"), I = e("ui/urlPreview/urlPreview"), q = e("telemetry/chat/urlPreviewAction"), R = e("ui/players/ytPlayer"), U = e("ui/modelHelpers/personActionsHelper"), z = e("swx-utils-chat").conversation, W = e("utils/chat/quoteMessageUtils"), X = e("telemetry/chat/quoteMessageEvent"), V = e("utils/common/clipboard");
+  return t.assign($.prototype, y), $;
 });

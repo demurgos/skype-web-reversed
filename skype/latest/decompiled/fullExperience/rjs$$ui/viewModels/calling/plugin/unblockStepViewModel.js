@@ -2,13 +2,13 @@ define("ui/viewModels/calling/plugin/unblockStepViewModel", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "ui/viewModels/calling/helpers/browserInstallContent",
   "swx-enums",
   "swx-i18n",
-  "constants/calling"
+  "swx-constants"
 ], function (e, t) {
-  var n = e("cafe/applicationInstance"), r = e("ui/viewModels/calling/helpers/browserInstallContent"), i = e("swx-enums"), s = e("swx-i18n").localization, o = e("constants/calling"), u = function (u) {
+  var n = e("swx-cafe-application-instance"), r = e("ui/viewModels/calling/helpers/browserInstallContent"), i = e("swx-enums"), s = e("swx-i18n").localization, o = e("swx-constants").CALLING, u = function (u) {
       function h() {
         c.changed(d);
       }

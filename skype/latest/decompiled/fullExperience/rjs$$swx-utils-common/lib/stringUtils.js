@@ -13,12 +13,15 @@
     if (!e)
       return !1;
     var r = new RegExp("\\b" + n.escapeRegExp(t), "i");
-    return a(e).search(r) !== -1;
+    return f(e).search(r) !== -1;
   }
   function u(e) {
     return e.replace(/[\W]+|[\s]+/gi, " ").trim();
   }
   function a(e) {
+    return e.replace(/[.,\/#!£$%\^&\*;:{}=\-+`~()]+/gi, " ").replace(/\s+/g, " ").trim();
+  }
+  function f(e) {
     var t = parseInt("0xD800"), r = parseInt("0xDBFF"), i = 0, o = "", u = "", a;
     if (!e)
       return e;
@@ -31,29 +34,29 @@
     }
     return u;
   }
-  function f(e, t, n, r) {
+  function l(e, t, n, r) {
     return typeof r == "undefined" && (r = n), e.substr(0, n) + t + e.substr(r, e.length);
   }
-  function l(e) {
+  function c(e) {
     return e === "";
   }
-  function c(e) {
+  function h(e) {
     return n.isString(e) && e.length > 0;
   }
-  function h(e) {
+  function p(e) {
     return e === "\r";
   }
-  function p(e) {
+  function d(e) {
     return e === "\n";
   }
-  function d(e) {
+  function v(e) {
     return e === " ";
   }
-  function v(e, t) {
+  function m(e, t) {
     var n = this.wordBoundariesAt(e, t);
     return n.start === -1 ? "" : e.substring(n.start, n.end);
   }
-  function m(e, t) {
+  function g(e, t) {
     if (t > e.length)
       return {
         start: -1,
@@ -73,8 +76,12 @@
       end: r
     };
   }
-  function g(e) {
+  function y(e) {
     return r + e + i;
+  }
+  function b(e, t) {
+    var n = t;
+    return h(e) && !isNaN(e) && (n = parseInt(e, 10)), n;
   }
   var n = e("lodash-compat"), r = "\u202A", i = "\u202C", s = {
       "ª": "a",
@@ -352,14 +359,16 @@
     };
   t.anyWordStartsWith = o;
   t.clean = u;
-  t.normalize = a;
-  t.inject = f;
-  t.isEmpty = l;
-  t.isNotEmpty = c;
-  t.isCarriageReturn = h;
-  t.isNewLine = p;
-  t.isWhiteSpace = d;
-  t.wordAt = v;
-  t.wordBoundariesAt = m;
-  t.forceLTREmbedding = g;
+  t.removeNonWordCharacters = a;
+  t.normalize = f;
+  t.inject = l;
+  t.isEmpty = c;
+  t.isNotEmpty = h;
+  t.isCarriageReturn = p;
+  t.isNewLine = d;
+  t.isWhiteSpace = v;
+  t.wordAt = m;
+  t.wordBoundariesAt = g;
+  t.forceLTREmbedding = y;
+  t.tryParseInt = b;
 }));

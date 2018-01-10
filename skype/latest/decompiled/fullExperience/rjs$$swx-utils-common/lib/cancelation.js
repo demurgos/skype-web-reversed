@@ -22,8 +22,7 @@
     if (n.isFunction(r.makeCancelable))
       return r.makeCancelable(t);
     var i = e;
-    if (n.isFunction(i.then))
-      return s(i, t);
+    return n.isFunction(i.then) ? s(i, t) : undefined;
   }
   function u(e) {
     if (!e || !n.isObject(e) || !n.isFunction(e.abort))
@@ -31,10 +30,10 @@
     var t = e;
     return t.makeCancelable = function (e) {
       var t = this, n;
-      return e.catch(function (e) {
+      return e["catch"](function (e) {
         n = e;
         t.abort();
-      }), Promise.resolve(this).catch(function (t) {
+      }), Promise.resolve(this)["catch"](function (t) {
         throw e.isCanceled ? (n.innerException = t, n) : t;
       });
     }, t;
@@ -72,7 +71,7 @@
   t.CancelationTokenFactory = r;
   var i = function (e) {
     function t() {
-      e.call(this, "Operation canceled");
+      return e.call(this, "Operation canceled") || this;
     }
     return __extends(t, e), t;
   }(Error);

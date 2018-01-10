@@ -29,6 +29,7 @@
   }
   var n = e("lodash-compat"), r = e("reqwest"), i = e("swx-browser-globals"), s = 1000, o = function () {
       function e(e) {
+        this.$unit = { _resetGlobalState: this._resetGlobalState.bind(this) };
         this.apiUrl = e;
         this._resetGlobalState();
       }
@@ -38,7 +39,7 @@
         });
       }, e.prototype.update = function (e, t, n) {
         var r = i.getWindow();
-        return a(t ? "PUT" : "DELETE", n, r.encodeURIComponent(e.toString()), this.apiUrl).catch(function (e) {
+        return a(t ? "PUT" : "DELETE", n, r.encodeURIComponent(e.toString()), this.apiUrl)["catch"](function (e) {
           if (e && e.status && e.status === 404)
             return;
           throw e;
@@ -50,5 +51,6 @@
         }, s, { trailing: !1 });
       }, e;
     }();
+  t.FlagsService = o;
   t.build = f;
 }));

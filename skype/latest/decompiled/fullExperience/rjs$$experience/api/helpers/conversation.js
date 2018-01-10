@@ -3,18 +3,18 @@ define("experience/api/helpers/conversation", [
   "exports",
   "module",
   "lodash-compat",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "experience/api/auth/authEventHandler",
   "experience/api/helpers/modality",
   "experience/api/error",
-  "ui/modelHelpers/conversationHelper",
+  "swx-utils-chat",
   "swx-enums",
-  "constants/common",
+  "swx-constants",
   "telemetry/chat/conversationJoined",
   "experience/api/helpers/conversationsSynchronizer",
   "experience/api/helpers/conversationFacade",
   "experience/settings",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "experience/api/helpers/contentNavigatorStore"
 ], function (e, t) {
   function g(e, t, r) {
@@ -39,19 +39,26 @@ define("experience/api/helpers/conversation", [
     }, e);
   }
   function w(e, t, r) {
+    var i = d.resolve(f.serviceLocator.PUBSUB);
+    i.publish(f.apiUIEvents.SWX_CHAT_LOADED);
     if (!n.isFunction(t))
       return;
     try {
       t(S(e));
       b();
-    } catch (i) {
+    } catch (s) {
       E(r, m.SUCCESS_CALLBACK_ERROR);
     }
   }
   function E(e, t) {
+    if (t instanceof XMLHttpRequest) {
+      var n;
+      t.status === 0 ? n = "Timeout while joining converstation" : n = t.response;
+      t = new Error(n);
+    }
     try {
       b(t);
-    } catch (n) {
+    } catch (r) {
     }
     l.get().onJoinConversationError(t);
     y(e, t);
@@ -67,46 +74,46 @@ define("experience/api/helpers/conversation", [
         function s() {
           t.results().length ? r(t.results(0).result) : i();
         }
-        t.sources(n).keywords.id = e;
+        e.substring(0, 4) === "tel:" ? (t.sources(n), t.text(e)) : t.sources(n).keywords.id = e;
         t.getMore().then(s, i);
       });
     }), Promise.all(t);
   }
-  var n = e("lodash-compat"), r = e("cafe/applicationInstance"), i = e("experience/api/auth/authEventHandler"), s = e("experience/api/helpers/modality"), o = e("experience/api/error").asApiError, u = e("ui/modelHelpers/conversationHelper"), a = e("swx-enums"), f = e("constants/common"), l = e("telemetry/chat/conversationJoined"), c = e("experience/api/helpers/conversationsSynchronizer"), h = e("experience/api/helpers/conversationFacade"), p = e("experience/settings"), d = e("services/serviceLocator"), v = e("experience/api/helpers/contentNavigatorStore"), m = f.api.conversation.errorMessages;
-  t.startConversation = function (e, t, n, r, i) {
-    function f(e, a) {
-      var f = u.createConversation(e, a), l = {
+  var n = e("lodash-compat"), r = e("swx-cafe-application-instance"), i = e("experience/api/auth/authEventHandler"), s = e("experience/api/helpers/modality"), o = e("experience/api/error").asApiError, u = e("swx-utils-chat").conversation, a = e("swx-enums"), f = e("swx-constants").COMMON, l = e("telemetry/chat/conversationJoined"), c = e("experience/api/helpers/conversationsSynchronizer"), h = e("experience/api/helpers/conversationFacade"), p = e("experience/settings"), d = e("swx-service-locator-instance").default, v = e("experience/api/helpers/contentNavigatorStore"), m = f.api.conversation.errorMessages;
+  t.startConversation = function (e, t, n, i, o) {
+    function l(e, f) {
+      var l = r.get().conversationsManager, c = u.createConversation(e, l, f), h = {
           modalities: t,
-          conversation: f
-        }, c = v.get(i);
-      s.startModalities(l, function () {
-        c && c.navigateToConversation(f);
-        g(f, n, r);
-      }, o);
+          conversation: c
+        }, p = v.get(o);
+      s.startModalities(h, function () {
+        p && p.navigateToConversation(c);
+        g(c, n, i);
+      }, a);
     }
-    var o = y.bind(null, r), a;
+    var a = y.bind(null, i), f;
     if (!Array.isArray(e)) {
-      o(m.URI_NOT_VALID);
+      a(m.URI_NOT_VALID);
       return;
     }
     if (e.length === 0) {
-      f([], !0);
+      l([], !0);
       return;
     }
-    a = p.startConversationMaxParticipantCount;
-    a > 0 && e.length > a && (e = e.slice(0, a));
+    f = p.startConversationMaxParticipantCount;
+    f > 0 && e.length > f && (e = e.slice(0, f));
     if (p.authentication && p.authentication.anonymousMode) {
-      f(e);
+      l(e);
       return;
     }
     x(e).then(function (e) {
-      f(e);
+      l(e);
     }, function () {
-      o(m.SEARCH_FAILED);
-    }).catch(o);
+      a(m.SEARCH_FAILED);
+    }).catch(a);
   };
   t.joinConversation = function (e, t, i, o, u, a) {
-    function p(e) {
+    function d(e) {
       var n = {
           modalities: t,
           conversation: e,
@@ -122,22 +129,23 @@ define("experience/api/helpers/conversation", [
       f(m.URI_NOT_VALID);
       return;
     }
-    r.get().personsAndGroupsManager.mePerson.id.get().then(function (t) {
-      l.get().onJoinConversation({
-        uri: e,
-        prefix: t
-      });
-      c.sync().then(function () {
-        if (u)
-          h._getConversationByUri(e).then(p).catch(f);
-        else
-          try {
+    try {
+      r.get().personsAndGroupsManager.mePerson.id.get().then(function (t) {
+        l.get().onJoinConversation({
+          uri: e,
+          prefix: t
+        });
+        c.sync().then(function () {
+          if (u)
+            h._getConversationByUri(e).then(d).catch(f);
+          else {
             var t = h.getConversationByUri(e);
-            p(t);
-          } catch (n) {
-            f(n);
+            d(t);
           }
-      });
-    }).catch(f);
+        }).catch(f);
+      }).catch(f);
+    } catch (p) {
+      f(p);
+    }
   };
 });

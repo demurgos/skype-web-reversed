@@ -7,127 +7,157 @@ define("ui/viewModels/people/contactProfile", [
   "swx-i18n",
   "utils/common/cafeObservable",
   "vendor/knockout",
-  "services/serviceLocator",
-  "constants/common",
-  "ui/telemetry/actions/actionNames",
+  "swx-service-locator-instance",
+  "swx-constants",
   "ui/telemetry/actions/actionSources",
   "ui/modalDialog/modalDialog",
   "ui/viewModels/people/blockContactModal",
   "text!views/people/blockContactModal.html",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "swx-enums",
   "ui/viewModels/people/deleteContactModal",
   "text!views/people/deleteContactModal.html",
-  "ui/modelHelpers/personHelper"
+  "ui/modelHelpers/personHelper",
+  "ui/modelHelpers/groupHelper",
+  "ui/modelHelpers/personActionsHelper"
 ], function (e, t) {
-  function b(e, t) {
-    function C() {
-      return x() && !r.contact.isPstn() && !r.contact.isAgent();
-    }
-    function k() {
-      r.isInContacts(y.isKnownPerson(E));
-    }
-    function L(e, t) {
-      w.publish(a.events.interaction.SCROLL_START, t);
+  function w(e, t) {
+    function L() {
+      return N() && !r.contact.isPstn();
     }
     function A() {
-      r.dispatchEvent(a.events.conversation.CLOSE_PROFILE, undefined, r.DIRECTION.PARENT);
-      j();
+      r.isInContacts(g.isKnownPerson(x));
     }
     function O() {
-      return r.contact.isAgent() ? v.activityType.ContactRequestOutgoingAgent : v.activityType.ContactRequestOutgoing;
+      C(Z());
     }
-    function M() {
-      var e = u.resolve(a.serviceLocator.ACTION_TELEMETRY);
-      e.recordAction(f.contacts.contactRequestSent, { isResend: !1 });
+    function M(e, t) {
+      S.publish(a.events.interaction.SCROLL_START, t);
     }
     function D() {
-      var e = E.isBlocked.set(!1);
-      return P(), e;
+      return r.contact.isAgent() ? d.activityType.ContactRequestOutgoingAgent : r.contact.isPstn() ? d.activityType.ContactRequestOutgoingPSTN : d.activityType.ContactRequestOutgoing;
     }
     function P() {
-      var e = u.resolve(a.serviceLocator.ACTION_TELEMETRY);
-      e.recordAction(f.contacts.contactUnblocked, N);
+      var e = new c(w, k), t = w.isAgent() ? i.fetch({ key: "modal_block_agent_text_aria_label" }) : i.fetch({ key: "modal_blockContact_text_aria_label" });
+      return l.build(c.ELEMENT_ID, e, h), l.show(c.ELEMENT_ID, t), Promise.resolve();
     }
     function H() {
-      var e = new h(T, N), t = i.fetch({ key: "modal_blockContact_text_aria_label" });
-      return c.build(h.ELEMENT_ID, e, p), c.show(h.ELEMENT_ID, t), Promise.resolve();
-    }
-    function B() {
       var e = {
         key: "label_text_blockContact_with_name",
-        params: { name: r.contact.displayName() }
+        params: { name: r.contact.displayNameUnescaped() }
       };
-      return S() && (e.key = "label_text_unblockContact_with_name"), i.fetch(e);
+      return T() && (e.key = "label_text_unblockContact_with_name"), i.fetch(e);
+    }
+    function B() {
+      var e = { key: "favorites_add_to_favorite" };
+      return C() && (e.key = "favorites_remove_from_favorite"), i.fetch(e);
     }
     function j() {
-      r.actionsInProgress(!1);
+      var e = { key: g.isAgent(w) ? "label_text_delete_agent" : "label_text_deleteContact" };
+      return i.fetch(e);
     }
     function F() {
-      return !!r.contact.locationText();
+      r.actionsInProgress(!1);
     }
     function I() {
-      return b.isFeatureOn(a.featureFlags.SHOW_AGENT_RATING_ON_PROFILE) && r.contact.isAgent() && $("rating");
+      return !!r.contact.locationText();
     }
     function q() {
-      return r.contact.isAgent() && $("author");
+      return E.isFeatureOn(a.featureFlags.SHOW_AGENT_RATING_ON_PROFILE) && r.contact.isAgent() && G("rating");
     }
     function R() {
-      return r.contact.isAgent() && $("description");
+      return r.contact.isAgent() && G("author");
     }
     function U() {
-      return r.contact.isAgent() && $("website");
+      return r.contact.isAgent() && G("description");
     }
     function z() {
-      return r.contact.isAgent() && $("privacyStatement");
+      return r.contact.isAgent() && G("website");
     }
     function W() {
-      return r.contact.isAgent() && $("termsOfService");
+      return r.contact.isAgent() && G("privacyStatement");
     }
     function X() {
-      return r.contact.isAgent() && $("extraInfo");
+      return r.contact.isAgent() && G("termsOfService");
     }
     function V() {
-      return r.contact.isAgent() && (z() || W());
+      return E.isFeatureOn(a.featureFlags.SHOW_AGENT_EXTRA_INFO_ON_PROFILE) && r.contact.isAgent() && G("extraInfo");
     }
-    function $(e) {
+    function $() {
+      return r.contact.isAgent() && (W() || X());
+    }
+    function J() {
+      return r.contact.isAgent() && G("capabilitiesText");
+    }
+    function K() {
+      return R() || U() || r.showAgentId || q() || z();
+    }
+    function Q() {
+      var e = r.contact.agentDetails();
+      return r.contact.isAgent() ? e && e.capabilities && typeof e.capabilities.media_autoplay == "function" && !!e.capabilities.media_autoplay() : !1;
+    }
+    function G(e) {
       var t;
-      return J(e) ? (t = r.contact.agentDetails()[e](), t !== undefined && t !== null && ("" + t).trim().length > 0) : !1;
+      return Y(e) ? (t = r.contact.agentDetails()[e](), t !== undefined && t !== null && ("" + t).trim().length > 0) : !1;
     }
-    function J(e) {
+    function Y(e) {
       return !!r.contact.agentDetails() && typeof r.contact.agentDetails()[e] == "function";
     }
-    var r = this, b = u.resolve(a.serviceLocator.FEATURE_FLAGS), w = u.resolve(a.serviceLocator.PUBSUB), E = e.conversationModel.participants(0).person, S = s.newObservableProperty(E.isBlocked), x = s.newObservableProperty(E.isBlocked.set.enabled), T = e.conversationTile.contact().getPerson(), N = { source: l.contactProfile };
+    function Z() {
+      return y.isPersonInGroup(d.groupType.Favorites, w);
+    }
+    function et() {
+      var e = E.isFeatureOn(a.featureFlags.USE_BUSINESS_WORDING), t = E.isFeatureOn(a.featureFlags.ENABLE_BUSINESS_CONTACT_MANAGEMENT);
+      return e && !t ? !1 : !0;
+    }
+    var r = this, w = e.conversationTile.contact().getPerson(), E = u.resolve(a.serviceLocator.FEATURE_FLAGS), S = u.resolve(a.serviceLocator.PUBSUB), x = e.conversationModel.participants(0).person, T = s.newObservableProperty(x.isBlocked), N = s.newObservableProperty(x.isBlocked.set.enabled), C = o.observable(Z()), k = { source: f.contactProfile };
     r.closeLabel = i.fetch({ key: "header_text_close" });
-    r.model = E;
+    r.model = e.conversationModel;
     r.contact = e.conversationTile.contact();
     r.avatar = s.newObservableProperty(e.conversationModel.avatarUrl);
-    r.hasContactInfo = o.computed(F);
+    r.hasContactInfo = o.computed(I);
+    r.enableContactsManagement = et;
     r.actionsInProgress = o.observable(!1);
-    r.canBlockContact = o.computed(C);
+    r.canBlockContact = o.computed(L);
     r.isInContacts = o.observable(!1);
-    r.blockContactText = o.computed(B);
-    r.hasAgentRating = o.computed(I);
-    r.hasAgentAuthor = o.computed(q);
-    r.hasAgentDescription = o.computed(R);
-    r.hasAgentWebsite = o.computed(U);
-    r.hasAgentPrivacyStatement = o.computed(z);
-    r.hasAgentTermsOfService = o.computed(W);
-    r.hasAgentExtraInfo = o.computed(X);
-    r.hasAgentPrivacyLinks = o.computed(V);
+    r.isOrganizationContact = g.isOrganizationContact(w);
+    r.blockContactText = o.computed(H);
+    r.favoriteContactText = o.computed(B);
+    r.deleteContactText = o.computed(j);
+    r.showAgentId = E.isFeatureOn(a.featureFlags.SHOW_AGENT_ID_ON_PROFILE);
+    r.favoritesFeatureEnabled = E.isFeatureOn(a.featureFlags.FAVORITE_CONTACTS_ENABLED);
+    r.hasAgentRating = o.computed(q);
+    r.hasAgentAuthor = o.computed(R);
+    r.hasAgentDescription = o.computed(U);
+    r.hasAgentWebsite = o.computed(z);
+    r.hasAgentPrivacyStatement = o.computed(W);
+    r.hasAgentTermsOfService = o.computed(X);
+    r.hasAgentExtraInfo = o.computed(V);
+    r.hasAgentPrivacyLinks = o.computed($);
+    r.hasAgentCapabilitiesText = o.computed(J);
+    r.hasAgentDetailsToShow = o.computed(K);
+    r.hasAgentCapabilityAutoPlay = o.computed(Q);
     r.addContact = function () {
-      var t, n = O();
-      return r.actionsInProgress(!0), d.get().conversationsManager.conversations.add(e.conversationModel), t = d.get().personsAndGroupsManager.all.persons.add(T, T.id(), undefined, n), M(), t.then(A, j), t;
+      function i() {
+        r.dispatchEvent(a.events.conversation.CLOSE_PROFILE, undefined, r.DIRECTION.PARENT);
+        F();
+      }
+      var t, n = D();
+      return r.actionsInProgress(!0), p.get().conversationsManager.conversations.add(e.conversationModel), t = b.addPerson(w, n, e.conversationModel, k, i, F), r.dispatchEvent(a.events.message.ADD_CONTACT, k, r.DIRECTION.PARENT), t;
     };
     r.toggleContactBlocked = function () {
       var e;
-      return r.actionsInProgress(!0), S() ? e = D() : e = H(), e.then(j, j), e;
+      return r.actionsInProgress(!0), T() ? e = b.unblockPerson(w, k) : e = P(), e.then(F, F), e;
     };
     r.deleteContact = function () {
-      var e = N.source, t = new m(r.contact, e, N), n = i.fetch({ key: "modal_deleteContact_text_aria_label" });
-      return c.build(m.ELEMENT_ID, t, g), c.show(m.ELEMENT_ID, n), Promise.resolve();
+      var e = new v(r.contact, k), t = g.isAgent(w) ? i.fetch({ key: "label_text_delete_agent" }) : i.fetch({ key: "modal_deleteContact_text_aria_label" });
+      return l.build(v.ELEMENT_ID, e, m), l.show(v.ELEMENT_ID, t), Promise.resolve();
     };
-    r.onScroll = n.debounce(L, 1000, {
+    r.toggleFavoriteContact = function () {
+      var e;
+      return r.actionsInProgress(!0), C() ? e = b.removeFavorite(w, k) : e = b.addFavorite(w, k), e.then(F, F), e;
+    };
+    r.onScroll = n.debounce(M, 1000, {
       leading: !0,
       trailing: !1
     });
@@ -135,7 +165,8 @@ define("ui/viewModels/people/contactProfile", [
       t.init();
     };
     r.dispose = function () {
-      d.get().personsAndGroupsManager.all.persons.changed.off(k);
+      p.get().personsAndGroupsManager.all.persons.changed.off(A);
+      y.unsubscribeFromGroup(d.groupType.Favorites, O);
       r.hasContactInfo.dispose();
       r.hasAgentRating.dispose();
       r.hasAgentAuthor.dispose();
@@ -145,17 +176,22 @@ define("ui/viewModels/people/contactProfile", [
       r.hasAgentTermsOfService.dispose();
       r.hasAgentExtraInfo.dispose();
       r.hasAgentPrivacyLinks.dispose();
-      r.contact.dispose();
+      r.hasAgentCapabilitiesText.dispose();
+      r.hasAgentDetailsToShow.dispose();
+      r.hasAgentCapabilityAutoPlay.dispose();
       r.canBlockContact.dispose();
       r.blockContactText.dispose();
+      r.deleteContactText.dispose();
+      r.favoriteContactText.dispose();
       t.dispose();
     };
-    d.get().personsAndGroupsManager.all.persons.changed(k);
+    p.get().personsAndGroupsManager.all.persons.changed(A);
+    y.subscribeToGroup(d.groupType.Favorites, O);
   }
-  var n = e("lodash-compat"), r = e("utils/common/eventMixin"), i = e("swx-i18n").localization, s = e("utils/common/cafeObservable"), o = e("vendor/knockout"), u = e("services/serviceLocator"), a = e("constants/common"), f = e("ui/telemetry/actions/actionNames"), l = e("ui/telemetry/actions/actionSources"), c = e("ui/modalDialog/modalDialog"), h = e("ui/viewModels/people/blockContactModal"), p = e("text!views/people/blockContactModal.html"), d = e("cafe/applicationInstance"), v = e("swx-enums"), m = e("ui/viewModels/people/deleteContactModal"), g = e("text!views/people/deleteContactModal.html"), y = e("ui/modelHelpers/personHelper");
-  n.assign(b.prototype, r);
-  t.classFunction = b;
+  var n = e("lodash-compat"), r = e("utils/common/eventMixin"), i = e("swx-i18n").localization, s = e("utils/common/cafeObservable"), o = e("vendor/knockout"), u = e("swx-service-locator-instance").default, a = e("swx-constants").COMMON, f = e("ui/telemetry/actions/actionSources"), l = e("ui/modalDialog/modalDialog"), c = e("ui/viewModels/people/blockContactModal"), h = e("text!views/people/blockContactModal.html"), p = e("swx-cafe-application-instance"), d = e("swx-enums"), v = e("ui/viewModels/people/deleteContactModal"), m = e("text!views/people/deleteContactModal.html"), g = e("ui/modelHelpers/personHelper"), y = e("ui/modelHelpers/groupHelper"), b = e("ui/modelHelpers/personActionsHelper");
+  n.assign(w.prototype, r);
+  t.classFunction = w;
   t.build = function (e, t) {
-    return new b(e, t);
+    return new w(e, t);
   };
 });

@@ -3,11 +3,11 @@ define("experience/api/helpers/modality", [
   "exports",
   "module",
   "lodash-compat",
-  "constants/common",
+  "swx-constants",
   "swx-enums",
   "ui/viewModels/calling/helpers/callingFacade",
   "ui/telemetry/actions/actionNames",
-  "services/serviceLocator"
+  "swx-service-locator-instance"
 ], function (e, t) {
   function l(e) {
     return n.contains(e, a.VIDEO);
@@ -21,7 +21,7 @@ define("experience/api/helpers/modality", [
   function p(e) {
     return l(e) || c(e) || h(e);
   }
-  var n = e("lodash-compat"), r = e("constants/common"), i = e("swx-enums"), s = e("ui/viewModels/calling/helpers/callingFacade"), o = e("ui/telemetry/actions/actionNames"), u = e("services/serviceLocator"), a = r.modalityType, f = r.api.modality.errorMessages;
+  var n = e("lodash-compat"), r = e("swx-constants").COMMON, i = e("swx-enums"), s = e("ui/viewModels/calling/helpers/callingFacade"), o = e("ui/telemetry/actions/actionNames"), u = e("swx-service-locator-instance").default, a = r.modalityType, f = r.api.modality.errorMessages;
   t.startModalities = function (e, t, a) {
     function g() {
       n.isFunction(t) && t();

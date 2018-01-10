@@ -1,11 +1,13 @@
 define("utils/common/cache/instance", [
   "require",
   "exports",
-  "module",
-  "utils/common/cache/provider"
+  "module"
 ], function (e, t) {
-  var n = e("utils/common/cache/provider"), r;
+  var n;
   t.get = function () {
-    return r || (r = new n()), r;
+    return n;
+  };
+  t.set = function (e) {
+    n = e;
   };
 });

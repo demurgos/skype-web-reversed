@@ -5,10 +5,10 @@ define("ui/viewModels/chat/scheduleCallModal", [
   "lodash-compat",
   "vendor/knockout",
   "browser/window",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "utils/common/eventMixin",
   "ui/modalDialog/modalDialog",
-  "constants/common",
+  "swx-constants",
   "ui/telemetry/actions/actionNames",
   "ui/modelHelpers/meetingScheduler"
 ], function (e, t) {
@@ -38,7 +38,7 @@ define("ui/viewModels/chat/scheduleCallModal", [
       u.hide(c);
     };
   }
-  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("browser/window"), s = e("services/serviceLocator"), o = e("utils/common/eventMixin"), u = e("ui/modalDialog/modalDialog"), a = e("constants/common"), f = e("ui/telemetry/actions/actionNames"), l = e("ui/modelHelpers/meetingScheduler"), c = "swx-overlayScheduleCall";
+  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("browser/window"), s = e("swx-service-locator-instance").default, o = e("utils/common/eventMixin"), u = e("ui/modalDialog/modalDialog"), a = e("swx-constants").COMMON, f = e("ui/telemetry/actions/actionNames"), l = e("ui/modelHelpers/meetingScheduler"), c = "swx-overlayScheduleCall";
   n.assign(h.prototype, o);
   t.ELEMENT_ID = c;
   t.build = function (e) {

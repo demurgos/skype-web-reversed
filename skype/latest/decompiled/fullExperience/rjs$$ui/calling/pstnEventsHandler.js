@@ -3,55 +3,56 @@ define("ui/calling/pstnEventsHandler", [
   "exports",
   "module",
   "swx-enums",
-  "lodash-compat"
+  "lodash-compat",
+  "ui/modelHelpers/personHelper"
 ], function (e, t) {
-  function i(e) {
-    function o(e) {
-      e === n.callConnectionState.Disconnected ? (s && s.dispose(), t.participants().forEach(f)) : e === n.callConnectionState.Connecting && (s = t.participants.observe(u), t.participants().forEach(a));
+  function s(e) {
+    function u(e) {
+      e === n.callConnectionState.Disconnected ? (o && o.dispose(), t.participants().forEach(l)) : e === n.callConnectionState.Connecting && (o = t.participants.observe(a), t.participants().forEach(f));
     }
-    function u(e, t) {
+    function a(e, t) {
       r.forIn(e, function (e) {
-        a(e);
-      });
-      r.forIn(t, function (e) {
         f(e);
       });
+      r.forIn(t, function (e) {
+        l(e);
+      });
     }
-    function a(n) {
-      function s(r) {
+    function f(n) {
+      function o(r) {
         var i = n.audio.state.reason;
         e.process(t, n, i, r);
       }
-      if (!l(n.audio.endpoint()))
+      if (!c(n.audio.endpoint()) && !i.isPstn(n.person))
         return;
       var r = n.person.id();
-      if (r in i)
+      if (r in s)
         return;
-      i[r] = s;
-      n.audio.state.changed(s);
-    }
-    function f(e) {
-      var t, n;
-      n = e.person.id();
-      n in i && (t = i[n], e.audio.state.changed.off(t), delete i[n]);
+      s[r] = o;
+      n.audio.state.changed(o);
     }
     function l(e) {
+      var t, n;
+      n = e.person.id();
+      n in s && (t = s[n], e.audio.state.changed.off(t), delete s[n]);
+    }
+    function c(e) {
       return /^(\+)?\d+$/.test(e);
     }
-    var t, i = {}, s;
+    var t, s = {}, o;
     this.subscribeToConversation = function (e) {
       t = e;
-      t.selfParticipant.audio.state.changed(o);
+      t.selfParticipant.audio.state.changed(u);
     };
     this.dispose = function () {
-      s && s.dispose();
-      t.participants().forEach(f);
-      i = null;
-      t.selfParticipant.audio.state.changed.off(o);
+      o && o.dispose();
+      t.participants().forEach(l);
+      s.length = 0;
+      t.selfParticipant.audio.state.changed.off(u);
     };
   }
-  var n = e("swx-enums"), r = e("lodash-compat");
+  var n = e("swx-enums"), r = e("lodash-compat"), i = e("ui/modelHelpers/personHelper");
   t.build = function (e) {
-    return new i(e);
+    return new s(e);
   };
 });

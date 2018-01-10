@@ -8,7 +8,7 @@ define("ui/components/calling/callScreen", [
   "text!views/calling/callScreen.html"
 ], function (e, t) {
   function i(e, t) {
-    var i = r.build(e.conversation);
+    var i = r.build(e.conversation, t.element);
     return i.setContext(n.dataFor(t.element)), i.init(), i;
   }
   var n = e("vendor/knockout"), r = e("ui/viewModels/calling/callScreenViewModel/callScreenViewModel");

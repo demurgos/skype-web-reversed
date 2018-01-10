@@ -9,35 +9,41 @@
       "swx-browser-globals"
     ], e);
 }(function (e, t) {
-  function r(e, t) {
-    var r = n.getWindow();
+  function r(e, r) {
+    var i = n.getWindow();
     try {
-      r.sessionStorage.setItem(e, t);
-    } catch (i) {
+      i.sessionStorage.setItem(e, r);
+      delete t._backingStore[e];
+    } catch (s) {
+      t._backingStore[e] = r;
     }
   }
   function i(e) {
-    var t = n.getWindow();
+    var r = n.getWindow();
     try {
-      return t.sessionStorage.getItem(e);
-    } catch (r) {
+      var i = r.sessionStorage.getItem(e);
+      return !i && e in t._backingStore ? t._backingStore[e] : (t._backingStore[e] = i, i);
+    } catch (s) {
     }
   }
   function s(e) {
-    var t = n.getWindow();
+    var r = n.getWindow();
     try {
-      return t.sessionStorage.removeItem(e);
-    } catch (r) {
+      delete t._backingStore[e];
+      r.sessionStorage.removeItem(e);
+    } catch (i) {
     }
   }
   function o() {
     var e = n.getWindow();
     try {
+      t._backingStore = {};
       e.sessionStorage.clear();
-    } catch (t) {
+    } catch (r) {
     }
   }
   var n = e("swx-browser-globals");
+  t._backingStore = {};
   t.set = r;
   t.get = i;
   t.remove = s;

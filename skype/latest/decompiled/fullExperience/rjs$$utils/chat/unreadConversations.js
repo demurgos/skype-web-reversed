@@ -1,7 +1,7 @@
 define("utils/chat/unreadConversations", [
   "require",
   "vendor/knockout",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "utils/common/cafeObservable"
 ], function (e) {
   function s() {
@@ -31,7 +31,7 @@ define("utils/chat/unreadConversations", [
       getCount: s
     };
   }
-  var t = e("vendor/knockout"), n = e("cafe/applicationInstance"), r = e("utils/common/cafeObservable"), i;
+  var t = e("vendor/knockout"), n = e("swx-cafe-application-instance"), r = e("utils/common/cafeObservable"), i;
   return {
     getInstance: function () {
       return i || (i = s()), i;

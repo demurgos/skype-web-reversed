@@ -1,8 +1,8 @@
 define("jsviews/chat/header", [
   "require",
   "browser/dom",
-  "constants/keys",
-  "constants/common"
+  "swx-constants",
+  "swx-constants"
 ], function (e) {
   function o(e) {
     function u(e) {
@@ -30,6 +30,6 @@ define("jsviews/chat/header", [
       t.getElement(".editTopic input.edit", e).select();
     };
   }
-  var t = e("browser/dom"), n = e("constants/keys"), r = e("constants/common"), i = "conversationHeader", s = "swx-container";
+  var t = e("browser/dom"), n = e("swx-constants").KEYS, r = e("swx-constants").COMMON, i = "conversationHeader", s = "swx-container";
   return o;
 });

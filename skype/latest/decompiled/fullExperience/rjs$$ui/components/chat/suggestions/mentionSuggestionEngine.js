@@ -1,15 +1,16 @@
 define("ui/components/chat/suggestions/mentionSuggestionEngine", [
   "require",
   "lodash-compat",
-  "constants/common",
+  "swx-constants",
   "ui/components/chat/suggestions/mentionSuggestion",
   "ui/modelHelpers/personHelper",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "swx-utils-common"
 ], function (e) {
   function a() {
     var e = s.resolve(n.serviceLocator.FEATURE_FLAGS);
     this.isEnabled = e.isFeatureOn(n.featureFlags.MENTIONS_ENABLED);
+    this.isEnabledForPeople = e.isFeatureOn(n.featureFlags.MENTIONS_PEOPLE_ENABLED);
     this.matchImplicitByContains = e.isFeatureOn(n.featureFlags.AGGRESSIVE_IMPLICT_MENTIONS_MATCHING);
   }
   function f(e, n) {
@@ -18,16 +19,21 @@ define("ui/components/chat/suggestions/mentionSuggestionEngine", [
     var r = new RegExp(t.escapeRegExp(n), "i");
     return o.normalize(e).search(r) !== -1;
   }
-  var t = e("lodash-compat"), n = e("constants/common"), r = e("ui/components/chat/suggestions/mentionSuggestion"), i = e("ui/modelHelpers/personHelper"), s = e("services/serviceLocator"), o = e("swx-utils-common").stringUtils, u = 4;
+  var t = e("lodash-compat"), n = e("swx-constants").COMMON, r = e("ui/components/chat/suggestions/mentionSuggestion"), i = e("ui/modelHelpers/personHelper"), s = e("swx-service-locator-instance").default, o = e("swx-utils-common").stringUtils, u = 4;
   return a.prototype.priority = 1, a.prototype.filterParticipants = function (t, n, r) {
-    function u(e) {
+    function a(e) {
       return !i.isPstn(e.person) && (o.anyWordStartsWith(e.person.displayName(), r) || o.anyWordStartsWith(e.person.id(), r));
     }
-    function a(e) {
+    function l(e) {
       return !i.isPstn(e.person) && (f(e.person.displayName(), r) || f(e.person.id(), r));
     }
-    var s = n || this.matchImplicitByContains ? a : u;
-    return t.filter(s);
+    function c(e) {
+      return i.isAgent(e.person);
+    }
+    var s = n || this.matchImplicitByContains ? l : a, u;
+    return u = t.filter(s), this.isEnabledForPeople || (u = u.filter(c)), u.length > 1 && u.sort(function (e, t) {
+      return e.person.displayName().toLowerCase().localeCompare(t.person.displayName().toLowerCase());
+    }), u;
   }, a.prototype.getSuggestions = function (t, n) {
     if (!t.conversationModel.isGroupConversation() || !this.isEnabled)
       return {

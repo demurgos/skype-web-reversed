@@ -6,15 +6,15 @@ define("ui/viewModels/chat/inviteLink", [
   "vendor/knockout",
   "browser/dom",
   "browser/window",
-  "utils/chat/spaceMail",
-  "constants/common",
+  "swx-utils-chat",
+  "swx-constants",
   "utils/common/eventMixin",
   "utils/common/cafeObservable",
   "utils/common/location",
-  "constants/common",
+  "swx-constants",
   "ui/telemetry/actions/actionNames",
   "ui/telemetry/actions/actionSources",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "swx-i18n"
 ], function (e, t) {
   function g(e, t) {
@@ -75,7 +75,7 @@ define("ui/viewModels/chat/inviteLink", [
       n.mailtoLink.dispose();
     };
   }
-  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("browser/dom"), s = e("browser/window"), o = e("utils/chat/spaceMail"), u = e("constants/common").events, a = e("utils/common/eventMixin"), f = e("utils/common/cafeObservable"), l = e("utils/common/location"), c = e("constants/common"), h = e("ui/telemetry/actions/actionNames"), p = e("ui/telemetry/actions/actionSources"), d = e("services/serviceLocator"), v = e("swx-i18n").localization, m = 3000;
+  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("browser/dom"), s = e("browser/window"), o = e("swx-utils-chat").spaceMail, u = e("swx-constants").COMMON.events, a = e("utils/common/eventMixin"), f = e("utils/common/cafeObservable"), l = e("utils/common/location"), c = e("swx-constants").COMMON, h = e("ui/telemetry/actions/actionNames"), p = e("ui/telemetry/actions/actionSources"), d = e("swx-service-locator-instance").default, v = e("swx-i18n").localization, m = 3000;
   n.assign(g.prototype, a);
   t.classFunction = g;
   t.build = function (e, t) {

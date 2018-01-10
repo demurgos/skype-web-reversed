@@ -4,7 +4,7 @@ define("ui/telemetry/identityTelemetry", [
   "module",
   "browser/window",
   "swx-enums",
-  "cafe/applicationInstance"
+  "swx-cafe-application-instance"
 ], function (e, t) {
   function o(e) {
     e.setCommonProperty("user_id", u, s.Identity);
@@ -27,7 +27,7 @@ define("ui/telemetry/identityTelemetry", [
     }
     return e;
   }
-  var n = e("browser/window"), r = e("swx-enums"), i = e("cafe/applicationInstance"), s;
+  var n = e("browser/window"), r = e("swx-enums"), i = e("swx-cafe-application-instance"), s;
   t.addIdentityToAllEvents = function (e) {
     s = s || n.skypeTelemetryManager.PIIType;
     o(e);

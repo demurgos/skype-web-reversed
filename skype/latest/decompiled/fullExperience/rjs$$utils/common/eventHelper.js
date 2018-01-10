@@ -2,7 +2,7 @@ define("utils/common/eventHelper", [
   "require",
   "exports",
   "module",
-  "constants/keys"
+  "swx-constants"
 ], function (e, t) {
   function i() {
   }
@@ -31,7 +31,7 @@ define("utils/common/eventHelper", [
     var t = o(e);
     return t === n.ESCAPE;
   }
-  var n = e("constants/keys"), r = {
+  var n = e("swx-constants").KEYS, r = {
       96: "0",
       97: "1",
       98: "2",

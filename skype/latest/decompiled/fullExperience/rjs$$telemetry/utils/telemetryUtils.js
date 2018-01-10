@@ -2,9 +2,9 @@ define("telemetry/utils/telemetryUtils", [
   "require",
   "exports",
   "module",
-  "constants/common"
+  "swx-constants"
 ], function (e, t) {
-  var n = e("constants/common"), r = n.telemetry.NOT_AVAILABLE;
+  var n = e("swx-constants").COMMON, r = n.telemetry.NOT_AVAILABLE;
   t.stringify = function (e) {
     for (var t in e)
       e.hasOwnProperty(t) && !(typeof e[t] == "string" || e[t] instanceof String) && (e[t] = e[t] + "");

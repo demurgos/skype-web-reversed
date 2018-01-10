@@ -5,8 +5,8 @@ define("ui/viewModels/calling/startCallButtonViewModel", [
   "lodash-compat",
   "utils/common/eventMixin",
   "vendor/knockout",
-  "constants/common",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-service-locator-instance",
   "ui/contextMenu/menuItemHelper",
   "ui/contextMenu/items/all",
   "ui/modelHelpers/personHelper"
@@ -54,7 +54,7 @@ define("ui/viewModels/calling/startCallButtonViewModel", [
       c();
     };
   }
-  var n = e("lodash-compat"), r = e("utils/common/eventMixin"), i = e("vendor/knockout"), s = e("constants/common"), o = e("services/serviceLocator"), u = e("ui/contextMenu/menuItemHelper"), a = e("ui/contextMenu/items/all"), f = e("ui/modelHelpers/personHelper");
+  var n = e("lodash-compat"), r = e("utils/common/eventMixin"), i = e("vendor/knockout"), s = e("swx-constants").COMMON, o = e("swx-service-locator-instance").default, u = e("ui/contextMenu/menuItemHelper"), a = e("ui/contextMenu/items/all"), f = e("ui/modelHelpers/personHelper");
   n.assign(l.prototype, r);
   t.classFunction = l;
   t.build = function (e) {

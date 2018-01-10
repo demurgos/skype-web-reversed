@@ -5,9 +5,9 @@ define("ui/viewModels/chat/spaceSettings", [
   "utils/common/eventMixin",
   "swx-i18n",
   "swx-enums",
-  "utils/chat/spaceMail",
+  "swx-utils-chat",
   "utils/common/cafeObservable",
-  "constants/common",
+  "swx-constants",
   "utils/common/eventHelper"
 ], function (e) {
   function l(e, t) {
@@ -55,6 +55,6 @@ define("ui/viewModels/chat/spaceSettings", [
       return n && r.joiningEnabledHandler(), !n;
     };
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("utils/common/eventMixin"), i = e("swx-i18n").localization, s = e("swx-enums"), o = e("utils/chat/spaceMail"), u = e("utils/common/cafeObservable"), a = e("constants/common").events, f = e("utils/common/eventHelper");
+  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("utils/common/eventMixin"), i = e("swx-i18n").localization, s = e("swx-enums"), o = e("swx-utils-chat").spaceMail, u = e("utils/common/cafeObservable"), a = e("swx-constants").COMMON.events, f = e("utils/common/eventHelper");
   return t.assign(l.prototype, r), l;
 });

@@ -2,11 +2,11 @@ define("experience/api/auth/linking", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "experience/settings",
   "ui/appOverlay/appOverlay",
   "swx-xco",
-  "constants/common",
+  "swx-constants",
   "swx-enums",
   "telemetry/authentication/linking",
   "telemetry/authentication/signIn",
@@ -63,6 +63,7 @@ define("experience/api/auth/linking", [
       throw "[XCO Linking] You cannot start both \"createTechnical\" and \"welcome\" flows";
     t = {
       client_id: "580081",
+      clientVersion: r.uiVersion,
       rps_token: e.rps_token,
       microsoft: !0,
       env: r.xcoEnv,
@@ -71,6 +72,7 @@ define("experience/api/auth/linking", [
       hidden: e.hidden || !1,
       welcome: e.welcome || !1,
       relink: e.relink || !1,
+      theme: "skype-white",
       site_name: e.site_name || null,
       callback: function (t) {
         function r() {
@@ -99,6 +101,6 @@ define("experience/api/auth/linking", [
   function b(e) {
     return e && e.skypetoken;
   }
-  var n = e("cafe/applicationInstance"), r = e("experience/settings"), i = e("ui/appOverlay/appOverlay"), s = e("swx-xco").linking, o = e("constants/common"), u = e("swx-enums"), a = e("telemetry/authentication/linking"), f = e("telemetry/authentication/signIn"), l = e("experience/api/auth/authEventHandler");
+  var n = e("swx-cafe-application-instance"), r = e("experience/settings"), i = e("ui/appOverlay/appOverlay"), s = e("swx-xco").linking, o = e("swx-constants").COMMON, u = e("swx-enums"), a = e("telemetry/authentication/linking"), f = e("telemetry/authentication/signIn"), l = e("experience/api/auth/authEventHandler");
   t.start = m;
 });

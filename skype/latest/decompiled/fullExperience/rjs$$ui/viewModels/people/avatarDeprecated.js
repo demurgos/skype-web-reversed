@@ -19,10 +19,11 @@ define("ui/viewModels/people/avatarDeprecated", [
     r.isPstn = n.wrapObservable(e.isPstn);
     r.isGroupAvatar = n.wrapObservable(e.isGroupAvatar);
     r.isAgent = e.isAgent;
-    r.avatarUrl = e.avatar || "";
+    r.avatarUrl = n.wrapObservable(e.avatar);
     r.containerClass = t.computed(i);
     r.presenceClass = t.computed(o);
     r.tabindex = e.tabindex || "";
+    r.displayName = n.wrapObservable(e.displayName);
     this.dispose = function () {
       r.containerClass.dispose();
       r.presenceClass.dispose();

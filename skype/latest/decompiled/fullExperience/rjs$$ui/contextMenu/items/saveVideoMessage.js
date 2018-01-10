@@ -3,8 +3,8 @@ define("ui/contextMenu/items/saveVideoMessage", [
   "swx-i18n",
   "browser/dom",
   "ui/contextMenu/menuItem",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "swx-enums",
   "ui/telemetry/actions/actionNames"
 ], function (e) {
@@ -31,6 +31,6 @@ define("ui/contextMenu/items/saveVideoMessage", [
       return t && n && !e.isDeleted();
     };
   }
-  var t = e("swx-i18n").localization, n = e("browser/dom"), r = e("ui/contextMenu/menuItem"), i = e("services/serviceLocator"), s = e("constants/common"), o = e("swx-enums"), u = e("ui/telemetry/actions/actionNames");
+  var t = e("swx-i18n").localization, n = e("browser/dom"), r = e("ui/contextMenu/menuItem"), i = e("swx-service-locator-instance").default, s = e("swx-constants").COMMON, o = e("swx-enums"), u = e("ui/telemetry/actions/actionNames");
   return a.prototype = Object.create(r.prototype), a.TYPE = "SaveVideoMessageMenuItem", a;
 });

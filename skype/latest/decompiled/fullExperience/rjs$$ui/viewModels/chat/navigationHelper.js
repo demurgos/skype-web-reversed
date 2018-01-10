@@ -3,11 +3,11 @@ define("ui/viewModels/chat/navigationHelper", [
   "exports",
   "module",
   "lodash-compat",
-  "services/pubSub/pubSub",
-  "constants/common",
+  "swx-pubsub-instance",
+  "swx-constants",
   "constants/components"
 ], function (e, t) {
-  var n = e("lodash-compat"), r = e("services/pubSub/pubSub"), i = e("constants/common"), s = e("constants/components");
+  var n = e("lodash-compat"), r = e("swx-pubsub-instance").default, i = e("swx-constants").COMMON, s = e("constants/components");
   t.navigateToContactsPage = function (t) {
     function o() {
       r.publish(i.events.navigation.NAVIGATE, { page: s.people.CONTACTS_PAGE });

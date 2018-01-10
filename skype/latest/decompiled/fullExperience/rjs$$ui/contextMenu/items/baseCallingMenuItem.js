@@ -1,80 +1,79 @@
 define("ui/contextMenu/items/baseCallingMenuItem", [
   "require",
   "ui/contextMenu/menuItem",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "swx-enums",
   "ui/viewModels/calling/helpers/callingFacade",
   "ui/modelHelpers/personHelper",
-  "cafe/applicationInstance",
-  "ui/controls/calling/sounds",
+  "swx-cafe-application-instance",
   "ui/modelHelpers/conversationHelper"
 ], function (e) {
-  function l(e, o, l, h, p, d) {
-    function g(e) {
-      return !m.getCallingService(e).start.enabled() && m.getCallingService(e).start.enabled.reason === i.callingNotSupportedReasons.PluginNotInstalled;
+  function f(e, o, f, c, h, p) {
+    function m(e) {
+      return !v.getCallingService(e).start.enabled() && v.getCallingService(e).start.enabled.reason === i.callingNotSupportedReasons.PluginNotInstalled;
     }
-    function y() {
+    function g() {
       var e = n.resolve(r.serviceLocator.MODEL_UI_OBSERVER).conversationsCallStateObserver;
       return e.activeCalls().length > 0;
     }
-    function b() {
+    function y() {
       function i() {
-        return m.setCallingServiceEndpoint(t), a.playOnce(a.KEYS.CALL_DIALING), s.placeCall(t, m.isVideoCall(), p, !0);
+        return v.setCallingServiceEndpoint(t), s.placeCall(t, v.isVideoCall(), h, !0);
       }
       function o() {
         var e = n.resolve(r.serviceLocator.ACTION_TELEMETRY);
-        d = d || { source: m.getDefaultTelemetrySource() };
-        m.addTelemetryContextData(d);
-        e.recordAction(m.getTelemetryActionName(), d);
+        p = p || { source: v.getDefaultTelemetrySource() };
+        v.addTelemetryContextData(p);
+        e.recordAction(v.getTelemetryActionName(), p);
       }
       var e, t;
-      return o(), m.sendFeatureTelemetry(), e = u.get().conversationsManager, t = e.getConversation(v), i();
+      return o(), v.sendFeatureTelemetry(), e = u.get().conversationsManager, t = e.getConversation(d), e.conversations.add(t), i();
     }
-    var v, m = this;
-    t.call(m, e, o, b);
-    v = h.getPerson();
-    m.cssClass = l;
-    m.featuresAreEnabled = function () {
+    var d, v = this;
+    t.call(v, e, o, y);
+    d = c.getPerson();
+    v.cssClass = f;
+    v.featuresAreEnabled = function () {
       return !1;
     };
-    m.mePersonHasCallingCapability = function () {
+    v.mePersonHasCallingCapability = function () {
       return !1;
     };
-    m.conversationHasCallingCapability = function (e) {
-      return m.getCallingService(e).start.enabled();
+    v.conversationHasCallingCapability = function (e) {
+      return v.getCallingService(e).start.enabled();
     };
-    m.personHasSkypeCallingCapability = function () {
+    v.personHasSkypeCallingCapability = function () {
       return !1;
     };
-    m.getCallingService = function () {
+    v.getCallingService = function () {
     };
-    m.isVideoCall = function () {
+    v.isVideoCall = function () {
       return !1;
     };
-    m.getDefaultTelemetrySource = function () {
+    v.getDefaultTelemetrySource = function () {
     };
-    m.getTelemetryActionName = function () {
+    v.getTelemetryActionName = function () {
     };
-    m.addTelemetryContextData = function () {
+    v.addTelemetryContextData = function () {
     };
-    m.sendFeatureTelemetry = function () {
+    v.sendFeatureTelemetry = function () {
     };
-    m.setCallingServiceEndpoint = function (e) {
+    v.setCallingServiceEndpoint = function (e) {
       var t = n.resolve(r.serviceLocator.FEATURE_FLAGS);
       if (t.isFeatureOn(r.featureFlags.PSTN_ENABLED)) {
         var i = e.participants(0);
         i.audio.endpoint(i.person.id());
       }
     };
-    m.isEnabled = function () {
-      var e = f.getExistingConversationWithPerson(v);
-      return !m.featuresAreEnabled() || c() || v.isBlocked() || !m.personHasSkypeCallingCapability(v) || y() ? !1 : !e || g(e) ? !0 : m.conversationHasCallingCapability(e) && m.mePersonHasCallingCapability();
+    v.isEnabled = function () {
+      var e = a.getExistingConversationWithPerson(d);
+      return !v.featuresAreEnabled() || l() || d.isBlocked() || !v.personHasSkypeCallingCapability(d) || g() ? !1 : !e || m(e) ? !0 : v.conversationHasCallingCapability(e) && v.mePersonHasCallingCapability();
     };
   }
-  function c() {
+  function l() {
     return o.isGuest(u.get().personsAndGroupsManager.mePerson);
   }
-  var t = e("ui/contextMenu/menuItem"), n = e("services/serviceLocator"), r = e("constants/common"), i = e("swx-enums"), s = e("ui/viewModels/calling/helpers/callingFacade"), o = e("ui/modelHelpers/personHelper"), u = e("cafe/applicationInstance"), a = e("ui/controls/calling/sounds"), f = e("ui/modelHelpers/conversationHelper");
-  return l.prototype = Object.create(t.prototype), l;
+  var t = e("ui/contextMenu/menuItem"), n = e("swx-service-locator-instance").default, r = e("swx-constants").COMMON, i = e("swx-enums"), s = e("ui/viewModels/calling/helpers/callingFacade"), o = e("ui/modelHelpers/personHelper"), u = e("swx-cafe-application-instance"), a = e("ui/modelHelpers/conversationHelper");
+  return f.prototype = Object.create(t.prototype), f;
 });

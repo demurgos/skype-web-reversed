@@ -1,25 +1,25 @@
 define("ui/viewModels/calling/endCallControlViewModel", [
   "require",
-  "vendor/knockout",
   "ui/viewModels/calling/baseCallControlViewModel",
   "ui/telemetry/actions/actionNames",
-  "constants/common",
-  "services/serviceLocator"
+  "swx-constants",
+  "swx-service-locator-instance",
+  "ui/calling/unansweredCallHandler"
 ], function (e) {
   function o(e, o) {
     function u() {
-      var e = s.resolve(i.serviceLocator.ACTION_TELEMETRY), t = o ? r.audioVideo.endCall : r.audioVideo.timeline.endCall;
+      var e = i.resolve(r.serviceLocator.ACTION_TELEMETRY), t = o ? n.audioVideo.endCall : n.audioVideo.timeline.endCall;
       e.recordAction(t);
     }
-    n.call(this, e);
+    t.call(this, e);
     this.endCall = function () {
       e.audioService.stop();
+      s.callHungUpByCaller();
       u();
     };
-    this.isButtonFocused = t.observable(!0);
   }
-  var t = e("vendor/knockout"), n = e("ui/viewModels/calling/baseCallControlViewModel"), r = e("ui/telemetry/actions/actionNames"), i = e("constants/common"), s = e("services/serviceLocator");
-  return o.prototype = Object.create(n.prototype), o.prototype.constructor = o, {
+  var t = e("ui/viewModels/calling/baseCallControlViewModel"), n = e("ui/telemetry/actions/actionNames"), r = e("swx-constants").COMMON, i = e("swx-service-locator-instance").default, s = e("ui/calling/unansweredCallHandler");
+  return o.prototype = Object.create(t.prototype), o.prototype.constructor = o, {
     build: function (e, t) {
       return new o(e, t);
     }

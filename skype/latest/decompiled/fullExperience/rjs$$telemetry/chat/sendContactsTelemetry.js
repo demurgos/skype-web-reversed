@@ -2,45 +2,49 @@ define("telemetry/chat/sendContactsTelemetry", [
   "require",
   "exports",
   "module",
-  "constants/common",
+  "swx-constants",
   "ui/telemetry/telemetryClient",
   "telemetry/utils/telemetryUtils",
   "experience/settings",
-  "utils/chat/dateTime"
+  "swx-utils-chat",
+  "swx-service-locator-instance",
+  "utils/common/styleModeHelper"
 ], function (e, t) {
-  function a(e) {
-    function c() {
+  function l(e) {
+    function d() {
       t.data = {
-        cta: l || f,
-        action: f,
-        participantsCount: e.participantsCount() || f,
-        statusCodestatusCode: f,
-        timeBeforeActionTaken: f,
-        numberOfContacts: f
+        cta: h || c,
+        action: c,
+        participantsCount: e.participantsCount() || c,
+        statusCodestatusCode: c,
+        timeBeforeActionTaken: c,
+        numberOfContacts: c
       };
     }
-    function h() {
-      t.data.timeBeforeActionTaken = p(a, u.getDate());
+    function v() {
+      t.data.timeBeforeActionTaken = m(l, u.getDate());
+      t.data.mediaBarV2Enabled = p.isFeatureOn(n.featureFlags.MEDIA_BAR_V2_ENABLED);
+      t.data.styleMode = f.get().currentMode();
       var e = s.stringify(t.data);
-      i.get().sendEvent(o.telemetry.uiTenantToken, r.TYPE, e);
-      c();
+      i.get().sendEvent(o.telemetry.chatTenantToken, r.TYPE, e);
+      d();
     }
-    function p(e, t) {
+    function m(e, t) {
       return t - e;
     }
-    var t = this, a = u.getDate(), f = n.telemetry.NOT_AVAILABLE, l = r.cta.MEDIABAR;
+    var t = this, l = u.getDate(), c = n.telemetry.NOT_AVAILABLE, h = r.cta.MEDIABAR, p = a.resolve(n.serviceLocator.FEATURE_FLAGS);
     t.canceled = function () {
       t.data.action = r.action.CANCELED;
-      h();
+      v();
     };
     t.confirmed = function () {
       t.data.action = r.action.CONFIRMED;
-      h();
+      v();
     };
-    c();
+    d();
   }
-  var n = e("constants/common"), r = n.telemetry.sendContacts, i = e("ui/telemetry/telemetryClient"), s = e("telemetry/utils/telemetryUtils"), o = e("experience/settings"), u = e("utils/chat/dateTime");
+  var n = e("swx-constants").COMMON, r = n.telemetry.sendContacts, i = e("ui/telemetry/telemetryClient"), s = e("telemetry/utils/telemetryUtils"), o = e("experience/settings"), u = e("swx-utils-chat").dateTime, a = e("swx-service-locator-instance").default, f = e("utils/common/styleModeHelper");
   t.build = function (e) {
-    return new a(e);
+    return new l(e);
   };
 });

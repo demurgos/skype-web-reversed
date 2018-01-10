@@ -3,37 +3,40 @@ define("ui/contextMenu/items/removeMessage", [
   "swx-i18n",
   "ui/contextMenu/menuItem",
   "swx-enums",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "ui/telemetry/actions/actionNames",
   "ui/telemetry/actions/actionSources",
-  "telemetry/chat/telemetryEnumerator"
+  "swx-telemetry-buckets",
+  "swx-pubsub-instance"
 ], function (e) {
-  function f(e, l) {
-    function h() {
+  function c(e, h) {
+    function d() {
+      var t = e.model ? e.clientmessageid : e.key();
       e.html("");
-      d();
+      m();
+      l.publish(o.message.REMOVED, t);
     }
-    function p() {
+    function v() {
       return new Date() - e.timestamp();
     }
-    function d() {
-      l.lifetime = p();
-      l.timedelta = a.getMessageLifeDurationGroup(new Date() - e.timestamp());
-      l.type = e.type();
+    function m() {
+      h.lifetime = v();
+      h.timedelta = f.getMessageLifeDurationGroup(new Date() - e.timestamp());
+      h.type = e.type();
       var t = i.resolve(s.serviceLocator.ACTION_TELEMETRY);
-      t.recordAction(o.chat.removeMessage, l);
+      t.recordAction(u.chat.removeMessage, h);
     }
     if (!e)
       throw new Error("Parameter missing: message is required");
-    var c = t.fetch({ key: "chatLogmenuItem_text_remove" });
-    l = l || { source: u.contextMenuItem.removeMessage };
-    n.call(this, f.TYPE, c, h);
+    var p = t.fetch({ key: "chatLogmenuItem_text_remove" });
+    h = h || { source: a.contextMenuItem.removeMessage };
+    n.call(this, c.TYPE, p, d);
     this.isEnabled = function () {
-      var t = e.status() === r.activityStatus.Succeeded, n = e.html && e.html.set.enabled(), i = n && !e.isDeleted() && e.type() !== r.activityType.SystemMessage;
-      return !!t && !!i;
+      var t = e.status() === r.activityStatus.Succeeded, n = e.html && e.html.set.enabled(), i = n && !e.isDeleted() && e.type() !== r.activityType.SystemMessage, s = e._isSMS && e._isSMS();
+      return !!t && !!i && !s;
     };
   }
-  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("swx-enums"), i = e("services/serviceLocator"), s = e("constants/common"), o = e("ui/telemetry/actions/actionNames"), u = e("ui/telemetry/actions/actionSources"), a = e("telemetry/chat/telemetryEnumerator");
-  return f.prototype = Object.create(n.prototype), f.TYPE = "RemoveMessageMenuItem", f;
+  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("swx-enums"), i = e("swx-service-locator-instance").default, s = e("swx-constants").COMMON, o = s.events, u = e("ui/telemetry/actions/actionNames"), a = e("ui/telemetry/actions/actionSources"), f = e("swx-telemetry-buckets"), l = e("swx-pubsub-instance").default;
+  return c.prototype = Object.create(n.prototype), c.TYPE = "RemoveMessageMenuItem", c;
 });

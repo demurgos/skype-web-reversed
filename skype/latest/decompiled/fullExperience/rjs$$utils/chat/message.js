@@ -2,49 +2,76 @@ define("utils/chat/message", [
   "require",
   "swx-enums",
   "constants/activityTypeGroups",
-  "constants/common",
-  "browser/detect",
+  "swx-constants",
+  "swx-browser-detect",
   "constants/calling.resources",
   "swx-i18n",
-  "utils/chat/dateTime",
-  "services/serviceLocator",
+  "swx-utils-chat",
+  "swx-service-locator-instance",
+  "swx-utils-chat",
   "ui/viewModels/people/properties/displayNameText",
   "ui/viewModels/people/properties/locationText",
   "experience/settings",
   "lodash-compat",
   "ui/modelHelpers/personHelper"
 ], function (e) {
-  var t = e("swx-enums"), n = e("constants/activityTypeGroups"), r = e("constants/common"), i = e("browser/detect"), s = e("constants/calling.resources").fallbackMessages, o = e("swx-i18n").localization, u = e("utils/chat/dateTime"), a = e("services/serviceLocator"), f = e("ui/viewModels/people/properties/displayNameText"), l = e("ui/viewModels/people/properties/locationText"), c = e("experience/settings"), h = e("lodash-compat"), p = e("ui/modelHelpers/personHelper");
+  function v(e, t, n) {
+    var i, s = "28:" + e, u = n._botsSettings, a = u ? m(s, u) : r.chat.BOT_MESSAGING_MODE.UNDEFINED;
+    switch (a) {
+    case r.chat.BOT_MESSAGING_MODE.ALL:
+      i = "message_text_addedBotGroupConversation_allMessagesMode";
+      break;
+    case r.chat.BOT_MESSAGING_MODE.AT:
+    case r.chat.BOT_MESSAGING_MODE.UNDEFINED:
+      i = "message_text_addedBotGroupConversation_privateMode";
+    }
+    return o.fetch({
+      key: i,
+      params: { botName: t }
+    });
+  }
+  function m(e, t) {
+    return e && t[e] ? t[e].messagingMode : r.chat.BOT_MESSAGING_MODE.UNDEFINED;
+  }
+  var t = e("swx-enums"), n = e("constants/activityTypeGroups"), r = e("swx-constants").COMMON, i = e("swx-browser-detect").default, s = e("constants/calling.resources").fallbackMessages, o = e("swx-i18n").localization, u = e("swx-utils-chat").dateTime, a = e("swx-service-locator-instance").default, f = e("swx-utils-chat").messageSanitizer, l = e("ui/viewModels/people/properties/displayNameText"), c = e("ui/viewModels/people/properties/locationText"), h = e("experience/settings"), p = e("lodash-compat"), d = e("ui/modelHelpers/personHelper");
   return {
-    getMessageFromParticipantActivityItem: function (e, n, i, s, u, f) {
-      function m() {
+    getMessageFromParticipantActivityItem: function (e, n, i, s, u, l) {
+      function b() {
         var e = "";
         return i.forEach(function (t, n) {
           e = n === 0 ? e + t.displayName() : e + ", " + t.displayName();
         }), e;
       }
-      function g(e) {
-        var t = h.some(e, function (e) {
-          return p.isAgent(e.getPerson());
-        });
-        return t ? "\n" + o.fetch({ key: "message_text_botWasAddedToConversation" }) : "";
+      function w(e) {
+        var t = "", n = p.some(e, function (e) {
+            return d.isAgent(e.getPerson());
+          });
+        return n ? (e.forEach(function (e) {
+          var n = e.getPerson(), r = p.escape(n.displayName());
+          if (!d.isAgent(n))
+            return;
+          m ? t += "\n" + v(n.id(), r, l) : t += "\n" + o.fetch({
+            key: "message_text_botWasAddedToConversation",
+            params: { botName: r }
+          });
+        }), t) : "";
       }
-      function y() {
+      function E() {
         return o.fetch({
           key: "message_text_wasAddedToConversation",
           params: {
-            participant: d(),
-            contact: m()
+            participant: g(),
+            contact: b()
           }
         });
       }
-      function b(e, t) {
+      function S(e, t) {
         return a.resolve(r.serviceLocator.FEATURE_FLAGS).isFeatureOn(r.featureFlags.SPACES) ? e() === t() : !1;
       }
-      function w(e) {
+      function x(e) {
         var t = [];
         e.participants().forEach(function (e) {
-          t.push(e.displayName());
+          t.push(e.person.displayName());
         });
         if (t.length === 0)
           return;
@@ -62,83 +89,84 @@ define("utils/chat/message", [
           }
         });
       }
-      var l = a.resolve(r.serviceLocator.FEATURE_FLAGS), c = l.isFeatureOn(r.featureFlags.SINGLE_CONVERSATION_MODE), d = n.displayName, v = p.isMePerson(n);
+      var c = a.resolve(r.serviceLocator.FEATURE_FLAGS), h = c.isFeatureOn(r.featureFlags.SINGLE_CONVERSATION_MODE), m = c.isFeatureOn(r.featureFlags.BOT_MESSAGES_MODE_V2_ENABLED), g = n.displayName, y = d.isMePerson(n);
       switch (e) {
       case t.activityType.ParticipantJoined:
         if (i.length > 0)
-          return y() + g(i);
-        if (c && v && f)
-          return w(f);
+          return E() + w(i);
+        if (h && y && l)
+          return x(l);
         return o.fetch({
           key: "message_text_joinedConversation",
-          params: { participant: d() }
+          params: { participant: g() }
         });
       case t.activityType.ParticipantJoinFailed:
         return o.fetch({
           key: "message_text_joinConversationFailed",
-          params: { participant: d() }
+          params: { participant: g() }
         });
       case t.activityType.ParticipantLeft:
-        if (b(d, s))
+        if (S(g, s))
           return o.fetch({
             key: "message_text_guestRemovedBySystem",
-            params: { participant: m() }
+            params: { participant: b() }
           });
         if (i.length > 0)
           return o.fetch({
             key: "message_text_wasRemovedFromConversation",
             params: {
-              participant: d(),
-              removedParticipant: m()
+              participant: g(),
+              removedParticipant: b()
             }
           });
         if (u && u.subcode === "Ejected" && u.message === "You were removed from the meeting.")
           return o.fetch({ key: "message_text_youWereRemovedFromConversation" });
         return o.fetch({
           key: "message_text_hasLeftConversation",
-          params: { participant: d() }
+          params: { participant: g() }
         });
       case t.activityType.ParticipantRoleUpdate:
         return o.fetch({
           key: "message_text_roleUpdated",
           params: {
-            who: d(),
-            whom: i[0] ? i[0].displayName() : d(),
+            who: g(),
+            whom: i[0] ? i[0].displayName() : g(),
             role: s()
           }
         });
       case t.activityType.ParticipantTopicUpdate:
+        var T = s ? f.escapeHTML(s()) : "";
         return o.fetch({
           key: "message_text_topicUpdated",
           params: {
-            participant: d(),
-            topic: s()
+            participant: g(),
+            topic: T
           }
         });
       case t.activityType.ParticipantPictureUpdate:
         return o.fetch({
           key: "message_text_threadPictureUpdated",
-          params: { participant: d() }
+          params: { participant: g() }
         });
       case t.activityType.ParticipantHistoryDisclosed:
         return o.fetch({
           key: s() ? "message_text_historyDisclosed" : "message_text_historyClosed",
-          params: { participant: d() }
+          params: { participant: g() }
         });
       case t.activityType.ParticipantJoiningEnabled:
         return o.fetch({
           key: s() ? "message_text_joiningEnabled" : "message_text_joiningDisabled",
-          params: { participant: d() }
+          params: { participant: g() }
         });
       case t.activityType.ParticipantLegacyMemberAdded:
         return o.fetch({
           key: "message_text_legacyMemberAdded",
-          params: { participant: d() }
+          params: { participant: g() }
         });
       case t.activityType.ParticipantLegacyMemberUpgraded:
         return o.fetch({
           key: "message_text_legacyMemberUpgraded",
-          params: { participant: d() }
+          params: { participant: g() }
         });
       }
       return "";
@@ -147,7 +175,7 @@ define("utils/chat/message", [
       function a() {
         return i ? o.fetch({ key: "message_text_ended" + r }) : o.fetch({ key: "message_text_outgoing" + r + "NoAnswer" });
       }
-      var r = n ? "GroupCall" : "Call", i = e.duration() !== 0, s = {
+      var r = n ? "GroupCall" : "Call", i = !!e.duration(), s = {
           callAction: "",
           duration: i ? u.formatCallDuration(e.duration()) : "",
           text: ""
@@ -175,18 +203,18 @@ define("utils/chat/message", [
       case t.activityType.ContactRequestIsNowContact:
         return o.fetch({
           key: "message_text_contactRequestIsNowContact",
-          params: { displayName: f.format(n.id(), n.displayName()) }
+          params: { displayName: l.format(n.id(), n.displayName()) }
         });
       case t.activityType.ContactRequestIncomingInviteFree:
-        return r = l.format(n.location), r ? o.fetch({
+        return r = c.format(n.location), r ? o.fetch({
           key: "invite_free_message_received_location",
           params: {
-            displayName: f.format(n.id(), n.displayName()),
+            displayName: l.format(n.id(), n.displayName()),
             location: r
           }
         }) : o.fetch({
           key: "invite_free_message_received",
-          params: { displayName: f.format(n.id(), n.displayName()) }
+          params: { displayName: l.format(n.id(), n.displayName()) }
         });
       }
       return "";
@@ -210,58 +238,37 @@ define("utils/chat/message", [
     },
     getMessageFromPluginFreeActivityItem: function (e) {
       function n() {
-        var e = o.fetch({
-          key: "message_text_pluginFree_windowsUpdate_line1",
-          params: { update_link: s.windowsUpdateLink }
-        });
-        return e + "\r\n" + o.fetch({ key: "message_text_pluginFree_windowsUpdate_line2" });
+        var e = o.fetch({ key: "message_text_pluginFree_screenSharingFallback_line1" }), t = o.fetch({
+            key: "message_text_pluginFree_screenSharingFallback_line2",
+            params: { upgrade_link: s.skypeUpgradeLink }
+          });
+        return e + "\r\n" + t;
       }
       function r() {
-        return o.fetch({ key: "message_text_pluginFree_screenSharingFallback_line1" }) + "\r\n" + o.fetch({
-          key: "message_text_pluginFree_screenSharingFallback_line2",
-          params: { upgrade_link: s.skypeUpgradeLink }
-        });
-      }
-      function u() {
         return o.fetch({ key: i.getBrowserInfo().isEdge ? "message_text_pluginFree_microphoneAccess_edge" : "message_text_pluginFree_microphoneAccess_others" });
       }
-      function a() {
-        var e = o.fetch({
-          key: "message_text_pluginFree_outgoingP2P_line1",
-          params: { upgrade_link: s.skypeUpgradeLink }
-        });
-        return e + "\r\n" + o.fetch({ key: "message_text_pluginFree_outgoingP2P_line2" });
-      }
-      function f() {
-        var e = o.fetch({
-          key: "message_text_pluginFree_incomingP2P_line1",
-          params: { upgrade_link: s.skypeUpgradeLink }
-        });
-        return e + "\r\n" + o.fetch({ key: "message_text_pluginFree_incomingP2P_line2" });
-      }
-      function l() {
+      function u() {
         return o.fetch({ key: "message_text_pluginFree_noVideoCapability" });
       }
-      switch (e.type()) {
-      case t.activityType.PluginFreeFallbackWindowsUpdate:
-        return n();
-      case t.activityType.PluginFreeFallbackScreenSharing:
-        return r();
-      case t.activityType.PluginFreeFallbackMicrophoneAccess:
+      function a() {
         return u();
-      case t.activityType.PluginFreeFallbackOutgoingP2PCall:
-        return a();
-      case t.activityType.PluginFreeFallbackIncomingP2PCall:
-        return f();
+      }
+      switch (e.type()) {
+      case t.activityType.PluginFreeFallbackScreenSharing:
+        return n();
+      case t.activityType.PluginFreeFallbackMicrophoneAccess:
+        return r();
       case t.activityType.PluginFreeNoVideoCapability:
-        return l();
+        return u();
+      case t.activityType.PluginFreeVideoCompatibility:
+        return a();
       }
       return "";
     },
     getMessageFromPstnActivityItem: function (e) {
       function n(e) {
-        var t = "<a href=\"{url}\" target=\"_blank\" class=\"{class}\">{text}</a>", n = c.commerce.purchaseCreditUrl, i = c.commerce.purchaseSubscriptionUrl, s, u, a, f, l = r.telemetry.pstn.cssClasses.ADD_CREDIT, h = r.telemetry.pstn.cssClasses.ADD_SUBSCRIPTION;
-        return s = o.fetch({ key: "pstn_insufficient_funds_credit" }), u = o.fetch({ key: "pstn_insufficient_funds_subscription" }), a = t.replace("{url}", n).replace("{text}", s).replace("{class}", l), f = t.replace("{url}", i).replace("{text}", u).replace("{class}", h), e.isGroup() ? e.participantName() === e.participantEndpoint() ? o.fetch({
+        var t = "<a href=\"{url}\" target=\"_blank\" class=\"{class}\">{text}</a>", n = h.commerce.purchaseCreditUrl, i = h.commerce.purchaseSubscriptionUrl, s, u, a, f, l = r.telemetry.pstn.cssClasses.ADD_CREDIT, c = r.telemetry.pstn.cssClasses.ADD_SUBSCRIPTION;
+        return s = o.fetch({ key: "pstn_insufficient_funds_credit" }), u = o.fetch({ key: "pstn_insufficient_funds_subscription" }), a = t.replace("{url}", n).replace("{text}", s).replace("{class}", l), f = t.replace("{url}", i).replace("{text}", u).replace("{class}", c), e.isGroup() ? e.participantName() === e.participantEndpoint() ? o.fetch({
           key: "pstn_insufficient_funds_group",
           params: {
             phoneNumber: e.participantEndpoint(),
@@ -319,7 +326,8 @@ define("utils/chat/message", [
       return "";
     },
     getActivityItemGroup: function (e) {
-      return n.PARTICIPANT_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.PARTICIPANT : n.CALL_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CALL : n.NGC_UPGRADE_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.NGC_UPGRADE : n.PLUGIN_FREE_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.PLUGIN_FREE : n.MEDIA_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.MEDIA : n.CONTACT_REQUEST_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CONTACT_REQUEST : n.POLL_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.POLL : n.CONTACT_INFO_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CONTACT_INFO : n.TRANSACTION_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.TRANSACTION : n.PSTN_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.PSTN : n.CUSTOM_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CUSTOM : r.activityItemGroups.TEXT;
-    }
+      return n.PARTICIPANT_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.PARTICIPANT : n.CALL_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CALL : n.NGC_UPGRADE_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.NGC_UPGRADE : n.PLUGIN_FREE_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.PLUGIN_FREE : n.MEDIA_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.MEDIA : n.CONTACT_REQUEST_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CONTACT_REQUEST : n.POLL_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.POLL : n.CONTACT_INFO_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CONTACT_INFO : n.TRANSACTION_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.TRANSACTION : n.PSTN_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.PSTN : n.CUSTOM_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.CUSTOM : n.TRANSCRIPT_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.TRANSCRIPT : n.SYSTEM_MESSAGES.indexOf(e) !== -1 ? r.activityItemGroups.SYSTEM : r.activityItemGroups.TEXT;
+    },
+    getBotDisclosureMessage: v
   };
 });

@@ -13,6 +13,7 @@ define("experience/defaultInitParams", [], function () {
     flags: "",
     locale: "en-us",
     variant: "swx",
-    jsonp: !0
+    jsonp: !0,
+    disableTelemetry: !1
   };
 });

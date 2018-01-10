@@ -6,59 +6,60 @@ define("ui/viewModels/chat/translator/translatorLanguagePicker", [
   "vendor/knockout",
   "utils/common/eventHelper",
   "utils/common/scroll",
-  "utils/common/outsideClickHandler"
+  "utils/common/outsideClickHandler",
+  "swx-focus-handler"
 ], function (e, t) {
-  function u(e, t) {
-    function h(e, t) {
+  function a(e, t) {
+    function p(e, t) {
       return e.name.localeCompare(t.name);
     }
-    function p() {
-      u.menuOpened(!0);
-      o.add(c, d);
-      v();
-    }
     function d() {
-      u.menuOpened(!1);
-      o.remove(c);
+      a.menuOpened(!0);
+      o.add(h, v);
       m();
     }
     function v() {
+      a.menuOpened(!1);
+      o.remove(h);
+      g();
+    }
+    function m() {
       var e = n.getElement(".LanguagePicker-item.selected", t);
       e && e.scrollIntoView();
     }
-    function m() {
+    function g() {
       var e = n.getElement(".LanguagePicker-button", t);
-      e && e.focus();
+      e && u.get().addFocusRequestToQueue(e);
     }
-    var u = this, a = e.language, f = e.supportedLanguages.sort(h), l, c = e.class;
-    u.init = function () {
-      u.language = a;
-      u.menuOpened = r.observable(!1);
-      u.supportedLanguages = f;
-      l = s.build(n.getElement("div.LanguagePicker-content", t));
-      l.init();
-      u.pickerClass = {};
-      u.pickerClass[e.class] = !0;
-      u.languageButtonLabel = e.ariaLabel;
-      u.languageButtonHandler = function () {
-        u.menuOpened() ? d() : p();
+    var a = this, f = e.language, l = e.supportedLanguages.sort(p), c, h = e.class;
+    a.init = function () {
+      a.language = f;
+      a.menuOpened = r.observable(!1);
+      a.supportedLanguages = l;
+      c = s.build(n.getElement("div.LanguagePicker-content", t));
+      c.init();
+      a.pickerClass = {};
+      a.pickerClass[e.class] = !0;
+      a.languageButtonLabel = e.ariaLabel;
+      a.languageButtonHandler = function () {
+        a.menuOpened() ? v() : d();
       };
-      u.onLanguageButtonKeyDown = function (e, t) {
+      a.onLanguageButtonKeyDown = function (e, t) {
         var n = i.isActivation(t);
-        return n && u.languageButtonHandler(), !n;
+        return n && a.languageButtonHandler(), !n;
       };
-      u.languageSelectionHandler = function (e) {
-        a(e);
-        d();
+      a.languageSelectionHandler = function (e) {
+        f(e);
+        v();
       };
     };
-    u.dispose = function () {
-      u.menuOpened() && d();
-      l.dispose();
+    a.dispose = function () {
+      a.menuOpened() && v();
+      c.dispose();
     };
   }
-  var n = e("browser/dom"), r = e("vendor/knockout"), i = e("utils/common/eventHelper"), s = e("utils/common/scroll"), o = e("utils/common/outsideClickHandler");
+  var n = e("browser/dom"), r = e("vendor/knockout"), i = e("utils/common/eventHelper"), s = e("utils/common/scroll"), o = e("utils/common/outsideClickHandler"), u = e("swx-focus-handler");
   t.build = function (e, t) {
-    return new u(e, t);
+    return new a(e, t);
   };
 });

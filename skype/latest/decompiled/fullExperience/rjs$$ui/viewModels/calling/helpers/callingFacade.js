@@ -2,69 +2,68 @@ define("ui/viewModels/calling/helpers/callingFacade", [
   "require",
   "exports",
   "module",
-  "services/pubSub/pubSub",
-  "constants/calling",
-  "services/calling/pluginInstall",
+  "swx-constants",
+  "swx-constants",
+  "swx-util-calling-stack",
+  "swx-enums",
   "ui/viewModels/chat/navigationHelper",
-  "swx-enums"
+  "services/calling/pluginInstall",
+  "swx-pubsub-instance",
+  "ui/controls/calling/sounds",
+  "swx-cafe-application-instance",
+  "swx-service-locator-instance",
+  "ui/calling/unansweredCallHandler"
 ], function (e, t) {
-  function u(e, t, n, r) {
-    return a(e, t, n, r).catch(function (i) {
-      return l(i, e, t, n, r);
-    });
-  }
-  function a(e, t, n, r) {
-    return i.isPluginInstalled(e, t).then(function (i) {
-      return i ? f(e, t, n).then(function () {
-        r && s.navigateToConversation(e, n);
-      }) : c(e, t, !0, "outgoing", n, r);
-    });
-  }
-  function f(e, t, i) {
-    return n.publish(r.EVENTS.START_CALL, {
+  function p(e, t, r, i) {
+    return a.publish(n.EVENTS.START_CALL, {
       conversation: e,
       isVideo: t,
-      source: i
-    }), t ? e.videoService.start() : e.audioService.start();
+      source: r
+    }), h.callStarting(t), f.playLoop(f.KEYS.CALL_CONNECTING), i && o.navigateToConversation(e, r), t ? e.videoService.start() : e.audioService.start();
   }
-  function l(e, t, n, i, s) {
-    return t.selfParticipant.audio.state.reason === o.callDisconnectionReason.OutOfBrowserCall && e.message === r.ERRORS.P2P_FALLBACK ? a(t, n, i, s) : Promise.reject(e);
+  function d(e, t) {
+    return a.publish(n.EVENTS.ANSWER, {
+      conversation: e,
+      isVideo: t
+    }), t && e.videoService.accept.enabled() ? e.videoService.accept() : e.audioService.accept();
   }
-  function c(e, t, n, o, u, a) {
-    return new Promise(function (l, c) {
-      function h(n, i) {
-        if (e && i && n === r.PLUGIN_INSTALL_EXIT_METHOD.CALL_STARTED) {
-          var o = f(e, t, "pluginInstallCallback");
-          a && s.navigateToConversation(e, u);
-          l(o);
+  function v(e, t, n, r) {
+    return u.isPluginInstalled(e, t).then(function (i) {
+      return i ? p(e, t, n, r) : m(e, t, !0, "outgoing", n, r);
+    });
+  }
+  function m(e, t, i, a, f, h) {
+    var v = l.get().personsAndGroupsManager.mePerson.capabilities.audio.reason, m = c.resolve(r.serviceLocator.FEATURE_FLAGS), g = v === s.callingNotSupportedReasons.PluginBlocked;
+    return !m.isFeatureOn(r.featureFlags.ASK_TO_UNBLOCK_PLUGIN) && g ? Promise.reject(Error(s.callingNotSupportedReasons.PluginBlocked)) : new Promise(function (r, l) {
+      function c(i, u) {
+        if (e && u && i === n.PLUGIN_INSTALL_EXIT_METHOD.CALL_STARTED) {
+          var a;
+          e.selfParticipant.audio.state() === s.callConnectionState.Notified ? a = d(e, t) : a = p(e, t, "pluginInstallCallback");
+          h && o.navigateToConversation(e, f);
+          r(a);
         } else
-          c(Error("Plugin install result: " + i + ", exitMethod: " + n));
+          l(Error("Plugin install result: " + u + ", exitMethod: " + i));
       }
-      i.startInstallFlow(o, {
-        isOutgoing: n,
+      u.startInstallFlow(a, {
+        isOutgoing: i,
         conversation: e,
         isVideo: t,
-        done: h
+        done: c,
+        onlyUnblock: g
       });
     });
   }
-  var n = e("services/pubSub/pubSub"), r = e("constants/calling"), i = e("services/calling/pluginInstall"), s = e("ui/viewModels/chat/navigationHelper"), o = e("swx-enums");
+  var n = e("swx-constants").CALLING, r = e("swx-constants").COMMON, i = e("swx-util-calling-stack"), s = e("swx-enums"), o = e("ui/viewModels/chat/navigationHelper"), u = e("services/calling/pluginInstall"), a = e("swx-pubsub-instance").default, f = e("ui/controls/calling/sounds"), l = e("swx-cafe-application-instance"), c = e("swx-service-locator-instance").default, h = e("ui/calling/unansweredCallHandler");
   t.placeCall = function (e, t, n, r) {
-    return u(e, t, n, r);
+    return f.playOnce(f.KEYS.CALL_DIALING), i.get().isPluginlessCallingSupported() ? p(e, t, n, r) : v(e, t, n, r);
   };
-  t.acceptCall = function (e, t) {
-    n.publish(r.EVENTS.ANSWER, {
-      conversation: e,
-      isVideo: t
-    });
-    t && e.videoService.accept.enabled() ? e.videoService.accept() : e.audioService.accept();
-  };
+  t.acceptCall = d;
   t.rejectCall = function (e) {
-    n.publish(r.EVENTS.REJECT, { conversation: e });
+    a.publish(n.EVENTS.REJECT, { conversation: e });
     e.audioService.reject();
   };
   t.installPlugin = function (e, t, n, r) {
     r = r || !1;
-    c(t, r, n, e);
+    m(t, r, n, e);
   };
 });

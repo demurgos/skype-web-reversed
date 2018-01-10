@@ -2,6 +2,7 @@ define("services/store/pes/catalogItemProcessor", [
   "require",
   "exports",
   "module",
+  "lodash-compat",
   "services/pes/constants",
   "services/pes/tabs/stylesFactory",
   "services/pes/mojis/stylesFactory",
@@ -10,45 +11,44 @@ define("services/store/pes/catalogItemProcessor", [
   "services/pes/configProcessor",
   "experience/settings"
 ], function (e, t) {
-  function f(e, t) {
+  function l(e, t) {
     var n, r, i = t.packs;
     for (n = 0; n < i.length; n++) {
       r = i[n];
       if (r.id === e)
-        return r.itemIds = r.items, r.isHidden = !1, r.items = [], l(r, t), r;
+        return r.itemIds = r.items, r.isHidden = !1, r.items = [], c(r, t), r;
     }
   }
-  function l(e, t) {
-    var r, i, s = t.items;
-    for (r = 0; r < s.length; r++)
-      i = s[r], e.itemIds.indexOf(i.id) > -1 && (i.thumbnail = i.type === n.itemTypes.moji.id ? t.itemsRoot + "/" + i.id + "/views/thumbnail" : t.emoticonsRoot + "/" + i.id + "/views/default_40", e.items.push(i));
+  function c(e, t) {
+    var n, i, s = t.items;
+    for (n = 0; n < s.length; n++)
+      i = s[n], e.itemIds.indexOf(i.id) > -1 && (i.thumbnail = i.type === r.itemTypes.moji.id ? t.itemsRoot + "/" + i.id + "/views/thumbnail" : t.emoticonsRoot + "/" + i.id + "/views/default_40", e.items.push(i));
   }
-  function c(e, t, n) {
+  function h(e, t, n) {
     if (!e)
       return;
-    var i, s, o = r.create(e.tabs[0]), u, a = e.tabs[0].packs, f;
+    var r, s, o = i.create(e.tabs[0]), u, a = e.tabs[0].packs, f;
     for (f = 0; f < a.length; f++)
-      u = a[f].items, o = h(o, u, t, n), i = document.createElement("style"), s = document.createTextNode(o), i.appendChild(s), document.head.appendChild(i);
+      u = a[f].items, o = p(o, u, t, n, e), r = document.createElement("style"), s = document.createTextNode(o), r.appendChild(s), document.head.appendChild(r);
   }
-  function h(e, t, r, o) {
-    var u, a;
-    for (u = 0; u < t.length; u++)
-      a = t[u], a.type === n.itemTypes.moji.id ? (a.thumbnailUrl = o ? a.thumbnail + "?" + r : a.thumbnail, e += i.create(a)) : e += s.create(a);
-    return e;
+  function p(e, t, i, u, a) {
+    return n.forEach(t, function (t) {
+      t.type === r.itemTypes.moji.id ? (t.thumbnailUrl = u ? t.thumbnail + "?" + i : t.thumbnail, e += s.create(t), t.thumbnailClass = "id_" + t.id + " thumbnail", t.keyframeClass = "id_" + t.id + " keyframe", t.contentUrl = a.itemsRoot + "/" + t.id + "/views/" + r.profiles.moji.content, u && (t.contentUrl += "?" + i)) : e += o.create(t);
+    }), e;
   }
-  var n = e("services/pes/constants"), r = e("services/pes/tabs/stylesFactory"), i = e("services/pes/mojis/stylesFactory"), s = e("services/pes/emoticons/stylesFactory"), o = e("utils/chat/pesUtils"), u = e("services/pes/configProcessor"), a = e("experience/settings");
+  var n = e("lodash-compat"), r = e("services/pes/constants"), i = e("services/pes/tabs/stylesFactory"), s = e("services/pes/mojis/stylesFactory"), o = e("services/pes/emoticons/stylesFactory"), u = e("utils/chat/pesUtils"), a = e("services/pes/configProcessor"), f = e("experience/settings");
   t.processTabConfig = function (e) {
-    var t = e.tabs, r, i, s, l;
-    e.itemsRoot = o.rewriteUrls(e.itemsRoot, a.pesCDNAuthentication.rewriteRules);
-    for (r = 0; r < t.length; r++) {
-      s = t[r];
+    var t = e.tabs, n, i, s, o;
+    e.itemsRoot = u.rewriteUrls(e.itemsRoot, f.pesCDNAuthentication.rewriteRules);
+    for (n = 0; n < t.length; n++) {
+      s = t[n];
       s.packs = [];
-      s.type || (s.type = n.itemTypes.tab.id);
+      s.type || (s.type = r.itemTypes.tab.id);
       s.thumbnailUrl || (s.thumbnailUrl = e.tabsRoot + "/" + s.id + "/views/thumbnail");
       for (i = 0; s.sections && i < s.sections.length; i++)
-        l = f(s.sections[i].pack, e), l.parentTab = s, s.packs.push(l);
+        o = l(s.sections[i].pack, e), o.parentTab = s, s.packs.push(o);
     }
-    u.process(e);
+    a.process(e);
   };
   t.processSKUs = function (e) {
     e.forEach(function (e) {
@@ -57,6 +57,6 @@ define("services/store/pes/catalogItemProcessor", [
     });
   };
   t.loadStyles = function (e, t, n) {
-    c(e, t, n);
+    h(e, t, n);
   };
 });

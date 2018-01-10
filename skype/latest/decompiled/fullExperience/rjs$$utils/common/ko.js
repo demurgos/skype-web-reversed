@@ -4,7 +4,7 @@ define("utils/common/ko", [
   "module",
   "vendor/knockout",
   "lodash-compat",
-  "utils/common/array"
+  "swx-utils-common"
 ], function (e, t) {
   function s(e, t) {
     return t(e()), e.subscribe(t);
@@ -21,7 +21,7 @@ define("utils/common/ko", [
       i(e) && n.call(u, e);
     }), o && u.dispose(), u;
   }
-  var n = e("vendor/knockout"), r = e("lodash-compat"), i = e("utils/common/array");
+  var n = e("vendor/knockout"), r = e("lodash-compat"), i = e("swx-utils-common").array;
   t.disposeAndClearArray = function (e) {
     var t = e();
     t.forEach(function (e) {

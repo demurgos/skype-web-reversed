@@ -4,7 +4,7 @@ define("ui/modalDialog/confirmationDialog", [
   "utils/common/eventMixin",
   "ui/modalDialog/modalDialog",
   "swx-i18n",
-  "utils/chat/messageSanitizer",
+  "swx-utils-chat",
   "vendor/knockout",
   "text!views/ui/modalDialog/confirmationDialog.html",
   "browser/dom"
@@ -35,7 +35,7 @@ define("ui/modalDialog/confirmationDialog", [
       t.contentViewModel && (o.cleanNode(e), o.applyBindings(t.contentViewModel, e));
     };
   }
-  var t = e("lodash-compat"), n = e("utils/common/eventMixin"), r = e("ui/modalDialog/modalDialog"), i = e("swx-i18n").localization, s = e("utils/chat/messageSanitizer"), o = e("vendor/knockout"), u = e("text!views/ui/modalDialog/confirmationDialog.html"), a = e("browser/dom"), f = "swx-overlayConfirmationDialog";
+  var t = e("lodash-compat"), n = e("utils/common/eventMixin"), r = e("ui/modalDialog/modalDialog"), i = e("swx-i18n").localization, s = e("swx-utils-chat").messageSanitizer, o = e("vendor/knockout"), u = e("text!views/ui/modalDialog/confirmationDialog.html"), a = e("browser/dom"), f = "swx-overlayConfirmationDialog";
   return l.ELEMENT_ID = f, l.build = function (e) {
     return new l(e);
   }, t.assign(l.prototype, n), l;

@@ -1,0 +1,3 @@
+define("text!views/calling/screenSharingPreview.html", [], function () {
+  return "<!-- ko if: previewImage() -->\r\n<swx-call-screen-modal params=\"name: DIALOG_NAME\">\r\n    <img class=\"ssPreviewImage\" data-bind=\"attr: { src: previewImage() }\">\r\n    <div class=\"actions\">\r\n        <swx-button params=\"cssClass: 'secondary circle', textKey: 'action_button_cancel', i18nTitle: cancelTitle, action: closePreview, hasFocus: cancelButtonHasFocus\"></swx-button>\r\n        <swx-button params=\"cssClass: 'primary circle', textKey: 'callscreen_text_shareScreen', i18nTitle: shareScreenTitle, action: shareScreen\"></swx-button>\r\n    </div>\r\n</swx-call-screen-modal>\r\n<!-- /ko -->";
+});

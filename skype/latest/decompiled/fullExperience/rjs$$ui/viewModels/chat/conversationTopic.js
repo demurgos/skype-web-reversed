@@ -4,70 +4,75 @@ define("ui/viewModels/chat/conversationTopic", [
   "module",
   "vendor/knockout",
   "swx-i18n",
-  "utils/common/async",
-  "constants/common",
+  "swx-utils-common",
+  "swx-constants",
   "utils/common/cafeObservable",
   "ui/modelHelpers/conversationHelper",
   "swx-utils-common",
-  "utils/chat/messageSanitizer"
+  "swx-utils-chat"
 ], function (e, t) {
-  var n = e("vendor/knockout"), r = e("swx-i18n").localization, i = e("utils/common/async"), s = e("constants/common"), o = e("utils/common/cafeObservable"), u = e("ui/modelHelpers/conversationHelper"), a = e("swx-utils-common").stringUtils, f = e("utils/chat/messageSanitizer"), l = function (e) {
-      function m() {
-        d || (d = !0, i.execute(function () {
-          if (!d)
+  var n = e("vendor/knockout"), r = e("swx-i18n").localization, i = e("swx-utils-common").async, s = e("swx-constants").COMMON, o = e("utils/common/cafeObservable"), u = e("ui/modelHelpers/conversationHelper"), a = e("swx-utils-common").stringUtils, f = e("swx-utils-chat").messageSanitizer, l = function (e) {
+      function g() {
+        v || (v = !0, i.execute(function () {
+          if (!v)
             return;
-          t.topic(y());
-          d = !1;
+          t.topic(b());
+          v = !1;
         }));
       }
-      function g() {
-        w();
+      function y() {
+        E();
         if (!l.participants().length) {
-          t.topic(v);
+          t.topic(m);
           return;
         }
         l.participants().slice(0, s.conversation.NUMBER_OF_PARTICIPANT_NAMES_IN_TOPIC).forEach(function (e) {
-          p.push({
+          d.push({
             displayName: e.person.displayName,
-            subscription: e.person.displayName.changed(m)
+            subscription: e.person.displayName.changed(g)
           });
         });
       }
-      function y() {
-        var e = p.map(function (e) {
+      function b() {
+        var e = d.map(function (e) {
           return u.isPstnEndpoint(e.displayName()) ? a.forceLTREmbedding(e.displayName()) : e.displayName();
         });
-        return e.length < 1 ? v : e.join(s.conversation.TOPIC_DELIMITER);
-      }
-      function b() {
-        l.participants.changed(g);
+        return e.length < 1 ? m : e.join(s.conversation.TOPIC_DELIMITER);
       }
       function w() {
-        p.forEach(function (e) {
-          e.subscription.dispose();
-        });
-        p = [];
+        l.participants.changed(y);
       }
       function E() {
-        w();
-        l.participants.changed.off(g);
+        d.forEach(function (e) {
+          e.subscription.dispose();
+        });
+        d = [];
       }
-      function S(e) {
-        var n = e ? f.getSanitizedTopic(e) : v;
-        u.isPstnEndpoint(n) && (n = a.forceLTREmbedding(n));
-        t.topic(n);
-        d = !1;
+      function S() {
+        E();
+        l.participants.changed.off(y);
       }
       function x(e) {
-        S(e);
-        E();
+        function r(e) {
+          var t = e.replace(/<[^a\/].*?>(.*?)<\/[^a].*?>/gi, "$1"), n = t.replace(/(<.*?\.{3,})$/, "").trim(), r = n === "" ? "" : f.validateUnescapedLink(n).replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+          return r;
+        }
+        var n = e ? f.getSanitizedTopic(e) : m;
+        u.isPstnEndpoint(n) && (n = a.forceLTREmbedding(n));
+        t.topic(r(n));
+        v = !1;
       }
-      var t = this, l = e, c = o.newObservableProperty(l.topic), h = c.subscribe(x), p = [], d, v = r.fetch({ key: "conversation_header_topic_untitled_conversation" });
-      t.topic = n.observable(v);
-      c() ? S(c()) : b();
+      function T(e) {
+        x(e);
+        S();
+      }
+      var t = this, l = e, c = l.participants(0), h = o.newObservableProperty(l.topic), p = h.subscribe(T), d = [], v, m = r.fetch({ key: "conversation_header_topic_untitled_conversation" });
+      t.topic = n.observable(m);
+      !l.isGroupConversation() && c && (t.displayName = o.newObservableProperty(c.person.displayName));
+      h() ? x(h()) : w();
       t.dispose = function () {
-        h.dispose();
-        E();
+        p.dispose();
+        S();
       };
     };
   t.build = function (e) {

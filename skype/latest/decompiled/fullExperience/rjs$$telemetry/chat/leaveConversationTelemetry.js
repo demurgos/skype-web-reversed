@@ -2,61 +2,62 @@ define("telemetry/chat/leaveConversationTelemetry", [
   "require",
   "exports",
   "module",
-  "constants/common",
+  "swx-constants",
+  "experience/settings",
   "services/telemetry/skypeData",
   "services/telemetry/common/telemetryContext"
 ], function (e, t) {
-  function o(e, t) {
-    function h() {
-      o.data = {
-        cta: e || l,
-        action: l,
-        participantsCount: t.participantsCount() || l,
-        statusCode: l,
-        tim: l,
-        ttd: l,
-        lmg: l
-      };
-    }
+  function u(e, t) {
     function p() {
-      var e = {
-        type: r.TYPE,
-        data: o.data
+      u.data = {
+        cta: e || c,
+        action: c,
+        participantsCount: t.participantsCount() || c,
+        statusCode: c,
+        tim: c,
+        ttd: c,
+        lmg: c
       };
-      i.push(e);
-      h();
     }
-    function d(e, t) {
+    function d() {
+      var e = {
+        type: i.TYPE,
+        data: u.data
+      };
+      s.push(e, r.telemetry.chatTenantToken);
+      p();
+    }
+    function v(e, t) {
       return t - e;
     }
-    function v() {
+    function m() {
       return new Date().getTime();
     }
-    var o = this, u = v(), a, f, l = n.telemetry.NOT_AVAILABLE, c = s.get();
-    t.historyService._lastMessageFromServer && (a = t.historyService._lastMessageFromServer.timestamp());
-    o.started = function () {
-      f = v();
+    var u = this, a = m(), f, l, c = n.telemetry.NOT_AVAILABLE, h = o.get();
+    t.historyService._lastMessageFromServer && (f = t.historyService._lastMessageFromServer.timestamp());
+    u.started = function () {
+      l = m();
     };
-    o.canceled = function () {
-      var e = v();
-      o.data.action = r.action.CANCELED;
-      o.data.tim = d(u, v());
-      a && (o.data.lmg = d(a, e));
-      p();
+    u.canceled = function () {
+      var e = m();
+      u.data.action = i.action.CANCELED;
+      u.data.tim = v(a, m());
+      f && (u.data.lmg = v(f, e));
+      d();
     };
-    o.completed = function () {
-      o.data.action = r.action.CONFIRMED;
-      var e = v();
-      o.data.statusCode = c.statusCode;
-      o.data.tim = d(u, e);
-      a && (o.data.lmg = d(a, e));
-      f && (o.data.ttd = d(f, e));
-      p();
+    u.completed = function () {
+      u.data.action = i.action.CONFIRMED;
+      var e = m();
+      u.data.statusCode = h.statusCode;
+      u.data.tim = v(a, e);
+      f && (u.data.lmg = v(f, e));
+      l && (u.data.ttd = v(l, e));
+      d();
     };
-    h();
+    p();
   }
-  var n = e("constants/common"), r = n.telemetry.leaveConversation, i = e("services/telemetry/skypeData"), s = e("services/telemetry/common/telemetryContext");
+  var n = e("swx-constants").COMMON, r = e("experience/settings"), i = n.telemetry.leaveConversation, s = e("services/telemetry/skypeData"), o = e("services/telemetry/common/telemetryContext");
   t.build = function (e, t) {
-    return new o(e, t);
+    return new u(e, t);
   };
 });

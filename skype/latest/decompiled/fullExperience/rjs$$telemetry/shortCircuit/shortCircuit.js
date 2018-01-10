@@ -3,18 +3,24 @@ define("telemetry/shortCircuit/shortCircuit", [
   "exports",
   "module",
   "ui/telemetry/telemetryClient",
-  "constants/common",
+  "swx-constants",
   "experience/settings"
 ], function (e, t) {
   function s() {
-    this.sendStartEvent = function () {
-      n.get().sendEvent(i.telemetry.uiTenantToken, r.shortCircuit.START, {});
+    this.sendStartEvent = function (e) {
+      n.get().sendEvent(i.telemetry.uiTenantToken, r.shortCircuit.START, e || {});
     };
-    this.sendFinishedEvent = function () {
-      n.get().sendEvent(i.telemetry.uiTenantToken, r.shortCircuit.FINISHED, {});
+    this.sendFinishedEvent = function (e) {
+      n.get().sendEvent(i.telemetry.uiTenantToken, r.shortCircuit.FINISHED, e || {});
+    };
+    this.sendAddressBookAddedEvent = function (e) {
+      n.get().sendEvent(i.telemetry.uiTenantToken, r.shortCircuit.ADDRESS_BOOK_ADDED, e || {});
+    };
+    this.sendVisibleEvent = function (e) {
+      n.get().sendEvent(i.telemetry.uiTenantToken, r.shortCircuit.VISIBLE, e || {});
     };
   }
-  var n = e("ui/telemetry/telemetryClient"), r = e("constants/common").telemetry.contacts, i = e("experience/settings");
+  var n = e("ui/telemetry/telemetryClient"), r = e("swx-constants").COMMON.telemetry.contacts, i = e("experience/settings");
   t.build = function () {
     return new s();
   };

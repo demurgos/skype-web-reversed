@@ -2,15 +2,15 @@ define("ui/contextMenu/items/startPSTNCall", [
   "require",
   "ui/contextMenu/items/baseCallingMenuItem",
   "swx-i18n",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "ui/telemetry/actions/actionNames",
   "ui/telemetry/actions/actionSources",
   "constants/cssClasses",
   "swx-enums",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "telemetry/calling/pstn/pstn",
-  "constants/common",
+  "swx-constants",
   "swx-utils-common",
   "lodash-compat"
 ], function (e) {
@@ -70,6 +70,6 @@ define("ui/contextMenu/items/startPSTNCall", [
       n === e && (t = !0);
     }), t;
   }
-  var t = e("ui/contextMenu/items/baseCallingMenuItem"), n = e("swx-i18n").localization, r = e("services/serviceLocator"), i = e("constants/common"), s = e("ui/telemetry/actions/actionNames"), o = e("ui/telemetry/actions/actionSources"), u = e("constants/cssClasses"), a = e("swx-enums"), f = e("cafe/applicationInstance"), l = e("telemetry/calling/pstn/pstn"), c = e("constants/common").telemetry.pstn, h = e("swx-utils-common").stringUtils, p = e("lodash-compat");
+  var t = e("ui/contextMenu/items/baseCallingMenuItem"), n = e("swx-i18n").localization, r = e("swx-service-locator-instance").default, i = e("swx-constants").COMMON, s = e("ui/telemetry/actions/actionNames"), o = e("ui/telemetry/actions/actionSources"), u = e("constants/cssClasses"), a = e("swx-enums"), f = e("swx-cafe-application-instance"), l = e("telemetry/calling/pstn/pstn"), c = e("swx-constants").COMMON.telemetry.pstn, h = e("swx-utils-common").stringUtils, p = e("lodash-compat");
   return d.prototype = Object.create(t.prototype), d.TYPE = "StartPSTNCallMenuItem", d;
 });

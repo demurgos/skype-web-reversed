@@ -10,15 +10,21 @@ define("ui/contextMenu/items/blockContact", [
 ], function (e) {
   function a(e, f) {
     function c() {
-      var n = new i(e.getPerson(), f), o = t.fetch({ key: "modal_blockContact_text_aria_label" });
-      r.build(i.ELEMENT_ID, n, s);
-      r.show(i.ELEMENT_ID, o);
+      var t = new i(e.getPerson(), f);
+      r.build(i.ELEMENT_ID, t, s);
+      r.show(i.ELEMENT_ID, p());
+    }
+    function h() {
+      return e.isAgent() ? t.fetch({ key: "label_text_block_agent" }) : t.fetch({ key: "label_text_blockContact" });
+    }
+    function p() {
+      return e.isAgent() ? t.fetch({ key: "modal_block_agent_text_aria_label" }) : t.fetch({ key: "modal_blockContact_text_aria_label" });
     }
     var l;
     f = f || { source: o.contextMenuItem.block };
     if (!e)
       throw new Error("Parameter missing: contactVM is required");
-    l = t.fetch({ key: "label_text_blockContact" });
+    l = h();
     n.call(this, a.TYPE, l, c);
     this.cssClass = u.contextMenu.items.BLOCK_CONTACT;
     this.isEnabled = function () {

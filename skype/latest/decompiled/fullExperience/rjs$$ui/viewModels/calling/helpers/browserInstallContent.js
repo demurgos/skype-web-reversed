@@ -1,10 +1,12 @@
 define("ui/viewModels/calling/helpers/browserInstallContent", [
   "require",
-  "browser/detect",
+  "swx-browser-detect",
   "experience/settings",
-  "swx-i18n"
+  "swx-i18n",
+  "swx-constants",
+  "swx-service-locator-instance"
 ], function (e) {
-  function u() {
+  function f() {
     var e, n, r = {
         osName: t.getSystemInfo().osName,
         browserName: t.getBrowserInfo().browserName
@@ -15,49 +17,58 @@ define("ui/viewModels/calling/helpers/browserInstallContent", [
     } : n = {
       osName: t.OPERATING_SYSTEMS.MACOSX,
       browserName: t.BROWSERS.SAFARI
-    }, a(t.getSystemInfo().osName) ? e = r : e = n, f(e.osName, e.browserName);
+    }, l(t.getSystemInfo().osName) ? e = r : e = n, c(e.osName, e.browserName);
   }
-  function a(e) {
+  function l(e) {
     return e === t.OPERATING_SYSTEMS.WINDOWS || e === t.OPERATING_SYSTEMS.MACOSX;
   }
-  function f(e, t) {
-    var n, i = o[e][t];
-    return i || (i = o.Windows.Unknown), n = {
+  function c(e, t) {
+    var n, i = a[e][t];
+    return i || (i = a.Windows.Unknown), n = {
       images: {
-        closeScreen: h(i.closeScreen.image),
-        download: h(i.download.image),
-        install: h(i.install.image),
-        enjoy: h(i.enjoy.image)
+        closeScreen: d(i.closeScreen.image),
+        download: d(i.download.image),
+        install: d(i.install.image),
+        enjoy: d(i.enjoy.image)
       },
       text: {
         closeScreen: r.fetch({ key: i.closeScreen.text }),
         download: r.fetch({ key: i.download.text }),
         install: r.fetch({ key: i.install.text }),
-        enjoy: r.fetch({ key: i.enjoy.text })
+        enjoy: g(i.enjoy.text)
       }
-    }, i.unblock && l(n, i.unblock), i.extensionStart && c(n, i), n;
+    }, i.unblock && h(n, i.unblock), i.extensionStart && p(n, i), n;
   }
-  function l(e, t) {
-    e.images.unblock = h(t.image);
+  function h(e, t) {
+    e.images.unblock = d(t.image);
     e.text.unblock = r.fetch({ key: t.text });
   }
-  function c(e, t) {
-    e.images.extensionStart = h(t.extensionStart.image);
+  function p(e, t) {
+    e.images.extensionStart = d(t.extensionStart.image);
     e.text.extensionStart = r.fetch({ key: t.extensionStart.text });
-    e.images.extensionInstallPlugin = h(t.extensionInstallPlugin.image);
+    e.images.extensionInstallPlugin = d(t.extensionInstallPlugin.image);
     e.text.extensionInstallPlugin = r.fetch({ key: t.extensionInstallPlugin.text });
-    e.images.extensionInstallFailed = h(t.extensionInstallFailed.image);
+    e.images.extensionInstallFailed = d(t.extensionInstallFailed.image);
     e.text.extensionInstallFailed = r.fetch({ key: t.extensionInstallFailed.text });
   }
-  function h(e) {
+  function d(e) {
     return [
       n.assetsBaseUrl,
-      i,
+      o,
       e,
-      s
+      u
     ].join("");
   }
-  var t = e("browser/detect"), n = e("experience/settings"), r = e("swx-i18n").localization, i = "/images/components/av/installSteps/", s = ".jpg", o = {
+  function v() {
+    return s.resolve(i.serviceLocator.FEATURE_FLAGS).isFeatureOn(i.featureFlags.USE_BUSINESS_WORDING);
+  }
+  function m(e) {
+    return e + "_4b";
+  }
+  function g(e) {
+    return v() ? r.fetch({ key: m(e) }) : r.fetch({ key: e });
+  }
+  var t = e("swx-browser-detect").default, n = e("experience/settings"), r = e("swx-i18n").localization, i = e("swx-constants").COMMON, s = e("swx-service-locator-instance").default, o = "/images/components/av/installSteps/", u = ".jpg", a = {
       "Mac OS X": {
         Chrome: {
           closeScreen: {
@@ -247,5 +258,5 @@ define("ui/viewModels/calling/helpers/browserInstallContent", [
         }
       }
     };
-  return { getInstallResources: u };
+  return { getInstallResources: f };
 });

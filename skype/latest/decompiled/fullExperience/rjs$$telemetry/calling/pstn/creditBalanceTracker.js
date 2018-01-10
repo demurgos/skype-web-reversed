@@ -2,10 +2,10 @@ define("telemetry/calling/pstn/creditBalanceTracker", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "ui/modelHelpers/conversationHelper",
   "telemetry/calling/pstn/pstn",
-  "browser/detect"
+  "swx-browser-detect"
 ], function (e, t) {
   function o() {
     function u() {
@@ -28,7 +28,7 @@ define("telemetry/calling/pstn/creditBalanceTracker", [
       t === !0 && r.isConversationWithPstn(e) && (o = new Date().getTime(), t = !1);
     };
   }
-  var n = e("cafe/applicationInstance"), r = e("ui/modelHelpers/conversationHelper"), i = e("telemetry/calling/pstn/pstn"), s = e("browser/detect");
+  var n = e("swx-cafe-application-instance"), r = e("ui/modelHelpers/conversationHelper"), i = e("telemetry/calling/pstn/pstn"), s = e("swx-browser-detect").default;
   t.build = function () {
     return new o();
   };

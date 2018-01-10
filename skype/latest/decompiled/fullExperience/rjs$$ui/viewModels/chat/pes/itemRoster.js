@@ -1,85 +1,62 @@
 define("ui/viewModels/chat/pes/itemRoster", [
   "require",
   "lodash-compat",
-  "vendor/knockout",
-  "swx-i18n",
-  "constants/common",
-  "utils/common/eventMixin",
-  "services/pes/constants"
+  "browser/dom",
+  "swx-utils-common",
+  "utils/common/stateMixin",
+  "utils/common/eventHelper",
+  "services/pes/constants",
+  "vendor/knockout"
 ], function (e) {
-  function u() {
-    function s(t) {
-      e.item(t);
+  function a(e, t) {
+    function f() {
+      var e = n.getElement("video.moji.preview", t);
+      e && e.pause && e.pause();
     }
-    function u(t) {
-      if (t === e.item() && t.isPlaying && t.isPlaying())
-        return;
-      e.lockedItem && e.lockedItem.isLocked(!1);
-      e.item(t);
-      t.isLocked(!0);
-      e.lockedItem = t;
-      e.play();
-    }
-    function a() {
-      e.registerEvent(i.expressionPicker.ITEM_PREVIEW_REQUEST, s);
-      e.registerEvent(i.expressionPicker.ITEM_SELECT_REQUEST, u);
-      e.registerEvent(i.expressionPicker.ITEM_CANCEL_REQUEST, e._pauseVideo);
-      e.registerEvent(i.expressionPicker.CLOSE_REQUEST, e._reset);
-    }
-    var e = this, t = r.fetch({ key: "emoticonPicker_heading_label" });
-    e.item = n.observable();
-    e.lockedItem = null;
-    e._pauseVideo = function () {
-      var t = document.querySelector("video.moji.preview");
-      t && t.pause && t.pause();
-      e.lockedItem && e.lockedItem.isLocked(!1);
-      e.lockedItem = null;
-    };
-    e._reset = function () {
-      e._pauseVideo();
-      e.item({
-        type: "",
-        description: t,
-        copyright: "",
-        isLocked: function () {
-          return !1;
-        },
-        isPlaying: function () {
-          return !1;
-        }
-      });
-    };
-    e.init = function () {
-      a();
-      e._reset();
-    };
-    e.dispose = function () {
-      e._reset();
-    };
-    e.play = function () {
-      function r() {
-        t.isPlaying(!1);
-        t.isPlayed(!0);
-        t.onPlayed();
-        n.removeEventListener("ended", r);
-        n.removeEventListener("pause", i);
+    function l() {
+      function r(e) {
+        s.params.eventEmitter.emit(e);
       }
       function i() {
-        t.isPlaying(!1);
-        t.isPlayed(!0);
-        t.onPlayed();
-        n.removeEventListener("ended", r);
-        n.removeEventListener("pause", i);
+        e.removeEventListener("ended", i);
+        e.removeEventListener("pause", u);
+        r("handlePlaybackPaused");
       }
-      var t = e.item(), n = document.querySelector("video.moji.preview");
-      if (t.type !== o.itemTypes.moji.id)
+      function u() {
+        e.removeEventListener("ended", i);
+        e.removeEventListener("pause", u);
+        r("handlePlaybackPaused");
+      }
+      var e = n.getElement("video.moji.preview", t);
+      if (!e || s.params.item() && s.params.item().type() !== o.itemTypes.moji.id)
         return;
-      t.isPlaying(!0);
-      n.play();
-      n.addEventListener("ended", r, !1);
-      n.addEventListener("pause", i, !1);
+      e.play();
+      e.addEventListener("ended", i, !1);
+      e.addEventListener("pause", u, !1);
+    }
+    var s = this, a;
+    s.params = i.overrideDefaults({}, s.getDefaultParams(), e);
+    s.playState = u.computed(function () {
+      return s.params.itemStartPlayRequest() > 0;
+    });
+    a = s.params.itemStartPlayRequest.subscribe(function (e) {
+      r.execute(function () {
+        e > 0 ? l() : f();
+      }, null, !0);
+    });
+    s.init = function () {
+    };
+    s.dispose = function () {
+      a.dispose();
+      s.playState.dispose();
     };
   }
-  var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("swx-i18n").localization, i = e("constants/common").events, s = e("utils/common/eventMixin"), o = e("services/pes/constants");
-  return t.assign(u.prototype, s), u;
+  var t = e("lodash-compat"), n = e("browser/dom"), r = e("swx-utils-common").async, i = e("utils/common/stateMixin"), s = e("utils/common/eventHelper"), o = e("services/pes/constants"), u = e("vendor/knockout");
+  return a.prototype.getDefaultParams = function () {
+    return {
+      item: {},
+      itemStartPlayRequest: 0,
+      eventEmitter: s.emptyEmitter
+    };
+  }, t.assign(a.prototype, i), a;
 });

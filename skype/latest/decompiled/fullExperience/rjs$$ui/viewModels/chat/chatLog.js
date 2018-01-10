@@ -4,217 +4,256 @@ define("ui/viewModels/chat/chatLog", [
   "browser/document",
   "vendor/knockout",
   "utils/common/ko",
-  "utils/common/array",
+  "swx-utils-common",
   "utils/common/cafeObservable",
-  "constants/common",
-  "constants/common",
+  "swx-constants",
+  "swx-constants",
   "utils/common/eventMixin",
   "ui/contextMenu/contextMenu",
   "ui/contextMenu/items/all",
-  "utils/chat/conversationCache",
-  "utils/common/async",
-  "services/serviceLocator",
+  "swx-utils-chat",
+  "swx-utils-common",
+  "swx-service-locator-instance",
   "utils/common/appVisibilityProvider",
   "swx-i18n",
   "ui/telemetry/actions/actionSources",
-  "utils/chat/messageSanitizer",
+  "swx-utils-chat",
   "experience/settings",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
+  "utils/common/accessibility",
   "swx-enums",
-  "ui/modelHelpers/personHelper"
+  "ui/modelHelpers/personHelper",
+  "swx-log-tracer",
+  "browser/dom",
+  "ui/players/mediaPlayerController"
 ], function (e) {
-  function N(e) {
-    function X(t) {
+  function _(e, f) {
+    function tt(t) {
       var n = new e();
-      return n.init(t, f.conversation), N[n.clientmessageid] = n, n;
+      return n.setContext(f), n.init(t, _.conversation), D[n.clientmessageid] = n, n;
     }
-    function V(e, t) {
-      (!t.text || bt(t.text())) && s.insertAt(f.collection(), e, X(t));
+    function nt(e, t) {
+      (!t.text || _t(t.text())) && s.insertAt(_.collection(), e, tt(t));
     }
-    function $(e, t) {
-      var n = s.removeFrom(f.collection(), e);
-      delete N[n.clientmessageid];
+    function rt(e, t) {
+      var n = s.removeFrom(_.collection(), e);
+      delete D[n.clientmessageid];
+      n.clientmessageid !== t.key() && T.warn("Removing wrong element ! There was de-synchronization between model activityItems and viewmodel messages ! Crash !");
     }
-    function J() {
-      var e = {}, t = f.collection();
+    function it() {
+      var e = {}, t = _.collection();
       t.forEach(function (t) {
-        e = C.processMessage(t, e);
+        e = P.processMessage(t, e);
       });
-      C.processMyLastMessageIfAny(t);
-      f.collection.valueHasMutated();
+      P.processMyLastMessageIfAny(t);
+      _.collection.valueHasMutated();
     }
-    function K(e) {
-      i.handleArrayChanges(f.collection(), e, V, $);
-      J();
+    function st(e) {
+      i.handleArrayChanges(_.collection(), e, nt, rt);
+      it();
     }
-    function Q() {
-      D = A.activityItems.subscribe();
+    function ot() {
+      q = j.activityItems.subscribe();
     }
-    function G() {
-      k = O.subscribe(K, null, "arrayChange");
+    function ut() {
+      H = F.subscribe(st, null, "arrayChange");
     }
-    function Y() {
-      if (!O)
+    function at() {
+      if (!F)
         return;
-      F.start();
-      Q();
-      var e = O(), t;
-      e.length < x && p.execute(rt);
+      X.start();
+      ot();
+      var e = F(), t;
+      e.length < k && p.execute(gt);
       if (e.length === 0) {
-        G();
-        f.dispatchEvent(u.events.conversation.MESSAGES_LOADED, e, f.DIRECTION.PARENT);
+        ut();
+        _.dispatchEvent(u.events.conversation.MESSAGES_LOADED, e, _.DIRECTION.PARENT);
         return;
       }
       t = e.filter(function (e) {
-        return !e.text || bt(e.text());
+        return !e.text || _t(e.text());
       });
       t = t.map(function (e) {
-        return X(e);
+        return tt(e);
       });
-      r.utils.arrayPushAll(f.collection(), t);
-      J();
-      G();
-      f.dispatchEvent(u.events.conversation.MESSAGES_LOADED, e, f.DIRECTION.PARENT);
+      r.utils.arrayPushAll(_.collection(), t);
+      it();
+      ut();
+      _.dispatchEvent(u.events.conversation.MESSAGES_LOADED, e, _.DIRECTION.PARENT);
     }
-    function Z() {
-      H && j.isVisible() && v.hasFocus() && !B && j.isScrolledCloseToBottom() && A.markAllAsRead();
+    function ft() {
+      var e = [];
+      return t.forEach(_.collection(), function (t) {
+        W.isMessageVisible(t.clientmessageid) && e.push(t.model);
+      }), e;
     }
-    function et() {
-      if (!j)
+    function lt() {
+      var e = j.unreadActivityItemsCount(), t = _.collection(), n = ct(t);
+      if (e > t.length) {
+        gt();
         return;
-      if (it())
+      }
+      W.isVisible() && e > 0 && e < M && n && W.isScrolledToBottom() && W.scrollToMessage(n);
+    }
+    function ct(e) {
+      return t.find(e, function (e) {
+        return !e.model.isRead();
+      });
+    }
+    function ht(e) {
+      if (U && W.isVisible() && (e || v.hasFocus()) && !z) {
+        var t = [];
+        Y && (t = ft());
+        j.markAllAsRead(t);
+      }
+    }
+    function pt(e) {
+      e && e.suggestedActions && e.suggestedActions().length ? (_.suggestedActions(e.suggestedActions()), _.suggestedActionsAuthor = e.author, _.showSuggestedActions(!0)) : (_.suggestedActions([]), _.suggestedActionsAuthor = {}, _.showSuggestedActions(!1));
+    }
+    function dt() {
+      if (!W)
         return;
-      f._updatingMessages = !0;
-      j.showNewMessages();
-      f._updatingMessages = !1;
-      U && U();
-      C.processMyBeforeLastMessageIfAny(f.collection());
-      Z();
-      !j.isScrollable() && !M && p.execute(rt);
-      F.registerSync();
+      if (yt())
+        return;
+      _._updatingMessages = !0;
+      W.showNewMessages();
+      Y && lt();
+      _._updatingMessages = !1;
+      K && K();
+      P.processMyBeforeLastMessageIfAny(_.collection());
+      !W.isScrollable() && !I && p.execute(gt);
+      X.registerSync();
     }
-    function tt() {
-      F.registerSync();
-      M = !1;
-      et(!0);
+    function vt() {
+      X.registerSync();
+      I = !1;
+      dt();
     }
-    function nt() {
-      F.registerError();
+    function mt() {
+      X.registerError();
     }
-    function rt() {
-      A.getMoreActivityItems.enabled() && (M = !0, A.getMoreActivityItems(T).then(tt, nt));
+    function gt() {
+      j.getMoreActivityItems.enabled() && (I = !0, j.getMoreActivityItems(L).then(vt, mt));
     }
-    function it() {
-      return f.collection && f.collection().filter(function (e) {
+    function yt() {
+      return _.collection && _.collection().filter(function (e) {
         return !e.isRendered;
       }).length > 0;
     }
-    function st() {
-      it() || p.execute(et);
+    function bt() {
+      yt() || p.execute(dt);
     }
-    function ot() {
-      j.restoreScrollPosition();
+    function wt() {
+      W.restoreScrollPosition();
     }
-    function ut() {
-      if (j.isScrollPositionStored())
+    function Et() {
+      if (W.isScrollPositionStored())
         return;
-      j.storeScrollPosition();
+      W.storeScrollPosition();
     }
-    function at(e) {
-      H = !0;
-      j.onShow();
-      Z();
-      lt();
-      e && e.messageId && ft(e.messageId);
+    function St(e) {
+      U = !0;
+      W.onShow();
+      if (!W.isScrollable()) {
+        gt();
+        ht();
+        return;
+      }
+      Y && lt();
+      e && e.messageId && xt(e.messageId);
     }
-    function ft(e) {
-      var t, n = f.collection();
-      U = null;
+    function xt(e) {
+      var t, n = _.collection();
+      K = null;
       for (t = 0; t < n.length; t++) {
         var r = n[t];
         if (r.clientmessageid === e) {
-          j.scrollToMessage(r);
-          A._messagesWithUnseenHearts.remove(e);
-          U = null;
+          W.scrollToMessage(r);
+          K = null;
           return;
         }
       }
-      U = ft.bind(null, e);
-      rt();
+      K = xt.bind(null, e);
+      gt();
     }
-    function lt() {
-      j.isScrollable() || rt();
+    function Tt() {
+      ht();
+      U = !1;
+      W.onHide();
     }
-    function ct() {
-      Z();
-      H = !1;
-      j.onHide();
-    }
-    function ht() {
+    function Nt() {
       function e(e) {
-        I.publish(a.interaction.SCROLL_START, e);
+        V.publish(a.interaction.SCROLL_START, e);
       }
       return t.debounce(e, 1000, {
         leading: !0,
         trailing: !1
       });
     }
-    function pt(e) {
-      B = e;
-      e || Z();
+    function Ct(e) {
+      z = e;
+      e || ht();
     }
-    function dt() {
-      A.isHistoryDisclosed() && rt();
+    function kt() {
+      j.isHistoryDisclosed() && gt();
     }
-    function vt() {
+    function Lt() {
       var e = n.fullScreenElement && n.fullScreenElement !== null || n.mozFullScreen || n.webkitIsFullScreen;
-      return e || R;
+      return e || J;
     }
-    function mt() {
-      R = !0;
+    function At() {
+      J = !0;
     }
-    function gt(e) {
-      R = !1;
-      e && ft(e);
+    function Ot(e) {
+      J = !1;
+      e && xt(e);
     }
-    function yt() {
+    function Mt() {
       function n(e) {
-        j.isMessageVisible(e.id) && A._messagesWithUnseenHearts.remove(e.id);
+        W.isMessageVisible(e.id) && j._messagesWithUnseenHearts.remove(e.id);
       }
-      var e = A._messagesWithUnseenHearts();
+      var e = j._messagesWithUnseenHearts();
       if (e.length === 0)
         return;
       t.forEach(e, n);
     }
-    function bt(e) {
+    function _t(e) {
       var n = b.messageFilters && b.messageFilters.chatLogMessageFilter ? b.messageFilters.chatLogMessageFilter : null;
       return t.isFunction(n) ? n(e) : !0;
     }
-    function wt(e, t) {
-      f.conversation.historyService.removeCustomActivityItem(E.activityType.ContactRequestOutgoing);
-      f.conversation.historyService.removeCustomActivityItem(E.activityType.ContactRequestIsNowContact);
-      f.conversation.historyService.addCustomActivityItem(e, { sender: t });
+    function Dt(e, t) {
+      _.conversation.historyService.removeCustomActivityItem(S.activityType.ContactRequestOutgoing);
+      _.conversation.historyService.removeCustomActivityItem(S.activityType.ContactRequestIsNowContact);
+      _.conversation.historyService.addCustomActivityItem(e, { sender: t });
     }
-    function Et(e) {
-      var t = f.participants(0).person;
-      e.id() === t.id() && wt(E.activityType.ContactRequestOutgoing, t);
+    function Pt(e) {
+      var t = _.participants(0).person;
+      e.id() === t.id() && Dt(S.activityType.ContactRequestOutgoing, t);
     }
-    function St() {
+    function Ht(e) {
+      var t = _.participants(0).person;
+      e.id() === t.id() && _.conversation.historyService.removeCustomActivityItem(S.activityType.ContactRequestOutgoing);
+    }
+    function Bt() {
       var e;
-      if (!z.isFeatureOn(u.featureFlags.ENABLE_BUSINESS_CONTACT_MANAGEMENT))
+      if (!Q.isFeatureOn(u.featureFlags.ENABLE_BUSINESS_CONTACT_MANAGEMENT))
         return;
-      if (f.conversation.isGroupConversation() || f.participants.size() !== 1)
-        return;
-      e = f.participants(0).person;
-      S.isKnownPerson(e) || wt(E.activityType.ContactRequestOutgoing, e);
-      w.get().personsAndGroupsManager.all.persons.removed(Et);
+      var t = d.resolve(u.serviceLocator.SUBSCRIPTION_PROVIDER);
+      t.getContacts().then(function () {
+        if (_.conversation.isGroupConversation() || _.participants.size() !== 1)
+          return;
+        e = _.participants(0).person;
+        !x.isKnownPerson(e) && !x.isWelcomeAgent(e) && Dt(S.activityType.ContactRequestOutgoing, e);
+        w.get().personsAndGroupsManager.all.persons.removed(Pt);
+        w.get().personsAndGroupsManager.all.persons.added(Ht);
+      });
     }
-    function xt() {
+    function jt() {
       var e, t, n;
-      f.showIntroText = z.isFeatureOn(u.featureFlags.SHOW_CHAT_INTRO_TEXT);
-      if (!f.showIntroText)
+      _.showIntroText = Q.isFeatureOn(u.featureFlags.SHOW_CHAT_INTRO_TEXT);
+      if (!_.showIntroText)
         return;
-      f.introMessages = [];
+      _.introMessages = [];
       b.chatIntroText && b.chatIntroText.key && (e = b.chatIntroText.key);
       if (!e)
         return;
@@ -223,115 +262,155 @@ define("ui/viewModels/chat/chatLog", [
       if (!t)
         return;
       n ? t.split(n).forEach(function (e) {
-        f.introMessages.push({ text: e.trim() });
-      }) : f.introMessages.push({ text: t.trim() });
+        _.introMessages.push({ text: e.trim() });
+      }) : _.introMessages.push({ text: t.trim() });
     }
-    var f = this, N = {}, C, k, L, A, O, M, D, P, H = !0, B, j, F, I = d.resolve(u.serviceLocator.PUBSUB), q = ht(), R, U, z = d.resolve(u.serviceLocator.FEATURE_FLAGS), W = z.isFeatureOn(u.featureFlags.HEARTS_ENABLED);
-    this.collection = r.observableArray();
-    this.participants = null;
-    this.init = function (e, t, n, r) {
-      I.subscribe(u.events.narrowMode.SIDEBAR_STATE_CHANGED, pt);
-      I.subscribe(u.events.videoPlayer.FULLSCREEN_ON, mt);
-      I.subscribe(u.events.videoPlayer.FULLSCREEN_OFF, gt);
-      j = t;
-      C = n;
-      A = e.historyService;
-      h.forModel(e);
-      O = o.newObservableCollection(A.activityItems);
-      f.conversation = e;
-      f.participants = e.participants;
-      j.init({
-        onContextMenu: f.showContextMenu,
-        onMessageVisibilityChange: f.messageVisibilityChange
-      }, e);
-      L = v.hasFocus.subscribe(Z);
-      P = A.isHistoryDisclosed.changed(dt);
-      this.registerEvent(a.message.RENDERED, st);
-      this.registerEvent(a.navigation.FRAGMENT_SHOW, at, this.DIRECTION.PARENT);
-      this.registerEvent(a.navigation.FRAGMENT_BEFORE_HIDE, ct, this.DIRECTION.PARENT);
-      this.forwardEvent(a.navigation.FRAGMENT_BEFORE_HIDE, this.DIRECTION.CHILD, null);
-      this.forwardEvent(a.conversation.OPEN_PROFILE, this.DIRECTION.PARENT, null, this.DIRECTION.CHILD);
-      this.registerEvent(a.conversation.MARK_AS_READ, Z);
-      this.registerEvent(a.message.BEFORE_EXPANDED, ut);
-      this.registerEvent(a.message.AFTER_EXPANDED, ot);
-      this.registerEvent(u.events.videoPlayer.FULLSCREEN_ON, ut);
-      this.registerEvent(u.events.videoPlayer.FULLSCREEN_OFF, ot);
-      W && f.conversation.historyService._messagesWithUnseenHearts && A._messagesWithUnseenHearts.changed(yt);
-      F = r;
-      p.execute(Y);
-      St();
-      xt();
-    };
-    this.onScroll = function (e, t) {
-      j && (q(t), j.onScroll(t), j.isScrolledToTop() && !f._updatingMessages && !vt() && rt(), Z());
-    };
-    this.dispose = function () {
-      j.dispose();
-      D && D.dispose();
-      k && k.dispose();
-      P && P.dispose();
-      L.dispose();
-      f.ariaForNewMessage.dispose();
-      F.dispose();
-      I.unsubscribe(u.events.narrowMode.SIDEBAR_STATE_CHANGED, pt);
-      I.unsubscribe(u.events.videoPlayer.FULLSCREEN_ON, mt);
-      I.unsubscribe(u.events.videoPlayer.FULLSCREEN_OFF, gt);
-      k = null;
-      f.collection = null;
-      j = null;
-      O = null;
-      N = null;
-      W && A._messagesWithUnseenHearts && A._messagesWithUnseenHearts.changed.off(yt);
-      z.isFeatureOn(u.featureFlags.ENABLE_BUSINESS_CONTACT_MANAGEMENT) && w.get().personsAndGroupsManager.all.persons.removed.off(Et);
-    };
-    this.showContextMenu = function (e, t) {
-      var n = N[e], r = n && n.model, i = [], s = { source: g.conversation.messageItem }, o, u = f.conversation.chatService.sendMessage.enabled();
-      if (!r || !u)
-        return;
-      o = {
-        source: g.contextMenuItem.removeMessage,
-        parent: g.conversation.messageItem
-      };
-      i.push(new c.QuoteMessageMenuItem(f, r));
-      i.push(new c.EditMessageMenuItem(f, r));
-      i.push(new c.RemoveMessageMenuItem(r, o));
-      i.push(new c.CopyLinkMenuItem(f, n));
-      i.push(new c.OpenLinkMenuItem(f, n));
-      i.push(new c.SaveVideoMessageMenuItem(r));
-      l.show(i, t, s);
-    };
-    this.messageVisibilityChange = function (e) {
-      function n(e) {
-        var t = e.attributes["data-id"].value, n = A._messagesWithUnseenHearts(t);
-        n && A._messagesWithUnseenHearts.remove(t);
+    function Ft() {
+      function i() {
+        return t.model.type() === S.activityType.UnblockContact || t.model.type() === S.activityType.ContactRequestOutgoing;
       }
-      W && A._messagesWithUnseenHearts && H && A._messagesWithUnseenHearts.size() > 0 && t.forEach(e, n);
-      f.dispatchEvent(u.events.conversation.VIEWPORT_CHANGED, e, f.DIRECTION.PARENT);
-    };
-    this.ariaForNewMessage = r.computed(function () {
-      var e, t, n, r, i = f.collection();
-      return i === undefined || i.length <= 0 ? "" : (n = i[i.length - 1], n.authorName && (e = n.authorName()), n.author && n.author.displayName && (e = n.author.displayName()), r = y.stripHTML(n.content()), t = m.fetch({
+      var e, t, n, r = _.collection();
+      if (r === undefined || r.length <= 0)
+        return;
+      t = r[r.length - 1];
+      if (i())
+        return;
+      t.authorName && (e = t.authorName());
+      t.author && t.author.displayName && (e = t.author.displayName());
+      n = y.stripHTML(t.content());
+      e ? E.announce({
         key: "accessibility_chatLog_newMessage",
         params: {
           author: e,
-          content: r
+          content: n
         }
-      }), t);
-    });
-    this.navigateToHeartedMessage = function () {
-      function t(e, t) {
-        return !e || !t ? 0 : parseInt(e.id) - parseInt(t.id);
-      }
-      if (!W)
+      }, { key: t.clientmessageid }) : E.announce({
+        key: "accessibility_chatLog_newMessage_withoutAuthor",
+        params: { content: n }
+      }, { key: t.clientmessageid });
+      pt(t);
+    }
+    function It(e) {
+      var t = N.getElement("[data-id=\"" + e + "\"]");
+      t && t.focus();
+    }
+    var _ = this, D = {}, P, H, B, j, F, I, q, R, U = !0, z, W, X, V = d.resolve(u.serviceLocator.PUBSUB), $ = Nt(), J, K, Q = d.resolve(u.serviceLocator.FEATURE_FLAGS), G = Q.isFeatureOn(u.featureFlags.HEARTS_ENABLED), Y = Q.isFeatureOn(u.featureFlags.MARK_READ_MESSAGES_V2_ENABLED), Z, et = null;
+    this.collection = r.observableArray();
+    this.participants = null;
+    this.init = function (e, t, i, s) {
+      V.subscribe(u.events.narrowMode.SIDEBAR_STATE_CHANGED, Ct);
+      V.subscribe(u.events.videoPlayer.FULLSCREEN_ON, At);
+      V.subscribe(u.events.videoPlayer.FULLSCREEN_OFF, Ot);
+      V.subscribe(u.events.message.REMOVED, It);
+      W = t;
+      P = i;
+      j = e.historyService;
+      h.forModel(e);
+      F = o.newObservableCollection(j.activityItems);
+      _.conversation = e;
+      _.participants = e.participants;
+      _.isMouseOver = r.observable();
+      _.suggestedActionsEnabled = Q.isFeatureOn(u.featureFlags.SUGGESTED_ACTIONS_ENABLED);
+      _.showSuggestedActions = r.observable(!1);
+      _.hasSuggestedActionOnLeft = r.observable(!1);
+      _.hasSuggestedActionOnRight = r.observable(!1);
+      _.suggestedActionsAuthor = {};
+      _.suggestedActions = r.observableArray([]);
+      _.showBotDetails = r.pureComputed(function () {
+        return e.isGroupConversation() && _.showSuggestedActions() && !!_.suggestedActionsAuthor.displayName && !!_.suggestedActionsAuthor.avatar;
+      });
+      _.suggestionChanged = function () {
+        var e = W ? W.getArrowsPositions() : null;
+        if (!e)
+          return;
+        _.hasSuggestedActionOnLeft(e.left);
+        _.hasSuggestedActionOnRight(e.right);
+      };
+      _.scrollLeft = function () {
+        W.scrollSuggestedArea("left", _.suggestionChanged);
+      };
+      _.scrollRight = function () {
+        W.scrollSuggestedArea("right", _.suggestionChanged);
+      };
+      W.init({
+        onContextMenu: _.showContextMenu,
+        onMessageVisibilityChange: _.messageVisibilityChange
+      }, e);
+      B = v.hasFocus.subscribe(ht);
+      Z = _.collection.subscribe(Ft);
+      R = j.isHistoryDisclosed.changed(kt);
+      this.registerEvent(a.message.RENDERED, bt);
+      this.registerEvent(a.navigation.FRAGMENT_BEFORE_HIDE, Tt, this.DIRECTION.PARENT);
+      this.forwardEvent(a.navigation.FRAGMENT_SHOW, this.DIRECTION.CHILD, St, this.DIRECTION.PARENT);
+      this.forwardEvent(a.navigation.FRAGMENT_BEFORE_HIDE, this.DIRECTION.CHILD, null);
+      this.forwardEvent(a.conversation.OPEN_PROFILE, this.DIRECTION.PARENT, null, this.DIRECTION.CHILD);
+      this.forwardEvent(a.message.ADD_CONTACT, this.DIRECTION.PARENT, null, this.DIRECTION.CHILD);
+      this.registerEvent(a.conversation.MARK_AS_READ, ht);
+      this.registerEvent(a.message.BEFORE_EXPANDED, Et);
+      this.registerEvent(a.message.AFTER_EXPANDED, wt);
+      this.registerEvent(u.events.videoPlayer.FULLSCREEN_ON, Et);
+      this.registerEvent(u.events.videoPlayer.FULLSCREEN_OFF, wt);
+      G && _.conversation.historyService._messagesWithUnseenHearts && j._messagesWithUnseenHearts.changed(Mt);
+      X = s;
+      p.execute(at);
+      Bt();
+      jt();
+      _.suggestedActionsEnabled && (n.addEventListener("resize", _.suggestionChanged), window.setTimeout(function () {
+        _.suggestionChanged();
+      }, 100));
+    };
+    this.onMouseOver = function () {
+      _.isMouseOver(!0);
+    };
+    this.onMouseOut = function () {
+      _.isMouseOver(!1);
+    };
+    this.onScroll = function (e, t) {
+      W && ($(t), W.onScroll(t, A), W.isScrolledToTop() && !_._updatingMessages && !Lt() && gt(), Y ? (clearTimeout(et), et = setTimeout(function () {
+        ht(_.isMouseOver());
+      }, O)) : ht());
+    };
+    this.dispose = function () {
+      W.dispose();
+      q && q.dispose();
+      H && H.dispose();
+      R && R.dispose();
+      _.showBotDetails.dispose();
+      B.dispose();
+      Z.dispose();
+      X.dispose();
+      V.unsubscribe(u.events.narrowMode.SIDEBAR_STATE_CHANGED, Ct);
+      V.unsubscribe(u.events.videoPlayer.FULLSCREEN_ON, At);
+      V.unsubscribe(u.events.videoPlayer.FULLSCREEN_OFF, Ot);
+      V.unsubscribe(u.events.message.REMOVED, It);
+      H = null;
+      _.collection = null;
+      W = null;
+      F = null;
+      D = null;
+      G && j._messagesWithUnseenHearts && j._messagesWithUnseenHearts.changed.off(Mt);
+      Q.isFeatureOn(u.featureFlags.ENABLE_BUSINESS_CONTACT_MANAGEMENT) && (w.get().personsAndGroupsManager.all.persons.removed.off(Pt), w.get().personsAndGroupsManager.all.persons.added.off(Ht));
+      _.suggestedActionsEnabled && n.removeEventListener("resize", _.suggestionChanged);
+    };
+    this.showContextMenu = function (e, t, n) {
+      var r = D[e], i = r && r.model, s = [], o = { source: g.conversation.messageItem }, u, a = _.conversation.chatService.sendMessage.enabled();
+      if (!i || !a)
         return;
-      var e = A._messagesWithUnseenHearts();
-      if (e.length === 0)
+      return n ? (s.push(new c.CopySelectionMenuItem(_, i, n)), s.push(new c.CopySelectionTextMenuItem(_, i, n))) : (u = {
+        source: g.contextMenuItem.removeMessage,
+        parent: g.conversation.messageItem
+      }, s.push(new c.CopyMessageMenuItem(_, i)), s.push(new c.QuoteMessageMenuItem(_, i)), s.push(new c.EditMessageMenuItem(_, i)), s.push(new c.RemoveMessageMenuItem(i, u)), s.push(new c.CopyLinkMenuItem(_, r, t)), s.push(new c.OpenLinkMenuItem(_, r, t)), s.push(new c.SaveVideoMessageMenuItem(i))), l.show(s, t, o), l.isVisible();
+    };
+    this.messageVisibilityChange = function (e) {
+      if (!U)
         return;
-      var n = e.sort(t), r = n[0];
-      ft(r.id);
-      n = null;
+      var t = [];
+      e.forEach(function (e) {
+        t.push(e.getAttribute("data-id"));
+      });
+      C.onVisibleViewPortChanged(_.conversation.conversationId, t);
     };
   }
-  var t = e("lodash-compat"), n = e("browser/document"), r = e("vendor/knockout"), i = e("utils/common/ko"), s = e("utils/common/array"), o = e("utils/common/cafeObservable"), u = e("constants/common"), a = e("constants/common").events, f = e("utils/common/eventMixin"), l = e("ui/contextMenu/contextMenu"), c = e("ui/contextMenu/items/all"), h = e("utils/chat/conversationCache"), p = e("utils/common/async"), d = e("services/serviceLocator"), v = e("utils/common/appVisibilityProvider"), m = e("swx-i18n").localization, g = e("ui/telemetry/actions/actionSources"), y = e("utils/chat/messageSanitizer"), b = e("experience/settings"), w = e("cafe/applicationInstance"), E = e("swx-enums"), S = e("ui/modelHelpers/personHelper"), x = 10, T = 10;
-  return t.assign(N.prototype, f), N;
+  var t = e("lodash-compat"), n = e("browser/document"), r = e("vendor/knockout"), i = e("utils/common/ko"), s = e("swx-utils-common").array, o = e("utils/common/cafeObservable"), u = e("swx-constants").COMMON, a = e("swx-constants").COMMON.events, f = e("utils/common/eventMixin"), l = e("ui/contextMenu/contextMenu"), c = e("ui/contextMenu/items/all"), h = e("swx-utils-chat").conversationCache, p = e("swx-utils-common").async, d = e("swx-service-locator-instance").default, v = e("utils/common/appVisibilityProvider"), m = e("swx-i18n").localization, g = e("ui/telemetry/actions/actionSources"), y = e("swx-utils-chat").messageSanitizer, b = e("experience/settings"), w = e("swx-cafe-application-instance"), E = e("utils/common/accessibility").narrator, S = e("swx-enums"), x = e("ui/modelHelpers/personHelper"), T = e("swx-log-tracer").getLogger(), N = e("browser/dom"), C = e("ui/players/mediaPlayerController"), k = 10, L = 10, A = 300, O = 400, M = 51;
+  return t.assign(_.prototype, f), _;
 });

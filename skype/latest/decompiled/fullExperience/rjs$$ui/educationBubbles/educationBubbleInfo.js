@@ -3,9 +3,9 @@ define("ui/educationBubbles/educationBubbleInfo", [
   "exports",
   "module",
   "lodash-compat",
-  "constants/common"
+  "swx-constants"
 ], function (e, t) {
-  var n = e("lodash-compat"), r = e("constants/common");
+  var n = e("lodash-compat"), r = e("swx-constants").COMMON;
   t.SEARCH_EDUCATION_BUBBLE = {
     id: 8,
     anchorElementQuery: ".swx .icon .search",
@@ -17,7 +17,11 @@ define("ui/educationBubbles/educationBubbleInfo", [
     anchorElementQuery: ".swx .icon .search",
     i18nKey: "education_bubble_search_4b",
     iconUrlPath: "/assets/images/components/educationBubbles/educationBubbleSearch.svg",
-    options: { isBusinessFlagService: !0 }
+    options: {
+      isBusinessFlagService: !0,
+      i18nButtonKey: "education_bubble_gotit_button_4b",
+      i18nTitleKey: "education_bubble_search_title_4b"
+    }
   };
   t.CALL_EDUCATION_BUBBLE = {
     id: 6,
@@ -40,7 +44,9 @@ define("ui/educationBubbles/educationBubbleInfo", [
     iconUrlPath: "/assets/images/components/educationBubbles/educationBubbleChat.svg",
     options: {
       orientation: r.educationBubbles.ORIENTATION.TOP,
-      isBusinessFlagService: !0
+      isBusinessFlagService: !0,
+      i18nButtonKey: "education_bubble_gotit_button_4b",
+      i18nTitleKey: "education_bubble_chat_title_4b"
     }
   };
   t.SCHEDULE_CALL_EDUCATION_BUBBLE_1_GROUP = {

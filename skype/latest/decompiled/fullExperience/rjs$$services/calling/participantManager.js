@@ -1,7 +1,7 @@
 define("services/calling/participantManager", [
   "require",
   "swx-enums",
-  "constants/calling"
+  "swx-constants"
 ], function (e) {
   function r(e) {
     function l() {
@@ -35,10 +35,12 @@ define("services/calling/participantManager", [
         c(t) && d(e);
         h(t, r) && p(e);
       }
-      f[e.person.id()] = function () {
-        e.audio.state.changed.off(t);
-      };
-      e.audio.state.changed(t);
+      e.person.id.get().then(function () {
+        f[e.person.id()] = function () {
+          e.audio.state.changed.off(t);
+        };
+        e.audio.state.changed(t);
+      });
     }
     function m(e) {
       var t = e.person.id();
@@ -77,7 +79,7 @@ define("services/calling/participantManager", [
       e.participants.removed(g);
     }, r;
   }
-  var t = e("swx-enums"), n = e("constants/calling");
+  var t = e("swx-enums"), n = e("swx-constants").CALLING;
   return {
     build: function (e) {
       return new r(e);

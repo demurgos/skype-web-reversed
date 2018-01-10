@@ -5,8 +5,8 @@ define("ui/viewModels/people/contactListMenuItem", [
   "lodash-compat",
   "vendor/knockout",
   "usertiming",
-  "constants/common",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-service-locator-instance",
   "experience/settings",
   "ui/telemetry/telemetryClient"
 ], function (e, t) {
@@ -20,7 +20,7 @@ define("ui/viewModels/people/contactListMenuItem", [
       return e.uiAction && f.recordAction(e.uiAction), e.perfMarker && i.mark(e.perfMarker), e.event && a.get().sendEvent(u.uiTenantToken, e.event.name, e.event.data), n.isFunction(e.callback) && e.callback(), r.preventDefault(), !0;
     };
   }
-  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("usertiming"), s = e("constants/common"), o = e("services/serviceLocator"), u = e("experience/settings").telemetry, a = e("ui/telemetry/telemetryClient");
+  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("usertiming"), s = e("swx-constants").COMMON, o = e("swx-service-locator-instance").default, u = e("experience/settings").telemetry, a = e("ui/telemetry/telemetryClient");
   t.build = function (e) {
     return e || (e = {}), new f(e);
   };

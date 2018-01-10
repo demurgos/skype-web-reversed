@@ -5,8 +5,9 @@ define("ui/viewModels/calling/moreActionsControlViewModel", [
   "vendor/knockout",
   "ui/viewModels/calling/baseCallControlViewModel",
   "ui/telemetry/actions/actionNames",
-  "constants/common",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-constants",
+  "swx-service-locator-instance",
   "ui/contextMenu/items/all",
   "ui/contextMenu/contextMenu",
   "ui/telemetry/actions/actionSources",
@@ -14,76 +15,108 @@ define("ui/viewModels/calling/moreActionsControlViewModel", [
   "swx-enums",
   "swx-i18n"
 ], function (e) {
-  function d(e) {
-    function N() {
-      t.dispatchEvent(o.events.callScreen.ADD_PARTICIPANT, null, t.DIRECTION.PARENT);
-      k(s.audioVideo.addParticipants);
+  function v(e) {
+    function k() {
+      return n.isFeatureOn(o.featureFlags.AUDIO_VIDEO_SETTINGS_SUPPORT);
     }
-    function C() {
-      var t = e.screenSharingService;
-      m() ? (t.start(), k(s.audioVideo.shareScreen)) : g() && (t.stop(), k(s.audioVideo.stopSharingScreen));
-    }
-    function k(e) {
-      var t = u.resolve(o.serviceLocator.ACTION_TELEMETRY);
+    function L(e) {
+      var t = a.resolve(o.serviceLocator.ACTION_TELEMETRY);
       t.recordAction(e);
     }
-    function L() {
-      f.hide();
+    function A() {
+      l.hide();
     }
-    var t = this, n = r.observable(!0), d = c.newObservableProperty(e.selfParticipant.audio.state), v = c.newObservableProperty(e.participants.add.enabled), m = c.newObservableProperty(e.screenSharingService.start.enabled), g = c.newObservableProperty(e.screenSharingService.stop.enabled), y, b, w, E = r.observable(!1), S = p.fetch({ key: "callscreen_text_shareScreen" }), x = p.fetch({ key: "callscreen_text_stopSharingScreen" });
-    i.call(t, e, n);
-    t.addParticipantText = p.fetch({ key: "callscreen_text_addParticipants" });
-    t.moreActionsText = p.fetch({ key: "callscreen_text_plusButton" });
+    function O() {
+      t.dispatchEvent(o.events.callScreen.TOGGLE_MODAL_DIALOG, u.CALL_SCREEN_DIALOG.NAME.SCREEN_SHARING_PREVIEW, t.DIRECTION.PARENT);
+      L(s.audioVideo.shareScreenPreview);
+    }
+    function M() {
+      e.screenSharingService.start();
+      L(s.audioVideo.shareScreen);
+    }
+    function _() {
+      e.screenSharingService.stop();
+      L(s.audioVideo.stopSharingScreen);
+    }
+    var t = this, n = a.resolve(o.serviceLocator.FEATURE_FLAGS), v = r.observable(!0), m = h.newObservableProperty(e.selfParticipant.audio.state), g = h.newObservableProperty(e.participants.add.enabled), y = h.newObservableProperty(e.screenSharingService.start.enabled), b = h.newObservableProperty(e.screenSharingService.stop.enabled), w, E, S, x, T = d.fetch({ key: "callscreen_text_shareScreens" }), N = d.fetch({ key: "callscreen_text_stopSharingScreen" });
+    i.call(t, e, v);
+    t.addParticipantText = d.fetch({ key: "callscreen_text_addParticipants" });
+    t.moreActionsText = d.fetch({ key: "callscreen_text_plusButton" });
     t.screenShareText = r.pureComputed(function () {
-      return m() || !g() ? S : x;
+      return y() || !b() ? T : N;
     });
+    t.avSettingsText = d.fetch({ key: "callscreen_text_showAVSettings" });
     t.isAddingParticipantsAllowed = r.pureComputed(function () {
-      return !E() && v() && d() === h.callConnectionState.Connected;
+      return g() && m() === p.callConnectionState.Connected;
     });
     t.isScreenSharingAllowed = r.pureComputed(function () {
-      return m() || g();
+      return y() || b();
     });
-    t.hasAllowedActions = r.pureComputed(function () {
-      return t.isAddingParticipantsAllowed() || t.isScreenSharingAllowed();
+    t.isMoreActionsButtonEnabled = r.pureComputed(function () {
+      return (t.isAddingParticipantsAllowed() || t.isScreenSharingAllowed() || k()) && t.isCallControlEnabled();
     });
-    t.showMoreActionsMenu = function (t, n) {
-      var r = [
-          a.AddParticipantsMenuItem.build(function () {
-            return !v();
-          }, N),
-          a.ShareScreen.build(function () {
-            return !m() && !g();
-          }, m(), C)
-        ], i = {
-          source: l.recentItem,
+    t.showMoreActionsMenu = function (r, i) {
+      var u = 5, a = [
+          f.AddParticipantsMenuItem.build(function () {
+            return !t.isAddingParticipantsAllowed();
+          }, t.addParticipants),
+          f.ShareScreen.build(function () {
+            return !t.isScreenSharingAllowed();
+          }, y(), t.shareScreen),
+          f.AVSettings.build(function () {
+            return !k();
+          }, t.avSettings),
+          f.TransferCall.build(function () {
+            return !n.isFeatureOn(o.featureFlags.TRANSFER_CALL);
+          }, t.transferCall)
+        ], h = {
+          source: c.recentItem,
           isGroupConversation: e.isGroupConversation()
         };
-      f.show(r, n, i);
-      k(s.audioVideo.moreActions);
+      i.customClientOptions = {
+        offsetElement: i.target,
+        position: p.contextMenuPosition.Top,
+        offset: u
+      };
+      l.show(a, i, h);
+      L(s.audioVideo.moreActions);
     };
-    t.registerEvent(o.events.callScreen.ADD_PARTICIPANT_VISIBLE, E);
-    t.registerEvent(o.events.callScreen.CALL_ESCALATED_TO_GROUP, n.bind(null, !1));
-    t.addParticipant = N;
-    t.shareScreen = C;
-    y = v.subscribe(L);
-    b = m.subscribe(L);
-    w = g.subscribe(L);
-    var T = t.dispose;
+    t.addParticipants = function () {
+      t.dispatchEvent(o.events.callScreen.TOGGLE_MODAL_DIALOG, u.CALL_SCREEN_DIALOG.NAME.ADD_PARTICIPANTS, t.DIRECTION.PARENT);
+      L(s.audioVideo.addParticipants);
+    };
+    t.shareScreen = function () {
+      y() ? n.isFeatureOn(o.featureFlags.OUTGOING_SCREEN_SHARING_PREVIEW) ? O() : M() : b() && _();
+    };
+    t.avSettings = function () {
+      t.dispatchEvent(o.events.callScreen.TOGGLE_MODAL_DIALOG, u.CALL_SCREEN_DIALOG.NAME.AV_SETTINGS, t.DIRECTION.PARENT);
+    };
+    t.transferCall = function () {
+      t.dispatchEvent(o.events.callScreen.TOGGLE_MODAL_DIALOG, u.CALL_SCREEN_DIALOG.NAME.TRANSFER_CALL, t.DIRECTION.PARENT);
+    };
+    w = g.subscribe(A);
+    E = y.subscribe(A);
+    S = b.subscribe(A);
+    x = l.isVisible.subscribe(function (e) {
+      e ? t.dispatchEvent(o.events.callScreen.MORE_ACTION_MENU_VISIBLE, null, t.DIRECTION.PARENT) : t.dispatchEvent(o.events.callScreen.MORE_ACTION_MENU_HIDDEN, null, t.DIRECTION.PARENT);
+    });
+    var C = t.dispose;
     t.dispose = function () {
-      y && y.dispose();
-      b && b.dispose();
       w && w.dispose();
-      d.dispose();
-      v.dispose();
+      E && E.dispose();
+      S && S.dispose();
       m.dispose();
       g.dispose();
-      T.call(t);
+      y.dispose();
+      b.dispose();
+      x.dispose();
+      C.call(t);
     };
   }
-  var t = e("lodash-compat"), n = e("utils/common/eventMixin"), r = e("vendor/knockout"), i = e("ui/viewModels/calling/baseCallControlViewModel"), s = e("ui/telemetry/actions/actionNames"), o = e("constants/common"), u = e("services/serviceLocator"), a = e("ui/contextMenu/items/all"), f = e("ui/contextMenu/contextMenu"), l = e("ui/telemetry/actions/actionSources"), c = e("utils/common/cafeObservable"), h = e("swx-enums"), p = e("swx-i18n").localization;
-  return d.prototype = Object.create(i.prototype), d.prototype.constructor = d, t.assign(d.prototype, n), {
+  var t = e("lodash-compat"), n = e("utils/common/eventMixin"), r = e("vendor/knockout"), i = e("ui/viewModels/calling/baseCallControlViewModel"), s = e("ui/telemetry/actions/actionNames"), o = e("swx-constants").COMMON, u = e("swx-constants").CALLING, a = e("swx-service-locator-instance").default, f = e("ui/contextMenu/items/all"), l = e("ui/contextMenu/contextMenu"), c = e("ui/telemetry/actions/actionSources"), h = e("utils/common/cafeObservable"), p = e("swx-enums"), d = e("swx-i18n").localization;
+  return v.prototype = Object.create(i.prototype), v.prototype.constructor = v, t.assign(v.prototype, n), {
     build: function (e) {
-      return new d(e);
+      return new v(e);
     }
   };
 });

@@ -1,22 +1,25 @@
 define("services/pes/configProcessor", [
   "require",
-  "services/pes/emoticons/encoder",
   "lodash-compat",
-  "services/pes/tabs/fetcher",
+  "swx-constants",
+  "swx-emoticon-map-instance",
   "services/pes/emoticons/fetcher",
+  "services/pes/emoticons/renderLoop",
   "services/pes/mojis/fetcher",
   "services/pes/constants",
-  "utils/common/prefetcher"
+  "utils/common/prefetcher",
+  "swx-service-locator-instance",
+  "services/pes/tabs/fetcher"
 ], function (e) {
-  function a() {
-    function a(e) {
+  function c() {
+    function c(e) {
       var t, n, r;
       return r = document.getElementById("pesStyles"), r || (n = document.head, r = document.createElement("style"), r.id = "pesStyles", r.type = "text/css"), r.styleSheet ? r.styleSheet.cssText = e : (t = document.createTextNode(e), r.firstChild && r.removeChild(r.firstChild), r.appendChild(t)), n && n.appendChild(r), e;
     }
     var e = this;
     e.process = function (n) {
-      n.tabs.forEach(function (t, i) {
-        r.process(t, i);
+      n.tabs.forEach(function (t, r) {
+        l.process(t, r);
         t.packs.forEach(function (t) {
           t.items.forEach(function (t) {
             e._processItem(t, n, "process");
@@ -29,67 +32,67 @@ define("services/pes/configProcessor", [
       if (!e)
         throw new Error("Ad hoc fetching is not implemented, yet!");
       switch (e.type) {
-      case o.itemTypes.emoticon.id:
+      case u.itemTypes.emoticon.id:
         return i[n](e, t);
-      case o.itemTypes.moji.id:
-        return s[n](e, t);
-      case o.itemTypes.sticker.id:
+      case u.itemTypes.moji.id:
+        return o[n](e, t);
+      case u.itemTypes.sticker.id:
         throw new Error("Stickers are not implemented, yet!");
       default:
         throw new Error(e.type + " is not supported, yet!");
       }
     };
     e.prefetch = function (i) {
-      var s = [], o = [], u = [], a = n.cloneDeep(i, function (e) {
-          return e && n.isFunction(e.then) ? {} : undefined;
-        });
-      return a.tabs.forEach(function (t) {
-        var n = r.getResources(t);
-        s.push(n.styleDef);
-        o.splice(0, 0, n.prefetchUrls[0]);
+      var o = [], u = [], a = [], c = t.cloneDeep(i, function (e) {
+          return e && t.isFunction(e.then) ? {} : undefined;
+        }), h = f.resolve(n.serviceLocator.FEATURE_FLAGS);
+      return c.tabs.forEach(function (t) {
+        var n = l.getResources(t);
+        o.push(n.styleDef);
+        u.splice(0, 0, n.prefetchUrls[0]);
         t.packs.forEach(function (t) {
           t.items.forEach(function (t) {
             var n = e._processItem(t, i, "getResources");
-            s.push(n.styleDef);
+            o.push(n.styleDef);
             n.encoderMaps.forEach(function (e) {
-              u.push(e);
+              a.push(e);
             });
             n.prefetchUrls.forEach(function (e) {
-              o.push(e);
+              u.push(e);
             });
           });
         });
-      }), {
-        pesStyles: s,
-        prefetchUrls: o,
-        encodingMaps: u
+      }), h.isFeatureOn(n.featureFlags.CANVAS_EMOTICONS_ENABLED) && (s.isRunning() || s.start(), s.updateCache()), {
+        pesStyles: o,
+        prefetchUrls: u,
+        encodingMaps: a
       };
     };
-    e.register = function (n) {
-      var r = "";
-      t.map = {};
-      n.encodingMaps.forEach(function (e) {
+    e.register = function (t) {
+      var n = "";
+      r.map = {};
+      t.encodingMaps.forEach(function (e) {
         switch (e.type) {
-        case o.itemTypes.emoticon.id:
-          t.map[e.shortcut] = e.id;
+        case u.itemTypes.emoticon.id:
+          r.map[e.shortcut] = e.id;
           break;
-        case o.itemTypes.tab.id:
-        case o.itemTypes.moji.id:
-        case o.itemTypes.sticker.id:
+        case u.itemTypes.tab.id:
+        case u.itemTypes.moji.id:
+        case u.itemTypes.sticker.id:
           throw new Error("mapping.type not implemented yet:" + e.type);
         default:
           throw new Error("mapping.type not supported yet:" + e.type);
         }
       });
-      n.pesStyles.forEach(function (e) {
-        r += e;
+      t.pesStyles.forEach(function (e) {
+        n += e;
       });
-      a(r);
+      c(n);
     };
     e.prefetchImages = function (t) {
-      u.prefetchImages(t.prefetchUrls || []);
+      a.prefetchImages(t.prefetchUrls || []);
     };
   }
-  var t = e("services/pes/emoticons/encoder"), n = e("lodash-compat"), r = e("services/pes/tabs/fetcher"), i = e("services/pes/emoticons/fetcher"), s = e("services/pes/mojis/fetcher"), o = e("services/pes/constants"), u = e("utils/common/prefetcher");
-  return new a();
+  var t = e("lodash-compat"), n = e("swx-constants").COMMON, r = e("swx-emoticon-map-instance"), i = e("services/pes/emoticons/fetcher"), s = e("services/pes/emoticons/renderLoop"), o = e("services/pes/mojis/fetcher"), u = e("services/pes/constants"), a = e("utils/common/prefetcher"), f = e("swx-service-locator-instance").default, l = e("services/pes/tabs/fetcher");
+  return new c();
 });

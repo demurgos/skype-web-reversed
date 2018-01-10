@@ -3,7 +3,7 @@ define("services/i18n/init", [
   "swx-i18n",
   "services/i18n/swx/default",
   "services/i18n/pluralizer",
-  "constants/common",
+  "swx-constants",
   "services/i18n/loader"
 ], function (e) {
   function a() {
@@ -15,6 +15,6 @@ define("services/i18n/init", [
     t.set(n);
     r.init(o);
   }
-  var t = e("swx-i18n").resources, n = e("services/i18n/swx/default"), r = e("services/i18n/pluralizer"), i = e("constants/common"), s = e("services/i18n/loader"), o = i.i18n.EMBEDDED_LOCALE, u = "swx";
+  var t = e("swx-i18n").resources, n = e("services/i18n/swx/default"), r = e("services/i18n/pluralizer"), i = e("swx-constants").COMMON, s = e("services/i18n/loader"), o = i.i18n.EMBEDDED_LOCALE, u = "swx";
   return new a();
 });

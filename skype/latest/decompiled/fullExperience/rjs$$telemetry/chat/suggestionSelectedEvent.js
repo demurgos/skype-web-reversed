@@ -1,8 +1,8 @@
 define("telemetry/chat/suggestionSelectedEvent", [
   "require",
-  "constants/common",
+  "swx-constants",
   "experience/settings",
-  "constants/keys",
+  "swx-constants",
   "ui/telemetry/telemetryClient"
 ], function (e) {
   function s() {
@@ -36,7 +36,7 @@ define("telemetry/chat/suggestionSelectedEvent", [
     };
     e.data = {};
     e.publish = function () {
-      e.data.selectedIndex !== t.telemetry.NOT_AVAILABLE && i.get().sendEvent(n.telemetry.uiTenantToken, s, e.data);
+      e.data.selectedIndex !== t.telemetry.NOT_AVAILABLE && i.get().sendEvent(n.telemetry.chatTenantToken, s, e.data);
       e.reset();
     };
     e.reset = function () {
@@ -52,6 +52,6 @@ define("telemetry/chat/suggestionSelectedEvent", [
     };
     e.reset();
   }
-  var t = e("constants/common"), n = e("experience/settings"), r = e("constants/keys"), i = e("ui/telemetry/telemetryClient");
+  var t = e("swx-constants").COMMON, n = e("experience/settings"), r = e("swx-constants").KEYS, i = e("ui/telemetry/telemetryClient");
   return s;
 });

@@ -1,78 +1,48 @@
 define("services/pes/emoticons/fetcher", [
   "require",
-  "vendor/knockout",
   "lodash-compat",
-  "services/pes/emoticons/stylesFactory",
+  "swx-constants",
   "services/pes/constants",
   "utils/chat/pesUtils",
-  "services/serviceLocator",
-  "constants/common",
-  "experience/settings"
+  "swx-service-locator-instance",
+  "experience/settings",
+  "services/pes/emoticons/stylesFactory",
+  "utils/common/url"
 ], function (e) {
   function f() {
-    function f(e) {
-      var t = o.resolve(u.serviceLocator.FEATURE_FLAGS);
-      return t.isFeatureOn(u.featureFlags.PES_CDN_AUTH_ENABLED) && (e = s.rewriteUrls(e, a.pesCDNAuthentication.rewriteRules)), {
-        smallStaticUrl: e + i.profiles.emoticons.getSmall(),
-        smallUrl: e + i.profiles.emoticons.getSmallAnimated(),
-        largeUrl: e + i.profiles.emoticons.getLargeAnimated(),
-        extraLargeUrl: e + i.profiles.emoticons.getExtraLargeAnimated()
+    function f(e, t) {
+      return a.buildUrl(e, { etag: t });
+    }
+    function l(e, t) {
+      var u = s.resolve(n.serviceLocator.FEATURE_FLAGS);
+      return u.isFeatureOn(n.featureFlags.PES_CDN_AUTH_ENABLED) && (e = i.rewriteUrls(e, o.pesCDNAuthentication.rewriteRules)), {
+        smallStaticUrl: f(e + r.profiles.emoticons.getSmall(), t),
+        largeStaticUrl: f(e + r.profiles.emoticons.getLarge(), t),
+        extraLargeStaticUrl: f(e + r.profiles.emoticons.getExtraLarge(), t),
+        smallUrl: f(e + r.profiles.emoticons.getSmallAnimated(), t),
+        largeUrl: f(e + r.profiles.emoticons.getLargeAnimated(), t),
+        extraLargeUrl: f(e + r.profiles.emoticons.getExtraLargeAnimated(), t)
       };
     }
-    function l(e, r) {
-      function s(e) {
-        return e.id + " extraLarge animated";
-      }
-      function o(e) {
-        return e.id + " large animated";
-      }
-      function u(e) {
-        return e.id + " animated";
-      }
-      function a(e) {
-        return e.id;
-      }
-      function l(e) {
-        return e.id + " large";
-      }
-      function c(e) {
-        return e.id + " extraLarge";
-      }
-      e.ariaLabel = e.description;
-      e.shortcut = e.shortcuts[0];
-      e.text = e.shortcut;
-      e.staticHtmlClass = a(e);
-      e.staticLargeHtmlClass = l(e);
-      e.staticExtraLargeHtmlClass = c(e);
-      e.animatedHtmlClass = u(e);
-      e.animatedLargeHtmlClass = o(e);
-      e.animatedExtraLargeHtmlClass = s(e);
-      e.htmlClass = t.observable(a(e));
-      e.htmlLargeClass = t.observable(o(e));
-      e.htmlExtraLargeClass = t.observable(s(e));
-      var i = f(r.emoticonsRoot + "/" + e.id + "/views/");
-      n.extend(e, i);
-      e.isLocked = t.observable(!1);
-    }
     var e = this;
-    e.process = function (e, t) {
-      return e.type !== i.itemTypes.emoticon.id ? null : (l(e, t), e);
+    e.process = function () {
+      return null;
     };
-    e.getResources = function (e, t) {
-      var s, a, l = [], c = o.resolve(u.serviceLocator.FEATURE_FLAGS);
-      return e.type !== i.itemTypes.emoticon.id ? null : (a = [], e.shortcuts.forEach(function (t) {
+    e.getResources = function (e, i) {
+      var o, a, f = [], c = s.resolve(n.serviceLocator.FEATURE_FLAGS), h;
+      return e.type !== r.itemTypes.emoticon.id ? null : (a = [], h = i.emoticonsRoot + "/" + e.id + "/views/", e.shortcuts.forEach(function (t) {
         a.push({
           shortcut: t,
           id: e.id,
-          type: i.itemTypes.emoticon.id
+          type: r.itemTypes.emoticon.id
         });
-      }), s = f(t.emoticonsRoot + "/" + e.id + "/views/"), n.extend(e, s), c.isFeatureOn(u.featureFlags.PES_FETCH_SMALL_ASSETS_ON_DEMAND) || l.push(e.smallUrl), c.isFeatureOn(u.featureFlags.PES_FETCH_MEDIUM_ASSETS_ON_DEMAND) || l.push(e.largeUrl), c.isFeatureOn(u.featureFlags.PES_FETCH_LARGE_ASSETS_ON_DEMAND) || l.push(e.extraLargeUrl), {
-        styleDef: r.create(e),
-        prefetchUrls: l,
+      }), o = l(h, e.etag), t.extend(e, o), c.isFeatureOn(n.featureFlags.PES_FETCH_SMALL_ASSETS_ON_DEMAND) || (f.push(e.smallUrl), f.push(e.smallStaticUrl)), c.isFeatureOn(n.featureFlags.PES_FETCH_MEDIUM_ASSETS_ON_DEMAND) || (f.push(e.largeUrl), f.push(e.largeStaticUrl)), c.isFeatureOn(n.featureFlags.PES_FETCH_LARGE_ASSETS_ON_DEMAND) || (f.push(e.extraLargeUrl), f.push(e.extraLargeStaticUrl)), {
+        styleDef: c.isFeatureOn(n.featureFlags.CANVAS_EMOTICONS_ENABLED) ? "" : u.create(e),
+        prefetchUrls: f,
         encoderMaps: a
       });
     };
   }
-  var t = e("vendor/knockout"), n = e("lodash-compat"), r = e("services/pes/emoticons/stylesFactory"), i = e("services/pes/constants"), s = e("utils/chat/pesUtils"), o = e("services/serviceLocator"), u = e("constants/common"), a = e("experience/settings");
+  var t = e("lodash-compat"), n = e("swx-constants").COMMON, r = e("services/pes/constants"), i = e("utils/chat/pesUtils"), s = e("swx-service-locator-instance").default, o = e("experience/settings"), u = e("services/pes/emoticons/stylesFactory"), a = e("utils/common/url");
   return new f();
 });

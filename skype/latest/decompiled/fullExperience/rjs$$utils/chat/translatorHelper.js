@@ -2,9 +2,9 @@ define("utils/chat/translatorHelper", [
   "require",
   "exports",
   "module",
-  "cafe/applicationInstance",
-  "constants/common",
-  "utils/chat/messageSanitizer",
+  "swx-cafe-application-instance",
+  "swx-constants",
+  "swx-utils-chat",
   "ui/modelHelpers/personHelper",
   "telemetry/translator/translatorTelemetry",
   "lodash-compat"
@@ -15,7 +15,7 @@ define("utils/chat/translatorHelper", [
       return e.users && e.users[0] && s.isMePersonId(e.users[0].mri);
     }), n.length ? n[0] : null) : null;
   }
-  var n = e("cafe/applicationInstance"), r = e("constants/common"), i = e("utils/chat/messageSanitizer"), s = e("ui/modelHelpers/personHelper"), o = r.telemetry.translator, u = e("telemetry/translator/translatorTelemetry"), a = e("lodash-compat");
+  var n = e("swx-cafe-application-instance"), r = e("swx-constants").COMMON, i = e("swx-utils-chat").messageSanitizer, s = e("ui/modelHelpers/personHelper"), o = r.telemetry.translator, u = e("telemetry/translator/translatorTelemetry"), a = e("lodash-compat");
   t.extractLanguageKey = function (e) {
     if (!e)
       return;
@@ -46,12 +46,12 @@ define("utils/chat/translatorHelper", [
       b({ message: v });
     }
     function E(t) {
-      var n = i.removeNoTranslateTags(t), r = p ? y : g, s = p ? i.processOutgoingTextMessage(v) : n, u = p ? n : v, a = {
-          message: u,
+      var n = i.removeNoTranslateTags(t), r = p ? y : g, u = p ? i.processOutgoingTextMessage(v, s) : n, a = p ? n : v, f = {
+          message: a,
           translation: {
             key: r,
             users: [{
-                value: s,
+                value: u,
                 mri: c
               }]
           }
@@ -65,9 +65,9 @@ define("utils/chat/translatorHelper", [
         b({ message: v });
         return;
       }
-      b(a);
+      b(f);
     }
-    var f = n.get(), l = f.translatorService, c = f.personsAndGroupsManager.mePerson.id(), h = u.build(), p = t === r.chat.messageType.OUTGOING, d = p ? o.eventType.OUTGOING : o.eventType.INCOMING, v = e, m = p ? i.processOutgoingTextMessageForTranslation(e) : i.processIncomingSanitizedTextMessageForTranslation(e), g, y;
+    var f = n.get(), l = f.translatorService, c = f.personsAndGroupsManager.mePerson.id(), h = u.build(), p = t === r.chat.messageType.OUTGOING, d = p ? o.eventType.OUTGOING : o.eventType.INCOMING, v = e, m = p ? i.processOutgoingTextMessageForTranslation(e, s) : i.processIncomingSanitizedTextMessageForTranslation(e), g, y;
     p ? (y = s._translatorSettings.meLanguage.code, g = s._translatorSettings.participantLanguage.code) : g = s._translatorSettings.meLanguage.code;
     l.translateMessage(y, g, m).then(E, w);
   };

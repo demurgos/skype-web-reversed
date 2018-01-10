@@ -4,11 +4,11 @@ define("ui/viewModels/chat/moreActionsButton", [
   "module",
   "lodash-compat",
   "vendor/knockout",
-  "constants/common",
+  "swx-constants",
   "utils/common/eventMixin",
   "swx-i18n",
   "ui/contextMenu/items/all",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "ui/telemetry/actions/actionNames"
 ], function (e, t) {
   function l(e) {
@@ -29,7 +29,7 @@ define("ui/viewModels/chat/moreActionsButton", [
       return n(), t.push(u.AddParticipantsMenuItem.build(e.addParticipantsDisabled, e.addParticipantsAction)), t.push(u.ScheduleCallMenuItem.build(e.conversation)), t;
     };
   }
-  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("constants/common"), s = e("utils/common/eventMixin"), o = e("swx-i18n").localization, u = e("ui/contextMenu/items/all"), a = e("services/serviceLocator"), f = e("ui/telemetry/actions/actionNames");
+  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("swx-constants").COMMON, s = e("utils/common/eventMixin"), o = e("swx-i18n").localization, u = e("ui/contextMenu/items/all"), a = e("swx-service-locator-instance").default, f = e("ui/telemetry/actions/actionNames");
   n.assign(l.prototype, s);
   t.build = function (e) {
     return new l(e);

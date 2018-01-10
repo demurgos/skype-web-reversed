@@ -1,9 +1,9 @@
 define("utils/chat/pesUtils", [
   "require",
   "lodash-compat",
-  "constants/common",
+  "swx-constants",
   "services/pes/constants",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "experience/settings",
   "utils/common/url"
 ], function (e) {
@@ -39,6 +39,6 @@ define("utils/chat/pesUtils", [
       a = f;
     };
   }
-  var t = e("lodash-compat"), n = e("constants/common"), r = e("services/pes/constants"), i = e("services/serviceLocator"), s = e("experience/settings"), o = e("utils/common/url");
+  var t = e("lodash-compat"), n = e("swx-constants").COMMON, r = e("services/pes/constants"), i = e("swx-service-locator-instance").default, s = e("experience/settings"), o = e("utils/common/url");
   return new u();
 });

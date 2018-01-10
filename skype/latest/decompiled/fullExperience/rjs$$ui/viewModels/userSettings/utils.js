@@ -4,12 +4,12 @@ define("ui/viewModels/userSettings/utils", [
   "module",
   "lodash-compat",
   "swx-enums",
-  "constants/common",
+  "swx-constants",
   "swx-i18n",
-  "browser/detect",
+  "swx-browser-detect",
   "ui/viewModels/userSettings/preferenceMapping"
 ], function (e, t) {
-  var n = e("lodash-compat"), r = e("swx-enums"), i = e("constants/common"), s = e("swx-i18n").localization, o = e("browser/detect"), u = e("ui/viewModels/userSettings/preferenceMapping").templates, a = i.userSettings.preferences;
+  var n = e("lodash-compat"), r = e("swx-enums"), i = e("swx-constants").COMMON, s = e("swx-i18n").localization, o = e("swx-browser-detect").default, u = e("ui/viewModels/userSettings/preferenceMapping").templates, a = i.userSettings.preferences;
   t.getPrefCategory = function (e, t, r) {
     var i = r;
     return e in t ? (i = t[e].category, i) : (n.keys(t).some(function (n) {
@@ -23,6 +23,7 @@ define("ui/viewModels/userSettings/utils", [
       return n.template;
     switch (e.type) {
     case r.preferenceType.Boolean:
+    case r.preferenceType.Notifications:
       return u.TOGGLE;
     case r.preferenceType.CallPolicy:
     case r.preferenceType.VideoPolicy:
@@ -65,5 +66,14 @@ define("ui/viewModels/userSettings/utils", [
       return r.indexOf(e) !== -1;
     }
     return i() || s();
+  };
+  t.getCategory = function (e) {
+    var t = {
+      id: e.id,
+      title: s.fetch({ key: e.titleI18NKey }),
+      "@Meta": { typeKey: "id" },
+      preferenceItems: []
+    };
+    return t.preferenceItems["@Meta"] = { typeKey: "template" }, t;
   };
 });

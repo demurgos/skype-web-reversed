@@ -2,8 +2,8 @@ define("experience/api/helpers/contentNavigator", [
   "require",
   "exports",
   "module",
-  "constants/common",
-  "services/serviceLocator"
+  "swx-constants",
+  "swx-service-locator-instance"
 ], function (e, t) {
   function i(e) {
     function u() {
@@ -31,7 +31,7 @@ define("experience/api/helpers/contentNavigator", [
       t ? c(e) : i = c.bind(undefined, e);
     };
   }
-  var n = e("constants/common"), r = e("services/serviceLocator");
+  var n = e("swx-constants").COMMON, r = e("swx-service-locator-instance").default;
   t.build = function (e) {
     return new i(e);
   };

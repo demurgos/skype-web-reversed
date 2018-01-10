@@ -3,115 +3,124 @@ define("experience/serviceLocatorInitializer", [
   "exports",
   "module",
   "swx-service-locator",
-  "constants/common",
+  "swx-constants",
   "experience/featureFlags/api",
   "services/controls/controlsBuilder",
   "services/navigation/navigationContext",
   "ui/modelObservers/modelObserver",
   "services/pes/mruService",
-  "experience/settings",
-  "services/pes.v2/mruService",
-  "services/pes.v2/bingSearch/bingSearchService",
+  "services/pes/bingSearch/bingSearchService",
+  "utils/common/cache/instance",
   "swx-giphy-service",
   "services/pes/config",
-  "services/pes.v2/config",
-  "services/pubSub/pubSub",
-  "services/serviceLocator",
+  "swx-pubsub-instance",
+  "swx-service-locator-instance",
   "ui/viewModels/experience/splashScreen",
   "services/subscriptions/subscriptionProvider",
-  "utils/people/progressiveTimeout",
-  "services/pes.v2/bingSearch/urlPreviewService",
+  "swx-utils-people",
+  "services/pes/bingSearch/urlPreviewService",
   "ui/telemetry/actions/actionTelemetryApi",
-  "services/store/pes/storeService"
+  "services/store/pes/storeService",
+  "ui/telemetry/telemetryClient",
+  "ui/telemetry/identityTelemetry",
+  "swx-local-storage",
+  "browser/window"
 ], function (e, t) {
-  var n = e("swx-service-locator"), r = e("constants/common"), i = e("experience/featureFlags/api"), s = e("services/controls/controlsBuilder"), o = e("services/navigation/navigationContext"), u = e("ui/modelObservers/modelObserver"), a = e("services/pes/mruService"), f = e("experience/settings"), l = e("services/pes.v2/mruService"), c = e("services/pes.v2/bingSearch/bingSearchService"), h = e("swx-giphy-service"), p = e("services/pes/config"), d = e("services/pes.v2/config"), v = e("services/pubSub/pubSub"), m = e("services/serviceLocator"), g = e("ui/viewModels/experience/splashScreen"), y = e("services/subscriptions/subscriptionProvider"), b = e("utils/people/progressiveTimeout").classFunction, w = e("services/pes.v2/bingSearch/urlPreviewService"), E = e("ui/telemetry/actions/actionTelemetryApi"), S = e("services/store/pes/storeService");
-  t.registerDependencies = function (e) {
-    var t = e && e.settings || f, x = r.serviceLocator;
-    return n.serviceLocatorBuilder().withService({
-      name: x.PUBSUB,
+  function C(e) {
+    return n.serviceLocatorBuilder().withServiceInstance(e, { name: N.SETTINGS }).withService({
+      name: N.PUBSUB,
       build: function () {
-        return v;
+        return p;
       }
     }).withService({
-      name: x.FEATURE_FLAGS,
+      name: N.FEATURE_FLAGS,
       build: function () {
-        return new i(t);
+        return new i(e);
       }
-    }).buildSync(m), n.serviceLocatorBuilder().withService({
-      name: x.CONTROLS_BUILDER,
+    }).buildSync(d);
+  }
+  function k(e, t) {
+    var r, i = E.get(), s = !0;
+    t && t.initParams && t.initParams.disableTelemetry === !0 && (s = !1);
+    i.enabled(s);
+    S.addIdentityToAllEvents(i);
+    r = x.build({ serviceLocator: e });
+    n.serviceLocatorBuilder().withServiceInstance(i, { name: N.TELEMETRY_MANAGER }).withServiceInstance(r, { name: N.LOCAL_STORAGE }).buildSync(d);
+    l.set(r);
+  }
+  function L(e) {
+    return n.serviceLocatorBuilder().withService({
+      name: N.CONTROLS_BUILDER,
       build: function () {
         return new s();
       }
     }).withService({
-      name: x.NAVIGATION_CONTEXT,
+      name: N.NAVIGATION_CONTEXT,
       build: function () {
         return new o();
       }
     }).withService({
-      name: x.MODEL_UI_OBSERVER,
+      name: N.MODEL_UI_OBSERVER,
       build: function () {
         return u.build();
       }
     }).withService({
-      name: x.SUBSCRIPTION_PROVIDER,
+      name: N.SUBSCRIPTION_PROVIDER,
       build: function () {
-        return new y();
+        return new m();
       }
     }).withService({
-      name: x.ACTION_TELEMETRY,
+      name: N.ACTION_TELEMETRY,
       build: function () {
-        return E.build();
+        return b.build();
       }
     }).withService({
-      name: x.PROGRESSIVE_TIMEOUT,
+      name: N.PROGRESSIVE_TIMEOUT,
       build: function () {
-        return new b();
+        return new g(T);
       }
     }).withService({
-      name: x.PES_MRU_SERVICE,
+      name: N.PES_BING_SEARCH_SERVICE,
+      build: function () {
+        return f.build();
+      }
+    }).withService({
+      name: N.PES_GIPHY_SEARCH_SERVICE,
+      build: function () {
+        return c.build(e.pesSearchServices.giphy);
+      }
+    }).withService({
+      name: N.URL_PREVIEW_SERVICE,
+      build: function () {
+        return y.build();
+      }
+    }).buildSync(d), n.serviceLocatorBuilder().withService({
+      name: N.PES_MRU_SERVICE,
       build: function () {
         return a.build();
       }
     }).withService({
-      name: x.PES_CONFIG_SERVICE,
+      name: N.PES_CONFIG_SERVICE,
       build: function () {
-        return p.build();
+        return h.build();
       }
     }).withService({
-      name: x.PES_BING_SEARCH_SERVICE,
-      build: function () {
-        return c.build();
-      }
-    }).withService({
-      name: x.PES_GIPHY_SEARCH_SERVICE,
-      build: function () {
-        return h.build(t.pesSearchServices.giphy);
-      }
-    }).withService({
-      name: x.URL_PREVIEW_SERVICE,
+      name: N.PES_STORE_SERVICE,
       build: function () {
         return w.build();
       }
-    }).buildSync(m), n.serviceLocatorBuilder().withService({
-      name: x.PES_2_MRU_SERVICE,
+    }).buildSync(d), n.serviceLocatorBuilder().withService({
+      name: N.SPLASH_SCREEN,
       build: function () {
-        return l.build();
+        return new v();
       }
-    }).withService({
-      name: x.PES_2_CONFIG_SERVICE,
-      build: function () {
-        return d.build();
-      }
-    }).withService({
-      name: x.PES_STORE_SERVICE,
-      build: function () {
-        return S.build();
-      }
-    }).buildSync(m), n.serviceLocatorBuilder().withService({
-      name: x.SPLASH_SCREEN,
-      build: function () {
-        return new g();
-      }
-    }).buildSync(m), m;
+    }).buildSync(d), d;
+  }
+  var n = e("swx-service-locator"), r = e("swx-constants").COMMON, i = e("experience/featureFlags/api"), s = e("services/controls/controlsBuilder"), o = e("services/navigation/navigationContext"), u = e("ui/modelObservers/modelObserver"), a = e("services/pes/mruService"), f = e("services/pes/bingSearch/bingSearchService"), l = e("utils/common/cache/instance"), c = e("swx-giphy-service"), h = e("services/pes/config"), p = e("swx-pubsub-instance").default, d = e("swx-service-locator-instance").default, v = e("ui/viewModels/experience/splashScreen"), m = e("services/subscriptions/subscriptionProvider"), g = e("swx-utils-people").progressiveTimeout.default, y = e("services/pes/bingSearch/urlPreviewService"), b = e("ui/telemetry/actions/actionTelemetryApi"), w = e("services/store/pes/storeService"), E = e("ui/telemetry/telemetryClient"), S = e("ui/telemetry/identityTelemetry"), x = e("swx-local-storage"), T = e("browser/window"), N = r.serviceLocator;
+  t._registerAll = function (e) {
+    return C(e), k(d, e), L(e);
   };
+  t.registerDependencies = L;
+  t.registerSharedServices = k;
+  t.registerCoreServices = C;
 });

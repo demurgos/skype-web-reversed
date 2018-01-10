@@ -2,12 +2,12 @@ define("ui/contextMenu/items/videoCall", [
   "require",
   "ui/contextMenu/items/baseCallingMenuItem",
   "swx-i18n",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "ui/telemetry/actions/actionNames",
   "ui/telemetry/actions/actionSources",
   "constants/cssClasses",
-  "cafe/applicationInstance"
+  "swx-cafe-application-instance"
 ], function (e) {
   function f(e, l, c) {
     var h, p, d = this;
@@ -37,6 +37,6 @@ define("ui/contextMenu/items/videoCall", [
       return s.audioVideo.videoCall;
     };
   }
-  var t = e("ui/contextMenu/items/baseCallingMenuItem"), n = e("swx-i18n").localization, r = e("services/serviceLocator"), i = e("constants/common"), s = e("ui/telemetry/actions/actionNames"), o = e("ui/telemetry/actions/actionSources"), u = e("constants/cssClasses"), a = e("cafe/applicationInstance");
+  var t = e("ui/contextMenu/items/baseCallingMenuItem"), n = e("swx-i18n").localization, r = e("swx-service-locator-instance").default, i = e("swx-constants").COMMON, s = e("ui/telemetry/actions/actionNames"), o = e("ui/telemetry/actions/actionSources"), u = e("constants/cssClasses"), a = e("swx-cafe-application-instance");
   return f.prototype = Object.create(t.prototype), f.TYPE = "VideoCallMenuItem", f;
 });

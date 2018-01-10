@@ -6,7 +6,9 @@ define("ui/components/experience/index", [
   "ui/components/experience/searchInput",
   "ui/components/experience/searchResults",
   "ui/components/experience/selectBox",
-  "ui/components/experience/toggleButton"
+  "ui/components/experience/toggleButton",
+  "ui/components/experience/avatarFilePicker",
+  "ui/components/experience/eduCarousel"
 ], function (e) {
   return [
     e("ui/components/experience/button"),
@@ -15,6 +17,8 @@ define("ui/components/experience/index", [
     e("ui/components/experience/searchInput"),
     e("ui/components/experience/searchResults"),
     e("ui/components/experience/selectBox"),
-    e("ui/components/experience/toggleButton")
+    e("ui/components/experience/toggleButton"),
+    e("ui/components/experience/avatarFilePicker"),
+    e("ui/components/experience/eduCarousel")
   ];
 });

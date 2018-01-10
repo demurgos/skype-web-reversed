@@ -1,8 +1,8 @@
 define("utils/common/disposableMixin", [
   "require",
-  "services/pubSub/pubSub",
+  "swx-pubsub-instance",
   "browser/window",
-  "constants/common",
+  "swx-constants",
   "vendor/knockout"
 ], function (e) {
   function s(e) {
@@ -15,10 +15,8 @@ define("utils/common/disposableMixin", [
     };
     e._dmDisposeExtended = !0;
   }
-  var t = e("services/pubSub/pubSub"), n = e("browser/window"), r = e("constants/common").disposableGroups, i = e("vendor/knockout");
+  var t = e("swx-pubsub-instance").default, n = e("browser/window"), r = e("swx-constants").COMMON.disposableGroups, i = e("vendor/knockout");
   return {
-    _dmDisposeExtended: !1,
-    _disposableItems: null,
     registerPubSubEvent: function (e, n) {
       t.subscribe(e, n);
       this._dmRegisterDisposableItem(r.PUB_SUB, {

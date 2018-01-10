@@ -1,8 +1,8 @@
 define("services/telemetry/eventBus", [
   "require",
-  "services/pubSub/pubSub"
+  "swx-pubsub-instance"
 ], function (e) {
-  var t = e("services/pubSub/pubSub");
+  var t = e("swx-pubsub-instance").default;
   return {
     get: function () {
       return t;

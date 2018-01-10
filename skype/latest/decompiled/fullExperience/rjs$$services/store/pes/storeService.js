@@ -3,9 +3,9 @@ define("services/store/pes/storeService", [
   "lodash-compat",
   "services/store/pes/catalogItemProcessor",
   "experience/settings",
-  "jSkype/client",
-  "utils/common/builderMixin",
-  "services/pes.v2/configSync",
+  "swx-cafe-application-instance",
+  "swx-utils-common",
+  "services/pes/configSync",
   "reqwest"
 ], function (e) {
   function l(e) {
@@ -20,7 +20,7 @@ define("services/store/pes/storeService", [
   }
   function h() {
   }
-  var t = e("lodash-compat"), n = e("services/store/pes/catalogItemProcessor"), r = e("experience/settings"), i = r.pesStoreServices, s = r.entitlementService, o = e("jSkype/client"), u = e("utils/common/builderMixin"), a = e("services/pes.v2/configSync"), f = e("reqwest");
+  var t = e("lodash-compat"), n = e("services/store/pes/catalogItemProcessor"), r = e("experience/settings"), i = r.pesStoreServices, s = r.entitlementService, o = e("swx-cafe-application-instance"), u = e("swx-utils-common").builderMixin, a = e("services/pes/configSync"), f = e("reqwest");
   return h.prototype.loadCatalog = function () {
     var t = l({
       url: "https://" + i.catalogApiHost + i.catalogServiceEndpoint.replace("${lang}", r.locale.pes),
@@ -52,6 +52,34 @@ define("services/store/pes/storeService", [
           }
         }
       }), t;
+    });
+  }, h.prototype.getHiddenTabs = function () {
+    var t, n = o.get().personsAndGroupsManager.mePerson;
+    return t = l({ url: r.userOptionsService.host + r.userOptionsService.optionsEndpoint.replace("${userId}", n.id()).replace("${optionName}", "OPT_HIDDEN_EXPRESSION_TABS") }), Promise.resolve(c()).catch(function () {
+      return null;
+    }).then(function (e) {
+      return e ? (t.headers = {
+        "X-Skypetoken": e,
+        Accept: "application/json; ver=1.0"
+      }, f.compat(t)) : Promise.reject("Invalid Skype token");
+    }).catch(function () {
+    }).then(function (e) {
+      var t = [];
+      return e && e.optionStr && (t = JSON.parse(e.optionStr)), t;
+    });
+  }, h.prototype.postHiddenTabs = function (t) {
+    var n, i = o.get().personsAndGroupsManager.mePerson;
+    return n = l({
+      url: r.userOptionsService.host + r.userOptionsService.optionsEndpoint.replace("${userId}", i.id()).replace("${optionName}", "OPT_HIDDEN_EXPRESSION_TABS"),
+      type: "post",
+      data: "stringValue=" + JSON.stringify(t)
+    }), Promise.resolve(c()).catch(function () {
+      return null;
+    }).then(function (e) {
+      return e ? (n.headers = { "X-Skypetoken": e }, f.compat(n)) : Promise.reject("Invalid Skype token");
+    }).catch(function () {
+    }).then(function () {
+      return "success";
     });
   }, h.prototype.getTabsFromEntitlement = function () {
     var e = o.get().personsAndGroupsManager.mePerson, t;

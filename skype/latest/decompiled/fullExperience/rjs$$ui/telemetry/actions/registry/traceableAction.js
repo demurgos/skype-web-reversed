@@ -6,8 +6,8 @@ define("ui/telemetry/actions/registry/traceableAction", [
   "swx-utils-common",
   "usertiming",
   "experience/settings",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "ui/telemetry/telemetryClient"
 ], function (e, t) {
   function f(e, t) {
@@ -61,7 +61,7 @@ define("ui/telemetry/actions/registry/traceableAction", [
       p && (d.isFeatureOn(u.featureFlags.TELEMETRY_UIACTIONPERF_ENABLED) && a.get().sendEvent(s.telemetry.uiTenantToken, "ui_action_perf", e), g(), t());
     };
   }
-  var n = e("lodash-compat"), r = e("swx-utils-common").guid, i = e("usertiming"), s = e("experience/settings"), o = e("services/serviceLocator"), u = e("constants/common"), a = e("ui/telemetry/telemetryClient");
+  var n = e("lodash-compat"), r = e("swx-utils-common").guid, i = e("usertiming"), s = e("experience/settings"), o = e("swx-service-locator-instance").default, u = e("swx-constants").COMMON, a = e("ui/telemetry/telemetryClient");
   t.build = function (e, t) {
     return new f(e, t);
   };

@@ -6,7 +6,7 @@ define("ui/contextMenu/items/shareScreen", [
   "ui/contextMenu/menuItem"
 ], function (e, t) {
   function i(e, i, s) {
-    var o = n.fetch({ key: "callscreen_text_shareScreen" }), u = n.fetch({ key: "callscreen_text_stopSharingScreen" });
+    var o = n.fetch({ key: "callscreen_text_shareScreens" }), u = n.fetch({ key: "callscreen_text_stopSharingScreen" });
     r.call(this, t.TYPE, i ? o : u, s);
     this.isEnabled = function () {
       return !e();

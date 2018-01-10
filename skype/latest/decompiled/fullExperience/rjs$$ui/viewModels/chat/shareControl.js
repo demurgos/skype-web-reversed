@@ -4,10 +4,10 @@ define("ui/viewModels/chat/shareControl", [
   "module",
   "vendor/knockout",
   "utils/common/eventMixin",
-  "constants/common",
+  "swx-constants",
   "lodash-compat",
-  "constants/keys",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-service-locator-instance",
   "utils/common/eventHelper"
 ], function (e, t) {
   function l(e) {
@@ -49,7 +49,7 @@ define("ui/viewModels/chat/shareControl", [
     t.forwardEvent(s.roster.ROSTER_QUERY_EXECUTED);
     t.forwardEvent(s.roster.ROSTER_SELECTION_REMOVED);
   }
-  var n = e("vendor/knockout"), r = e("utils/common/eventMixin"), i = e("constants/common"), s = i.events, o = e("lodash-compat"), u = e("constants/keys"), a = e("services/serviceLocator"), f = e("utils/common/eventHelper");
+  var n = e("vendor/knockout"), r = e("utils/common/eventMixin"), i = e("swx-constants").COMMON, s = i.events, o = e("lodash-compat"), u = e("swx-constants").KEYS, a = e("swx-service-locator-instance").default, f = e("utils/common/eventHelper");
   t.build = function (e) {
     return new l(e);
   };

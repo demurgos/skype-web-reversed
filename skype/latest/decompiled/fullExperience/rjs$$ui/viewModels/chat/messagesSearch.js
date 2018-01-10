@@ -2,13 +2,13 @@ define("ui/viewModels/chat/messagesSearch", [
   "require",
   "vendor/knockout",
   "swx-i18n",
-  "services/pubSub/pubSub",
-  "constants/common",
-  "services/serviceLocator",
-  "cafe/applicationInstance",
-  "constants/common"
+  "swx-pubsub-instance",
+  "swx-constants",
+  "swx-service-locator-instance",
+  "swx-cafe-application-instance",
+  "swx-constants"
 ], function (e) {
-  var t = e("vendor/knockout"), n = e("swx-i18n").localization, r = e("services/pubSub/pubSub"), i = e("constants/common"), s = e("services/serviceLocator"), o = e("cafe/applicationInstance"), u = e("constants/common").events.search;
+  var t = e("vendor/knockout"), n = e("swx-i18n").localization, r = e("swx-pubsub-instance").default, i = e("swx-constants").COMMON, s = e("swx-service-locator-instance").default, o = e("swx-cafe-application-instance"), u = e("swx-constants").COMMON.events.search;
   return function (a) {
     function m(e) {
       var t;

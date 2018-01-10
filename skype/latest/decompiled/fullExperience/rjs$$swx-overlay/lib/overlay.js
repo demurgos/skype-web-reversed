@@ -6,87 +6,92 @@
     typeof define == "function" && define.amd && define("swx-overlay/lib/overlay", [
       "require",
       "exports",
-      "./helpers"
+      "./helpers",
+      "swx-focus-handler"
     ], e);
 }(function (e, t) {
-  function f() {
-    return !u.content || !u.contentParent ? !1 : (u.contentParent.appendChild(u.content), r.removeChild(u.slide), u = {}, !0);
+  function c() {
+    return !f.content || !f.contentParent ? !1 : (f.contentParent.appendChild(f.content), i.removeChild(f.slide), f = {}, !0);
   }
-  function l() {
-    var e = document.createElement("div"), t = document.createElement("div"), r = document.createElement("div"), s = document.createElement("div");
+  function h() {
+    var e = document.createElement("div"), t = document.createElement("div"), r = document.createElement("div"), i = document.createElement("div");
     n.addClass(e, "overlaySlide");
     n.addClass(t, "table");
     n.addClass(r, "tableCell");
-    n.addClass(s, "overlaySlideContent");
-    n.addClass(s, "themeWhite");
-    s.tabIndex = -1;
-    s.setAttribute("role", "dialog");
-    s.setAttribute("aria-label", "");
-    r.appendChild(s);
+    n.addClass(i, "overlaySlideContent");
+    n.addClass(i, "themeWhite");
+    i.tabIndex = -1;
+    i.setAttribute("role", "dialog");
+    i.setAttribute("aria-label", "");
+    r.appendChild(i);
     t.appendChild(r);
     e.appendChild(t);
-    i = e;
+    s = e;
   }
-  function c() {
+  function p() {
     var e = document.createElement("div");
     n.addClass(e, "overlayContainer");
-    r = e;
+    i = e;
   }
-  function h(e) {
+  function d(e) {
     var t = {};
-    return t.content = e, t.contentParent = e.parentNode, t.slide = i.cloneNode(!0), t.contentContainer = t.slide.querySelector(".overlaySlideContent"), t.contentContainer.appendChild(e), t;
+    return t.content = e, t.contentParent = e.parentNode, t.slide = s.cloneNode(!0), t.contentContainer = t.slide.querySelector(".overlaySlideContent"), t.contentContainer.appendChild(e), t;
   }
-  function p(e) {
-    var t = u.slide;
-    if (s === !1) {
-      f();
+  function v(e) {
+    var t = f.slide;
+    if (o === !1) {
+      c();
       return;
     }
     if (n.cssTransitionsSupported === !1 || e === null) {
-      f();
+      c();
       return;
     }
     e.inactiveTransitionClass !== "" && (n.bind(t, n.cssTransitionEndEventName, function () {
       n.removeClass(t, e.inactiveTransitionClass);
     }), n.addClass(t, e.inactiveTransitionClass));
-    n.bind(t, n.cssTransitionEndEventName, f);
+    n.bind(t, n.cssTransitionEndEventName, c);
     n.addClass(t, e.inactiveClass);
   }
-  function d(e) {
+  function m(e) {
     if (n.cssTransitionsSupported === !1 || e === null) {
-      r.appendChild(o.slide);
+      i.appendChild(a.slide);
       return;
     }
-    e.activeTransitionClass !== "" && (n.bind(o.slide, n.cssTransitionEndEventName, function () {
-      n.removeClass(o.slide, e.activeTransitionClass);
-    }), n.addClass(o.slide, e.activeTransitionClass));
-    n.addClass(o.slide, e.activeClass);
+    e.activeTransitionClass !== "" && (n.bind(a.slide, n.cssTransitionEndEventName, function () {
+      n.removeClass(a.slide, e.activeTransitionClass);
+    }), n.addClass(a.slide, e.activeTransitionClass));
+    n.addClass(a.slide, e.activeClass);
     window.setTimeout(function () {
-      n.removeClass(o.slide, e.activeClass);
+      n.removeClass(a.slide, e.activeClass);
     }, 10);
-    r.appendChild(o.slide);
-  }
-  function v(e) {
-    var t;
-    if (s === !1)
-      return;
-    t = e.target;
-    r.contains(t) === !1 && o.contentContainer.focus();
-  }
-  function m(e) {
-    e.keyCode === 27 && t.hide();
+    i.appendChild(a.slide);
   }
   function g(e) {
-    var t = e.length, i;
-    for (i = 0; i < t; i++)
-      n.addClass(r, e[i]);
+    var t;
+    if (o === !1)
+      return;
+    t = e.target;
+    i.contains(t) === !1 && y();
   }
   function y() {
-    c();
-    l();
-    n.bind(document, "focusin", v);
+    r.get().addFocusRequestToQueue(a.contentContainer);
   }
-  var n = e("./helpers"), r = null, i = null, s = !1, o = {}, u = {}, a = {
+  function b(e) {
+    e.keyCode === 27 && t.hide();
+  }
+  function w(e) {
+    var t = e.length, r;
+    for (r = 0; r < t; r++)
+      n.addClass(i, e[r]);
+  }
+  function E() {
+    p();
+    h();
+    n.bind(document, "focusin", g);
+    u = !1;
+  }
+  var n = e("./helpers"), r = e("swx-focus-handler"), i = null, s = null, o = !1, u = !1, a = {}, f = {}, l = {
       next: {
         activeClass: "next",
         activeTransitionClass: "",
@@ -100,21 +105,21 @@
         inactiveTransitionClass: ""
       }
     };
-  y();
-  t.display = function (e, t, i, f) {
-    var l, c = null;
-    return f = f || {}, typeof e != "string" ? !1 : (typeof t != "string" && (t = ""), e.indexOf("#") === 0 && (e = e.substr(1)), l = document.getElementById(e), l === null ? !1 : l === o.content ? !1 : (i !== undefined && s === !0 && a[i] !== undefined && (c = a[i]), u = n.extend({}, o), o = h(l), o.contentContainer.setAttribute("aria-label", t), s === !1 && (document.body.appendChild(r), s = !0), c !== null && (n.removeClass(r, c.activeClass), n.removeClass(r, c.inactiveClass), n.addClass(r, c.activeClass)), g(f.containerClasses), p(c), d(c), o.contentContainer.focus(), !0));
+  E();
+  t.display = function (e, t, r, s) {
+    var c, h = null;
+    return s = s || {}, u = s.skipSlideCreation ? s.skipSlideCreation : !1, typeof e != "string" ? !1 : (typeof t != "string" && (t = ""), e.indexOf("#") === 0 && (e = e.substr(1)), c = document.getElementById(e), c === null ? !1 : c === a.content ? !1 : (r !== undefined && o === !0 && l[r] !== undefined && (h = l[r]), u || (f = n.extend({}, a), a = d(c), a.contentContainer.setAttribute("aria-label", t)), o === !1 && (document.body.appendChild(i), o = !0), h !== null && (n.removeClass(i, h.activeClass), n.removeClass(i, h.inactiveClass), n.addClass(i, h.activeClass)), w(s.containerClasses), u ? (n.unbind(document, "focusin", g), i.appendChild(c)) : (v(h), m(h), y()), !0));
   };
   t.hide = function () {
-    return u = n.extend({}, o), f() === !1 ? !1 : (r.parentNode.removeChild(r), s = !1, n.unbind(document, "keydown", m), o = {}, !0);
+    return f = n.extend({}, a), !u && c() === !1 ? !1 : (i.parentNode.removeChild(i), o = !1, n.unbind(document, "keydown", b), a = {}, !0);
   };
   t.bindHide = function (e) {
-    return !e || typeof e != "object" ? !1 : (n.bind(e, "click", t.hide), n.bind(document, "keydown", m), !0);
+    return !e || typeof e != "object" ? !1 : (n.bind(e, "click", t.hide), n.bind(document, "keydown", b), !0);
   };
   t.isOverlayDisplayed = function () {
-    return s;
+    return o;
   };
   t.getOverlayContainer = function () {
-    return r;
+    return i;
   };
 }));

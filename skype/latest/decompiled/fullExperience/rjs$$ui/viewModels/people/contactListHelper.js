@@ -3,7 +3,7 @@ define("ui/viewModels/people/contactListHelper", [
   "exports",
   "module",
   "lodash-compat",
-  "utils/people/organizePersons",
+  "swx-utils-people",
   "ui/viewModels/people/contactBuilder",
   "ui/modelHelpers/personHelper"
 ], function (e, t) {
@@ -20,7 +20,7 @@ define("ui/viewModels/people/contactListHelper", [
         }), !0;
     });
   }
-  var n = e("lodash-compat"), r = e("utils/people/organizePersons"), i = e("ui/viewModels/people/contactBuilder"), s = e("ui/modelHelpers/personHelper");
+  var n = e("lodash-compat"), r = e("swx-utils-people").organizePersons, i = e("ui/viewModels/people/contactBuilder"), s = e("ui/modelHelpers/personHelper");
   t.deselectContactFromDefaultList = function (e, t) {
     u(!1, e, t);
   };
@@ -34,7 +34,7 @@ define("ui/viewModels/people/contactListHelper", [
     }, []);
   };
   t.organizeByAlphabet = function (e) {
-    return r.byAlphabet(e);
+    return e = e || [], r.byAlphabet(e);
   };
   t.setObservablePropertyOnContacts = function (e, r, i) {
     function s(n) {

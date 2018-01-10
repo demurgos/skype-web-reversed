@@ -3,18 +3,24 @@ define("experience/api/flagsObservable", [
   "exports",
   "module",
   "lodash-compat",
-  "constants/common",
+  "swx-constants",
   "vendor/knockout",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "experience/settings"
 ], function (e, t) {
-  var n = e("lodash-compat"), r = e("constants/common"), i = e("vendor/knockout"), s = e("services/serviceLocator"), o = e("experience/settings");
+  var n = e("lodash-compat"), r = e("swx-constants").COMMON, i = e("vendor/knockout"), s = e("swx-service-locator-instance").default, o = e("experience/settings");
   t.expose = function () {
-    var e = i.observable(""), t = s.resolve(r.serviceLocator.PUBSUB);
+    function a(e) {
+      e === "" ? o.flags = "[]" : o.flags = e;
+    }
+    var e = i.observable(""), t = s.resolve(r.serviceLocator.PUBSUB), u = {
+        read: e,
+        write: a
+      };
     return t.subscribe(r.events.flags.SET_FLAG, function (t) {
       if (!n.isString(t))
         throw new TypeError("invalid arguments; expected a flag name (String)");
-      e(o.version + "/" + t);
-    }), { setFlag: e };
+      e(t);
+    }), { flags: i.computed(u) };
   };
 });

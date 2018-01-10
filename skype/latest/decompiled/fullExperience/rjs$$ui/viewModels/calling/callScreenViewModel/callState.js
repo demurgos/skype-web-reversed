@@ -1,35 +1,32 @@
 define("ui/viewModels/calling/callScreenViewModel/callState", [
   "require",
-  "vendor/knockout",
+  "swx-constants",
   "swx-enums",
-  "constants/calling"
+  "vendor/knockout"
 ], function (e) {
   function s(e) {
     function c() {
-      s.state() === r.ENDING ? o = window.setTimeout(h, i) : window.clearTimeout(o);
+      s.state() === t.ENDING ? o = window.setTimeout(h, i) : window.clearTimeout(o);
     }
     function h() {
-      s.state(r.ENDED);
+      s.state(t.ENDED);
     }
     function p() {
-      s.state(r.CONNECTING);
+      s.state() !== t.ENDING && s.state(t.CONNECTING);
     }
-    function d(t, i) {
+    function d(r, i) {
       if (!i || i === n.callConnectionState.Disconnected)
         return;
-      e.selfParticipant.audio.state.reason !== n.callDisconnectionReason.CallEscalated ? (s.totalCallDuration = s.getCurrentDuration(), s.state(r.ENDING)) : s.state(r.ENDED);
+      e.selfParticipant.audio.state.reason !== n.callDisconnectionReason.CallEscalated ? (s.totalCallDuration = s.getCurrentDuration(), s.state(t.ENDING)) : s.state(t.ENDED);
     }
     function v() {
-      s.state() !== r.EARLY_MEDIA && s.state(r.CALLING);
+      s.state() !== t.EARLY_MEDIA && s.state() !== t.ENDING && s.state(t.CALLING);
     }
     function m() {
-      v();
-      s.state(r.EARLY_MEDIA);
+      s.state() !== t.ENDING && (v(), s.state(t.EARLY_MEDIA));
     }
     function g() {
-      l = e.audioService.callConnected();
-      s.state(r.CONNECTED);
-      y();
+      s.state() !== t.ENDING && (l = e.audioService.callConnected(), s.state(t.CONNECTED), y());
     }
     function y() {
       x(f);
@@ -53,10 +50,10 @@ define("ui/viewModels/calling/callScreenViewModel/callState", [
       E();
     }
     function E() {
-      var t = e.participants().some(function (e) {
+      var r = e.participants().some(function (e) {
         return e.audio.state() === n.callConnectionState.EarlyMedia;
       });
-      s.state() === r.EARLY_MEDIA && !t && s.state(r.CALLING);
+      s.state() === t.EARLY_MEDIA && !r && s.state(t.CALLING);
     }
     function S() {
       u.push(s.state.subscribe(c), e.selfParticipant.audio.state.when(n.callConnectionState.Connecting, p), e.selfParticipant.audio.state.when(n.callConnectionState.Connected, g), e.selfParticipant.audio.state.when(n.callConnectionState.Disconnecting, d), e.selfParticipant.audio.state.when(n.callConnectionState.Disconnected, d));
@@ -70,7 +67,7 @@ define("ui/viewModels/calling/callScreenViewModel/callState", [
       e.length = 0;
     }
     var s = this, o, u = [], a = [], f = [], l = null;
-    this.state = t.observable(r.CONNECTING);
+    this.state = r.observable(t.CONNECTING);
     this.totalCallDuration = null;
     this.dispose = function () {
       x(u);
@@ -82,7 +79,7 @@ define("ui/viewModels/calling/callScreenViewModel/callState", [
     };
     S();
   }
-  var t = e("vendor/knockout"), n = e("swx-enums"), r = e("constants/calling").CALL_STATES, i = 3500;
+  var t = e("swx-constants").CALLING.CALL_STATES, n = e("swx-enums"), r = e("vendor/knockout"), i = 3500;
   return {
     build: function (e) {
       return new s(e);

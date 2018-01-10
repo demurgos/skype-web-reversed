@@ -3,13 +3,13 @@ define("ui/viewModels/chat/hearts", [
   "exports",
   "module",
   "swx-enums",
-  "constants/common",
+  "swx-constants",
   "ui/viewModels/people/contactBuilder",
   "telemetry/chat/emotionActionEvent",
   "swx-i18n",
   "vendor/knockout",
   "ui/modelHelpers/personHelper",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "swx-utils-common"
 ], function (e, t) {
   function c(e, t, c) {
@@ -162,7 +162,7 @@ define("ui/viewModels/chat/hearts", [
       });
     };
   }
-  var n = e("swx-enums"), r = e("constants/common"), i = e("ui/viewModels/people/contactBuilder"), s = e("telemetry/chat/emotionActionEvent"), o = e("swx-i18n").localization, u = e("vendor/knockout"), a = e("ui/modelHelpers/personHelper"), f = e("services/serviceLocator"), l = e("swx-utils-common").stopwatch;
+  var n = e("swx-enums"), r = e("swx-constants").COMMON, i = e("ui/viewModels/people/contactBuilder"), s = e("telemetry/chat/emotionActionEvent"), o = e("swx-i18n").localization, u = e("vendor/knockout"), a = e("ui/modelHelpers/personHelper"), f = e("swx-service-locator-instance").default, l = e("swx-utils-common").stopwatch;
   t.build = function (e, t, n) {
     return new c(e, t, n);
   };

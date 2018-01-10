@@ -2,20 +2,26 @@ define("jSkype/services/callHandlerFactory", [
   "require",
   "exports",
   "module",
-  "utils/calling/callingStack",
-  "jSkype/services/plugin/pluginCallHandler",
-  "jSkype/services/NGCCallAgent/NGCCallAgent/ngcAgent",
-  "jSkype/services/outOfBrowser/outOfBrowserCallHandler",
+  "swx-jskype-main/lib/services/calling/handlers/plugin/pluginCallingHandler",
+  "swx-jskype-main/lib/services/calling/handlers/pluginless/pluginlessCallingHandler",
+  "swx-jskype-main/lib/services/calling/handlers/shell/shellCallingHandler",
+  "swx-jskype-main/lib/services/calling/callingFacade",
+  "swx-util-calling-stack",
+  "swx-jskype-main/lib/services/plugin/pluginCallHandler",
+  "jSkype/services/swxWebCalling",
+  "swx-jskype-main/lib/services/outOfBrowser/outOfBrowserCallHandler",
   "swx-enums"
 ], function (e, t) {
-  var n = e("utils/calling/callingStack"), r = e("jSkype/services/plugin/pluginCallHandler"), i = e("jSkype/services/NGCCallAgent/NGCCallAgent/ngcAgent").callHandler, s = e("jSkype/services/outOfBrowser/outOfBrowserCallHandler"), o = e("swx-enums"), u;
+  var n = e("swx-jskype-main/lib/services/calling/handlers/plugin/pluginCallingHandler"), r = e("swx-jskype-main/lib/services/calling/handlers/pluginless/pluginlessCallingHandler"), i = e("swx-jskype-main/lib/services/calling/handlers/shell/shellCallingHandler"), s = e("swx-jskype-main/lib/services/calling/callingFacade"), o = e("swx-util-calling-stack"), u = e("swx-jskype-main/lib/services/plugin/pluginCallHandler"), a = e("jSkype/services/swxWebCalling").callHandler, f = e("swx-jskype-main/lib/services/outOfBrowser/outOfBrowserCallHandler"), l = e("swx-enums"), c;
   t.createCallHandler = function (t) {
-    return t.audioService._canHandlePluginlessCall() ? (t._callData.callTechnology(o.callTechnology.NGC), i.build(t)) : n.get().isInBrowserPluginSupported() ? r.build(t) : s.build(t);
+    var c, h;
+    return t.audioService._canHandlePluginlessCall() ? (t._callData.callTechnology(l.callTechnology.NGC), c = a.build(t), h = r) : o.get().isInBrowserPluginSupported() ? (c = u.build(t), h = n) : (c = f.build(t), h = i), s.setCallingHandler(h), c;
   };
-  t.initialize = function () {
-    return n.get().isPluginlessCallingSupported() ? u = i : n.get().isInBrowserPluginSupported() ? u = r : u = s, u.initialize();
+  t.initialize = function (t) {
+    var l;
+    return o.get().isPluginlessCallingSupported() ? (c = a, l = r, r.initialize(t)) : o.get().isInBrowserPluginSupported() ? (c = u, l = n) : (c = f, l = i), s.setCallingHandler(l), c.initialize();
   };
   t.dispose = function () {
-    u && u.dispose && u.dispose();
+    c && c.dispose && c.dispose();
   };
 });

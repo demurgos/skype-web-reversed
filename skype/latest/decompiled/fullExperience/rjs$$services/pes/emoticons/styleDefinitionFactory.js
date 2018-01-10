@@ -33,7 +33,7 @@ define("services/pes/emoticons/styleDefinitionFactory", [
       return u += "{\n", u += " -ms-high-contrast-adjust: none;\n", u += " background-image: url('" + n + "'); \n", u += " background-size: " + r + "px " + s + "px; \n", u += " height: " + s + "px; \n", u += i(o), u += " -moz-animation: none; \n", u += " -webkit-animation: none; \n", u += " animation: none \n", u += "}", u;
     }
     function f(e) {
-      return a(e, "", e.smallUrl, t.frameHeights.emoticons.SMALL, e.styleDef.smallHeight, e.styleDef.smallOffset) + a(e, ".large", e.largeUrl, t.frameHeights.emoticons.LARGE, e.styleDef.largeHeight, e.styleDef.largeOffset) + a(e, ".extraLarge", e.extraLargeUrl, t.frameHeights.emoticons.EXTRA_LARGE, e.styleDef.extraLargeHeight, e.styleDef.extraLargeOffset);
+      return a(e, "", e.smallStaticUrl, t.frameHeights.emoticons.SMALL, t.frameHeights.emoticons.SMALL, 0) + a(e, ".large", e.largeStaticUrl, t.frameHeights.emoticons.LARGE, t.frameHeights.emoticons.LARGE, 0) + a(e, ".extraLarge", e.extraLargeStaticUrl, t.frameHeights.emoticons.EXTRA_LARGE, t.frameHeights.emoticons.EXTRA_LARGE, 0);
     }
     var e = this;
     e.create = function (e) {

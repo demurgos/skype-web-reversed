@@ -4,14 +4,14 @@ define("ui/viewModels/chat/fileTransferActivityActions", [
   "module",
   "lodash-compat",
   "swx-enums",
-  "constants/common",
+  "swx-constants",
   "swx-i18n",
   "vendor/knockout",
   "experience/settings",
   "browser/dom",
-  "cafe/applicationInstance",
+  "swx-cafe-application-instance",
   "swx-flags-service-api",
-  "browser/detect",
+  "swx-browser-detect",
   "ui/modalDialog/downloadFileConfirmationDialog"
 ], function (e, t) {
   function p(e) {
@@ -81,7 +81,7 @@ define("ui/viewModels/chat/fileTransferActivityActions", [
       t.isFailed.dispose();
     };
   }
-  var n = e("lodash-compat"), r = e("swx-enums"), i = e("constants/common"), s = e("swx-i18n").localization, o = e("vendor/knockout"), u = e("experience/settings"), a = e("browser/dom"), f = e("cafe/applicationInstance"), l = e("swx-flags-service-api"), c = e("browser/detect"), h = e("ui/modalDialog/downloadFileConfirmationDialog");
+  var n = e("lodash-compat"), r = e("swx-enums"), i = e("swx-constants").COMMON, s = e("swx-i18n").localization, o = e("vendor/knockout"), u = e("experience/settings"), a = e("browser/dom"), f = e("swx-cafe-application-instance"), l = e("swx-flags-service-api"), c = e("swx-browser-detect").default, h = e("ui/modalDialog/downloadFileConfirmationDialog");
   t.build = function (e) {
     return new p(e);
   };

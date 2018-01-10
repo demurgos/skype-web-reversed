@@ -3,11 +3,11 @@ define("services/controls/controlsBuilder", [
   "vendor/knockout",
   "experience/settings",
   "browser/dom",
-  "services/serviceLocator",
-  "constants/common",
+  "swx-service-locator-instance",
+  "swx-constants",
   "utils/common/accessibility",
   "utils/common/applicationFocusManager",
-  "services/g11n/globalization"
+  "swx-g11n"
 ], function (e) {
   function c() {
     function p() {
@@ -116,6 +116,6 @@ define("services/controls/controlsBuilder", [
       h.push(e);
     };
   }
-  var t = e("vendor/knockout"), n = e("experience/settings"), r = e("browser/dom"), i = e("services/serviceLocator"), s = e("constants/common"), o = e("utils/common/accessibility"), u = e("utils/common/applicationFocusManager"), a = e("services/g11n/globalization"), f = "data-control", l = "model";
+  var t = e("vendor/knockout"), n = e("experience/settings"), r = e("browser/dom"), i = e("swx-service-locator-instance").default, s = e("swx-constants").COMMON, o = e("utils/common/accessibility"), u = e("utils/common/applicationFocusManager"), a = e("swx-g11n").globalization, f = "data-control", l = "model";
   return c;
 });

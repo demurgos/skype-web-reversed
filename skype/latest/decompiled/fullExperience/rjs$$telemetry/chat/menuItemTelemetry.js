@@ -2,10 +2,10 @@ define("telemetry/chat/menuItemTelemetry", [
   "require",
   "exports",
   "module",
-  "constants/common",
+  "swx-constants",
   "experience/settings",
   "utils/common/styleModeHelper",
-  "services/serviceLocator",
+  "swx-service-locator-instance",
   "ui/telemetry/telemetryClient"
 ], function (e, t) {
   function f() {
@@ -29,12 +29,12 @@ define("telemetry/chat/menuItemTelemetry", [
       e.data.ordinal = u.ordinal || t;
       e.data.navigationMenuIconsEnabled = f.isFeatureOn(n.featureFlags.NAVIGATION_MENU_ICONS_ENABLED);
       var h = i.TYPE, p = c(e.data);
-      a.get().sendEvent(r.telemetry.uiTenantToken, h, p);
+      a.get().sendEvent(r.telemetry.chatTenantToken, h, p);
       l();
     };
     l();
   }
-  var n = e("constants/common"), r = e("experience/settings"), i = n.telemetry.menuItemClicked, s = n.styleMode, o = e("utils/common/styleModeHelper"), u = e("services/serviceLocator"), a = e("ui/telemetry/telemetryClient");
+  var n = e("swx-constants").COMMON, r = e("experience/settings"), i = n.telemetry.menuItemClicked, s = n.styleMode, o = e("utils/common/styleModeHelper"), u = e("swx-service-locator-instance").default, a = e("ui/telemetry/telemetryClient");
   t.build = function () {
     return new f();
   };

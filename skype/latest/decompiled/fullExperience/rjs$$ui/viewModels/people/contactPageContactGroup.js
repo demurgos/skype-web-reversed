@@ -17,12 +17,17 @@ define("ui/viewModels/people/contactPageContactGroup", [
     function o(e) {
       return i.build(e, { hideable: !0 });
     }
+    e = e || {};
+    e.contacts = e.contacts || [];
     this.name = e.name;
-    this.contacts = n.observableArray(e.contacts.map(o));
+    this.contacts = n.observableArray([]);
     this._hiddenContacts = n.observableArray();
     this._contactsSubscription = this.contacts.subscribe(s, this, "arrayChange");
-    s.call(this);
     this.isHidden = n.computed(r, this);
+    this.init = function () {
+      var t = e.contacts.map(o);
+      this.contacts(t);
+    };
   }
   var t = e("lodash-compat"), n = e("vendor/knockout"), r = e("utils/common/ko"), i = e("ui/viewModels/people/contactBuilder");
   return s.prototype.dispose = function () {

@@ -3,8 +3,8 @@ define("ui/contextMenu/items/removeConversationHistory", [
   "swx-i18n",
   "ui/contextMenu/menuItem",
   "ui/modalDialog/removeConversationHistoryDialog",
-  "services/serviceLocator",
-  "constants/common"
+  "swx-service-locator-instance",
+  "swx-constants"
 ], function (e) {
   function o() {
     return i.resolve(s.serviceLocator.FEATURE_FLAGS).isFeatureOn(s.featureFlags.USE_BUSINESS_WORDING);
@@ -27,6 +27,6 @@ define("ui/contextMenu/items/removeConversationHistory", [
       return r.canDeleteConversation(e);
     };
   }
-  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("ui/modalDialog/removeConversationHistoryDialog"), i = e("services/serviceLocator"), s = e("constants/common");
+  var t = e("swx-i18n").localization, n = e("ui/contextMenu/menuItem"), r = e("ui/modalDialog/removeConversationHistoryDialog"), i = e("swx-service-locator-instance").default, s = e("swx-constants").COMMON;
   return f.prototype = Object.create(n.prototype), f.TYPE = "RemoveConversationHistoryMenuItem", f;
 });

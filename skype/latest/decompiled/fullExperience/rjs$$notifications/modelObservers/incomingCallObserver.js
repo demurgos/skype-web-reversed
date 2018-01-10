@@ -2,54 +2,68 @@ define("notifications/modelObservers/incomingCallObserver", [
   "require",
   "notifications/factory",
   "swx-enums",
-  "constants/common",
-  "browser/window",
+  "swx-constants",
   "notifications/common/notificationHub",
-  "browser/detect",
+  "swx-browser-detect",
   "ui/telemetry/telemetryClient",
-  "experience/settings"
+  "experience/settings",
+  "swx-service-locator-instance",
+  "notifications/settings"
 ], function (e) {
-  function f() {
-    function c(e) {
-      var t = y(e);
+  function l() {
+    function v(e) {
+      var t = x(e);
       t.audioStateChangeSubscription = e.selfParticipant.audio.state.changed(function (t, n, r) {
-        p(e, t, n, r);
+        g(e, t, n, r);
       });
     }
-    function h(e) {
-      l.sendEvent(a.telemetry.uiTenantToken, r.telemetry.calling.MASTER_EVENT, e);
+    function m(e) {
+      h.sendEvent(u.telemetry.uiTenantToken, r.telemetry.calling.MASTER_EVENT, e);
     }
-    function p(e, t, n, r) {
+    function g(e, t, n, r) {
       var i = {
         newValue: t,
         oldValue: r
       };
-      if (o.getBrowserInfo().isShellApp)
+      if (s.getBrowserInfo().isShellApp)
         return;
-      if (w(i) && !d()) {
-        h({ name: "LocalUserOffline" });
-        e.audioService.reject();
+      if (N(t) && !b()) {
+        m({ name: "LocalUserOffline" });
         return;
       }
-      w(i) && v(e);
-      b(i) && g(e);
+      if (N(t) && y()) {
+        m({ name: "CallInProgress" });
+        return;
+      }
+      N(t) && w(e);
+      T(i) && S(e);
     }
-    function d() {
-      return f.mePerson.status() === n.onlineStatus.Online;
+    function y() {
+      var e = a.resolve(r.serviceLocator.FEATURE_FLAGS).isFeatureOn(r.featureFlags.DISABLE_CONCURRENT_ACTIVE_CALLS), t = a.resolve(r.serviceLocator.MODEL_UI_OBSERVER).conversationsCallStateObserver;
+      return e && t.activeCalls().length > 0 ? !0 : !1;
     }
-    function v(e) {
-      E(e).then(function (e) {
-        m(e) || x(e);
+    function b() {
+      if (f.callNotificationsMuted())
+        return !1;
+      var e = l.mePerson.status();
+      return p.isFeatureOn(r.featureFlags.USE_BUSINESS_WORDING) ? e !== n.onlineStatus.DoNotDisturb : e === n.onlineStatus.Online || e === n.onlineStatus.Away;
+    }
+    function w(e) {
+      C(e).then(function (e) {
+        E(e) || A(e);
+      }).catch(function () {
+        S(e);
       });
     }
-    function m(e) {
+    function E(e) {
       return e && e.active();
     }
-    function g(e) {
-      var t = y(e), n = t.notification;
+    function S(e) {
+      var t = x(e), n = t.notification;
       n && !n._keepActive && (n.active(!1), t.notification = null);
+      d.onNotificationCanceled && d.onNotificationCanceled();
     }
-    function y(t) {
+    function x(t) {
       var n;
       for (var r = 0; r < e.length; r++) {
         n = e[r];
@@ -58,61 +72,73 @@ define("notifications/modelObservers/incomingCallObserver", [
       }
       return n = { conversation: t }, e.push(n), n;
     }
-    function b(e) {
+    function T(e) {
       return e.oldValue !== undefined && e.newValue === n.callConnectionState.Disconnected;
     }
-    function w(e) {
-      return e.newValue === n.callConnectionState.Notified;
+    function N(e) {
+      return e === n.callConnectionState.Notified;
     }
-    function E(e) {
-      var t = y(e);
-      return t.notification && t.notification.active() ? Promise.resolve(t.notification) : S(e).then(function (e) {
+    function C(e) {
+      var t = x(e);
+      return t.notification && t.notification.active() ? Promise.resolve(t.notification) : k(e).then(function (e) {
         return t.notification = e, t.notification;
       });
     }
-    function S(e) {
-      var i, s = r.notifications.INCOMING_CALL, o = !1;
-      return e.audioService.accept.enabled.get().then(function (u) {
-        var a = e.audioService.accept.enabled.reason;
-        if (!u)
-          switch (a) {
-          case n.callingNotSupportedReasons.PluginNotInstalled:
-            s = r.notifications.INCOMING_CALL_WITH_NO_PLUGIN;
-            break;
-          case n.callingNotSupportedReasons.BrowserNotSupported:
-            s = r.notifications.INCOMING_CALL_BROWSER_NOT_SUPPORTED, o = !0;
-            break;
-          case n.callingNotSupportedReasons.OSNotSupported:
-            s = r.notifications.INCOMING_CALL_OS_NOT_SUPPORTED, o = !0;
-            break;
-          default:
-            s = r.notifications.INCOMING_CALL_OS_NOT_SUPPORTED;
-          }
-        return i = t.build(s, { conversation: e }), i._keepActive = o, i;
+    function k(e) {
+      var t = c.mediaCapabilities, r, i = n.callingNotSupportedReasons.PluginNotInstalled;
+      return new Promise(function (n) {
+        if (t.isPluginInstalled)
+          t.isBrowserMediaSupported() || t.isPluginInstalled() ? (r = L(e, !0, i), n(r)) : t.isPluginInstalled.get().finally(function () {
+            t.isPluginInstalled() ? (r = L(e, !0, i), n(r)) : (r = L(e, !1, i), n(r));
+          });
+        else {
+          var s = e.audioService.accept.enabled();
+          i = e.audioService.accept.enabled.reason;
+          r = L(e, s, i);
+          n(r);
+        }
       });
     }
-    function x(e) {
-      function u() {
-        e.active() && (n.dispose(), e.decline());
-      }
-      var t, n, o = i.setTimeout(u, a.incomingCalls.notificationTimeout);
+    function L(e, i, s) {
+      var o, u = r.notifications.INCOMING_CALL, a = !1;
+      if (!i)
+        switch (s) {
+        case n.callingNotSupportedReasons.PluginNotInstalled:
+        case n.callingNotSupportedReasons.PluginBlocked:
+          u = r.notifications.INCOMING_CALL_WITH_NO_PLUGIN;
+          break;
+        case n.callingNotSupportedReasons.BrowserNotSupported:
+          u = r.notifications.INCOMING_CALL_BROWSER_NOT_SUPPORTED, a = !0;
+          break;
+        case n.callingNotSupportedReasons.OSNotSupported:
+          u = r.notifications.INCOMING_CALL_OS_NOT_SUPPORTED, a = !0;
+          break;
+        default:
+          u = r.notifications.INCOMING_CALL_OS_NOT_SUPPORTED;
+        }
+      return o = t.build(u, { conversation: e }), o._keepActive = a, o;
+    }
+    function A(e) {
+      var t, n;
       n = e.active.subscribe(function (e) {
-        e || (clearTimeout(o), n.dispose());
+        e || n.dispose();
       });
-      e.type === r.notifications.AUDIO ? e.sender.uri() ? s.notify(e) : t = e.sender.uri.subscribe(function (n) {
-        n && (s.notify(e), t.dispose());
-      }) : s.notify(e);
+      e.type === r.notifications.AUDIO ? e.sender.uri() ? i.notify(e) : t = e.sender.uri.subscribe(function (n) {
+        n && (i.notify(e), t.dispose());
+      }) : i.notify(e);
     }
-    var e = [], f, l = u.get();
+    var e = [], l, c, h = o.get(), p = a.resolve(r.serviceLocator.FEATURE_FLAGS), d = this;
     this.observe = function (e) {
-      e.conversationsManager.conversations.added(c);
-      f = e.personsAndGroupsManager;
+      e.conversationsManager.conversations.added(v);
+      c = e.devicesManager;
+      l = e.personsAndGroupsManager;
     };
+    this.onNotificationCanceled = null;
   }
-  var t = e("notifications/factory"), n = e("swx-enums"), r = e("constants/common"), i = e("browser/window"), s = e("notifications/common/notificationHub"), o = e("browser/detect"), u = e("ui/telemetry/telemetryClient"), a = e("experience/settings");
+  var t = e("notifications/factory"), n = e("swx-enums"), r = e("swx-constants").COMMON, i = e("notifications/common/notificationHub"), s = e("swx-browser-detect").default, o = e("ui/telemetry/telemetryClient"), u = e("experience/settings"), a = e("swx-service-locator-instance").default, f = e("notifications/settings");
   return {
     build: function () {
-      return new f();
+      return new l();
     }
   };
 });

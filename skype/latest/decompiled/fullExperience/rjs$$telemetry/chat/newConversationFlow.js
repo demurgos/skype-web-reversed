@@ -1,79 +1,80 @@
 define("telemetry/chat/newConversationFlow", [
   "require",
-  "constants/common",
+  "swx-constants",
+  "experience/settings",
   "services/telemetry/skypeData",
   "services/telemetry/common/telemetryContext",
   "services/telemetry/common/analyticsInfo",
   "usertiming"
 ], function (e) {
-  function f() {
-    function c() {
-      for (var e in n.NEW_CONVERSATION)
-        n.NEW_CONVERSATION.hasOwnProperty(e) && a.clearMarks(n.NEW_CONVERSATION[e]);
-      for (var t in i.NEW_CONVERSATION)
-        i.NEW_CONVERSATION.hasOwnProperty(t) && a.clearMeasures(i.NEW_CONVERSATION[t]);
-    }
+  function l() {
     function h() {
+      for (var e in r.NEW_CONVERSATION)
+        r.NEW_CONVERSATION.hasOwnProperty(e) && f.clearMarks(r.NEW_CONVERSATION[e]);
+      for (var t in s.NEW_CONVERSATION)
+        s.NEW_CONVERSATION.hasOwnProperty(t) && f.clearMeasures(s.NEW_CONVERSATION[t]);
+    }
+    function p() {
       try {
-        var e = a.getEntriesByName(n.NEW_CONVERSATION.CREATION_END_OK).length > 0;
+        var e = f.getEntriesByName(r.NEW_CONVERSATION.CREATION_END_OK).length > 0;
         if (e) {
-          l = !0;
-          a.measure(i.NEW_CONVERSATION.TTS, n.NEW_CONVERSATION.CREATION_START, n.NEW_CONVERSATION.CREATION_END_OK);
+          c = !0;
+          f.measure(s.NEW_CONVERSATION.TTS, r.NEW_CONVERSATION.CREATION_START, r.NEW_CONVERSATION.CREATION_END_OK);
           return;
         }
-        l = !1;
-        a.measure(i.NEW_CONVERSATION.TTS, n.NEW_CONVERSATION.CREATION_START, n.NEW_CONVERSATION.CREATION_END_ERROR);
+        c = !1;
+        f.measure(s.NEW_CONVERSATION.TTS, r.NEW_CONVERSATION.CREATION_START, r.NEW_CONVERSATION.CREATION_END_ERROR);
       } catch (t) {
       }
     }
-    var e = r.STARTED, f = 0, l = t.telemetry.NOT_AVAILABLE;
+    var e = i.STARTED, l = 0, c = t.telemetry.NOT_AVAILABLE;
     this.participantsCountUpdated = function (e) {
-      f = e;
+      l = e;
     };
     this.publish = function () {
-      function S() {
+      function x() {
         try {
-          a.mark(n.NEW_CONVERSATION.RENDER_END);
-          a.measure(i.NEW_CONVERSATION.TTC, n.NEW_CONVERSATION.FLOW_START, n.NEW_CONVERSATION.RENDER_END);
-          a.measure(i.NEW_CONVERSATION.TTR, n.NEW_CONVERSATION.CREATION_START, n.NEW_CONVERSATION.RENDER_END);
-          var e = a.getEntriesByName(i.NEW_CONVERSATION.TTC), t = a.getEntriesByName(i.NEW_CONVERSATION.TTR);
-          e && e.length > 0 && (m = e[0].duration);
-          t && t.length > 0 && (y = t[0].duration);
-        } catch (r) {
+          f.mark(r.NEW_CONVERSATION.RENDER_END);
+          f.measure(s.NEW_CONVERSATION.TTC, r.NEW_CONVERSATION.FLOW_START, r.NEW_CONVERSATION.RENDER_END);
+          f.measure(s.NEW_CONVERSATION.TTR, r.NEW_CONVERSATION.CREATION_START, r.NEW_CONVERSATION.RENDER_END);
+          var e = f.getEntriesByName(s.NEW_CONVERSATION.TTC), t = f.getEntriesByName(s.NEW_CONVERSATION.TTR);
+          e && e.length > 0 && (g = e[0].duration);
+          t && t.length > 0 && (b = t[0].duration);
+        } catch (n) {
         }
       }
-      var p = o.get(), d = u.get(), v = d.contactsInfo(), m = t.telemetry.NOT_AVAILABLE, g = t.telemetry.NOT_AVAILABLE, y = t.telemetry.NOT_AVAILABLE, b = [
+      var d = u.get(), v = a.get(), m = v.contactsInfo(), g = t.telemetry.NOT_AVAILABLE, y = t.telemetry.NOT_AVAILABLE, b = t.telemetry.NOT_AVAILABLE, w = [
           t.telemetry.historyLoadOrigin.NEW_CHAT_OPEN_EXISTING,
           t.telemetry.historyLoadOrigin.CALLING
-        ], w = b.indexOf(p.historyLoadOrigin) > -1, E = p.historyLoadOrigin === t.telemetry.historyLoadOrigin.NEW_CHAT_CREATION;
-      if (w)
-        e = r.REDIRECTED, S();
-      else if (E) {
-        e = r.CREATED;
-        S();
-        h();
-        g = t.telemetry.NOT_AVAILABLE;
-        var x = a.getEntriesByName(i.NEW_CONVERSATION.TTS);
-        x && x.length && (g = x[0].duration);
+        ], E = w.indexOf(d.historyLoadOrigin) > -1, S = d.historyLoadOrigin === t.telemetry.historyLoadOrigin.NEW_CHAT_CREATION;
+      if (E)
+        e = i.REDIRECTED, x();
+      else if (S) {
+        e = i.CREATED;
+        x();
+        p();
+        y = t.telemetry.NOT_AVAILABLE;
+        var T = f.getEntriesByName(s.NEW_CONVERSATION.TTS);
+        T && T.length && (y = T[0].duration);
       } else
-        e = r.ABANDONED;
-      var T = {
+        e = i.ABANDONED;
+      var N = {
         type: "chat_conversation_new",
         data: {
           stage: e,
-          contactsCount: v.totalContacts,
-          participantsCount: f,
-          CTA: p.historyLoadOrigin,
-          TTC: m,
-          TTS: g,
-          TTR: y,
-          success: l
+          contactsCount: m.totalContacts,
+          participantsCount: l,
+          CTA: d.historyLoadOrigin,
+          TTC: g,
+          TTS: y,
+          TTR: b,
+          success: c
         }
       };
-      c();
-      s.push(T);
+      h();
+      o.push(N, n.telemetry.chatTenantToken);
     };
   }
-  var t = e("constants/common"), n = t.telemetry.performanceMarks, r = t.telemetry.stages.NEW_CONVERSATION, i = t.telemetry.measurements, s = e("services/telemetry/skypeData"), o = e("services/telemetry/common/telemetryContext"), u = e("services/telemetry/common/analyticsInfo"), a = e("usertiming");
-  return f;
+  var t = e("swx-constants").COMMON, n = e("experience/settings"), r = t.telemetry.performanceMarks, i = t.telemetry.stages.NEW_CONVERSATION, s = t.telemetry.measurements, o = e("services/telemetry/skypeData"), u = e("services/telemetry/common/telemetryContext"), a = e("services/telemetry/common/analyticsInfo"), f = e("usertiming");
+  return l;
 });

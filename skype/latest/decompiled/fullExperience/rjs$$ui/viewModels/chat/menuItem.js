@@ -6,8 +6,8 @@ define("ui/viewModels/chat/menuItem", [
   "vendor/knockout",
   "usertiming",
   "utils/common/eventHelper",
-  "constants/common",
-  "services/serviceLocator",
+  "swx-constants",
+  "swx-service-locator-instance",
   "experience/settings",
   "ui/telemetry/telemetryClient",
   "telemetry/chat/menuItemTelemetry"
@@ -57,7 +57,7 @@ define("ui/viewModels/chat/menuItem", [
       }
     }, e);
   }
-  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("usertiming"), s = e("utils/common/eventHelper"), o = e("constants/common"), u = e("services/serviceLocator"), a = e("experience/settings").telemetry, f = e("ui/telemetry/telemetryClient"), l = e("telemetry/chat/menuItemTelemetry");
+  var n = e("lodash-compat"), r = e("vendor/knockout"), i = e("usertiming"), s = e("utils/common/eventHelper"), o = e("swx-constants").COMMON, u = e("swx-service-locator-instance").default, a = e("experience/settings").telemetry, f = e("ui/telemetry/telemetryClient"), l = e("telemetry/chat/menuItemTelemetry");
   t.build = function (e) {
     return new c(e);
   };
