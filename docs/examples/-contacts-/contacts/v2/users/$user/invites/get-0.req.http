@@ -1,0 +1,14 @@
+GET /contacts/v2/users/bob/invites HTTP/1.1
+Host: contacts.skype.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: application/json; ver=1.0
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://web.skype.com/en/
+X-Skypetoken: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEzIn0.eyJpYXQiOjE1MTU1NDE3NTgsImV4cCI6MTUxNTYyODE1NSwic2t5cGVpZCI6ImV0ZXJuYWxmZXN0Iiwic2NwIjo5NTgsImNzaSI6IjAiLCJjaWQiOiJmN2RlYmZjZmQ4NTQxOGExIiwiYWF0IjoxNTE1NTQxNzU1fQ.r5HAbzw3IlVo1-K111xUOLAhMcFdH8j8IwQwLpSzf2qFzMscp0gaxPKac3rztXbb90h3RPuE8DzYiA6dVOiHgEpv7xB0atMqJVHmFzo3cfTuuvrP2d6ny-V0nXYpxf1mlOVt3TzcnotB0qRuTwKskYQuKi8QG4bg5d3GwQK-_Sm8rmyQITkk0ZmTGjFRNZuVfPacXw2F-ezndy-8
+X-Skype-Caller: skype.com
+X-Skype-Request-Id: 4c07a904
+Content-Type: application/json
+Origin: https://web.skype.com
+DNT: 1
+Connection: keep-alive

@@ -1,0 +1,14 @@
+{
+  "request": {
+    "uri": "https://contacts.skype.com/contacts/v1/users/self/contacts/profiles",
+    "jar": null,
+    "headers": {
+      "X-Skypetoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEyIn0.eyJpYXQiOjE0OTQ2MTAyNDQsImV4cCI6MTQ5NDY5NjY0NCwic2t5cGVpZCI6ImV0ZXJuYWxmZXN0Iiwic2NwIjo5NTgsImNzaSI6IjAiLCJjaWQiOiJmN2RlYmZjZmQ4NTQxOGExIiwiYWF0IjoxNDk0NjEwMjQxfQ.D9vNDEv9Qg9hhxWSYkbIHnft1aOdmTh1t1seQ_2xIkFgkzMy5WPgnv_tpDO9JgoumkTo4Z-_LHhQf8Omok5SpmGD7aBrXr1nBHmkIBHsDUGm_SC0PAdKjem96XEKxiSBp-okfxCZqiPUMflRAk7iIMmsEtW3bTqbrzGp3xJ9iz3VQPit6FUMyc5V_06d443WU63RmTTib1IVhmLf"
+    },
+    "form": {
+      "contacts": [
+        "aliceusername"
+      ]
+    }
+  }
+}

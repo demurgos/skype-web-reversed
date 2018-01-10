@@ -1,0 +1,16 @@
+HTTP/2.0 200 OK
+content-type: application/json; charset=utf-8
+content-encoding: gzip
+server: Microsoft-HTTPAPI/2.0
+strict-transport-security: max-age=31536000; includeSubDomains
+access-control-allow-origin: https://web.skype.com
+access-control-allow-credentials: true
+access-control-expose-headers: ETag,Retry-After,X-Succeeded-Prefixes,X-Skype-Continuation-Token
+x-succeded-prefixes: 2:, 8:
+x-session: eyJndkU3VzQ2c3Zuc2o4Zz09IjoiMTA2Mjo1NTE3NTU4IiwiRlNGZzVzbG9mOGtZSUE9PSI6IjU3MTU6Mjk3ODMxMyJ9
+x-correlation-id: 87428fb3-e5c2-49bc-a1ac-ef31d7a6f532
+x-role-instance: 037873ce4b44486bb53be1f76ce1525f/9
+date: Tue, 09 Jan 2018 23:52:53 GMT
+X-Firefox-Spdy: h2
+
+{"invite_list":[{"mri":"8:live:from.terra","invites":[{"message":"Hi Bob, I'd like to add you as a contact.","time":"2018-01-09T14:42:17Z"}],"displayname":"VERONICA - CAMBRIAN VANCOUVER","avatar_url":"https://avatar.skype.com/v1/avatars/live:from.terra?auth_key=1886767542"}]}
